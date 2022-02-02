@@ -1,0 +1,32 @@
+{
+    "welcomeFile": "/local_server/index.html",
+    "authenticationMethod": "route",
+    "routes": [
+      {
+          "source": "^/local_server/human-resource/(.*)$",
+          "target": "/odata/v4/com.sal.employee_portal.HumanResourceService/$1",
+          "destination": "human-resource-srv",
+          "csrfProtection": false,
+          "authenticationType": "none"
+      },
+      {
+        "source": "^/local_server/resources/(.*)$",
+        "target": "/resources/$1",
+        "authenticationType": "none",
+        "destination": "ui5"
+      },
+      {
+        "source": "^/local_server/test-resources/(.*)$",
+        "target": "/test-resources/$1",
+        "authenticationType": "none",
+        "destination": "ui5"
+      },
+      {
+          "source": "^/local_server/(.*)$",
+          "target": "$1",
+          "localDir": "../webapp",
+          "authenticationType": "xsuaa"
+      }
+    ]
+  }
+  
