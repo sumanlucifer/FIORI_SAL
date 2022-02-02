@@ -1,0 +1,44 @@
+{
+    "destinations": [
+        {
+            "name": "human-resource-srv",
+            "url": "https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de3438ae57.cfapps.eu10.hana.ondemand.com",
+            "forwardAuthToken": true
+        },
+        {
+            "name": "ui5",
+            "url": "https://ui5.sap.com"
+        }
+    ],
+    "VCAP_SERVICES": {
+        
+        "xsuaa": [
+            {
+                "tags": [
+                    "xsuaa",
+                    "endpoint:https://api.cf.eu10.hana.ondemand.com",
+                    "org:Saudi Airlines Cargo Company_sal-btp-cf-dev-8glkufj3",
+                    "space:Dev"
+                ],
+                "plan": "application",
+                "credentials": {
+                    "apiurl": "https://api.authentication.eu10.hana.ondemand.com",
+                    "clientid": "sb-employee-portal-uaa!t123834",
+                    "clientsecret": "1kFZT+F6cpLN0xXqbXCL7fVBlkI=",
+                    "credential-type": "instance-secret",
+                    "identityzone": "sal-btp-cf-dev-8glkufj3",
+                    "identityzoneid": "23b140a5-9213-4e93-a39f-6f3e5030c904",
+                    "sburl": "https://internal-xsuaa.authentication.eu10.hana.ondemand.com",
+                    "service_key_name": "key",
+                    "subaccountid": "23b140a5-9213-4e93-a39f-6f3e5030c904",
+                    "tenantid": "23b140a5-9213-4e93-a39f-6f3e5030c904",
+                    "tenantmode": "dedicated",
+                    "uaadomain": "authentication.eu10.hana.ondemand.com",
+                    "url": "https://sal-btp-cf-dev-8glkufj3.authentication.eu10.hana.ondemand.com",
+                    "xsappname": "employee-portal-uaa!t123834",
+                    "zoneid": "23b140a5-9213-4e93-a39f-6f3e5030c904"
+                }
+            }
+        ]
+    }
+}

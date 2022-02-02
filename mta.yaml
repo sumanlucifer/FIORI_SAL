@@ -1,0 +1,71 @@
+_schema-version: "3.2"
+ID: employee-portal
+version: 0.0.1
+modules:
+- name: employee-portal-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: employee-portal-dest-srv
+    parameters:
+      content-target: true
+  - name: employee-portal-repo-host
+    parameters:
+      service-key:
+        name: SAL_PORTAL_html_repo_host-key
+  - name: employee-portal-uaa
+    parameters:
+      service-key:
+        name: employee-portal-uaa-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: salfiorihr_SAL_PORTAL_html_repo_host
+          ServiceInstanceName: SAL_PORTAL-html5-app-host-service
+          ServiceKeyName: SAL_PORTAL_html_repo_host-key
+          sap.cloud.service: salfiorihr
+        - Authentication: OAuth2UserTokenExchange
+          Name: salfiorihr_uaa_SAL_PORTAL
+          ServiceInstanceName: SAL_PORTAL-xsuaa-service
+          ServiceKeyName: uaa_SAL_PORTAL-key
+          sap.cloud.service: salfiorihr
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: SAL_PORTAL-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: employee-portal-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comsalsalportalhr.zip
+      name: comsalsalportalhr
+      target-path: resources/
+- name: comsalsalportalhr
+  type: html5
+  path: salportalhr
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: employee-portal-dest-srv
+  type: org.cloudfoundry.existing-service
+- name: employee-portal-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: SAL_PORTAL-html5-app-host-service
+    service-plan: app-host
+- name: employee-portal-uaa
+  type: org.cloudfoundry.existing-service
+parameters:
+  deploy_mode: html5-repo
