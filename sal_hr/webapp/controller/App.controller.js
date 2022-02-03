@@ -10,6 +10,7 @@ sap.ui.define([
         return Controller.extend("com.sal.salhr.controller.App", {
             onInit: function () {
 
+
             }
         });
     });

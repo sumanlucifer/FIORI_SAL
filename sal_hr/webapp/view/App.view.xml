@@ -2,6 +2,7 @@
     controllerName="com.sal.salhr.controller.App"
    	displayBlock="true"
 	height="100%"
+    xmlns:m="sap.m"
 	xmlns="sap.f"
 	xmlns:mvc="sap.ui.core.mvc"
 >
@@ -32,9 +33,15 @@
         </App>
     </Shell> -->
 
+    <m:App>
+        <m:pages>
     	<FlexibleColumnLayout
 		id="flexibleColumnLayout"
 		stateChange=".onStateChanged"
 		backgroundDesign="Solid"
 		/>
+        </m:pages>
+    </m:App>
+
+
 </mvc:View>

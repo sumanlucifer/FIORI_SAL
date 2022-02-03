@@ -10,9 +10,10 @@
 		<f:content>
 			<VBox fitContainer="true" id="idV1">
 			
-				<ui:Table id="idTb"
+				 <ui:Table id="idTb"
 				rows="{/MasterSubModules}"
-				selectionMode="MultiToggle"
+				selectionMode="Single"
+                
 				visibleRowCount="7"
 				paste="onPaste"
 				ariaLabelledBy="title"
@@ -31,7 +32,18 @@
 						</ui:template>
 					</ui:Column>
 				</ui:columns>
-			</ui:Table>
+			</ui:Table> 
+
+                       <!-- <List items="{path: '/ParentLineItemSet'}" updateFinished="onUpdateListFinished">
+                <headerToolbar>
+                    <OverflowToolbar>
+                    <content>
+                    <Title text="{i18n>parentItems}"/>
+                    </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <StandardListItem title="{Name}" description="Description: {Description}" info="Material Code: {MaterialCode}" type="Navigation" press="onParentLineItemPress"/>
+            </List>-->
 			</VBox>
 		</f:content>
 
