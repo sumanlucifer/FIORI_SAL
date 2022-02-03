@@ -10,7 +10,7 @@
 		<f:content>
 			<VBox fitContainer="true" id="idV1">
 			
-				 <ui:Table id="idTb"
+				 <!-- <ui:Table id="idTb"
 				rows="{/MasterSubModules}"
 				selectionMode="Single"
                 
@@ -32,7 +32,7 @@
 						</ui:template>
 					</ui:Column>
 				</ui:columns>
-			</ui:Table> 
+			</ui:Table>  -->
 
                        <!-- <List items="{path: '/ParentLineItemSet'}" updateFinished="onUpdateListFinished">
                 <headerToolbar>
@@ -44,6 +44,45 @@
                 </headerToolbar>
                 <StandardListItem title="{Name}" description="Description: {Description}" info="Material Code: {MaterialCode}" type="Navigation" press="onParentLineItemPress"/>
             </List>-->
+
+            	<Table id="idProductsTable"
+		inset="false"
+		items="{/MasterSubModules}" 
+        itemPress="onMasterListPress">
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<Title text="Human Resource" level="H2"/>
+					<ToolbarSpacer />
+					<SearchField ></SearchField>
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		
+		<columns>
+			<Column
+				width="12em">
+				<Text text="Type" />
+			</Column>
+			
+			<Column
+				hAlign="End">
+				<Text text="Count" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle" type="Navigation">
+				<cells>
+					<ObjectIdentifier
+						title="{name}"
+						text="{description}"/>
+					
+					<ObjectNumber
+							number="{totalRequests}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
 			</VBox>
 		</f:content>
 

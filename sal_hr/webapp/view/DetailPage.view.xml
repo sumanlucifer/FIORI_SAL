@@ -1,0 +1,8 @@
+<mvc:View
+    controllerName="com.sal.salhr.controller.DetailPage"
+    xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:ui="sap.ui.table"
+>
+</mvc:View>

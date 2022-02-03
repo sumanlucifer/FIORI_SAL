@@ -109,13 +109,32 @@
 						"master"
 					
 					]
+				},
+                {
+					"pattern": "detail",
+					"name": "detail",
+					"target": [
+						
+                        "detail"
+					
+					]
 				}
+                
             ],
             "targets": {
                 "master": {
 					"viewName": "MasterList",
 					"controlAggregation": "beginColumnPages"
-				}
+				},
+                "detail": {
+                    "viewName": "DetailPage",
+                   
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "controlAggregation": "beginColumnPages"
+                    
+                }
+                
             }
         },
         "rootView": {
