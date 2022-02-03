@@ -1,16 +1,40 @@
 <mvc:View
     controllerName="com.sal.salhr.controller.App"
-    xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true"
-    xmlns="sap.m"
+   	displayBlock="true"
+	height="100%"
+	xmlns="sap.f"
+	xmlns:mvc="sap.ui.core.mvc"
 >
-    <Shell id="shell">
+    <!-- <Shell id="shell">
         <App id="app">
             <pages>
                 <Page id="page" title="{i18n>title}">
-                    <content />
+                    <content>
+                   	<ui:Table id="idTb"
+				rows="{/MasterSubModules}"
+				selectionMode="MultiToggle"
+				visibleRowCount="7"
+				paste="onPaste"
+				ariaLabelledBy="title">
+				
+				<ui:columns>
+					<ui:Column width="11rem">
+						<Label text="Type" />
+						<ui:template>
+							<Text text="{name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+				</ui:columns>
+			</ui:Table>
+                    </content>
                 </Page>
             </pages>
         </App>
-    </Shell>
+    </Shell> -->
+
+    	<FlexibleColumnLayout
+		id="flexibleColumnLayout"
+		stateChange=".onStateChanged"
+		backgroundDesign="Solid"
+		/>
 </mvc:View>

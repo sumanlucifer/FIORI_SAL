@@ -1,9 +1,11 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "com/sal/salhr/model/models"
+        "com/sal/salhr/model/models",
+        'sap/ui/model/json/JSONModel',
+        'sap/f/library'
     ],
-    function (UIComponent, Device, models) {
+    function (UIComponent, Device, models, JSONModel, fioriLibrary) {
         "use strict";
 
         return UIComponent.extend("com.sal.salhr.Component", {
@@ -25,7 +27,11 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+                
+               
+                
             }
+            
         });
     }
 );

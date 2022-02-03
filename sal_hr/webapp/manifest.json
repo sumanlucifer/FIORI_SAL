@@ -96,27 +96,26 @@
                 "viewType": "XML",
                 "async": true,
                 "viewPath": "com.sal.salhr.view",
-                "controlAggregation": "pages",
-                "controlId": "app",
-                "clearControlAggregation": false
+                "controlId": "flexibleColumnLayout",
+				"transition": "slide"
+				
+				
             },
             "routes": [
                 {
-                    "name": "RouteApp",
-                    "pattern": "RouteApp",
-                    "target": [
-                        "TargetApp"
-                    ]
-                }
+					"pattern": "",
+					"name": "master",
+					"target": [
+						"master"
+					
+					]
+				}
             ],
             "targets": {
-                "TargetApp": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "App",
-                    "viewName": "App"
-                }
+                "master": {
+					"viewName": "MasterList",
+					"controlAggregation": "beginColumnPages"
+				}
             }
         },
         "rootView": {

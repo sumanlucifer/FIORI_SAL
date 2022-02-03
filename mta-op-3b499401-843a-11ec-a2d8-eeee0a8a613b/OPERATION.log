@@ -1,0 +1,1810 @@
+#2.0#2022 02 02 15:10:17.938#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startEvent#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########http-nio-0.0.0.0-8080-exec-18###
+[XS2StartProcessListener] Operation ID: 3b499401-843a-11ec-a2d8-eeee0a8a613b#
+
+#2.0#2022 02 02 15:10:17.952#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startEvent#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########http-nio-0.0.0.0-8080-exec-18###
+[XS2StartProcessListener] Process environment: {
+  "PLATFORM" : "{\n  \"name\": \"CLOUD-FOUNDRY\",\n  \"module-types\": [\n    { \"name\": \"custom\" },\n    { \"name\": \"javascript.nodejs\" },\n    { \"name\": \"java\", \"parameters\": { \"buildpack\": \"sap_java_buildpack\" }},\n    { \"name\": \"java.tomcat\", \"parameters\": { \"buildpack\": \"sap_java_buildpack\" }, \"properties\": { \"TARGET_RUNTIME\": \"tomcat\" }},\n    { \"name\": \"java.tomee\",  \"parameters\": { \"buildpack\": \"sap_java_buildpack\" }, \"properties\": { \"TARGET_RUNTIME\": \"tomee\" }},\n    { \"name\": \"com.sap.xs.hdi-dynamic\", \"parameters\": { \"buildpack\": \"nodejs_buildpack\" }},\n    { \"name\": \"com.sap.xs.hdi\", \"parameters\": { \"no-route\": true, \"no-start\": true, \"memory\": \"256M\", \"tasks\": [{ \"name\": \"deploy\", \"memory\": \"256M\", \"command\": \"npm start\" }], \"dependency-type\": \"hard\" }, \"properties\" : { \"EXIT\": 1 }},\n    { \"name\": \"com.sap.xs.hdi-zdm\", \"parameters\": { \"zdm-mode\": true, \"no-route\": true, \"no-start\": true, \"memory\": \"256M\", \"tasks\": [{ \"name\": \"deploy\", \"memory\": \"256M\", \"command\": \"npm start\" }], \"dependency-type\": \"hard\" }, \"properties\" : { \"EXIT\": 1, \"HDI_DEPLOY_MODE\": \"ZDM\" }},\n    { \"name\": \"com.sap.portal.site-content\", \"parameters\": { \"no-route\": true, \"memory\": \"256M\", \"execute-app\": true, \"success-marker\": \"STDOUT:Deployment of site content to .* done.*\", \"failure-marker\": \"STDERR:Deployment of site content to .* failed.*\", \"stop-app\": true, \"check-deploy-id\": true, \"dependency-type\": \"hard\", \"health-check-type\": \"none\" }},\n    { \"name\": \"com.sap.portal.content\", \"parameters\": { \"no-route\": true, \"no-start\": true, \"memory\": \"256M\", \"tasks\": [{ \"name\": \"deploy\", \"memory\": \"256M\", \"command\": \"npm start\" }], \"dependency-type\": \"hard\" }, \"properties\" : { \"EXIT\": 1 }},\n    { \"name\": \"com.sap.xs.dwf\", \"parameters\": { \"no-route\": true, \"memory\": \"256M\", \"execute-app\": true, \"success-marker\": \"STDOUT:The deployment of DWF content to .* container finished successfully .*\", \"failure-marker\": \"STDERR:The deployment of DWF content to .* container failed .*\", \"stop-app\": true, \"check-deploy-id\": true, \"dependency-type\": \"hard\", \"health-check-type\": \"none\" }},\n    { \"name\": \"business-logging\", \"parameters\": { \"no-route\": true, \"memory\": \"256M\", \"execute-app\": true, \"success-marker\": \"STDOUT:Deployment of content deployer done.\", \"failure-marker\": \"STDERR:Deployment of content deployer failed.\", \"stop-app\": true, \"health-check-type\": \"none\" }},\n    { \"name\": \"com.sap.business-logging.content\", \"parameters\": { \"no-route\": true, \"no-start\": true, \"memory\": \"256M\", \"tasks\": [{ \"name\": \"deploy\", \"memory\": \"256M\", \"command\": \"npm start\" }], \"dependency-type\": \"hard\" }, \"properties\" : { \"EXIT\": 1 }},\n    { \"name\": \"com.sap.html5.application-content\", \"parameters\": { \"no-route\": true, \"memory\": \"256M\", \"execute-app\": true, \"success-marker\": \"STDOUT:Deployment of html5 application content done.*\", \"failure-marker\": \"STDERR:Deployment of html5 application content failed.*\", \"stop-app\": true, \"check-deploy-id\": true, \"dependency-type\": \"hard\", \"health-check-type\": \"none\" }}, \n    { \"name\": \"com.sap.html5.application.content\", \"parameters\": { \"no-route\": true, \"no-start\": true, \"memory\": \"256M\", \"tasks\": [{ \"name\": \"deploy\", \"memory\": \"256M\", \"command\": \"npm start\" }], \"dependency-type\": \"hard\" }, \"properties\" : { \"EXIT\": 1 }},\n    { \"name\": \"staticfile\", \"parameters\": { \"buildpack\": \"staticfile_buildpack\" }},\n    { \"name\": \"ruby\", \"parameters\": { \"buildpack\": \"ruby_buildpack\" }},\n    { \"name\": \"nodejs\", \"parameters\": { \"buildpack\": \"nodejs_buildpack\" }},\n    { \"name\": \"go\", \"parameters\": { \"buildpack\": \"go_buildpack\" }},\n    { \"name\": \"python\", \"parameters\": { \"buildpack\": \"python_buildpack\" }},\n    { \"name\": \"php\", \"parameters\": { \"buildpack\": \"php_buildpack\" }},\n    { \"name\": \"binary\", \"parameters\": { \"buildpack\": \"binary_buildpack\" }},\n    { \"name\": \"dotnet_core\", \"parameters\": { \"buildpack\": \"dotnet_core_buildpack\" }},\n    { \"name\": \"application\" },\n    { \"name\": \"com.sap.application.content\" },\n    { \"name\": \"com.sap.integration\" },\n    { \"name\": \"com.sap.api.management\" }\n  ],\n  \"resource-types\": [\n    { \"name\": \"com.sap.xs.hdi-container\", \"parameters\": { \"service\": \"hana\", \"service-plan\": \"hdi-shared\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.hana-sbss\", \"parameters\": { \"service\": \"hana\", \"service-plan\": \"sbss\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.hana-schema\", \"parameters\": { \"service\": \"hana\", \"service-plan\": \"schema\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.hana-securestore\", \"parameters\": { \"service\": \"hana\", \"service-plan\": \"securestore\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.managed-hdi-container\", \"parameters\": { \"service\": \"managed-hana\", \"service-plan\": \"hdi-shared\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.managed-hana-schema\", \"parameters\": { \"service\": \"managed-hana\", \"service-plan\": \"schema\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.managed-hana-securestore\", \"parameters\": { \"service\": \"managed-hana\", \"service-plan\": \"securestore\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.job-scheduler\", \"parameters\": { \"service\": \"jobscheduler\", \"service-plan\": \"lite\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.fs\", \"parameters\": { \"service\": \"fs-storage\", \"service-plan\": \"lite\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.uaa\", \"parameters\": { \"service\": \"xsuaa\", \"service-plan\": \"application\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.uaa-space\", \"parameters\": { \"service\": \"xsuaa\", \"service-plan\": \"application\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.uaa-devuser\", \"parameters\": { \"service\": \"xsuaa\", \"service-plan\": \"application\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.uaa-application\", \"parameters\": { \"service\": \"xsuaa\", \"service-plan\": \"application\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.uaa-broker\", \"parameters\": { \"service\": \"xsuaa\", \"service-plan\": \"broker\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.application-logs\", \"parameters\": { \"service\": \"application-logs\", \"service-plan\": \"lite\", \"skip-service-updates\": { \"parameters\": true, \"plan\": true }, \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.portal.site-host\", \"parameters\": { \"service\": \"portal-services\", \"service-plan\": \"site-host\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.portal.site-content\", \"parameters\": { \"service\": \"portal-services\", \"service-plan\": \"site-content\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.sap.xs.dwf-edw-client\", \"parameters\": { \"service\": \"dwf\", \"service-plan\": \"edw-client\", \"type\": \"managed-service\"}},\n    { \"name\": \"com.sap.xs.auditlog\", \"parameters\": { \"service\": \"auditlog\", \"service-plan\": \"standard\", \"skip-service-updates\": { \"parameters\": true, \"plan\": true }, \"type\": \"managed-service\" }},\n    { \"name\": \"auditlog\", \"parameters\": { \"service\": \"auditlog\", \"service-plan\": \"standard\", \"skip-service-updates\": { \"parameters\": true, \"plan\": true }, \"type\": \"managed-service\" }},\n    { \"name\": \"org.mongodb\", \"parameters\": { \"service\": \"mongodb\", \"service-plan\": \"v3.0-dev\", \"type\": \"managed-service\" }},\n    { \"name\": \"mongodb\", \"parameters\": { \"service\": \"mongodb\", \"service-plan\": \"v3.0-dev\", \"type\": \"managed-service\" }},\n    { \"name\": \"org.postgresql\", \"parameters\": { \"service\": \"postgresql\", \"service-plan\": \"v9.4-dev\", \"type\": \"managed-service\" }},\n    { \"name\": \"postgresql\", \"parameters\": { \"service\": \"postgresql\", \"service-plan\": \"v9.4-dev\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.rabbitmq\", \"parameters\": { \"service\": \"rabbitmq\", \"service-plan\": \"v3.6-dev\", \"type\": \"managed-service\" }},\n    { \"name\": \"rabbitmq\", \"parameters\": { \"service\": \"rabbitmq\", \"service-plan\": \"v3.6-dev\", \"type\": \"managed-service\" }},\n    { \"name\": \"io.redis\", \"parameters\": { \"service\": \"redis\", \"service-plan\": \"v3.0-dev\", \"type\": \"managed-service\" }},\n    { \"name\": \"redis\", \"parameters\": { \"service\": \"redis\", \"service-plan\": \"v3.0-dev\", \"type\": \"managed-service\" }},\n    { \"name\": \"com.influxdb\", \"parameters\": { \"service\": \"influxdb\", \"service-plan\": \"v0.13-container\", \"type\": \"managed-service\" }},\n    { \"name\": \"influxdb\", \"parameters\": { \"service\": \"influxdb\", \"service-plan\": \"v0.13-container\", \"type\": \"managed-service\" }},\n    { \"name\": \"org.cloudfoundry.user-provided-service\", \"parameters\": { \"type\": \"user-provided-service\" }},\n    { \"name\": \"org.cloudfoundry.managed-service\", \"parameters\": { \"type\": \"managed-service\" }},\n    { \"name\": \"org.cloudfoundry.existing-service\", \"parameters\": { \"type\": \"existing-service\" }},\n    { \"name\": \"org.cloudfoundry.existing-service-key\", \"parameters\": { \"type\": \"existing-service-key\" }},\n    { \"name\": \"mta-provided\", \"parameters\": { \"type\": \"mta-provides-dependency\" }},\n    { \"name\": \"configuration\", \"parameters\": { \"type\": \"configuration\" }},\n    { \"name\": \"autoscaler\", \"parameters\": { \"service\": \"autoscaler\", \"service-plan\": \"lite\", \"skip-service-updates\": { \"parameters\": true, \"plan\": true }, \"type\": \"managed-service\" }},\n    { \"name\": \"application-logs\", \"parameters\": { \"service\": \"application-logs\", \"service-plan\": \"lite\", \"skip-service-updates\": { \"parameters\": true, \"plan\": true }, \"type\": \"managed-service\" }},\n    { \"name\": \"connectivity\", \"parameters\": { \"service\": \"connectivity\", \"service-plan\": \"lite\", \"type\": \"managed-service\" }},\n    { \"name\": \"feature-flags\", \"parameters\": { \"service\": \"feature-flags\", \"service-plan\": \"lite\", \"type\": \"managed-service\" }},\n    { \"name\": \"metering\", \"parameters\": { \"service\": \"metering\", \"service-plan\": \"standard\", \"type\": \"managed-service\" }},\n    { \"name\": \"ml-foundation-services\", \"parameters\": { \"service\": \"ml-foundation-services\", \"service-plan\": \"lite\", \"type\": \"managed-service\" }},\n    { \"name\": \"objectstore\", \"parameters\": { \"service\": \"objectstore\", \"service-plan\": \"s3-standard\", \"type\": \"managed-service\" }},\n    { \"name\": \"destination\", \"parameters\": { \"service\": \"destination\", \"service-plan\": \"lite\", \"type\": \"managed-service\" }}\n  ]\n}\n",
+  "SKIP_SSL_VALIDATION" : "false",
+  "CONTROLLER_CLIENT_THREAD_POOL_SIZE" : "64",
+  "DB_TYPE" : "POSTGRESQL",
+  "FLOWABLE_JOB_EXECUTOR_MAX_THREADS" : "64",
+  "XS_TYPE" : "CF",
+  "VERSION" : "1.134.0",
+  "BASIC_AUTH_ENABLED" : "true",
+  "CONTROLLER_CLIENT_CONNECTION_POOL_SIZE" : "192",
+  "FLOWABLE_JOB_EXECUTOR_QUEUE_CAPACITY" : "8",
+  "GLOBAL_AUDITOR_USER" : "provisioned_user_xsa_deploy-serviceDSglobalAuditorUser",
+  "FLOWABLE_JOB_EXECUTOR_CORE_THREADS" : "32"
+}#
+
+#2.0#2022 02 02 15:10:17.952#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startEvent#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########http-nio-0.0.0.0-8080-exec-18###
+[XS2StartProcessListener] Current user: manasa.gandhalu@extentia.com#
+
+#2.0#2022 02 02 15:10:17.952#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startEvent#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########http-nio-0.0.0.0-8080-exec-18###
+[XS2StartProcessListener] Client space: Dev#
+
+#2.0#2022 02 02 15:10:17.952#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startEvent#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########http-nio-0.0.0.0-8080-exec-18###
+[XS2StartProcessListener] Client organization: Saudi Airlines Cargo Company_sal-btp-cf-dev-8glkufj3#
+
+#2.0#2022 02 02 15:10:17.952#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startEvent#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########http-nio-0.0.0.0-8080-exec-18###
+[XS2StartProcessListener] Process variables: {
+  "abortOnError" : false,
+  "mtaId" : "employee-portal-web",
+  "keepFiles" : false,
+  "verifyArchiveSignature" : false,
+  "noFailOnMissingPermissions" : false,
+  "deleteServiceBrokers" : false,
+  "appArchiveId" : "a3ac072d-1d22-47fe-96fe-66e28316d3bb",
+  "gitUri" : "",
+  "deleteServiceKeys" : "********",
+  "noRestartSubscribedApps" : false,
+  "noStart" : false,
+  "deleteServices" : false
+}#
+
+#2.0#2022 02 02 15:10:18.003#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.validateParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18031###
+[ValidateDeployParametersStep] Executing task "validateParametersTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.004#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.validateParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18031###
+[ValidateDeployParametersStep] Validating parameters...#
+
+#2.0#2022 02 02 15:10:18.004#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.validateParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18031###
+[ValidateDeployParametersStep] Deploying in org "Saudi Airlines Cargo Company_sal-btp-cf-dev-8glkufj3" and space "Dev"#
+
+#2.0#2022 02 02 15:10:18.008#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.validateParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18031###
+[ValidateDeployParametersStep] Parameters validated#
+
+#2.0#2022 02 02 15:10:18.009#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.validateParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18031###
+Step "Validate Parameters" finished#
+
+#2.0#2022 02 02 15:10:18.044#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteRemainingFileParts#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18032###
+[DeleteRemainingFileParts] Executing task "deleteRemainingFileParts" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.047#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteRemainingFileParts#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18032###
+Step "Delete Remaining File Parts" finished#
+
+#2.0#2022 02 02 15:10:18.082#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processArchiveTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18033###
+[XS2ProcessMtaArchiveStep] Executing task "processArchiveTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.083#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processArchiveTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18033###
+[XS2ProcessMtaArchiveStep] Processing MTA archive...#
+
+#2.0#2022 02 02 15:10:18.083#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processArchiveTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18033###
+[XS2ProcessMtaArchiveStep] MTA Archive ID: a3ac072d-1d22-47fe-96fe-66e28316d3bb#
+
+#2.0#2022 02 02 15:10:18.126#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processArchiveTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18033###
+[XS2ProcessMtaArchiveStep] MTA Archive Modules: [employee-portal-web-app-content]#
+
+#2.0#2022 02 02 15:10:18.126#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processArchiveTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18033###
+[XS2ProcessMtaArchiveStep] MTA Archive Requires: []#
+
+#2.0#2022 02 02 15:10:18.126#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processArchiveTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18033###
+[XS2ProcessMtaArchiveStep] MTA Archive Resources: [uaa_employee-portal-web]#
+
+#2.0#2022 02 02 15:10:18.134#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processArchiveTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18033###
+[XS2ProcessMtaArchiveStep] MTA archive processed#
+
+#2.0#2022 02 02 15:10:18.135#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processArchiveTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18033###
+Step "Process Archive" finished#
+
+#2.0#2022 02 02 15:10:18.174#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processExtensionDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+[ProcessMtaExtensionDescriptorsStep] Executing task "processExtensionDescriptorsTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.175#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processExtensionDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+[ProcessMtaExtensionDescriptorsStep] Processing MTA extension descriptors...#
+
+#2.0#2022 02 02 15:10:18.175#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processExtensionDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+[ProcessMtaExtensionDescriptorsStep] Extension descriptors: [ ]#
+
+#2.0#2022 02 02 15:10:18.175#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processExtensionDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+[ProcessMtaExtensionDescriptorsStep] MTA extension descriptors processed#
+
+#2.0#2022 02 02 15:10:18.177#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processExtensionDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+Step "Process Extension Descriptors" finished#
+
+#2.0#2022 02 02 15:10:18.213#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectSchemaVersionTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[DetectMtaSchemaVersionStep] Executing task "detectSchemaVersionTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.214#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectSchemaVersionTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[DetectMtaSchemaVersionStep] Detecting MTA major schema version...#
+
+#2.0#2022 02 02 15:10:18.216#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectSchemaVersionTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[DetectMtaSchemaVersionStep] Detected MTA schema version: "3"#
+
+#2.0#2022 02 02 15:10:18.220#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectSchemaVersionTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+Step "Detect Schema Version" finished#
+
+#2.0#2022 02 02 15:10:18.255#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.mergeDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18036###
+[MergeDescriptorsStep] Executing task "mergeDescriptorsTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.256#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.mergeDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18036###
+[MergeDescriptorsStep] Validating and merging descriptors...#
+
+#2.0#2022 02 02 15:10:18.258#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.mergeDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18036###
+[MergeDescriptorsStep] Merged deployment descriptor: {
+  "majorSchemaVersion" : 3,
+  "schemaVersion" : "3.2.0",
+  "id" : "employee-portal-web",
+  "version" : "0.0.1",
+  "modules" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-destination-content",
+    "type" : "com.sap.application.content",
+    "properties" : { },
+    "parameters" : {
+      "content" : {
+        "instance" : {
+          "destinations" : [ {
+            "Name" : "salportalui_employee_portal_web_html_repo_host",
+            "ServiceInstanceName" : "employee-portal-web-html5-app-host-service",
+            "ServiceKeyName" : "********",
+            "sap.cloud.service" : "salportalui"
+          }, {
+            "Authentication" : "********",
+            "Name" : "salportalui_uaa_employee_portal_web",
+            "ServiceInstanceName" : "employee-portal-uaa-srv",
+            "ServiceKeyName" : "********",
+            "sap.cloud.service" : "salportalui"
+          } ],
+          "existing_destinations_policy" : "ignore"
+        }
+      }
+    },
+    "requiredDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-destination-service",
+      "properties" : { },
+      "parameters" : {
+        "content-target" : true
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    }, {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web_html_repo_host",
+      "properties" : { },
+      "parameters" : {
+        "service-key" : "********"
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    }, {
+      "majorSchemaVersion" : 3,
+      "name" : "uaa_employee-portal-web",
+      "properties" : { },
+      "parameters" : {
+        "service-key" : "********"
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "providedDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-destination-content",
+      "isPublic" : false,
+      "properties" : { },
+      "parameters" : { },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "hooks" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-app-content",
+    "type" : "com.sap.application.content",
+    "path" : "employee-portal-web-app-content",
+    "properties" : { },
+    "parameters" : { },
+    "requiredDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web_html_repo_host",
+      "properties" : { },
+      "parameters" : {
+        "content-target" : true
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "providedDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-app-content",
+      "isPublic" : false,
+      "properties" : { },
+      "parameters" : { },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "hooks" : [ ]
+  } ],
+  "resources" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-destination-service",
+    "type" : "org.cloudfoundry.existing-service",
+    "properties" : { },
+    "parameters" : {
+      "service-name" : "employee-portal-dest-srv",
+      "service-plan" : "lite",
+      "type" : "existing-service",
+      "config" : {
+        "HTML5Runtime_enabled" : true,
+        "init_data" : {
+          "instance" : {
+            "destinations" : [ {
+              "Authentication" : "********",
+              "Name" : "ui5",
+              "ProxyType" : "Internet",
+              "Type" : "HTTP",
+              "URL" : "https://ui5.sap.com"
+            } ],
+            "existing_destinations_policy" : "update"
+          }
+        },
+        "version" : "1.0.0"
+      },
+      "service" : "destination"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web_html_repo_host",
+    "type" : "org.cloudfoundry.managed-service",
+    "properties" : { },
+    "parameters" : {
+      "service-name" : "employee-portal-web-html5-app-host-service",
+      "service-plan" : "app-host",
+      "type" : "managed-service",
+      "service" : "html5-apps-repo"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "uaa_employee-portal-web",
+    "type" : "org.cloudfoundry.existing-service",
+    "properties" : { },
+    "parameters" : {
+      "path" : "./xs-security.json",
+      "service-name" : "employee-portal-uaa-srv",
+      "service-plan" : "application",
+      "type" : "existing-service",
+      "service" : "xsuaa"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  } ],
+  "parameters" : {
+    "deploy_mode" : "html5-repo"
+  },
+  "parametersMetadata" : {
+    "metadata" : { }
+  }
+}#
+
+#2.0#2022 02 02 15:10:18.259#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.mergeDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18036###
+[MergeDescriptorsStep] Descriptors validated and merged#
+
+#2.0#2022 02 02 15:10:18.261#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.mergeDescriptorsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18036###
+Step "Merge Descriptors" finished#
+
+#2.0#2022 02 02 15:10:18.303#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectDeployedMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18037###
+[DetectDeployedMtaStep] Executing task "detectDeployedMtaTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.304#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectDeployedMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18037###
+[DetectDeployedMtaStep] Detecting deployed MTA...#
+
+#2.0#2022 02 02 15:10:18.451#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectDeployedMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18037###
+[DetectDeployedMtaStep] Detecting MTA by id employee-portal-web and namespace null#
+
+#2.0#2022 02 02 15:10:18.451#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectDeployedMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18037###
+[DetectDeployedMtaStep] Getting applications by metadata label selector "mta_id=1d594d9a6d896e9beef556b6ffeeedb8,!mta_namespace"...#
+
+#2.0#2022 02 02 15:10:18.552#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectDeployedMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18037###
+[DetectDeployedMtaStep] Getting service instances by metadata label selector "mta_id=1d594d9a6d896e9beef556b6ffeeedb8,!mta_namespace"...#
+
+#2.0#2022 02 02 15:10:18.657#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectDeployedMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18037###
+[DetectDeployedMtaStep] No deployed MTA detected - this is initial deployment#
+
+#2.0#2022 02 02 15:10:18.663#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detectDeployedMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18037###
+Step "Detect Deployed MTA" finished#
+
+#2.0#2022 02 02 15:10:18.703#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] Executing task "collectSystemParametersTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.704#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] Collecting system parameters...#
+
+#2.0#2022 02 02 15:10:18.704#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] Getting default domain...#
+
+#2.0#2022 02 02 15:10:18.847#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] Default domain: cfapps.eu10.hana.ondemand.com#
+
+#2.0#2022 02 02 15:10:18.848#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] Checking for overwriting read-only parameters for mta with id: "employee-portal-web"#
+
+#2.0#2022 02 02 15:10:18.848#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] No read-only parameters are overwritten#
+
+#2.0#2022 02 02 15:10:18.870#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] Descriptor with system parameters: {
+  "majorSchemaVersion" : 3,
+  "schemaVersion" : "3.2.0",
+  "id" : "employee-portal-web",
+  "version" : "0.0.1",
+  "modules" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-destination-content",
+    "type" : "com.sap.application.content",
+    "properties" : { },
+    "parameters" : {
+      "default-url" : "${protocol}://${default-uri}",
+      "default-app-name" : "employee-portal-web-destination-content",
+      "generated-password" : "********",
+      "default-uri" : "${host}.${domain}",
+      "default-instances" : 1,
+      "instances" : "${default-instances}",
+      "default-host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae",
+      "content" : {
+        "instance" : {
+          "destinations" : [ {
+            "Name" : "salportalui_employee_portal_web_html_repo_host",
+            "ServiceInstanceName" : "employee-portal-web-html5-app-host-service",
+            "ServiceKeyName" : "********",
+            "sap.cloud.service" : "salportalui"
+          }, {
+            "Authentication" : "********",
+            "Name" : "salportalui_uaa_employee_portal_web",
+            "ServiceInstanceName" : "employee-portal-uaa-srv",
+            "ServiceKeyName" : "********",
+            "sap.cloud.service" : "salportalui"
+          } ],
+          "existing_destinations_policy" : "ignore"
+        }
+      },
+      "app-name" : "${default-app-name}",
+      "protocol" : "https",
+      "domain" : "${default-domain}",
+      "host" : "${default-host}",
+      "generated-user" : "********",
+      "timestamp" : "20220202151018"
+    },
+    "requiredDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-destination-service",
+      "properties" : { },
+      "parameters" : {
+        "content-target" : true
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    }, {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web_html_repo_host",
+      "properties" : { },
+      "parameters" : {
+        "service-key" : "********"
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    }, {
+      "majorSchemaVersion" : 3,
+      "name" : "uaa_employee-portal-web",
+      "properties" : { },
+      "parameters" : {
+        "service-key" : "********"
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "providedDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-destination-content",
+      "isPublic" : false,
+      "properties" : { },
+      "parameters" : { },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "hooks" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-app-content",
+    "type" : "com.sap.application.content",
+    "path" : "employee-portal-web-app-content",
+    "properties" : { },
+    "parameters" : {
+      "default-url" : "${protocol}://${default-uri}",
+      "default-app-name" : "employee-portal-web-app-content",
+      "generated-password" : "********",
+      "default-uri" : "${host}.${domain}",
+      "default-instances" : 1,
+      "instances" : "${default-instances}",
+      "default-host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1",
+      "app-name" : "${default-app-name}",
+      "protocol" : "https",
+      "domain" : "${default-domain}",
+      "host" : "${default-host}",
+      "generated-user" : "********",
+      "timestamp" : "20220202151018"
+    },
+    "requiredDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web_html_repo_host",
+      "properties" : { },
+      "parameters" : {
+        "content-target" : true
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "providedDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-app-content",
+      "isPublic" : false,
+      "properties" : { },
+      "parameters" : { },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "hooks" : [ ]
+  } ],
+  "resources" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-destination-service",
+    "type" : "org.cloudfoundry.existing-service",
+    "properties" : { },
+    "parameters" : {
+      "generated-password" : "********",
+      "service-name" : "employee-portal-dest-srv",
+      "service-plan" : "lite",
+      "service" : "destination",
+      "generated-user" : "********",
+      "default-xsappname" : "employee-portal-web-destination-service",
+      "type" : "existing-service",
+      "config" : {
+        "HTML5Runtime_enabled" : true,
+        "init_data" : {
+          "instance" : {
+            "destinations" : [ {
+              "Authentication" : "********",
+              "Name" : "ui5",
+              "ProxyType" : "Internet",
+              "Type" : "HTTP",
+              "URL" : "https://ui5.sap.com"
+            } ],
+            "existing_destinations_policy" : "update"
+          }
+        },
+        "version" : "1.0.0"
+      },
+      "default-service-name" : "employee-portal-web-destination-service",
+      "default-container-name" : "SAUDI_AIRLINES_CARGO_COMPANY_SAL_BTP_CF_DEV_8GLKUFJ3_DEV2B177002"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web_html_repo_host",
+    "type" : "org.cloudfoundry.managed-service",
+    "properties" : { },
+    "parameters" : {
+      "generated-password" : "********",
+      "service-name" : "employee-portal-web-html5-app-host-service",
+      "service-plan" : "app-host",
+      "service" : "html5-apps-repo",
+      "generated-user" : "********",
+      "default-xsappname" : "employee-portal-web_html_repo_host",
+      "type" : "managed-service",
+      "default-service-name" : "employee-portal-web_html_repo_host",
+      "default-container-name" : "SAUDI_AIRLINES_CARGO_COMPANY_SAL_BTP_CF_DEV_8GLKUFJ3_DEV122C31C7"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "uaa_employee-portal-web",
+    "type" : "org.cloudfoundry.existing-service",
+    "properties" : { },
+    "parameters" : {
+      "generated-password" : "********",
+      "path" : "./xs-security.json",
+      "service-name" : "employee-portal-uaa-srv",
+      "service-plan" : "application",
+      "service" : "xsuaa",
+      "generated-user" : "********",
+      "default-xsappname" : "uaa_employee-portal-web",
+      "type" : "existing-service",
+      "default-service-name" : "uaa_employee-portal-web",
+      "default-container-name" : "SAUDI_AIRLINES_CARGO_COMPANY_SAL_BTP_CF_DEV_8GLKUFJ3_DEV156DED91"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  } ],
+  "parameters" : {
+    "deploy_mode" : "html5-repo",
+    "authorization-url" : "********",
+    "org-guid" : "085422c2-4a3d-4dbb-a70f-23108cf9350a",
+    "org" : "Saudi Airlines Cargo Company_sal-btp-cf-dev-8glkufj3",
+    "deploy-target" : "Saudi Airlines Cargo Company_sal-btp-cf-dev-8glkufj3 Dev",
+    "space" : "Dev",
+    "xs-api-url" : "https://api.cf.eu10.hana.ondemand.com",
+    "deploy-url" : "deploy-service.cfapps.eu10.hana.ondemand.com",
+    "xs-type" : "CF",
+    "default-domain" : "cfapps.eu10.hana.ondemand.com",
+    "xs-auth-url" : "********",
+    "space-guid" : "442d400a-d73a-4269-9726-3e1e73db535a",
+    "user" : "********",
+    "controller-url" : "https://api.cf.eu10.hana.ondemand.com"
+  },
+  "parametersMetadata" : {
+    "metadata" : { }
+  }
+}#
+
+#2.0#2022 02 02 15:10:18.871#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] Version rule: SAME_HIGHER#
+
+#2.0#2022 02 02 15:10:18.871#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] Detected new MTA version: "0.0.1"#
+
+#2.0#2022 02 02 15:10:18.878#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] MTA accepted for deployment#
+
+#2.0#2022 02 02 15:10:18.879#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+[CollectSystemParametersStep] System parameters collected#
+
+#2.0#2022 02 02 15:10:18.880#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.collectSystemParametersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18044###
+Step "Collect System Parameters" finished#
+
+#2.0#2022 02 02 15:10:18.920#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18046###
+[ProcessDescriptorStep] Executing task "processDescriptorTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.921#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18046###
+[ProcessDescriptorStep] Resolving properties and parameters in merged descriptor...#
+
+#2.0#2022 02 02 15:10:18.923#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18046###
+[ProcessDescriptorStep] Subscriptions: [ ]#
+
+#2.0#2022 02 02 15:10:18.924#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18046###
+[ProcessDescriptorStep] MTA Modules: [employee-portal-web-app-content, employee-portal-web-destination-content]#
+
+#2.0#2022 02 02 15:10:18.925#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18046###
+[ProcessDescriptorStep] Resolved deployment descriptor: {
+  "majorSchemaVersion" : 3,
+  "schemaVersion" : "3.2.0",
+  "id" : "employee-portal-web",
+  "version" : "0.0.1",
+  "modules" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-destination-content",
+    "type" : "com.sap.application.content",
+    "properties" : { },
+    "parameters" : {
+      "default-url" : "https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae.cfapps.eu10.hana.ondemand.com",
+      "default-app-name" : "employee-portal-web-destination-content",
+      "generated-password" : "********",
+      "default-uri" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae.cfapps.eu10.hana.ondemand.com",
+      "default-instances" : 1,
+      "instances" : 1,
+      "default-host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae",
+      "content" : {
+        "instance" : {
+          "destinations" : [ {
+            "Name" : "salportalui_employee_portal_web_html_repo_host",
+            "ServiceInstanceName" : "employee-portal-web-html5-app-host-service",
+            "ServiceKeyName" : "********",
+            "sap.cloud.service" : "salportalui"
+          }, {
+            "Authentication" : "********",
+            "Name" : "salportalui_uaa_employee_portal_web",
+            "ServiceInstanceName" : "employee-portal-uaa-srv",
+            "ServiceKeyName" : "********",
+            "sap.cloud.service" : "salportalui"
+          } ],
+          "existing_destinations_policy" : "ignore"
+        }
+      },
+      "app-name" : "employee-portal-web-destination-content",
+      "protocol" : "https",
+      "domain" : "cfapps.eu10.hana.ondemand.com",
+      "host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae",
+      "generated-user" : "********",
+      "timestamp" : "20220202151018"
+    },
+    "requiredDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-destination-service",
+      "properties" : { },
+      "parameters" : {
+        "content-target" : true
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    }, {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web_html_repo_host",
+      "properties" : { },
+      "parameters" : {
+        "service-key" : "********"
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    }, {
+      "majorSchemaVersion" : 3,
+      "name" : "uaa_employee-portal-web",
+      "properties" : { },
+      "parameters" : {
+        "service-key" : "********"
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "providedDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-destination-content",
+      "isPublic" : false,
+      "properties" : { },
+      "parameters" : { },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "hooks" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-app-content",
+    "type" : "com.sap.application.content",
+    "path" : "employee-portal-web-app-content",
+    "properties" : { },
+    "parameters" : {
+      "default-url" : "https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1.cfapps.eu10.hana.ondemand.com",
+      "default-app-name" : "employee-portal-web-app-content",
+      "generated-password" : "********",
+      "default-uri" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1.cfapps.eu10.hana.ondemand.com",
+      "default-instances" : 1,
+      "instances" : 1,
+      "default-host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1",
+      "app-name" : "employee-portal-web-app-content",
+      "protocol" : "https",
+      "domain" : "cfapps.eu10.hana.ondemand.com",
+      "host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1",
+      "generated-user" : "********",
+      "timestamp" : "20220202151018"
+    },
+    "requiredDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web_html_repo_host",
+      "properties" : { },
+      "parameters" : {
+        "content-target" : true
+      },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "providedDependencies" : [ {
+      "majorSchemaVersion" : 3,
+      "name" : "employee-portal-web-app-content",
+      "isPublic" : false,
+      "properties" : { },
+      "parameters" : { },
+      "propertiesMetadata" : {
+        "metadata" : { }
+      },
+      "parametersMetadata" : {
+        "metadata" : { }
+      }
+    } ],
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "hooks" : [ ]
+  } ],
+  "resources" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-destination-service",
+    "type" : "org.cloudfoundry.existing-service",
+    "properties" : { },
+    "parameters" : {
+      "generated-password" : "********",
+      "service-name" : "employee-portal-dest-srv",
+      "service-plan" : "lite",
+      "service" : "destination",
+      "generated-user" : "********",
+      "default-xsappname" : "employee-portal-web-destination-service",
+      "type" : "existing-service",
+      "config" : {
+        "HTML5Runtime_enabled" : true,
+        "init_data" : {
+          "instance" : {
+            "destinations" : [ {
+              "Authentication" : "********",
+              "Name" : "ui5",
+              "ProxyType" : "Internet",
+              "Type" : "HTTP",
+              "URL" : "https://ui5.sap.com"
+            } ],
+            "existing_destinations_policy" : "update"
+          }
+        },
+        "version" : "1.0.0"
+      },
+      "default-service-name" : "employee-portal-web-destination-service",
+      "default-container-name" : "SAUDI_AIRLINES_CARGO_COMPANY_SAL_BTP_CF_DEV_8GLKUFJ3_DEV2B177002"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web_html_repo_host",
+    "type" : "org.cloudfoundry.managed-service",
+    "properties" : { },
+    "parameters" : {
+      "generated-password" : "********",
+      "service-name" : "employee-portal-web-html5-app-host-service",
+      "service-plan" : "app-host",
+      "service" : "html5-apps-repo",
+      "generated-user" : "********",
+      "default-xsappname" : "employee-portal-web_html_repo_host",
+      "type" : "managed-service",
+      "default-service-name" : "employee-portal-web_html_repo_host",
+      "default-container-name" : "SAUDI_AIRLINES_CARGO_COMPANY_SAL_BTP_CF_DEV_8GLKUFJ3_DEV122C31C7"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "uaa_employee-portal-web",
+    "type" : "org.cloudfoundry.existing-service",
+    "properties" : { },
+    "parameters" : {
+      "generated-password" : "********",
+      "path" : "./xs-security.json",
+      "service-name" : "employee-portal-uaa-srv",
+      "service-plan" : "application",
+      "service" : "xsuaa",
+      "generated-user" : "********",
+      "default-xsappname" : "uaa_employee-portal-web",
+      "type" : "existing-service",
+      "default-service-name" : "uaa_employee-portal-web",
+      "default-container-name" : "SAUDI_AIRLINES_CARGO_COMPANY_SAL_BTP_CF_DEV_8GLKUFJ3_DEV156DED91"
+    },
+    "isActive" : true,
+    "isOptional" : false,
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    },
+    "requiredDependencies" : [ ]
+  } ],
+  "parameters" : {
+    "deploy_mode" : "html5-repo",
+    "authorization-url" : "********",
+    "org-guid" : "085422c2-4a3d-4dbb-a70f-23108cf9350a",
+    "org" : "Saudi Airlines Cargo Company_sal-btp-cf-dev-8glkufj3",
+    "deploy-target" : "Saudi Airlines Cargo Company_sal-btp-cf-dev-8glkufj3 Dev",
+    "space" : "Dev",
+    "xs-api-url" : "https://api.cf.eu10.hana.ondemand.com",
+    "deploy-url" : "deploy-service.cfapps.eu10.hana.ondemand.com",
+    "xs-type" : "CF",
+    "default-domain" : "cfapps.eu10.hana.ondemand.com",
+    "xs-auth-url" : "********",
+    "space-guid" : "442d400a-d73a-4269-9726-3e1e73db535a",
+    "user" : "********",
+    "controller-url" : "https://api.cf.eu10.hana.ondemand.com"
+  },
+  "parametersMetadata" : {
+    "metadata" : { }
+  }
+}#
+
+#2.0#2022 02 02 15:10:18.925#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18046###
+[ProcessDescriptorStep] Merged descriptor properties and parameters resolved#
+
+#2.0#2022 02 02 15:10:18.926#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.processDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18046###
+Step "Process Descriptor Step" finished#
+
+#2.0#2022 02 02 15:10:18.997#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Executing task "buildDeployModelTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:18.998#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Building cloud deployment model...#
+
+#2.0#2022 02 02 15:10:19.000#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] MTA archive modules: [employee-portal-web-app-content]#
+
+#2.0#2022 02 02 15:10:19.000#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Deployed modules: []#
+
+#2.0#2022 02 02 15:10:19.001#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] MTA modules: [employee-portal-web-app-content, employee-portal-web-destination-content]#
+
+#2.0#2022 02 02 15:10:19.001#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Service keys to create: {
+  "employee-portal-web_html_repo_host" : [ ],
+  "uaa_employee-portal-web" : [ ],
+  "employee-portal-web-destination-service" : [ ]
+}#
+
+#2.0#2022 02 02 15:10:19.002#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Modules to deploy: [{
+  "majorSchemaVersion" : 3,
+  "name" : "employee-portal-web-destination-content",
+  "type" : "com.sap.application.content",
+  "properties" : { },
+  "parameters" : {
+    "default-url" : "https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae.cfapps.eu10.hana.ondemand.com",
+    "default-app-name" : "employee-portal-web-destination-content",
+    "generated-password" : "********",
+    "default-uri" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae.cfapps.eu10.hana.ondemand.com",
+    "default-instances" : 1,
+    "instances" : 1,
+    "default-host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae",
+    "content" : {
+      "instance" : {
+        "destinations" : [ {
+          "Name" : "salportalui_employee_portal_web_html_repo_host",
+          "ServiceInstanceName" : "employee-portal-web-html5-app-host-service",
+          "ServiceKeyName" : "********",
+          "sap.cloud.service" : "salportalui"
+        }, {
+          "Authentication" : "********",
+          "Name" : "salportalui_uaa_employee_portal_web",
+          "ServiceInstanceName" : "employee-portal-uaa-srv",
+          "ServiceKeyName" : "********",
+          "sap.cloud.service" : "salportalui"
+        } ],
+        "existing_destinations_policy" : "ignore"
+      }
+    },
+    "app-name" : "employee-portal-web-destination-content",
+    "protocol" : "https",
+    "dependency-type" : "soft",
+    "domain" : "cfapps.eu10.hana.ondemand.com",
+    "host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de5053fdae",
+    "generated-user" : "********",
+    "timestamp" : "20220202151018"
+  },
+  "requiredDependencies" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-destination-service",
+    "properties" : { },
+    "parameters" : {
+      "content-target" : true
+    },
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    }
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web_html_repo_host",
+    "properties" : { },
+    "parameters" : {
+      "service-key" : "********"
+    },
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    }
+  }, {
+    "majorSchemaVersion" : 3,
+    "name" : "uaa_employee-portal-web",
+    "properties" : { },
+    "parameters" : {
+      "service-key" : "********"
+    },
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    }
+  } ],
+  "providedDependencies" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-destination-content",
+    "isPublic" : false,
+    "properties" : { },
+    "parameters" : { },
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    }
+  } ],
+  "propertiesMetadata" : {
+    "metadata" : { }
+  },
+  "parametersMetadata" : {
+    "metadata" : { }
+  },
+  "hooks" : [ ]
+}, {
+  "majorSchemaVersion" : 3,
+  "name" : "employee-portal-web-app-content",
+  "type" : "com.sap.application.content",
+  "path" : "employee-portal-web-app-content",
+  "properties" : { },
+  "parameters" : {
+    "default-url" : "https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1.cfapps.eu10.hana.ondemand.com",
+    "default-app-name" : "employee-portal-web-app-content",
+    "generated-password" : "********",
+    "default-uri" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1.cfapps.eu10.hana.ondemand.com",
+    "default-instances" : 1,
+    "instances" : 1,
+    "default-host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1",
+    "app-name" : "employee-portal-web-app-content",
+    "protocol" : "https",
+    "dependency-type" : "soft",
+    "domain" : "cfapps.eu10.hana.ondemand.com",
+    "host" : "saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de7946a4c1",
+    "generated-user" : "********",
+    "timestamp" : "20220202151018"
+  },
+  "requiredDependencies" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web_html_repo_host",
+    "properties" : { },
+    "parameters" : {
+      "content-target" : true
+    },
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    }
+  } ],
+  "providedDependencies" : [ {
+    "majorSchemaVersion" : 3,
+    "name" : "employee-portal-web-app-content",
+    "isPublic" : false,
+    "properties" : { },
+    "parameters" : { },
+    "propertiesMetadata" : {
+      "metadata" : { }
+    },
+    "parametersMetadata" : {
+      "metadata" : { }
+    }
+  } ],
+  "propertiesMetadata" : {
+    "metadata" : { }
+  },
+  "parametersMetadata" : {
+    "metadata" : { }
+  },
+  "hooks" : [ ]
+}]#
+
+#2.0#2022 02 02 15:10:19.002#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Custom domains: []#
+
+#2.0#2022 02 02 15:10:19.003#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Calculating resource batches...#
+
+#2.0#2022 02 02 15:10:19.003#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Calculating resource batches completed.#
+
+#2.0#2022 02 02 15:10:19.003#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+[BuildCloudDeployModelStep] Cloud deployment model built#
+
+#2.0#2022 02 02 15:10:19.004#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildDeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18047###
+Step "Build Deploy Model" finished#
+
+#2.0#2022 02 02 15:10:19.046#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildUndeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18048###
+[BuildCloudUndeployModelStep] Executing task "buildUndeployModelTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:19.047#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildUndeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18048###
+[BuildCloudUndeployModelStep] Building cloud undeployment model...#
+
+#2.0#2022 02 02 15:10:19.048#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildUndeployModelTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18048###
+Step "Build Undeploy Model" finished#
+
+#2.0#2022 02 02 15:10:19.086#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.addDomainsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18003###
+[AddDomainsStep] Executing task "addDomainsTask" of process "3b499421-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:19.087#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.addDomainsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18003###
+[AddDomainsStep] Custom domains: []#
+
+#2.0#2022 02 02 15:10:19.089#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.addDomainsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18003###
+Step "Add Domains" finished#
+
+#2.0#2022 02 02 15:10:19.209#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareModulesDeploymentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18011###
+[ExtractBatchedServicesStep] Executing task "prepareModulesDeploymentTask" of process "3c02aabc-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:19.210#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareModulesDeploymentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18011###
+[ExtractBatchedServicesStep] Extracting services from batch#
+
+#2.0#2022 02 02 15:10:19.211#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareModulesDeploymentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18011###
+[ExtractBatchedServicesStep] Services to create: [ {
+  "isOptional" : false,
+  "isManaged" : true,
+  "name" : "employee-portal-web-html5-app-host-service",
+  "v3Metadata" : {
+    "annotations" : {
+      "mta_id" : "employee-portal-web",
+      "mta_version" : "0.0.1",
+      "mta_resource" : "{\"name\":\"employee-portal-web_html_repo_host\"}"
+    },
+    "labels" : {
+      "mta_id" : "1d594d9a6d896e9beef556b6ffeeedb8"
+    }
+  },
+  "label" : "html5-apps-repo",
+  "plan" : "app-host",
+  "credentials" : "********",
+  "tags" : [ ],
+  "type" : "managed_service_instance",
+  "resourceName" : "employee-portal-web_html_repo_host",
+  "shouldSkipParametersUpdate" : false,
+  "shouldSkipPlanUpdate" : false,
+  "shouldSkipTagsUpdate" : false,
+  "shouldSkipSyslogUrlUpdate" : false
+} ]#
+
+#2.0#2022 02 02 15:10:19.212#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareModulesDeploymentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18011###
+Step "Extract Services From Batches" finished#
+
+#2.0#2022 02 02 15:10:19.306#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CheckServiceOperationStateTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18029###
+[CheckServiceOperationStateStep] Executing task "CheckServiceOperationStateTask" of process "3c14100d-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:19.306#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CheckServiceOperationStateTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18029###
+[CheckServiceOperationStateStep] Getting service instance "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:20.617#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CheckServiceOperationStateTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18029###
+Step "Check for service operations in Progress" finished#
+
+#2.0#2022 02 02 15:10:20.657#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.DetermineServiceCreateUpdateActionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+[DetermineServiceCreateUpdateServiceActionsStep] Executing task "DetermineServiceCreateUpdateActionsTask" of process "3c14100d-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:20.659#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.DetermineServiceCreateUpdateActionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+[DetermineServiceCreateUpdateServiceActionsStep] Processing service "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:20.663#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.DetermineServiceCreateUpdateActionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+[DetermineServiceCreateUpdateServiceActionsStep] Getting service instance "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:20.797#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.DetermineServiceCreateUpdateActionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+[DetermineServiceCreateUpdateServiceActionsStep] Service should be created#
+
+#2.0#2022 02 02 15:10:20.800#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.DetermineServiceCreateUpdateActionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18034###
+Step "Determine update actions" finished#
+
+#2.0#2022 02 02 15:10:20.844#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[CreateServiceStep] Executing task "CreateServiceTask" of process "3c14100d-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:20.847#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[CreateServiceStep] Creating service "employee-portal-web-html5-app-host-service" from MTA resource "employee-portal-web_html_repo_host"...#
+
+#2.0#2022 02 02 15:10:20.851#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[CreateServiceStep] Getting GUID of required service instance "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:20.933#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[CreateServiceStep] Creating service instance: {
+  "isOptional" : false,
+  "isManaged" : true,
+  "name" : "employee-portal-web-html5-app-host-service",
+  "v3Metadata" : {
+    "annotations" : {
+      "mta_id" : "employee-portal-web",
+      "mta_version" : "0.0.1",
+      "mta_resource" : "{\"name\":\"employee-portal-web_html_repo_host\"}"
+    },
+    "labels" : {
+      "mta_id" : "1d594d9a6d896e9beef556b6ffeeedb8"
+    }
+  },
+  "label" : "html5-apps-repo",
+  "plan" : "app-host",
+  "credentials" : "********",
+  "tags" : [ ],
+  "type" : "managed_service_instance",
+  "resourceName" : "employee-portal-web_html_repo_host",
+  "shouldSkipParametersUpdate" : false,
+  "shouldSkipPlanUpdate" : false,
+  "shouldSkipTagsUpdate" : false,
+  "shouldSkipSyslogUrlUpdate" : false
+}#
+
+#2.0#2022 02 02 15:10:22.909#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[CreateServiceStep] Service "employee-portal-web-html5-app-host-service" created#
+
+#2.0#2022 02 02 15:10:22.909#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+[CreateServiceStep] Triggered service operations: {
+  "employee-portal-web-html5-app-host-service" : "CREATE"
+}#
+
+#2.0#2022 02 02 15:10:22.912#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18035###
+Step "Create" finished#
+
+#2.0#2022 02 02 15:10:36.010#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18066###
+[CreateServiceStep] Executing task "CreateServiceTask" of process "3c14100d-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:36.011#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18066###
+[CreateServiceStep] Polling service operations...#
+
+#2.0#2022 02 02 15:10:36.013#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18066###
+[CreateServiceStep] Getting service instance "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:37.722#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18066###
+[CreateServiceStep] Last operation for service "employee-portal-web-html5-app-host-service": {
+  "type" : "CREATE",
+  "description" : "",
+  "state" : "SUCCEEDED"
+}#
+
+#2.0#2022 02 02 15:10:37.722#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18066###
+[CreateServiceStep] Service "employee-portal-web-html5-app-host-service" created#
+
+#2.0#2022 02 02 15:10:37.722#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18066###
+[CreateServiceStep] 1 of 1 done#
+
+#2.0#2022 02 02 15:10:37.726#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18066###
+[CreateServiceStep] Remaining services to poll: [ ]#
+
+#2.0#2022 02 02 15:10:37.728#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-18066###
+Step "Create" finished#
+
+#2.0#2022 02 02 15:10:46.282#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17580###
+[CreateServiceStep] Executing task "CreateServiceTask" of process "3c14100d-843a-11ec-a2d8-eeee0a8a613b"...#
+
+#2.0#2022 02 02 15:10:46.283#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17580###
+[CreateServiceStep] Updating metadata of service instance "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:46.456#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17580###
+[CreateServiceStep] Getting GUID of required service instance "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:46.564#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17580###
+[CreateServiceStep] Updating metadata of service instance "27be88e4-eb28-420a-a0c7-4b0e3bc4f023" to: {
+  "annotations" : {
+    "mta_id" : "employee-portal-web",
+    "mta_version" : "0.0.1",
+    "mta_resource" : "{\"name\":\"employee-portal-web_html_repo_host\"}"
+  },
+  "labels" : {
+    "mta_id" : "1d594d9a6d896e9beef556b6ffeeedb8"
+  }
+}#
+
+#2.0#2022 02 02 15:10:46.655#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17580###
+[CreateServiceStep] Updated metadata of service instance "employee-portal-web-html5-app-host-service"#
+
+#2.0#2022 02 02 15:10:46.656#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.CreateServiceTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17580###
+Step "Create" finished#
+
+#2.0#2022 02 02 15:10:46.831#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareModulesDeploymentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17594###
+[PrepareModulesDeploymentStep] Executing task "prepareModulesDeploymentTask" of process "4c788931-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:46.832#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareModulesDeploymentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17594###
+[PrepareModulesDeploymentStep] Preparing modules deployment...#
+
+#2.0#2022 02 02 15:10:46.836#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareModulesDeploymentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17594###
+Step "Prepare Modules Deployment" finished#
+
+#2.0#2022 02 02 15:10:46.952#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+[BuildContentDeploymentConfigurationStep] Executing task "buildContentDeploymentConfigurationTask" of process "4c8b7585-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:46.958#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-3###
+[BuildContentDeploymentConfigurationStep] Getting service keys for service instance "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:46.958#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-7###
+[BuildContentDeploymentConfigurationStep] Getting service keys for service instance "employee-portal-uaa-srv"...#
+
+#2.0#2022 02 02 15:10:46.958#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-5###
+[BuildContentDeploymentConfigurationStep] Getting service keys for service instance "employee-portal-dest-srv"...#
+
+#2.0#2022 02 02 15:10:48.705#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-3###
+[BuildContentDeploymentConfigurationStep] Creating service key "employee-portal-web_html_repo_host-key" for service "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:48.708#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-3###
+[BuildContentDeploymentConfigurationStep] Creating service key "employee-portal-web_html_repo_host-key" for service instance "employee-portal-web-html5-app-host-service" with parameters: { }#
+
+#2.0#2022 02 02 15:10:48.776#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-7###
+[BuildContentDeploymentConfigurationStep] Creating service key "uaa_employee-portal-web-key" for service "employee-portal-uaa-srv"...#
+
+#2.0#2022 02 02 15:10:48.779#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-7###
+[BuildContentDeploymentConfigurationStep] Creating service key "uaa_employee-portal-web-key" for service instance "employee-portal-uaa-srv" with parameters: { }#
+
+#2.0#2022 02 02 15:10:49.698#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-5###
+[BuildContentDeploymentConfigurationStep] Creating service key "employee-portal-web-destination-content-employee-portal-web-destination-service-credentials" for service "employee-portal-dest-srv"...#
+
+#2.0#2022 02 02 15:10:49.702#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-5###
+[BuildContentDeploymentConfigurationStep] Creating service key "employee-portal-web-destination-content-employee-portal-web-destination-service-credentials" for service instance "employee-portal-dest-srv" with parameters: {
+  "service_key_type" : "********"
+}#
+
+#2.0#2022 02 02 15:10:51.112#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-7###
+[BuildContentDeploymentConfigurationStep] Service key "uaa_employee-portal-web-key" created#
+
+#2.0#2022 02 02 15:10:51.508#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-3###
+[BuildContentDeploymentConfigurationStep] Service key "employee-portal-web_html_repo_host-key" created#
+
+#2.0#2022 02 02 15:10:52.380#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########ForkJoinPool-85-worker-5###
+[BuildContentDeploymentConfigurationStep] Service key "employee-portal-web-destination-content-employee-portal-web-destination-service-credentials" created#
+
+#2.0#2022 02 02 15:10:52.383#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+Step "Build Content Deployment Configuration" finished#
+
+#2.0#2022 02 02 15:10:52.399#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createContentDeployClientConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+[CreateContentDeployClientConfigurationStep] Executing task "createContentDeployClientConfigurationTask" of process "4fd3258c-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:52.401#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createContentDeployClientConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+[CreateContentDeployClientConfigurationStep] Content deployer client configuration: {
+  "contentDeployerUrl" : "https://destination-configuration.cfapps.eu10.hana.ondemand.com/destination-configuration/gacd",
+  "uaaClientConfiguration" : {
+    "url" : "********",
+    "useCertificateBasedAuthentication" : "********",
+    "credentials" : "********"
+  },
+  "httpRequestHeaders" : {
+    "X-CorrelationID" : "3b499401-843a-11ec-a2d8-eeee0a8a613b"
+  }
+}#
+
+#2.0#2022 02 02 15:10:52.616#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createContentDeployClientConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+Step "Create Content Deploy Client Configuration" finished#
+
+#2.0#2022 02 02 15:10:52.633#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.getContentFromDeploymentDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+[GetContentFromDeploymentDescriptorStep] Executing task "getContentFromDeploymentDescriptorTask" of process "4fd3258c-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:52.633#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.getContentFromDeploymentDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+[GetContentFromDeploymentDescriptorStep] Content for module: "employee-portal-web-destination-content" is: "{
+  "id" : "1f5d8cce-d61f-4dc5-a4ff-b271e1be3c72",
+  "contentType" : "EMBEDDED",
+  "content" : {
+    "instance" : {
+      "destinations" : [ {
+        "Name" : "salportalui_employee_portal_web_html_repo_host",
+        "ServiceInstanceName" : "employee-portal-web-html5-app-host-service",
+        "ServiceKeyName" : "********",
+        "sap.cloud.service" : "salportalui"
+      }, {
+        "Authentication" : "********",
+        "Name" : "salportalui_uaa_employee_portal_web",
+        "ServiceInstanceName" : "employee-portal-uaa-srv",
+        "ServiceKeyName" : "********",
+        "sap.cloud.service" : "salportalui"
+      } ],
+      "existing_destinations_policy" : "ignore"
+    }
+  }
+}"#
+
+#2.0#2022 02 02 15:10:52.635#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.getContentFromDeploymentDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+Step "Get Content From Deployment Descriptor" finished#
+
+#2.0#2022 02 02 15:10:52.654#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.synchronousContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+[SynchronousContentDeployStep] Executing task "synchronousContentDeployTask" of process "4fd3258c-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:52.655#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.synchronousContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+[SynchronousContentDeployStep] Deploying content module "employee-portal-web-destination-content" in target service "employee-portal-web-destination-service"...#
+
+#2.0#2022 02 02 15:10:52.882#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.synchronousContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+[SynchronousContentDeployStep] Processing inline content upload for module: employee-portal-web-destination-content#
+
+#2.0#2022 02 02 15:10:53.046#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.synchronousContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17599###
+Step "Synchronous Deploy" finished#
+
+#2.0#2022 02 02 15:10:53.197#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[BuildContentDeploymentConfigurationStep] Executing task "buildContentDeploymentConfigurationTask" of process "5046334b-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:53.199#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[BuildContentDeploymentConfigurationStep] Getting service keys for service instance "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:55.038#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[BuildContentDeploymentConfigurationStep] Creating service key "employee-portal-web-app-content-employee-portal-web_html_repo_host-credentials" for service "employee-portal-web-html5-app-host-service"...#
+
+#2.0#2022 02 02 15:10:55.041#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[BuildContentDeploymentConfigurationStep] Creating service key "employee-portal-web-app-content-employee-portal-web_html_repo_host-credentials" for service instance "employee-portal-web-html5-app-host-service" with parameters: {
+  "service_key_type" : "********"
+}#
+
+#2.0#2022 02 02 15:10:57.637#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[BuildContentDeploymentConfigurationStep] Service key "employee-portal-web-app-content-employee-portal-web_html_repo_host-credentials" created#
+
+#2.0#2022 02 02 15:10:57.639#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.buildContentDeploymentConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+Step "Build Content Deployment Configuration" finished#
+
+#2.0#2022 02 02 15:10:57.651#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createContentDeployClientConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[CreateContentDeployClientConfigurationStep] Executing task "createContentDeployClientConfigurationTask" of process "52f52622-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:57.651#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createContentDeployClientConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[CreateContentDeployClientConfigurationStep] Content deployer client configuration: {
+  "contentDeployerUrl" : "https://html5-apps-repo-dt.cfapps.eu10.hana.ondemand.com",
+  "uaaClientConfiguration" : {
+    "url" : "********",
+    "useCertificateBasedAuthentication" : "********",
+    "credentials" : "********"
+  },
+  "httpRequestHeaders" : {
+    "X-CorrelationID" : "3b499401-843a-11ec-a2d8-eeee0a8a613b"
+  }
+}#
+
+#2.0#2022 02 02 15:10:57.897#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createContentDeployClientConfigurationTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+Step "Create Content Deploy Client Configuration" finished#
+
+#2.0#2022 02 02 15:10:57.908#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.getContentFromDeploymentDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[GetContentFromDeploymentDescriptorStep] Executing task "getContentFromDeploymentDescriptorTask" of process "52f52622-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:57.909#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.getContentFromDeploymentDescriptorTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+Step "Get Content From Deployment Descriptor" finished#
+
+#2.0#2022 02 02 15:10:57.920#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.uploadContentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[UploadContentStep] Executing task "uploadContentTask" of process "52f52622-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:57.920#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.uploadContentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[UploadContentStep] Uploading content module "employee-portal-web-app-content" in target service "employee-portal-web_html_repo_host"...#
+
+#2.0#2022 02 02 15:10:57.925#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.uploadContentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[UploadContentStep] Uploading file "employee-portal-web-app-content/resources/data.zip" for content module "employee-portal-web-app-content" in service "employee-portal-web_html_repo_host"#
+
+#2.0#2022 02 02 15:10:58.631#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.uploadContentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[UploadContentStep] Uploaded content: {
+  "id" : "27f20df6-8600-4ab5-b2f4-a00ad7d148e9",
+  "name" : "content.zip",
+  "contentType" : "FILE"
+}#
+
+#2.0#2022 02 02 15:10:58.633#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.uploadContentTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+Step "Upload Content" finished#
+
+#2.0#2022 02 02 15:10:58.644#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[StartContentDeployStep] Executing task "startContentDeployTask" of process "52f52622-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:10:58.645#Z#INFO#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+[StartContentDeployStep] Deploying content module "employee-portal-web-app-content" in target service "employee-portal-web_html_repo_host"...#
+
+#2.0#2022 02 02 15:10:58.921#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-17629###
+Step "Start Content Deploy" finished#
+
+#2.0#2022 02 02 15:11:06.353#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14725###
+[StartContentDeployStep] Executing task "startContentDeployTask" of process "52f52622-843a-11ec-83c3-eeee0a822324"...#
+
+#2.0#2022 02 02 15:11:06.356#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14725###
+[StartContentDeployStep] Checking status of module content deployment "employee-portal-web-app-content" in service "employee-portal-web_html_repo_host"...#
+
+#2.0#2022 02 02 15:11:06.846#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14725###
+[StartContentDeployStep] Deleting content deployment resource "27f20df6-8600-4ab5-b2f4-a00ad7d148e9"...#
+
+#2.0#2022 02 02 15:11:06.880#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.startContentDeployTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14725###
+Step "Start Content Deploy" finished#
+
+#2.0#2022 02 02 15:11:07.063#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14736###
+[CreateSubscriptionsStep] Executing task "createSubscriptionsTask" of process "587ed832-843a-11ec-b047-eeee0a9cb56b"...#
+
+#2.0#2022 02 02 15:11:07.065#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14736###
+[CreateSubscriptionsStep] Creating subscriptions...#
+
+#2.0#2022 02 02 15:11:07.066#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14736###
+[CreateSubscriptionsStep] Subscriptions created#
+
+#2.0#2022 02 02 15:11:07.069#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.createSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14736###
+Step "Create Subscriptions" finished#
+
+#2.0#2022 02 02 15:11:07.117#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14737###
+[DeleteSubscriptionsStep] Executing task "deleteSubscriptionsTask" of process "587ed832-843a-11ec-b047-eeee0a9cb56b"...#
+
+#2.0#2022 02 02 15:11:07.119#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14737###
+[DeleteSubscriptionsStep] Deleting discontinued subscriptions...#
+
+#2.0#2022 02 02 15:11:07.120#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14737###
+[DeleteSubscriptionsStep] Subscriptions to delete: [ ]#
+
+#2.0#2022 02 02 15:11:07.120#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14737###
+[DeleteSubscriptionsStep] Deleted discontinued subscriptions#
+
+#2.0#2022 02 02 15:11:07.122#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteSubscriptionsTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14737###
+Step "Delete Subscriptions" finished#
+
+#2.0#2022 02 02 15:11:07.168#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteDiscontinuedConfigurationEntriesTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14738###
+[DeleteDiscontinuedConfigurationEntriesStep] Executing task "deleteDiscontinuedConfigurationEntriesTask" of process "587ed832-843a-11ec-b047-eeee0a9cb56b"...#
+
+#2.0#2022 02 02 15:11:07.169#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteDiscontinuedConfigurationEntriesTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14738###
+[DeleteDiscontinuedConfigurationEntriesStep] Deleting discontinued published dependencies...#
+
+#2.0#2022 02 02 15:11:08.121#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteDiscontinuedConfigurationEntriesTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14738###
+[DeleteDiscontinuedConfigurationEntriesStep] Deleted entries: [ ]#
+
+#2.0#2022 02 02 15:11:08.121#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteDiscontinuedConfigurationEntriesTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14738###
+[DeleteDiscontinuedConfigurationEntriesStep] Discontinued published dependencies deleted#
+
+#2.0#2022 02 02 15:11:08.122#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteDiscontinuedConfigurationEntriesTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14738###
+Step "Delete Discontinued Configuration Entries" finished#
+
+#2.0#2022 02 02 15:11:08.139#Z#WARN#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.deleteDiscontinuedConfigurationEntriesTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14738###
+[DoNotDeleteServicesListener] Skipping deletion of services, because the command line option "--delete-services" is not specified.#
+
+#2.0#2022 02 02 15:11:08.214#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detachServicesFromMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14746###
+[DetachServicesFromMtaStep] Executing task "detachServicesFromMtaTask" of process "5935a4a4-843a-11ec-b047-eeee0a9cb56b"...#
+
+#2.0#2022 02 02 15:11:08.216#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detachServicesFromMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14746###
+[DetachServicesFromMtaStep] Detaching services from MTA...#
+
+#2.0#2022 02 02 15:11:08.377#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detachServicesFromMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14746###
+[DetachServicesFromMtaStep] Getting service instances without auxiliary content by names []...#
+
+#2.0#2022 02 02 15:11:08.377#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detachServicesFromMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14746###
+[DetachServicesFromMtaStep] Detached services from MTA#
+
+#2.0#2022 02 02 15:11:08.379#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.detachServicesFromMtaTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14746###
+Step "Detach Services from MTA" finished#
+
+#2.0#2022 02 02 15:11:08.425#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.updateSubscribersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14747###
+[UpdateSubscribersStep] Executing task "updateSubscribersTask" of process "5935a4a4-843a-11ec-b047-eeee0a9cb56b"...#
+
+#2.0#2022 02 02 15:11:08.426#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.updateSubscribersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14747###
+[UpdateSubscribersStep] Updating subscribers...#
+
+#2.0#2022 02 02 15:11:09.412#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.updateSubscribersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14747###
+[UpdateSubscribersStep] Subscribers updated#
+
+#2.0#2022 02 02 15:11:09.414#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.updateSubscribersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14747###
+Step "Update Subscribers" finished#
+
+#2.0#2022 02 02 15:11:09.467#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.restartSubscribersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14748###
+[RestartSubscribersStep] Executing task "restartSubscribersTask" of process "5935a4a4-843a-11ec-b047-eeee0a9cb56b"...#
+
+#2.0#2022 02 02 15:11:09.471#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.restartSubscribersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14748###
+Step "Restart Subscribers" finished#
+
+#2.0#2022 02 02 15:11:09.513#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareToRestartServiceBrokerSubscribersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14749###
+[PrepareToRestartServiceBrokerSubscribersStep] Executing task "prepareToRestartServiceBrokerSubscribersTask" of process "5935a4a4-843a-11ec-b047-eeee0a9cb56b"...#
+
+#2.0#2022 02 02 15:11:09.518#Z#DEBUG#com.sap.cloud.lm.sl.xs2.3b499401-843a-11ec-a2d8-eeee0a8a613b.OPERATION.prepareToRestartServiceBrokerSubscribersTask#
+######org.cloudfoundry.multiapps.controller.persistence.services.ProcessLogger########flowable-async-job-executor-thread-14749###
+Step "Prepare To Restart Service Brokers Subscribers" finished#
+
