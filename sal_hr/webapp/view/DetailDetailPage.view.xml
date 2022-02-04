@@ -1,0 +1,80 @@
+<mvc:View controllerName="com.sal.salhr.controller.DetailDetailPage"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form" height="100%">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle id="idDynamicPageTitle">
+                <f:heading>
+                    <Title id="idPageTitle" text="{i18n>BusinessTripRequest}"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request 48865">
+                        <Link id="idHumanResourceLink" text="{i18n>BusinessTripRequest}"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+                <f:expandedContent>
+                    <Label text="{i18n>RequestID} :2411"/>
+                </f:expandedContent>
+                <f:actions>
+                    <Button text="Modify" type="Emphasized" press="onEditPress"/>
+                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress"/>
+                </f:actions>
+                <f:navigationActions>
+                    <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
+                    <Button icon="sap-icon://exit-full-screen" press="onToggelFullScreenMode" type="Transparent" />
+                    <Button icon="sap-icon://decline" type="Transparent" />
+                </f:navigationActions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- DynamicPage Header Content -->
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute title="{i18n>Status}"/>
+                        <ObjectStatus text="Pending" state="Warning"/>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute title="{i18n>Requestedby}"/>
+                        <ObjectAttribute text="Don J."/>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                        <ObjectAttribute title="{i18n>DueByDate}"/>
+                        <ObjectAttribute text="6 Oct 2021"/>
+                    </layout:VerticalLayout>
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+        <!-- DynamicPage Content -->
+        <f:content>
+            <IconTabBar id="iconTabBar">
+                <items>
+                    <IconTabFilter id="idDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
+                        <core:Fragment fragmentName="com.sal.newtriprequest.newtriprequest.view.fragments.DisplayTripDetails" type="XML"/>
+                    </IconTabFilter>
+                    <IconTabFilter id="idEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                        <core:Fragment fragmentName="com.sal.newtriprequest.newtriprequest.view.fragments.EditTripDetails" type="XML"/>
+                    </IconTabFilter>
+                    <IconTabFilter text="{i18n>Resolution}">
+                        <Text text="" />
+                    </IconTabFilter>
+                    <IconTabFilter text="{i18n>History}">
+                        <Text text="" />
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </f:content>
+        <f:footer>
+            <OverflowToolbar id="idOverflowToolbar" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                <ToolbarSpacer id="idToolbarSpacer"/>
+                <Button id="idSaveBTN" text="{i18n>Save}" type="Emphasized" press="onSavePress"/>
+                <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCancelPress"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

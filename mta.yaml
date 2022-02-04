@@ -2,41 +2,42 @@ _schema-version: "3.2"
 ID: employee-portal-web
 version: 0.0.1
 modules:
-- name: employee-portal-web-destination-content
+- name: employee-portal-destination-content
   type: com.sap.application.content
   requires:
-  - name: employee-portal-web-destination-service
+  - name: employee-portal-dest-srv
     parameters:
       content-target: true
-  - name: employee-portal-web_html_repo_host
+  - name: employee-portal-repo-host
     parameters:
       service-key:
-        name: employee-portal-web_html_repo_host-key
-  - name: uaa_employee-portal-web
+        name: employee-portal-html5-key
+  - name: employee-portal-uaa
     parameters:
       service-key:
-        name: uaa_employee-portal-web-key
+        name: employee-portal-uaa-key
   parameters:
     content:
-      instance:
+      subaccount:
         destinations:
-        - Name: salportalui_employee_portal_web_html_repo_host
-          ServiceInstanceName: employee-portal-web-html5-app-host-service
-          ServiceKeyName: employee-portal-web_html_repo_host-key
-          sap.cloud.service: salportalui
-        - Authentication: OAuth2UserTokenExchange
-          Name: salportalui_uaa_employee_portal_web
+        - Name: employee_portal_service_repo_host
+          ServiceInstanceName: employee-portal-html5-srv
+          ServiceKeyName: employee-portal-html5-key
+          sap.cloud.service: employee_portal_service
+        - Name: employee_portal_service_fiori_uaa
+          Authentication: OAuth2UserTokenExchange
           ServiceInstanceName: employee-portal-uaa-srv
-          ServiceKeyName: uaa_employee-portal-web-key
-          sap.cloud.service: salportalui
-        existing_destinations_policy: ignore
+          ServiceKeyName: employee-portal-uaa-key
+          sap.cloud.service: employee_portal_service
+        existing_destinations_policy: update   
   build-parameters:
     no-source: true
-- name: employee-portal-web-app-content
+
+- name: employee-portal-app-content
   type: com.sap.application.content
   path: .
   requires:
-  - name: employee-portal-web_html_repo_host
+  - name: employee-portal-repo-host
     parameters:
       content-target: true
   build-parameters:
@@ -56,37 +57,27 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+
 resources:
-- name: employee-portal-web-destination-service
+- name: employee-portal-dest-srv
   type: org.cloudfoundry.existing-service
   parameters:
-    config:
-      HTML5Runtime_enabled: true
-      init_data:
-        instance:
-          destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
-      version: 1.0.0
     service: destination
     service-name: employee-portal-dest-srv
     service-plan: lite
-- name: employee-portal-web_html_repo_host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: employee-portal-web-html5-app-host-service
-    service-plan: app-host
-- name: uaa_employee-portal-web
+- name: employee-portal-uaa
   type: org.cloudfoundry.existing-service
   parameters:
-    path: ./xs-security.json
     service: xsuaa
     service-name: employee-portal-uaa-srv
     service-plan: application
+- name: employee-portal-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: employee-portal-html5-srv
+    service-plan: app-host
+
 parameters:
-  deploy_mode: html5-repo
+  deploy_mode : html5-repo
+  enable-parallel-deployments: true

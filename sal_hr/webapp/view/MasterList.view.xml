@@ -44,17 +44,17 @@
                 </headerToolbar>
                 <StandardListItem title="{Name}" description="Description: {Description}" info="Material Code: {MaterialCode}" type="Navigation" press="onParentLineItemPress"/>
             </List>-->
-
-            	<Table id="idMasterTable"
+      <Title text="Human Resource" level="H2"/>
+          	<Table id="idMasterTable"
 		inset="false"
 		items="{/MasterSubModules}" 
         >
 		<headerToolbar>
 			<OverflowToolbar>
 				<content>
-					<Title text="Human Resource" level="H2"/>
+					
 					<ToolbarSpacer />
-					<SearchField width="20%" placeholder="Search for Type" ></SearchField>
+					<SearchField width="70%" placeholder="Search for Type" ></SearchField>
                     <Button icon="sap-icon://sort"/>
 				</content>
 			</OverflowToolbar>

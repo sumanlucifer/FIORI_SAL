@@ -7,9 +7,9 @@
     <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="{/titleClickable}">
         <!-- DynamicPage Title -->
         <f:title>
-            <f:DynamicPageTitle>
+            <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding" stickySubheaderProvider="Table">
                 <f:heading>
-                    <Title text="Business Trip"/>
+                    <Title text="{name}"/>
                 </f:heading>
                 <!-- <f:breadcrumbs>
                         <Breadcrumbs>
@@ -21,13 +21,15 @@
                             <Link text="Page 5" />
                         </Breadcrumbs>
                     </f:breadcrumbs> -->
-                <f:actions>
+                <!-- <f:actions>
                     <Button text="Raise a Request" type="Emphasized" press="onPressRaiseRequest"/>
-                </f:actions>
+                </f:actions> -->
                 <f:navigationActions>
+                    <Button text="Raise a Request" type="Emphasized" press="onPressRaiseRequest"/>
                     <Button icon="sap-icon://full-screen" type="Transparent" />
                     <!-- <Button icon="sap-icon://exit-full-screen" type="Transparent" /> -->
                     <Button icon="sap-icon://decline" type="Transparent" />
+                    
                 </f:navigationActions>
             </f:DynamicPageTitle>
         </f:title>
@@ -37,53 +39,78 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute text="Total Request"/>
-                        <Label design="Bold" text="2"/>
+                        <Label design="Bold" text="{totalRequests}"/>
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute text="In Process"/>
-                        <Label design="Bold" text="1"/>
+                        <Label design="Bold" text="{totalPending}"/>
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute text="Done"/>
-                        <Label design="Bold" text="3"/>
+                        <Label design="Bold" text="{totalApproved}"/>
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute text="Open"/>
-                        <Label design="Bold" text="0"/>
+                        <Label design="Bold" text="{totalPending}"/>
                     </layout:VerticalLayout>
 
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="idTicketTable" inset="false" items="{/Tickets}">
+            <Table id="idTicketTable" items="{tickets}" inset="false">
                 <headerToolbar>
                     <OverflowToolbar>
                         <content>
-                            <Title text="Human Resource" level="H2"/>
+                            <Title text="{name} Request" level="H2"/>
                             <ToolbarSpacer />
-                            <SearchField width="30%"></SearchField>
+                            <SearchField placeholder="Search for requests" width="30%"></SearchField>
                             <Button icon="sap-icon://sort"/>
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
-                    <Column width="12em">
+                    <Column>
                         <Text text="Job Card ID" />
                     </Column>
 
-                    <Column >
+                    <Column>
                         <Text text="Request Date" />
+                    </Column>
+                    <Column>
+                        <Text text="SAP Ticket ID" />
+                    </Column>
+                    <Column>
+                        <Text text="From Date" />
+                    </Column>
+                    <Column>
+                        <Text text="To Date" />
+                    </Column>
+                    <Column>
+                        <Text text="Travel Type" />
+                    </Column>
+                    <Column>
+                        <Text text="Total Days" />
+                    </Column>
+                    <Column>
+                        <Text text="Status" />
                     </Column>
                 </columns>
                 <items>
                     <ColumnListItem press="onPressTicketItem" vAlign="Middle" type="Navigation">
                         <cells>
-                           <Text text="{ticketCode}" />
-                           <Text text="{Resquest date}" />
+                            <!-- <Text text="{ticketCode}" /> -->
+                            <Text text="{employeeId}" />
+                            <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd.MM.yyyy'}}" />
+                            <Text text="{ticketCode}" />
+                            <Text text=" " />
+                            <Text text=" " />
+                            <Text text="Local" />
+                            <Text text="2 Days" />
+                            <ObjectStatus text="{statusValue}" state="Indication02" />
                         </cells>
                     </ColumnListItem>
                 </items>
@@ -91,3 +118,4 @@
         </f:content>
     </f:DynamicPage>
 </mvc:View>
+

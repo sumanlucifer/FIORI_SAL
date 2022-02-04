@@ -8,13 +8,24 @@
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
         <!-- DynamicPage Title -->
         <f:title>
-            <f:DynamicPageTitle id="idDynamicPageTitle">
+            <!-- <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
                     <Title id="idPageTitle" text="{i18n>NewBusinessTripRequest}" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="{i18n>NewBusinessTripRequest}" class="sapUiSmallMarginBegin">
                         <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle> -->
+            <f:DynamicPageTitle id="idDynamicPageTitle">
+               <f:heading>
+                    <Title id="idPageTitle" text="New {name} Request" class="sapUiSmallMarginBegin"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New {name} Request" class="sapUiSmallMarginBegin">
+                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                        <!-- <Link text="{i18n>HumanResource}"/> -->
                     </Breadcrumbs>
                 </f:breadcrumbs>
             </f:DynamicPageTitle>

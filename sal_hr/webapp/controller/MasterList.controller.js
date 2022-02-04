@@ -30,18 +30,36 @@ sap.ui.define([
                 this._showObject(oEvent.getSource());
             },
 
+            // _showObject: function (oItem) {
+            //     var that = this;
+            //     var sObjectPath = oItem.getBindingContext().sPath;
+
+            //     this.getRouter().navTo("detail", {
+            //         parentMaterial: sObjectPath.slice("/MasterSubModules".length),
+            //         layout: "TwoColumnsMidExpanded"
+            //     },
+            //         false
+            //     );
+            // //    this.getRouter().navTo("detail");
+
+            // },
             _showObject: function (oItem) {
+
                 var that = this;
-                var sObjectPath = oItem.getBindingContext().sPath;
+
+                var sPath = oItem.getBindingContextPath()
 
                 this.getRouter().navTo("detail", {
-                    parentMaterial: sObjectPath.slice("/MasterSubModules".length),
-                    layout: "TwoColumnsMidExpanded"
-                },
-                    false
-                );
-            //    this.getRouter().navTo("detail");
 
-            }
+                    parentMaterial: oItem.getModel().getProperty(sPath).ID,//sObjectPath.slice("/MasterSubModules".length),
+
+                    layout: "TwoColumnsMidExpanded"
+
+                },
+
+                    false
+
+                );
+            } 
         });
     });

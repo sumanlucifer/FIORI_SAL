@@ -11,7 +11,7 @@
         "description": "{{appDescription}}",
         "dataSources": {
             "mainService": {
-                "uri": "/odata/v2/com.sal.employee_portal.HumanResourceService/",
+                "uri": "/odata/v2/HumanResourceService/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
@@ -85,7 +85,8 @@
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "Inline",
                     "refreshAfterChange": true,
-                    "useBatch": false
+                    "useBatch": false,
+                    "defaultUpdateMethod": "PUT"
                 },
                 "dataSource": "mainService",
                 "preload": true
@@ -104,8 +105,8 @@
                 "viewType": "XML",
                 "async": true,
                 "viewPath": "com.sal.salhr.view",
-                "controlAggregation": "pages",
                 "controlId": "flexibleColumnLayout",
+                "controlAggregation" : "pages",
                 "clearControlAggregation": false,
 				"transition": "slide"
 				
@@ -131,14 +132,16 @@
 					]
 				},
                 {
-					"pattern": "RaiseRequest",
-					"name": "RaiseRequest",
+                    "pattern": "RaiseRequest/{parentMaterial}/{layout}",
+                    "name": "RaiseRequest",
                     "titleTarget": "",
                     "greedy": false,
-					"target": [
+                    "target": [
                         "RaiseRequest"
-					]
-				}
+                    ]
+
+                }
+				
                 
             ],
             "targets": {
@@ -160,17 +163,15 @@
                 "RaiseRequest": {
                     "viewName": "CreateRequest",
                     "viewType": "XML",
-                    "controlAggregation": "beginColumnPages"
-                    
-                    
-                }
-
-                
+                    "controlAggregation": "endColumnPages",
+                    "transition": "slide",
+                    "viewLevel": 3                                   
+                }            
             }
         }
     },
     "sap.cloud": {
         "public": true,
-        "service": "salportalui"
+        "service": "employee_portal_service"
     }
 }
