@@ -11,12 +11,12 @@
         "description": "{{appDescription}}",
         "dataSources": {
             "mainService": {
-                "uri": "/odata/v4/com.sal.employee_portal.HumanResourceService/",
+                "uri": "/odata/v2/com.sal.employee_portal.HumanResourceService/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
                     "localUri": "localService/metadata.xml",
-                    "odataVersion": "4.0"
+                    "odataVersion": "2.0"
                 }
             }
         },
@@ -54,6 +54,13 @@
     },
     "sap.ui5": {
         "flexEnabled": true,
+        
+        "rootView": {
+            "viewName": "com.sal.salhr.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "flexibleColumnLayout"
+        },
         "dependencies": {
             "minUI5Version": "1.97.2",
             "libs": {
@@ -72,15 +79,16 @@
                 }
             },
             "": {
-                "dataSource": "mainService",
-                "preload": true,
+                "type": "sap.ui.model.odata.v2.ODataModel",
                 "settings": {
-                    "synchronizationMode": "None",
-                    "operationMode": "Server",
-                    "autoExpandSelect": true,
-                    "earlyRequests": true,
-                    "groupId": "$direct"
-                }
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": true,
+                    "useBatch": false
+                },
+                "dataSource": "mainService",
+                "preload": true
             }
         },
         "resources": {
@@ -92,11 +100,13 @@
         },
         "routing": {
             "config": {
-                "routerClass": "sap.m.routing.Router",
+                "routerClass": "sap.f.routing.Router",
                 "viewType": "XML",
                 "async": true,
                 "viewPath": "com.sal.salhr.view",
+                "controlAggregation": "pages",
                 "controlId": "flexibleColumnLayout",
+                "clearControlAggregation": false,
 				"transition": "slide"
 				
 				
@@ -111,12 +121,22 @@
 					]
 				},
                 {
-					"pattern": "detail",
+					"pattern": "detail/{parentMaterial}/{layout}",
 					"name": "detail",
+                    "titleTarget": "",
+                    "greedy": false,
 					"target": [
-						
-                        "detail"
-					
+                        "master",
+						 "detail"
+					]
+				},
+                {
+					"pattern": "RaiseRequest",
+					"name": "RaiseRequest",
+                    "titleTarget": "",
+                    "greedy": false,
+					"target": [
+                        "RaiseRequest"
 					]
 				}
                 
@@ -124,24 +144,29 @@
             "targets": {
                 "master": {
 					"viewName": "MasterList",
+                    "viewLevel": 1,
+                    "viewType": "XML",
+                    "transition": "slide",
 					"controlAggregation": "beginColumnPages"
 				},
                 "detail": {
                     "viewName": "DetailPage",
-                   
+                    "viewLevel": 2,
                     "viewType": "XML",
                     "transition": "slide",
+                    "controlAggregation": "midColumnPages"
+                    
+                },
+                "RaiseRequest": {
+                    "viewName": "CreateRequest",
+                    "viewType": "XML",
                     "controlAggregation": "beginColumnPages"
                     
+                    
                 }
+
                 
             }
-        },
-        "rootView": {
-            "viewName": "com.sal.salhr.view.App",
-            "type": "XML",
-            "async": true,
-            "id": "App"
         }
     },
     "sap.cloud": {

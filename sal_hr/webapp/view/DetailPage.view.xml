@@ -1,8 +1,93 @@
-<mvc:View
-    controllerName="com.sal.salhr.controller.DetailPage"
+<mvc:View controllerName="com.sal.salhr.controller.DetailPage" 
     xmlns="sap.m"
-	xmlns:f="sap.f"
-	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
     xmlns:ui="sap.ui.table"
->
+    xmlns:layout="sap.ui.layout" height="100%">
+    <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="{/titleClickable}">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Business Trip"/>
+                </f:heading>
+                <!-- <f:breadcrumbs>
+                        <Breadcrumbs>
+                            <Link text="Home" />
+                            <Link text="Page 1" />
+                            <Link text="Page 2" />
+                            <Link text="Page 3" />
+                            <Link text="Page 4" />
+                            <Link text="Page 5" />
+                        </Breadcrumbs>
+                    </f:breadcrumbs> -->
+                <f:actions>
+                    <Button text="Raise a Request" type="Emphasized" press="onPressRaiseRequest"/>
+                </f:actions>
+                <f:navigationActions>
+                    <Button icon="sap-icon://full-screen" type="Transparent" />
+                    <!-- <Button icon="sap-icon://exit-full-screen" type="Transparent" /> -->
+                    <Button icon="sap-icon://decline" type="Transparent" />
+                </f:navigationActions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- DynamicPage Header -->
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute text="Total Request"/>
+                        <Label design="Bold" text="2"/>
+                    </layout:VerticalLayout>
+
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute text="In Process"/>
+                        <Label design="Bold" text="1"/>
+                    </layout:VerticalLayout>
+
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute text="Done"/>
+                        <Label design="Bold" text="3"/>
+                    </layout:VerticalLayout>
+
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute text="Open"/>
+                        <Label design="Bold" text="0"/>
+                    </layout:VerticalLayout>
+
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Table id="idTicketTable" inset="false" items="{/Tickets}">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <Title text="Human Resource" level="H2"/>
+                            <ToolbarSpacer />
+                            <SearchField width="30%"></SearchField>
+                            <Button icon="sap-icon://sort"/>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column width="12em">
+                        <Text text="Job Card ID" />
+                    </Column>
+
+                    <Column >
+                        <Text text="Request Date" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem press="onPressTicketItem" vAlign="Middle" type="Navigation">
+                        <cells>
+                           <Text text="{ticketCode}" />
+                           <Text text="{Resquest date}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>

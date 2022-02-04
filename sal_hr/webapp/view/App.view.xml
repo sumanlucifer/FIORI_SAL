@@ -39,6 +39,7 @@
 		id="flexibleColumnLayout"
 		stateChange=".onStateChanged"
 		backgroundDesign="Solid"
+        layout="{layoutModel>/layout}"
 		/>
         </m:pages>
     </m:App>

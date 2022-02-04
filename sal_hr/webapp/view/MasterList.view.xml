@@ -1,4 +1,4 @@
-<mvc:View
+<mvc:View xmlns:core="sap.ui.core"
     controllerName="com.sal.salhr.controller.MasterList"
     xmlns="sap.m"
 	xmlns:f="sap.f"
@@ -45,41 +45,55 @@
                 <StandardListItem title="{Name}" description="Description: {Description}" info="Material Code: {MaterialCode}" type="Navigation" press="onParentLineItemPress"/>
             </List>-->
 
-            	<Table id="idProductsTable"
+            	<Table id="idMasterTable"
 		inset="false"
 		items="{/MasterSubModules}" 
-        itemPress="onMasterListPress">
+        >
 		<headerToolbar>
 			<OverflowToolbar>
 				<content>
 					<Title text="Human Resource" level="H2"/>
 					<ToolbarSpacer />
-					<SearchField ></SearchField>
+					<SearchField width="20%" placeholder="Search for Type" ></SearchField>
+                    <Button icon="sap-icon://sort"/>
 				</content>
 			</OverflowToolbar>
 		</headerToolbar>
 		
 		<columns>
-			<Column
-				width="12em">
+        
+			<Column width="3rem">
 				<Text text="Type" />
 			</Column>
-			
-			<Column
-				hAlign="End">
+			<Column hAlign="Begin">
+				
+			</Column>
+			<Column hAlign="End">
 				<Text text="Count" />
 			</Column>
 		</columns>
 		<items>
-			<ColumnListItem vAlign="Middle" type="Navigation">
-				<cells>
-					<ObjectIdentifier
+			<ColumnListItem type="Navigation" press="onMasterListPress">
+				
+					<!-- <ObjectIdentifier
 						title="{name}"
-						text="{description}"/>
+						text="{description}"
+                        icon="sap-icon://group"/> -->
+                        	<!-- <StandardListItem
+                            type="Active"
+				title="{name}"
+				description="{description}"
+				icon="sap-icon://group"
+			
+                	info="8"
+                    press="onMasterListPress"/> -->
 					
-					<ObjectNumber
-							number="{totalRequests}" />
-				</cells>
+					<!-- <ObjectNumber
+							number="{totalRequests}" /> -->
+                <core:Icon src="{path:'name',formatter:'.formatter.changeIcon'}"></core:Icon>        
+                <Text text="{name}" />
+                <Text text="{totalRequests}" />    
+				
 			</ColumnListItem>
 		</items>
 	</Table>
