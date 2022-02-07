@@ -5,100 +5,65 @@
 	xmlns:mvc="sap.ui.core.mvc"
     xmlns:ui="sap.ui.table"
 >
-   <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+   <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false" class="page" >
+        <f:title>
+            <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding" stickySubheaderProvider="Table">
+                <f:heading>
+                    <Title text="Human Resource"/>
+                </f:heading>
+              
+            </f:DynamicPageTitle>
+        </f:title>
 	
-		<f:content>
-			<VBox fitContainer="true" id="idV1">
-			
-				 <!-- <ui:Table id="idTb"
-				rows="{/MasterSubModules}"
-				selectionMode="Single"
-                
-				visibleRowCount="7"
-				paste="onPaste"
-				ariaLabelledBy="title"
-                >
-					<ui:extension>
-					<OverflowToolbar style="Clear">
-                    <ToolbarSpacer/>
-							<SearchField width="20%" />
-					</OverflowToolbar>
-				</ui:extension>
-				<ui:columns>
-					<ui:Column width="25rem">
-						<Label text="Type" />
-						<ui:template>
-							<Text text="{name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-				</ui:columns>
-			</ui:Table>  -->
+	
+        <f:content>
+              	<Table id="idMasterTable"
+		                    inset="false"
+		                    items="{/MasterSubModules}" 
+                                >
+		                     <headerToolbar>
+			                    <OverflowToolbar>
+                                    <content>
+                                    
+                                    <ToolbarSpacer />
+                                    <SearchField id="idMasterListSearch" width="30%" placeholder="Search for Type" liveChange=".onSearch" ></SearchField>
+                                    <Button icon="sap-icon://sort"/>
+                                </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                
+                                <columns>
+                                
+                                <Column width="3rem">
+                                    <Text text="Type" />
+                                </Column>
+                                 <Column hAlign="Begin"  width="10rem">
+                                    
+                                </Column>
+                                 <Column minScreenWidth = "Small" demandPopin="false">
+                                    
+                                </Column>
+                                
+                                <Column hAlign="End">
+                                    <Text text="Count" />
+                                </Column>
+                            </columns>
+                                <items>
+                                    <ColumnListItem id="idMasterColumnList" type="Navigation" press="onMasterListPress">
+                                      <cells>
+                                            <core:Icon src="{path:'name',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem"></core:Icon>        
+                                            <Text text="{name}" />
+                                             <Text text="{description}" wrapping="true" class="textDescription"/>
+                                            <Text text="{totalRequests}" class="infoColor"/>     
+                                       </cells> 
+                                    </ColumnListItem>
+                                </items>
+	                    </Table>
 
-                       <!-- <List items="{path: '/ParentLineItemSet'}" updateFinished="onUpdateListFinished">
-                <headerToolbar>
-                    <OverflowToolbar>
-                    <content>
-                    <Title text="{i18n>parentItems}"/>
-                    </content>
-                    </OverflowToolbar>
-                </headerToolbar>
-                <StandardListItem title="{Name}" description="Description: {Description}" info="Material Code: {MaterialCode}" type="Navigation" press="onParentLineItemPress"/>
-            </List>-->
-      <Title text="Human Resource" level="H2"/>
-          	<Table id="idMasterTable"
-		inset="false"
-		items="{/MasterSubModules}" 
-        >
-		<headerToolbar>
-			<OverflowToolbar>
-				<content>
-					
-					<ToolbarSpacer />
-					<SearchField width="70%" placeholder="Search for Type" ></SearchField>
-                    <Button icon="sap-icon://sort"/>
-				</content>
-			</OverflowToolbar>
-		</headerToolbar>
-		
-		<columns>
-        
-			<Column width="3rem">
-				<Text text="Type" />
-			</Column>
-			<Column hAlign="Begin">
-				
-			</Column>
-			<Column hAlign="End">
-				<Text text="Count" />
-			</Column>
-		</columns>
-		<items>
-			<ColumnListItem type="Navigation" press="onMasterListPress">
-				
-					<!-- <ObjectIdentifier
-						title="{name}"
-						text="{description}"
-                        icon="sap-icon://group"/> -->
-                        	<!-- <StandardListItem
-                            type="Active"
-				title="{name}"
-				description="{description}"
-				icon="sap-icon://group"
-			
-                	info="8"
-                    press="onMasterListPress"/> -->
-					
-					<!-- <ObjectNumber
-							number="{totalRequests}" /> -->
-                <core:Icon src="{path:'name',formatter:'.formatter.changeIcon'}"></core:Icon>        
-                <Text text="{name}" />
-                <Text text="{totalRequests}" />    
-				
-			</ColumnListItem>
-		</items>
-	</Table>
-			</VBox>
-		</f:content>
+
+
+        </f:content>
+
 
 		
 	</f:DynamicPage>

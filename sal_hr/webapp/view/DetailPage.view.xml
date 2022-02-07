@@ -4,28 +4,16 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:ui="sap.ui.table"
     xmlns:layout="sap.ui.layout" height="100%">
-    <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="{/titleClickable}">
+    <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="{/titleClickable}" class="page" >
         <!-- DynamicPage Title -->
         <f:title>
             <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding" stickySubheaderProvider="Table">
                 <f:heading>
                     <Title text="{name}"/>
                 </f:heading>
-                <!-- <f:breadcrumbs>
-                        <Breadcrumbs>
-                            <Link text="Home" />
-                            <Link text="Page 1" />
-                            <Link text="Page 2" />
-                            <Link text="Page 3" />
-                            <Link text="Page 4" />
-                            <Link text="Page 5" />
-                        </Breadcrumbs>
-                    </f:breadcrumbs> -->
-                <!-- <f:actions>
-                    <Button text="Raise a Request" type="Emphasized" press="onPressRaiseRequest"/>
-                </f:actions> -->
+           
                 <f:navigationActions>
-                    <Button text="Raise a Request" type="Emphasized" press="onPressRaiseRequest"/>
+                    <Button text="Raise a Request" press="onPressRaiseRequest" class="RaiseRequestButton"/>
                     <Button icon="sap-icon://full-screen" type="Transparent" />
                     <!-- <Button icon="sap-icon://exit-full-screen" type="Transparent" /> -->
                     <Button icon="sap-icon://decline" type="Transparent" />
@@ -36,7 +24,7 @@
         <!-- DynamicPage Header -->
         <f:header>
             <f:DynamicPageHeader pinnable="true">
-                <layout:HorizontalLayout allowWrapping="true">
+                <!-- <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute text="Total Request"/>
                         <Label design="Bold" text="{totalRequests}"/>
@@ -57,7 +45,27 @@
                         <Label design="Bold" text="{totalPending}"/>
                     </layout:VerticalLayout>
 
-                </layout:HorizontalLayout>
+                </layout:HorizontalLayout> -->
+
+                	<FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
+				
+				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Total Requests"/>
+					        <Text text="{totalRequests}" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
+				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="In Process"/>
+					        <Text text="3" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
+				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Done"/>
+					        <Text text="2" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
+                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Open"/>
+					        <Text text="1" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
+			        </FlexBox>
             </f:DynamicPageHeader>
         </f:header>
         <f:content>

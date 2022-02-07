@@ -60,7 +60,7 @@
                 <ToolbarSpacer id="idToolbarSpacer"/>
                 <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
                 <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCancelPress"/>
-                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" type="Emphasized" press="onRaiseRequestPress"/>
+                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

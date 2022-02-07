@@ -1,1 +1,28 @@
 /* Enter your custom styles here */
+.page {
+    background-color: white !important;
+}
+.textDescription {
+    font-size: 11px !important;
+}
+
+
+
+.infoColor {
+	color : #800000 !important;
+
+}
+
+
+.RaiseRequestButton .sapMBtnInner {
+    background-color: #8A2BE2;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.dataPointsColor {
+	color : #800000 !important;
+    font-weight: 400;
+    font-size: 20px !important;
+
+}

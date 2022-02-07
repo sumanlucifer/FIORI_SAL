@@ -1,10 +1,12 @@
 sap.ui.define([
     "./BaseController",
     "sap/ui/core/mvc/Controller",
-    "com/sal/salhr/model/formatter"
+    "com/sal/salhr/model/formatter",
+    "sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
 ],
    
-    function (BaseController,Controller,formatter) {
+    function (BaseController,Controller,formatter,Filter,FilterOperator) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.MasterList", {
@@ -60,6 +62,20 @@ sap.ui.define([
                     false
 
                 );
-            } 
+            },
+            onSearch:function(oEvent){
+                var aFilters = [];
+                var sQuery = oEvent.getSource().getValue();
+                if (sQuery && sQuery.length > 0) {
+                    var filter = new Filter("name", FilterOperator.Contains, sQuery);
+                    aFilters.push(filter);
+                }
+    
+              
+                var oTable = this.byId("idMasterTable");
+                var oBinding = oTable.getBinding("items");
+                oBinding.filter(aFilters);
+
+            }
         });
     });
