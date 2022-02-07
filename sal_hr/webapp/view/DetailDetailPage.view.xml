@@ -52,13 +52,13 @@
         </f:header>
         <!-- DynamicPage Content -->
         <f:content>
-            <IconTabBar id="iconTabBar">
+            <!-- <IconTabBar id="iconTabBar">
                 <items>
                     <IconTabFilter id="idDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
-                        <core:Fragment fragmentName="com.sal.newtriprequest.newtriprequest.view.fragments.DisplayTripDetails" type="XML"/>
+                        <core:Fragment fragmentName="com.sal.salhr.Fragments.DisplayBusinessTrip" type="XML"/>
                     </IconTabFilter>
                     <IconTabFilter id="idEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                        <core:Fragment fragmentName="com.sal.newtriprequest.newtriprequest.view.fragments.EditTripDetails" type="XML"/>
+                        <core:Fragment fragmentName="com.sal.salhr.Fragments.EditBusinessTrip" type="XML"/>
                     </IconTabFilter>
                     <IconTabFilter text="{i18n>Resolution}">
                         <Text text="" />
@@ -67,7 +67,7 @@
                         <Text text="" />
                     </IconTabFilter>
                 </items>
-            </IconTabBar>
+            </IconTabBar> -->
         </f:content>
         <f:footer>
             <OverflowToolbar id="idOverflowToolbar" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
