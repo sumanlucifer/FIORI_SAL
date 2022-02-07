@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
+    	      
+      
+                   <form:SimpleForm id="idNewRquestSimpleForm" title="{i18n>LeaveRequest}" layout="ResponsiveGridLayout" 
+                 columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                   <form:content>
+                    
+                        <Label id="idTimeType" text="{i18n>TimeType}" required="true" class="sapUiSmallMarginTop"/>
+                       	<Select				
+						    items="{
+							path: '/SF_Leave'
+							
+						}">
+					        <core:Item key="{timeType}" text="{timeType}" />
+				        </Select>
+                        <Label id="idAvailBal" text="{i18n>AvailableBalance}" required="true" class="sapUiSmallMarginTop"/>
+                        <Input id="idAvailBalance" value="{name}" />
+                        <Label id="idFromDateLBL" text="{i18n>StartDate}" required="true"/>
+                        <DatePicker id="idStartDatePicker" value="{NewTripRequestModel>/StartDate}" change="handleChange"/>
+                        <Label id="idEndDateLBL" text="{i18n>EndDate}" required="true"/>
+                        <DatePicker id="idEndDatePicker" value="{NewTripRequestModel>/EndDate}" change="handleChange"/>
+                        <Label id="idReq" text="Requesting"/>
+                        <Input id="idReqInp" value="{NewTripRequestModel>/TotalDays}"/>
+                        <Label id="idReturnLabel" text="Requesting"/>
+                        <Input id="idReturnInp" value="{NewTripRequestModel>/TotalDays}"/>
+                        <CheckBox id="idCheckbRecurring" text="Recurring Absence"></CheckBox>
+                        <Label text="Comment" />
+                        <TextArea ></TextArea>
+
+                        
+                    </form:content>
+                   </form:SimpleForm>
+           
+        
+
+
+</core:FragmentDefinition>

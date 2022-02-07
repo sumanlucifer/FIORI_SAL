@@ -13,7 +13,7 @@
                 </f:heading>
            
                 <f:navigationActions>
-                    <Button text="Raise a Request" press="onPressRaiseRequest" class="RaiseRequestButton"/>
+                    <Button text="Raise a Request" press="onPressRaiseRequest" type="Emphasized"/>
                     <Button icon="sap-icon://full-screen" type="Transparent" />
                     <!-- <Button icon="sap-icon://exit-full-screen" type="Transparent" /> -->
                     <Button icon="sap-icon://decline" type="Transparent" />
@@ -91,18 +91,7 @@
                     <Column>
                         <Text text="SAP Ticket ID" />
                     </Column>
-                    <Column>
-                        <Text text="From Date" />
-                    </Column>
-                    <Column>
-                        <Text text="To Date" />
-                    </Column>
-                    <Column>
-                        <Text text="Travel Type" />
-                    </Column>
-                    <Column>
-                        <Text text="Total Days" />
-                    </Column>
+                   
                     <Column>
                         <Text text="Status" />
                     </Column>
@@ -114,10 +103,7 @@
                             <Text text="{employeeId}" />
                             <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd.MM.yyyy'}}" />
                             <Text text="{ticketCode}" />
-                            <Text text=" " />
-                            <Text text=" " />
-                            <Text text="Local" />
-                            <Text text="2 Days" />
+                           
                             <ObjectStatus text="{statusValue}" state="Indication02" />
                         </cells>
                     </ColumnListItem>

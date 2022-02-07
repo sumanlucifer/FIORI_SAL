@@ -78,6 +78,7 @@
                     "bundleName": "com.sal.salhr.i18n.i18n"
                 }
             },
+            
             "": {
                 "type": "sap.ui.model.odata.v2.ODataModel",
                 "settings": {

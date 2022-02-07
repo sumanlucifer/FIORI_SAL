@@ -63,10 +63,11 @@
 
 sap.ui.define([ 
     "./BaseController",
-    "sap/ui/core/mvc/Controller"
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel"
 ],
 
-    function (BaseController, Controller) {
+    function (BaseController, Controller,JSONModel) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.DetailPage", {
 
@@ -102,8 +103,10 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: sKey
                 });
-            },
 
+                
+            },
+            
 
             onPressTicketItem: function (oEvent) {
 
