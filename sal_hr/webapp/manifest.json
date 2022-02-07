@@ -133,6 +133,17 @@
 					]
 				},
                 {
+					"pattern": "detail/{parentMaterial}/detailDetail/{layout}",
+					"name": "detailDetail",
+                    "titleTarget": "",
+                    "greedy": false,
+					"target": [
+                         "master",
+						 "detail",
+                         "detailDetail"
+					]
+				},
+                {
                     "pattern": "RaiseRequest/{parentMaterial}/{layout}",
                     "name": "RaiseRequest",
                     "titleTarget": "",
@@ -161,12 +172,20 @@
                     "controlAggregation": "midColumnPages"
                     
                 },
+                "detailDetail": {
+                    "viewName": "DetailDetailPage",
+                    "viewLevel": 3,
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "controlAggregation": "endColumnPages"
+                    
+                },
                 "RaiseRequest": {
                     "viewName": "CreateRequest",
                     "viewType": "XML",
                     "controlAggregation": "endColumnPages",
                     "transition": "slide",
-                    "viewLevel": 3                                   
+                    "viewLevel": 1                                   
                 }            
             }
         }
