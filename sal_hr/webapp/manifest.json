@@ -54,7 +54,7 @@
     },
     "sap.ui5": {
         "flexEnabled": true,
-        
+        "config": { "fullWidth": true },
         "rootView": {
             "viewName": "com.sal.salhr.view.App",
             "type": "XML",
@@ -133,7 +133,7 @@
 					]
 				},
                 {
-					"pattern": "detail/{parentMaterial}/detailDetail/{layout}",
+					"pattern": "detail/{parentMaterial}/detailDetail/{childModule}/{layout}",
 					"name": "detailDetail",
                     "titleTarget": "",
                     "greedy": false,
@@ -143,9 +143,11 @@
                          "detailDetail"
 					]
 				},
+              
                 {
                     "pattern": "RaiseRequest/{parentMaterial}/{layout}",
                     "name": "RaiseRequest",
+                    "layout":"EndColumnFullScreen",
                     "titleTarget": "",
                     "greedy": false,
                     "target": [
@@ -185,7 +187,7 @@
                     "viewType": "XML",
                     "controlAggregation": "endColumnPages",
                     "transition": "slide",
-                    "viewLevel": 1                                   
+                    "viewLevel": 4                                 
                 }            
             }
         }

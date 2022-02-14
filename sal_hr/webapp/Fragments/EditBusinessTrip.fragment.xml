@@ -1,80 +1,36 @@
-<mvc:View controllerName="com.sal.newtriprequest.newtriprequest.controller.BusinessTripRequestDetails"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:layout="sap.ui.layout"
-    xmlns:core="sap.ui.core"
-    xmlns:form="sap.ui.layout.form" height="100%">
-    <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding">
-        <!-- DynamicPage Title -->
-        <f:title>
-            <f:DynamicPageTitle id="idDynamicPageTitle">
-                <f:heading>
-                    <Title id="idPageTitle" text="{i18n>BusinessTripRequest}"/>
-                </f:heading>
-                <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request 48865">
-                        <Link id="idHumanResourceLink" text="{i18n>BusinessTripRequest}"/>
-                    </Breadcrumbs>
-                </f:breadcrumbs>
-                <f:expandedContent>
-                    <Label text="{i18n>RequestID} :2411"/>
-                </f:expandedContent>
-                <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress"/>
-                </f:actions>
-                <f:navigationActions>
-                    <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
-                    <Button icon="sap-icon://exit-full-screen" press="onToggelFullScreenMode" type="Transparent" />
-                    <Button icon="sap-icon://decline" type="Transparent" />
-                </f:navigationActions>
-            </f:DynamicPageTitle>
-        </f:title>
-        <!-- DynamicPage Header Content -->
-        <f:header>
-            <f:DynamicPageHeader pinnable="true">
-                <layout:HorizontalLayout allowWrapping="true">
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute title="{i18n>Status}"/>
-                        <ObjectStatus text="Pending" state="Warning"/>
-                    </layout:VerticalLayout>
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute title="{i18n>Requestedby}"/>
-                        <ObjectAttribute text="Don J."/>
-                    </layout:VerticalLayout>
-                    <layout:VerticalLayout>
-                        <ObjectAttribute title="{i18n>DueByDate}"/>
-                        <ObjectAttribute text="6 Oct 2021"/>
-                    </layout:VerticalLayout>
-                </layout:HorizontalLayout>
-            </f:DynamicPageHeader>
-        </f:header>
-        <!-- DynamicPage Content -->
-        <f:content>
-            <IconTabBar id="iconTabBar">
-                <items>
-                    <IconTabFilter id="idDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
-                        <core:Fragment fragmentName="com.sal.newtriprequest.newtriprequest.view.fragments.DisplayTripDetails" type="XML"/>
-                    </IconTabFilter>
-                    <IconTabFilter id="idEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                        <core:Fragment fragmentName="com.sal.newtriprequest.newtriprequest.view.fragments.EditTripDetails" type="XML"/>
-                    </IconTabFilter>
-                    <IconTabFilter text="{i18n>Resolution}">
-                        <Text text="" />
-                    </IconTabFilter>
-                    <IconTabFilter text="{i18n>History}">
-                        <Text text="" />
-                    </IconTabFilter>
-                </items>
-            </IconTabBar>
-        </f:content>
-        <f:footer>
-            <OverflowToolbar id="idOverflowToolbar" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                <ToolbarSpacer id="idToolbarSpacer"/>
-                <Button id="idSaveBTN" text="{i18n>Save}" type="Emphasized" press="onSavePress"/>
-                <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCancelPress"/>
-            </OverflowToolbar>
-        </f:footer>
-    </f:DynamicPage>
-</mvc:View>
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <form:SimpleForm id="idEditRquestSimpleForm" layout="ResponsiveGridLayout" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <form:content>
+            <Title id="idEditRequestDetailsTTL" text="{i18n>RequestDetails}" titleStyle="H5" level="H5"/>
+            <Label id="idEditRequestIDLBL" text="{i18n>RequestID}" class="sapUiSmallMarginTop"/>
+            <Input value="2411"/>
+            <Label id="idEditRequestDateLBL" text="{i18n>RequestDate}"/>
+            <DatePicker id="idRequestDatePicker" value="Oct 5,2021" change="handleChange"/>
+            <Label id="idEditTravelDestinationLBL" text="{i18n>TravelDestination}"/>
+            <Input value="Riyadh"/>
+            <Label id="idEditStartDateLBL" text="{i18n>StartDate}"/>
+            <DatePicker id="idStartBDatePicker" value="{path:'physicalStartDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}" change="handleChange"/>
+            <Label id="idEditSubjectLBL" text="{i18n>Subject}"/>
+            <Input value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."/>
+            <core:Title id="idEditEmptyTitle" text=" "/>
+            <Label id="idEditSAPTicketIDLBL" text="{i18n>SAPTicketID}"/>
+            <Input value="500009095"/>
+            <Label id="idEditTravelTypeLBL" text="{i18n>TravelType}"/>
+            <Input value="Local"/>
+            <Label id="idEditTotalDaysLBL" text="{i18n>TotalDays}"/>
+            <Input value="{quantityInDays}"/>
+            <Label id="idEditEndDateLBL" text="{i18n>EndDate}"/>
+            <DatePicker id="idTofrDatePicker" value="{path:'physicalEndDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}" change="handleChange"/>
+        </form:content>
+    </form:SimpleForm>
+</core:FragmentDefinition>

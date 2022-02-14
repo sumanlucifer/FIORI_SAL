@@ -33,7 +33,7 @@
         </f:title>
         <!-- DynamicPage Content -->
         <f:content>
-           <layout:VerticalLayout id="idLeaveLayout">
+           <layout:VerticalLayout id="idLeaveLayout" class="sapUiNoMargin sapUiNoContentPadding">
                 <layout:content>
                     <!-- <core:Fragment fragmentName="{oFragmentModel>/sFragmentName}" type="XML" /> -->
                 </layout:content>

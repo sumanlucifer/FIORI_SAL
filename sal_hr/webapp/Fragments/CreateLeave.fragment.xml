@@ -1,37 +1,59 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core">
-    	      
-      
-                   <form:SimpleForm id="idNewRquestSimpleForm" title="{i18n>LeaveRequest}" layout="ResponsiveGridLayout" 
-                 columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-                   <form:content>
-                    
-                        <Label id="idTimeType" text="{i18n>TimeType}" required="true" class="sapUiSmallMarginTop"/>
-                       	<Select				
-						    items="{
-							path: '/SF_Leave'
-							
-						}">
-					        <core:Item key="{timeType}" text="{timeType}" />
-				        </Select>
-                        <Label id="idAvailBal" text="{i18n>AvailableBalance}" required="true" class="sapUiSmallMarginTop"/>
-                        <Input id="idAvailBalance" value="{name}" />
-                        <Label id="idFromDateLBL" text="{i18n>StartDate}" required="true"/>
-                        <DatePicker id="idStartDatePicker" value="{NewTripRequestModel>/StartDate}" change="handleChange"/>
-                        <Label id="idEndDateLBL" text="{i18n>EndDate}" required="true"/>
-                        <DatePicker id="idEndDatePicker" value="{NewTripRequestModel>/EndDate}" change="handleChange"/>
-                        <Label id="idReq" text="Requesting"/>
-                        <Input id="idReqInp" value="{NewTripRequestModel>/TotalDays}"/>
-                        <Label id="idReturnLabel" text="Requesting"/>
-                        <Input id="idReturnInp" value="{NewTripRequestModel>/TotalDays}"/>
-                        <CheckBox id="idCheckbRecurring" text="Recurring Absence"></CheckBox>
-                        <Label text="Comment" />
-                        <TextArea ></TextArea>
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	
 
-                        
-                    </form:content>
-                   </form:SimpleForm>
-           
-        
-
+		<f:SimpleForm 
+			editable="true"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="4"
+			labelSpanM="12"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="0"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="2"
+			columnsM="2"
+			singleContainerFullSize="false" >
+				<f:content>
+				<core:Title text="Create New Request " class="sapUiLargeMarginBottom" />
+				<Label text="Time Type" required="true" />
+				<Select id="idTimeType" items="{ path: '/SF_Leave_TimeType'                                                              }">
+                <core:Item key="{externalCode}" text="{externalName_localized}" />
+                </Select>
+				<Label text="Start Date" required="true"/>
+                <DatePicker id="idStartDate" value="{path:'DateModel>/startDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" change="onLeaveStartDatChange"/>
+            
+				
+					
+				<Label text="Requesting" />
+				<Input id="idRequestDay" value=" ">
+					<layoutData>
+						<l:GridData span="XL2 L3 M4 S4" />
+					</layoutData>
+				</Input>
+       
+                <CheckBox text="Recurring Absence" select="onSelectRecurringAbsc"></CheckBox>
+				<Label text="Comment" />
+                 <TextArea ></TextArea>
+				<core:Title text=" " />
+				<Label text="Available Balance" />
+				<Input value=" " enabled="false">
+					<layoutData>
+						<l:GridData span="XL2 L3 M4 S4" />
+					</layoutData>
+				</Input>
+                <Label text="{i18n>EndDate}" required="true"/>
+                <DatePicker id="idEndDate" value="{path:'DateModel>/endDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" change="onLeaveEndDateChange"/>
+				<Label text="Returning to Work On" />
+				 <DatePicker value="{path:'DateModel>/returnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/>
+			</f:content>
+		</f:SimpleForm>
 
 </core:FragmentDefinition>

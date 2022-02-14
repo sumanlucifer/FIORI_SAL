@@ -14,16 +14,37 @@ sap.ui.define([
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
-                this.getView().addEventDelegate({
-                    onBeforeShow: function (evt) {
-    
-                        that.loadFragment();
-    
-                    }.bind(this),
-                    onAfterHide: function (evt) {
-    
-                    }
+
+                var sReturnDate= new Date();
+                sReturnDate.setDate(new Date().getDate() + 1);
+                if(sReturnDate.getDay() === 5){
+                    sReturnDate.setDate(sReturnDate.getDate() + 2);
+                    
+                }else if(sReturnDate.getDay() === 6){
+                    sReturnDate.setDate(sReturnDate.getDate() + 1);
+                   
+                }
+                var oDateModel = new JSONModel({
+                    startDate: new Date(),    
+                    endDate: new Date(),
+                    returnDate : sReturnDate            
                 });
+
+                this.getView().setModel(oDateModel, "DateModel");
+
+              
+                
+
+                // this.getView().addEventDelegate({
+                //     onBeforeShow: function (evt) {
+    
+                //         that.loadFragment();
+    
+                //     }.bind(this),
+                //     onAfterHide: function (evt) {
+    
+                //     }
+                // });
             },
             // onRouteMatched: function (oEvent) {
             //     this.sParentID = oEvent.getParameter("arguments").parentMaterial;
@@ -64,15 +85,44 @@ sap.ui.define([
             },
             loadFragment:function(){
                 debugger;
-             
-                 var oFragmentModel = new JSONModel();
-                 this.getView().setModel(oFragmentModel,"oFragmentModel")
+                 var that = this;
+                //  var oFragmentModel = new JSONModel();
+                //  this.getView().setModel(oFragmentModel,"oFragmentModel")
                   var sType = this.sParentID;
-                  this.fragmentName = "com.sal.salhr.Fragments.CreateLeave";
-                  var oLayout = this.getView().byId('idLeaveLayout'), //don't forget to set id for a VerticalLayout
-                  oFragment = sap.ui.xmlfragment(this.fragmentName ,this);
-                  oLayout.addContent(oFragment);
+                  
+                  var oLayout = this.getView().byId('idLeaveLayout');
+                  
+                 
+                  if(sType === "1"){
+                    oLayout.destroyContent();
+                    this.fragmentName = "com.sal.salhr.Fragments.CreateLeave";
+                    
+                        this.oFragment = sap.ui.xmlfragment("idLeaveFragment",this.fragmentName ,this);
+                        oLayout.addContent(this.oFragment);
+                  
+                    
+                   
+                    this.getOwnerComponent().getModel().read("/SF_Leave_TimeType", {
+						urlParameters: {
+							"$filter": "(category eq 'ABSENCE')"
+						},
+                       success:function(oData,oResponse){
+                        var oFragmetModel = new JSONModel(oData);
+                        that.oFragment.setModel(oFragmetModel, "oFragmetModel");
+                       },
+                       error:function(err){
 
+                       }
+                    });
+
+                   
+
+                  }else {
+                    oLayout.destroyContent();
+                    this.fragmentName = "com.sal.salhr.Fragments.CreateBusinessTrip";
+                    var oFragment = sap.ui.xmlfragment(this.fragmentName ,this);
+                    oLayout.addContent(oFragment);
+                  }
 
                
                 //   switch (sType) {
@@ -96,15 +146,19 @@ sap.ui.define([
                 return "com.sal.salhr.Fragments.CreateLeave";
              },
             onRaiseRequestPress: function (oAdditionalData, aReservationItems) {
-                
+                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getValue();
+                sStartDate = Date.parse(sStartDate);
+                var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
+                sEndDate = Date.parse(sEndDate);
+                var sTimeType =  sap.ui.core.Fragment.byId("idLeaveFragment", "idTimeType").getSelectedKey();
                 var oPayload =
                 {
-                "endDate":new Date(),
+                "endDate":"/Date(" + sEndDate + ")/",
                 "loaActualReturnDate": null,
-                "timeType": "S110",
+                "timeType": sTimeType,
                 "loaExpectedReturnDate": null,
                 "loaStartJobInfoId": null,
-                "startDate": new Date(),
+                "startDate": "/Date(" + sStartDate + ")/",
                 "cust_KronosPayCodeEditID": null,
                 "startTime": null,
                 "loaEndJobInfoId": null,
@@ -118,12 +172,103 @@ sap.ui.define([
                 ;
                 this.mainModel.create("/SF_Leave", oPayload, {
                     success: function (oData, oResponse) {
-                        
+                        sap.m.MessageBox.success("Request Submitted Successfully.");
                     }.bind(this),
                     error: function (oError) {
-
+                        sap.m.MessageBox.error("Error.");  
                     }.bind(this)
                 })
-            }
+            },
+            onLeaveStartDatChange:function(oEvent){
+                var oneDay = 24 * 60 * 60 * 1000;
+                var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
+                var sStartDate = oEvent.getSource().getDateValue();
+               
+                this.sRequestDay = "";
+                if(sEndDate < sStartDate){
+                    oEvent.getSource().setValueState("Error");
+                    oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
+                }else{
+                    oEvent.getSource().setValueState();
+                    oEvent.getSource().setValueStateText("");
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").setValueState();
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").setValueStateText("");
+                    // this.sRequestDay = Math.round(Math.abs((new Date(sEndDate) - sStartDate) / oneDay)) + 1;
+                    
+                    this.sRequestDay = this.dateDifference(sStartDate,sEndDate);
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
+                }
+            },
+            onLeaveEndDateChange:function(oEvent){
+                var oneDay = 24 * 60 * 60 * 1000;
+                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
+                var sEndDate = oEvent.getSource().getDateValue();
+                
+                if(sEndDate < sStartDate){
+                    oEvent.getSource().setValueState("Error");
+                    oEvent.getSource().setValueStateText("End Date should be later than Start Date");
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
+                }else{
+                    oEvent.getSource().setValueState();
+                    oEvent.getSource().setValueStateText("");
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueState();
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueStateText("");
+                    // this.sRequestDay = Math.round(Math.abs((sEndDate - new Date(sStartDate)) / oneDay)) + 1 ;
+                    this.sRequestDay = this.dateDifference(sStartDate,sEndDate,oEvent);
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
+                   
+                }
+            },
+            onSelectRecurringAbsc:function(oEvent){
+                 if(oEvent.getParameters().selected === true){
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idVboxRecurring").setVisible(true);
+                 }else{
+                    sap.ui.core.Fragment.byId("idLeaveFragment", "idVboxRecurring").setVisible(false);
+                 }
+            },
+            dateDifference:function(startDate, endDate) {
+         
+                startDate.setHours(12,0,0,0);
+                endDate.setHours(12,0,0,0);
+      
+                var totalDays = Math.round((endDate - startDate) / 8.64e7);
+                
+              
+                var wholeWeeks = totalDays / 7 | 0;
+                
+               
+                var days = wholeWeeks * 5;
+              
+               
+                if (totalDays % 7) {
+                    startDate.setDate(startDate.getDate() + wholeWeeks * 7);
+                  
+                  while (startDate < endDate) {
+                  
+                    startDate.setDate(startDate.getDate() + 1);
+              
+                 
+                    if (startDate.getDay() != 5 && startDate.getDay() != 6) {
+                      ++days;
+                    }
+                  }
+                  startDate.setDate(this.getView().getModel("DateModel").getProperty("/startDate").getDate());
+                }
+                var sReturnDate = new Date();
+                sReturnDate.setDate(endDate.getDate() + 1);
+                if(sReturnDate.getDay() === 5){
+                    sReturnDate.setDate(sReturnDate.getDate() + 2);
+                    this.getView().getModel("DateModel").setProperty("/returnDate",sReturnDate);
+                }else if(sReturnDate.getDay() === 6){
+                    sReturnDate.setDate(sReturnDate.getDate() + 1);
+                    this.getView().getModel("DateModel").setProperty("/returnDate",sReturnDate);
+                }else {
+                    sReturnDate.setDate(endDate.getDate() + 1);
+                }
+               
+                return days + 1;
+              }
+             
         });
     });      

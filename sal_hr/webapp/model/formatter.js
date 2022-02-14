@@ -15,7 +15,39 @@ sap.ui.define([], function() {
                 return 'sap-icon://flight';
 			} 
 				
-		}
+		},
+        ticketStatusText: function (sValue) {
+
+            switch (sValue) {
+            case 'CANCELLED':
+            sValue = "Rejected";
+            break;
+            case 'APPROVED':
+            sValue = "Approved";
+            break;
+            case 'PENDING':
+            sValue = "Pending";
+            break;
+            }
+            return sValue;
+            },
+        ticketStatus: function (sValue) {
+            var returnStatus = "None";
+            switch (sValue) {
+            case 'CANCELLED':
+            returnStatus = "Error";
+            break;
+            case 'APPROVED':
+            returnStatus = "Success";
+            break;
+            case 'PENDING':
+            returnStatus = "Warning";
+            break;
+            default:
+            returnStatus = "None";
+            }
+            return returnStatus;
+            }
 
 
 	};

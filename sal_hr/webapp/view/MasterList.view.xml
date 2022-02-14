@@ -35,7 +35,7 @@
                                 <columns>
                                 
                                 <Column width="3rem">
-                                    <Text text="Type" />
+                                    <Text text="Type" class="tblHeaderText"/>
                                 </Column>
                                  <Column hAlign="Begin"  width="10rem">
                                     
@@ -45,13 +45,13 @@
                                 </Column>
                                 
                                 <Column hAlign="End">
-                                    <Text text="Count" />
+                                    <Text text="Count" class="tblHeaderText" />
                                 </Column>
                             </columns>
                                 <items>
                                     <ColumnListItem id="idMasterColumnList" type="Navigation" press="onMasterListPress">
                                       <cells>
-                                            <core:Icon src="{path:'name',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem"></core:Icon>        
+                                            <core:Icon src="{path:'name',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem" class="ListIcon"></core:Icon>        
                                             <Text text="{name}" />
                                              <Text text="{description}" wrapping="true" class="textDescription"/>
                                             <Text text="{totalRequests}" class="infoColor"/>     

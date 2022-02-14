@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <form:SimpleForm id="idNewLeaveRquestSimpleForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <form:content>
+            <Title id="idLeaveEditRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
+            <!-- <Label id="idLeaveRequestIDLBL" text="{i18n>Request ID}" class="sapUiSmallMarginTop"/>
+                                <Input text="2411"/> -->
+            <Label id="idLeaveStartDateLBL" text="{i18n>Start Date}" class="sapUiSmallMarginTop"/>
+            <DatePicker id="idStartLDatePicker" value="{path:'startDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}" change="handleChange"/>
+            <Label id="ideditLeaveTypeLBL" text="{i18n>Leave Type}"/>
+            <Input id="idEditTimeTypeINP" value="{timeType}"/>
+            <Label id="ideditCommentsLBL" text="{i18n>Comments}"/>
+            <TextArea value="{comment}"/>
+            <core:Title id="idLeaveEmptyTitle" text=" "/>
+            <!-- <Label id="idLeaveRequestDateLBL" text="{i18n>Request Date}"/>
+                                <DatePicker id="idRequestDatePicker" value="Oct 5,2021" change="handleChange"/> -->
+            <Label id="idLeaveEndDateLBL" text="{i18n>End Date}"/>
+            <DatePicker id="idEditLeaveEndDatePicker" value="{path:'endDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}" change="handleChange"/>
+            <Label id="idLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}"/>
+            <Text text="{displayQuantity}"/>
+        </form:content>
+    </form:SimpleForm>
+</core:FragmentDefinition>

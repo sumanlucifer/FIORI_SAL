@@ -1,0 +1,37 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <form:SimpleForm id="idNewDisplayHealthRquestSimpleForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <form:content>
+            <Title id="idHealthDisplayRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
+            <Label id="idDisplayHealthRequestIDLBL" text="{i18n>Request ID}" class="sapUiSmallMarginTop"/>
+            <Text text="2411"/>
+            <Label id="idDisplayHealthStartDateLBL" text="{i18n>Start Date}"/>
+            <Text text="{path:'physicalStartDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/>
+            <Label id="idDisplayHealthTypeLBL" text="{i18n>Health Type}"/>
+            <Text text="Seak Health"/>
+            <Label id="idDisplayHealthCommentsLBL" text="{i18n>Comments}"/>
+            <Text text="{comment}"/>
+
+            <core:Title id="idDisplayHealthEmptyTitle" text=" "/>
+            <Label id="idDisplayHealthRequestDateLBL" text="{i18n>Request Date}"/>
+            <Text text="{path:'createdDateTime',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/>
+            <Label id="idDisplayHealthEndDateLBL" text="{i18n>End Date}"/>
+            <Text text="{path:'physicalEndDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/>
+            <Label id="idDisplayHealthTotalHealthDaysLBL" text="{i18n>Total Days}"/>
+            <Text text="{quantityInDays}"/>
+        </form:content>
+    </form:SimpleForm>
+</core:FragmentDefinition>

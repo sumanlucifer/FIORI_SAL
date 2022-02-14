@@ -1,0 +1,21 @@
+<mvc:View
+    controllerName="com.sal.inprocess.myrequestinprocesscard.controller.App"
+     xmlns="sap.suite.ui.microchart"
+    xmlns:m="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <m:GenericTile header="Requests" subheader="Sent by me" frameType="TwoByOne">
+        <m:tileContent>
+            <m:TileContent frameType="TwoByOne">
+                <m:content>
+                    <ComparisonMicroChart view="Wide" size="Responsive">
+                        <data>
+                            <ComparisonMicroChartData title="Rejected" value="{totalRejected}" color="Critical"/>
+                            <ComparisonMicroChartData title="Pending" value="{totalPending}" color="Good"/>
+                            <ComparisonMicroChartData title="Approved" value="{totalApproved}" color="Error"/>
+                        </data>
+                    </ComparisonMicroChart>
+                </m:content>
+            </m:TileContent>
+        </m:tileContent>
+    </m:GenericTile>
+</mvc:View>

@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <form:SimpleForm id="idNewDisplayLeaveRquestSimpleForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <form:content>
+            <Title id="idLeaveDisplayRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
+            <!-- <Label id="idDisplayLeaveRequestIDLBL" text="{i18n>Request ID}" class="sapUiSmallMarginTop"/>
+            <Text text="2411"/> -->
+            <Label id="idDisplayLeaveStartDateLBL" text="{i18n>Start Date}" class="sapUiSmallMarginTop"/>
+            <Text text="{path:'startDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/>
+            <Label id="idDisplayLeaveTypeLBL" text="{i18n>Leave Type}"/>
+            <Text text="{timeType}"/>
+            <Label id="idDisplayLeaveCommentsLBL" text="{i18n>Comments}"/>
+            <Text text="{comment}" />
+            <core:Title id="idDisplayLeaveEmptyTitle" text=" "/>
+            <!-- <Label id="idDisplayLeaveRequestDateLBL" text="{i18n>Request Date}"/>
+            <Text text="{path:'createdDateTime',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/> -->
+            <Label id="idDisplayLeaveEndDateLBL" text="{i18n>End Date}" />
+            <Text text="{path:'endDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/>
+            <Label id="idDisplayLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}"/>
+            <Text text="{displayQuantity}"/>
+        </form:content>
+    </form:SimpleForm>
+</core:FragmentDefinition>
