@@ -36,8 +36,14 @@
            <layout:VerticalLayout id="idLeaveLayout" class="sapUiNoMargin sapUiNoContentPadding">
                 <layout:content>
                     <!-- <core:Fragment fragmentName="{oFragmentModel>/sFragmentName}" type="XML" /> -->
+                 
                 </layout:content>
             </layout:VerticalLayout>
+           
+         
+           
+
+               
         </f:content>
         <!-- DynamicPage Footer -->
         <f:footer>

@@ -24,14 +24,15 @@ modules:
           ServiceInstanceName: employee-portal-html5-srv
           ServiceKeyName: employee-portal-html5-key
           sap.cloud.service: employee_portal_service
-        - Authentication: OAuth2UserTokenExchange
-          Name: employee_portal_service_fiori_uaa
+        - Name: employee_portal_service_fiori_uaa
+          Authentication: OAuth2UserTokenExchange
           ServiceInstanceName: employee-portal-uaa-srv
           ServiceKeyName: employee-portal-uaa-key
           sap.cloud.service: employee_portal_service
-        existing_destinations_policy: update
+        existing_destinations_policy: update   
   build-parameters:
     no-source: true
+
 - name: employee-portal-app-content
   type: com.sap.application.content
   path: .
@@ -46,10 +47,6 @@ modules:
       - comsalsalhr.zip
       name: comsalsalhr
       target-path: resources/
-    - artifacts:
-      - comsalinprocessmyrequestinprocesscard.zip
-      name: comsalinprocessmyrequestinprocesscard
-      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -60,16 +57,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comsalinprocessmyrequestinprocesscard
-  type: html5
-  path: myrequest_inprocess_card
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+
 resources:
 - name: employee-portal-dest-srv
   type: org.cloudfoundry.existing-service
@@ -89,24 +77,7 @@ resources:
     service: html5-apps-repo
     service-name: employee-portal-html5-srv
     service-plan: app-host
-- name: employee-portal-web-dest-srv
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      HTML5Runtime_enabled: false
-      init_data:
-        instance:
-          destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
-      version: 1.0.0
-    service: destination
-    service-name: employee-portal-web-dest-srv
-    service-plan: lite
+
 parameters:
-  deploy_mode: html5-repo
+  deploy_mode : html5-repo
   enable-parallel-deployments: true

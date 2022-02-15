@@ -92,7 +92,7 @@
                     <Column>
                         <Label text="Request Date" class="tblHeaderText"/>
                     </Column>
-                    <Column>
+                    <Column minScreenWidth = "Small" demandPopin="false">
                         <Label text="SAP Ticket ID" class="tblHeaderText"/>
                     </Column>
                    
