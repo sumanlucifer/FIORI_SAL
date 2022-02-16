@@ -1,21 +1,54 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:l="sap.ui.layout"
-    xmlns:f="sap.ui.layout.form"
+    xmlns:fm="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
 
 
-    <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
-        <f:content>
-            <core:Title text="Create New Request " class="sapUiLargeMarginBottom" />
+
+
+        <!-- <fm:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="4" labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false">
+
+
+
+
+
+        <fm:content>  -->
+           
+         <VBox alignContent="Center">
+    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+    
             <Label text="Time Type" required="true" />
             <Select id="idTimeType" items="{ path: '/SF_Leave_TimeType'}">
                 <core:Item key="{externalCode}" text="{externalName_localized}" />
             </Select>
+
+                        <Label text="Available Balance" />
+            <Input value=" " enabled="false" width="40%">
+                <layoutData>
+                    <l:GridData span="XL2 L3 M4 S4" />
+                </layoutData>
+            </Input>
+
+       </fm:SimpleForm>
+
+
+                        <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                         
             <Label text="Start Date" required="true"/>
             <DatePicker id="idStartDate" value="{path:'LocalViewModel>/startDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" change="onLeaveStartDatChange"/>
 
+            <Label text="{i18n>EndDate}" required="true"/>
+            <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" change="onLeaveEndDateChange"/>
 
 
+
+                        </fm:SimpleForm>
+
+
+
+
+        <fm:SimpleForm layout="ColumnLayout"   columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                         
             <Label text="Requesting" />
             <Input id="idRequestDay" value=" ">
                 <layoutData>
@@ -23,28 +56,51 @@
                 </layoutData>
             </Input>
 
-            <CheckBox text="Recurring Absence" select="onSelectRecurringAbsc"></CheckBox>
+            <Label text="Returning to Work On" />
+            <DatePicker value="{path:'LocalViewModel>/returnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/>
+
+          </fm:SimpleForm>
+
+
+                   <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">             
+                             <CheckBox text="Recurring Absence" select="onSelectRecurringAbsc"></CheckBox>
+                        </fm:SimpleForm>
+
+
+                   <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">             
             <Label text="Recurs" required="true" visible="{LocalViewModel>/recurringAbs}"/>
             <Select visible="{LocalViewModel>/recurringAbs}">
                 <core:Item key="Daily" text="Daily" />
                 <core:Item key="Weekly" text="Weekly" />
                 <core:Item key="BiWeekly" text="BiWeekly" />
             </Select>
-            <Label text="Comment" />
-            <TextArea ></TextArea>
-           
-            <core:Title text=" " />
-            <Label text="Available Balance" />
-            <Input value=" " enabled="false">
+
+            <Label visible="{LocalViewModel>/recurringAbs}" text="Ends On" required="true"/>
+            <DatePicker visible="{LocalViewModel>/recurringAbs}" id="idEndonDate" value="{path:'LocalViewModel>/endsOnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" change="onLeaveStartDatChange"/>
+
+
+                                                  <Label visible="{LocalViewModel>/recurringAbs}" text="Total Requesting" />
+            <Input visible="{LocalViewModel>/recurringAbs}" value=" " enabled="false">
                 <layoutData>
                     <l:GridData span="XL2 L3 M4 S4" />
                 </layoutData>
             </Input>
-            <Label text="{i18n>EndDate}" required="true"/>
-            <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" change="onLeaveEndDateChange"/>
-            <Label text="Returning to Work On" />
-            <DatePicker value="{path:'LocalViewModel>/returnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/>
-            <core:Title text=" " /> 
+
+
+
+
+                           </fm:SimpleForm>
+
+                                           <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">      
+                                    <Label text="Comment" />
+                                    <TextArea ></TextArea>
+
+
+
+                                                                   </fm:SimpleForm>       
+
+<!-- 
+ <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" class="style-RemoveTitleHeight">              -->
               <UploadCollection id="UploadCollection"
      maximumFilenameLength="55" 
      maximumFileSize="10"
@@ -59,10 +115,15 @@
      typeMissmatch="onTypeMissmatch" 
      uploadComplete="onUploadComplete" 
      beforeUploadStarts="onBeforeUploadStarts" />  
+                        <!-- </fm:SimpleForm>  -->
+
+
+                    </VBox> 
        
        
-        </f:content>
-    </f:SimpleForm>
+        <!-- </fm:content>
+    </fm:SimpleForm>  -->
     
 
 </core:FragmentDefinition>
+
