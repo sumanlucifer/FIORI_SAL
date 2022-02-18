@@ -3,10 +3,11 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "com/sal/salhr/model/formatter",
     "sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
+	"sap/ui/model/FilterOperator",
+    'sap/ui/model/Sorter'
 ],
    
-    function (BaseController,Controller,formatter,Filter,FilterOperator) {
+    function (BaseController,Controller,formatter,Filter,FilterOperator,Sorter) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.MasterList", {
@@ -67,8 +68,9 @@ sap.ui.define([
                 var aFilters = [];
                 var sQuery = oEvent.getSource().getValue();
                 if (sQuery && sQuery.length > 0) {
-                    var filter = new Filter("name", FilterOperator.Contains, sQuery);
-                    aFilters.push(filter);
+                    // var filter = new Filter("name", FilterOperator.Contains, sQuery);
+                    // aFilters.push(filter);
+                    aFilters.push( this.createFilter("name", FilterOperator.Contains, sQuery, true) );
                 }
     
               
@@ -76,6 +78,17 @@ sap.ui.define([
                 var oBinding = oTable.getBinding("items");
                 oBinding.filter(aFilters);
 
+            },
+            createFilter: function(key, operator, value, useToLower) {
+                return new Filter(useToLower ? "tolower(" + key + ")" : key, operator, useToLower ? "'" + value.toLowerCase() + "'" : value);
+            },
+            onSort: function () {
+                this._bDescendingSort = !this._bDescendingSort;
+                var oBinding = this.getView().byId("idMasterTable").getBinding("items"),
+                    oSorter = new Sorter("name", this._bDescendingSort);
+    
+                oBinding.sort(oSorter);
             }
+
         });
     });

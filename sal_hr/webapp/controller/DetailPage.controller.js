@@ -2,10 +2,13 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "com/sal/salhr/model/formatter"
+    "com/sal/salhr/model/formatter",
+    'sap/ui/model/Sorter',
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
 ],
 
-    function (BaseController, Controller,JSONModel,formatter) {
+    function (BaseController, Controller,JSONModel,formatter,Sorter,Filter,FilterOperator) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.DetailPage", {
@@ -18,12 +21,10 @@ sap.ui.define([
             },
             _onObjectMatched: function (oEvent) {
                 debugger;
+                this._bDescendingSort = false;
+                this.oTicketTable = this.oView.byId("idTicketTable");
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
-                // if (sLayout == 'TwoColumnsMidExpanded') {
-                //     this.byId("idViewBOQListButton").setPressed(false);
-                //     this.getViewModel("objectViewModel").setProperty("/sViewBOQButtonName", "View BOQ List");
-                // }
                 // this.getView().getModel().setProperty("/busy", false);
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
                 this._bindView();
@@ -36,6 +37,7 @@ sap.ui.define([
                 var oComponentModel = this.getComponentModel();
                 //    var sTickets = sObjectPath + "/tickets";
                 var sKey = oComponentModel.createKey("/MasterSubModules", {
+                  
                     ID: this.sParentID
                 });
 
@@ -90,7 +92,7 @@ sap.ui.define([
             onSort: function () {
                 this._bDescendingSort = !this._bDescendingSort;
                 var oBinding = this.oTicketTable.getBinding("items"),
-                    oSorter = new Sorter("name", this._bDescendingSort);
+                    oSorter = new Sorter("employeeId", this._bDescendingSort);
     
                 oBinding.sort(oSorter);
             },
@@ -103,9 +105,9 @@ sap.ui.define([
                 name: "com.sal.salhr.Fragments.TicketP13nDialog",
                     controller: this
                 }).then(function(oPersonalizationDialog){
-oView.addDependent(oPersonalizationDialog);
-oPersonalizationDialog.setModel(this.oJSONModel);
-return oPersonalizationDialog;
+                    oView.addDependent(oPersonalizationDialog);
+                    oPersonalizationDialog.setModel(this.oJSONModel);
+                    return oPersonalizationDialog;
                     }.bind(this));
                     }
                     this._pPersonalizationDialog.then(function(oPersonalizationDialog){
@@ -113,7 +115,38 @@ return oPersonalizationDialog;
                     this.oDataBeforeOpen = deepExtend({}, this.oJSONModel.getData());
                     oPersonalizationDialog.open();
                         }.bind(this));
-                }
+                },
+
+                handleFullScreen: function (oEvent) {
+                    var sLayout = "";
+                    if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
+                        sLayout = "EndColumnFullScreen";
+                        oEvent.getSource().setIcon("sap-icon://exit-full-screen");
+                    } else {
+                        sLayout = "ThreeColumnsMidExpanded";
+                        oEvent.getSource().setIcon("sap-icon://full-screen");
+                    }
+    
+                    this.oRouter.navTo("detail", {
+                        parentMaterial: this.sParentID,
+                        layout: sLayout
+                    });
+                },
+    
+                handleClose: function (oEvent) {
+                    var sLayout = "",
+                        sIcon = this.byId("idFullScreenBTN").getIcon();
+                    if (sIcon === "sap-icon://full-screen") {
+                        sLayout = "TwoColumnsMidExpanded";
+                    } else {
+                        sLayout = "ThreeColumnsMidExpanded";
+                        this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                    }
+                    this.oRouter.navTo("detail", {
+                        parentMaterial: this.sParentID,
+                        layout: sLayout
+                    });
+                },
 
             
 

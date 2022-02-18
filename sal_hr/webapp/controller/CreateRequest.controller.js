@@ -29,7 +29,8 @@ sap.ui.define([
                     endDate: new Date(),
                     returnDate : sReturnDate,
                     availBal : false,
-                    recurringAbs : false     
+                    recurringAbs : false,
+                    busy:false  
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -237,7 +238,95 @@ sap.ui.define([
                 }
                
                 return days + 1;
-              }
+              },
+              onAttachmentChange:function(oEvent){
+                  debugger;
+                var rowObj = oEvent.getSource().getBindingContext().getObject();
+                var that = this
+                var oFiles = oEvent.getParameters().files;
+                var SubType = "absence_doc";
+                var Type = "ABSENCE";
+    
+                this.oFiles = oFiles;
+                var fileName = oFiles[0].name;
+    
+                var fileType = oFiles[0].type;
+    
+                fileType = fileType === "application/pdf" ? "application/pdf" : "application/octet-stream";
+    
+    
+                var fileSize = oFiles[0].size;
+                for (var i = 0; i < oFiles.length; i++) {
+                    var fileName = oFiles[i].name;
+                    var fileSize = oFiles[i].size;
+                    this._getImageData(URL.createObjectURL(oFiles[i]), function (base64) {
+                        that._addData(base64, fileName, fileType, fileSize, rowObj, oFiles);
+                    }, fileName);
+                }
+              },
+              _getImageData: function (url, callback, fileName) {
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    var reader = new FileReader();
+                    var fileByteArray = [];
+                    reader.readAsArrayBuffer(xhr.response);
+                    reader.onloadend = function (evt) {
+                        if (evt.target.readyState == FileReader.DONE) {
+                            var arrayBuffer = evt.target.result,
+                                array = new Int8Array(arrayBuffer);
+                            for (var i = 0; i < array.length; i++) {
+                                fileByteArray.push(array[i]);
+                            }
+                            callback(fileByteArray);
+                        }
+                    }
+                };
+                xhr.open('GET', url);
+                xhr.responseType = 'blob';
+                xhr.send();
+            },
+            _addData: function (base64, fileName, fileType, fileSize, rowObj, oFiles) {
+                this.getViewModel("LocalViewModel").setProperty(
+                    "/busy",
+                    true
+                );
+    
+    
+              
+             
+                var documents = {                 
+                        
+                            "module": "GENERIC_OBJECT",
+                            "fileContent": "On leave",
+                            "fileName": fileName,
+                             "userId": "Extentia"                      
+                    
+                };
+    
+               
+                debugger;
+                var sPath = "/SF_Attachment"
+                this.mainModel.create(sPath, documents, {
+                    success: function (oData, oResponse) {
+                        
+    
+    
+                        this.getView().getModel().refresh();
+                        // this._updateDocumentService(oData.ID, fileType);
+                        //   this.getView().getModel("ManageMDCCModel").getData().MDCCItems[rowId].MapItems = true;
+                        //   this.getView().getModel("ManageMDCCModel").refresh();
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getModel("LocalViewModel").setProperty(
+                            "/busy",
+                            false
+                        );
+    
+                       // sap.m.MessageBox.error("Error uploading document");
+                    }
+                });
+            },
+
              
         });
     });      

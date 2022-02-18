@@ -17,9 +17,8 @@
            
                 <f:navigationActions>
                     <Button text="Raise a Request" press="onPressRaiseRequest" type="Emphasized"/>
-                    <Button icon="sap-icon://full-screen" type="Transparent" />
-                    <!-- <Button icon="sap-icon://exit-full-screen" type="Transparent" /> -->
-                    <Button icon="sap-icon://decline" type="Transparent" />
+                    <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
+                    <Button id="idCloseButton" icon="sap-icon://decline" type="Transparent" press="handleClose" />
                     
                 </f:navigationActions>
             </f:DynamicPageTitle>
@@ -58,45 +57,44 @@
 				        </VBox>
 				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					        <Label text="In Process" class="tblHeaderText"/>
-					        <Text text="3" class="sapUiTinyMarginTop dataPointsColor"/>
+					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
 				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					        <Label text="Done" class="tblHeaderText"/>
-					        <Text text="2" class="sapUiTinyMarginTop dataPointsColor"/>
+					        <Text text="{totalApproved}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
                          <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					        <Label text="Open" class="tblHeaderText"/>
-					        <Text text="1" class="sapUiTinyMarginTop dataPointsColor"/>
+					        <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
 			        </FlexBox>
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-              <Table id="idTicketTable" items="{tickets}" inset="false">
+              <Table id="idTicketTable" items="{tickets}" inset="false" autoPopinMode="true">
                 <headerToolbar>
                     <OverflowToolbar>
                         <content>
                             <Title text="{name} Request" level="H2"/>
                             <ToolbarSpacer />
-                            <SearchField placeholder="Search for requests" width="30%"></SearchField>
-                            <Button icon="sap-icon://sort"/>
+                            <SearchField placeholder="Search for requests" width="30%" search=".onSearch"></SearchField>
+                            <Button icon="sap-icon://sort" press="onSort"/>
                             <Button icon="sap-icon://filter"/>
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
-                    <Column>
+                    <Column width="14em" importance="High">
                         <Label text="Job Card ID" class="tblHeaderText"/>
                     </Column>
 
-                    <Column>
-                        <Label text="Request Date" class="tblHeaderText"/>
+                    <Column hAlign="End" importance="Low" width="auto" popinDisplay="Inline" >
+                        <Label text="Request Date" class="tblHeaderText" />
                     </Column>
-                    <Column minScreenWidth = "Small" demandPopin="false">
-                        <Label text="SAP Ticket ID" class="tblHeaderText"/>
+                    <Column  hAlign="End" width="auto" importance="Low" popinDisplay="Inline" >
+                        <Label text="SAP Ticket ID" class="tblHeaderText" />
                     </Column>
-                   
-                    <Column>
+                    <Column  hAlign="End" width="auto" importance="High">
                         <Label text="Status" class="tblHeaderText" />
                     </Column>
                 </columns>

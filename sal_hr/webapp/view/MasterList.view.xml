@@ -26,8 +26,8 @@
                                     <content>
                                     
                                     <ToolbarSpacer />
-                                    <SearchField id="idMasterListSearch" width="30%" placeholder="Search for Type" liveChange=".onSearch" ></SearchField>
-                                    <Button icon="sap-icon://sort"/>
+                                    <SearchField id="idMasterListSearch" width="30%" placeholder="Search for Type" search=".onSearch" ></SearchField>
+                                    <Button icon="sap-icon://sort" press="onSort"/>
                                 </content>
                                     </OverflowToolbar>
                                 </headerToolbar>
@@ -37,10 +37,10 @@
                                 <Column width="3rem">
                                     <Text text="Type" class="tblHeaderText"/>
                                 </Column>
-                                 <Column hAlign="Begin"  width="10rem">
+                                 <Column hAlign="Begin"  width="15rem">
                                     
                                 </Column>
-                                 <Column minScreenWidth = "Small" demandPopin="false">
+                                 <Column minScreenWidth="phone" demandPopin="false">
                                     
                                 </Column>
                                 
