@@ -6,9 +6,10 @@ sap.ui.define([
     'sap/ui/model/Sorter',
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/Device"
 ],
 
-    function (BaseController, Controller,JSONModel,formatter,Sorter,Filter,FilterOperator) {
+    function (BaseController, Controller,JSONModel,formatter,Sorter,Filter,FilterOperator,Device) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.DetailPage", {
@@ -16,7 +17,9 @@ sap.ui.define([
             onInit: function () {
 
                 this.oRouter = this.getRouter();
+                this.oRouter.getRoute("master").attachPatternMatched(this._onObjectMatched, this);
                 this.oRouter.getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
+                this.oRouter.getRoute("detailDetail").attachPatternMatched(this._onObjectMatched, this);
 
             },
             _onObjectMatched: function (oEvent) {
@@ -32,34 +35,35 @@ sap.ui.define([
             },
 
             _bindView: function () {
-                var objectViewModel = this.getViewModel("objectViewModel");
-                var that = this;
-                var oComponentModel = this.getComponentModel();
-                //    var sTickets = sObjectPath + "/tickets";
-                var sKey = oComponentModel.createKey("/MasterSubModules", {
-                  
+              
+                var oComponentModel = this.getComponentModel(),
+                sKey = null;
+               
+                var sKey = oComponentModel.createKey("/MasterSubModules", {                 
                     ID: this.sParentID
                 });
 
                 this.getView().bindElement({
-                    path: sKey
+                    path: sKey,
+                    events: {
+                        change: function (oEvent) {                        
+                            var oContextBinding = oEvent.getSource();
+                            oContextBinding.refresh(false);
+                        }.bind(this),
+                        dataRequested: function () {
+                            this.getView().setBusy(true);
+                        }.bind(this),
+                        dataReceived: function () {
+                            this.getView().setBusy(false);
+                        }.bind(this)
+                    }
                 });
 
                 
             },
             
 
-            onPressTicketItem: function (oEvent) {
-
-                // var supplierPath = oEvent.getSource().getBindingContext("products").getPath(),
-
-                //     supplier = supplierPath.split("/").slice(-1).pop();
-
-                this.oRouter.navTo("detailDetail", {
-                    parentMaterial: this.sParentID,
-                    layout: "ThreeColumnsMidExpanded"
-                });
-            },
+          
             onPressRaiseRequest: function () {
                 this.oRouter.navTo("RaiseRequest", {
                     parentMaterial: this.sParentID,
@@ -67,13 +71,10 @@ sap.ui.define([
                 })
             },
             onPressTicketItem: function (oEvent) {
-
+                debugger;
                 this.oRouter.navTo("detailDetail", {                  
-
                     parentMaterial: this.sParentID,
-
                     childModule: oEvent.getSource().getBindingContext().getObject().externalCode,
-
                     layout: "ThreeColumnsMidExpanded"
 
                 });
@@ -84,7 +85,7 @@ sap.ui.define([
                     sQuery = oEvent.getParameter("query");
                     
                 if (sQuery && sQuery.length > 0) {
-                    oTableSearchState = [new Filter("ticketCode", FilterOperator.Contains, sQuery)];
+                    oTableSearchState = [new Filter("employeeId", FilterOperator.Contains, sQuery)];
                 }
     
                 this.oTicketTable.getBinding("items").filter(oTableSearchState, "Application");
@@ -117,13 +118,14 @@ sap.ui.define([
                         }.bind(this));
                 },
 
-                handleFullScreen: function (oEvent) {
+                handleDetailFullScreen: function (oEvent) {
+                    debugger;
                     var sLayout = "";
                     if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
-                        sLayout = "EndColumnFullScreen";
+                        sLayout = "MidColumnFullScreen";
                         oEvent.getSource().setIcon("sap-icon://exit-full-screen");
                     } else {
-                        sLayout = "ThreeColumnsMidExpanded";
+                        sLayout = "TwoColumnsMidExpanded";
                         oEvent.getSource().setIcon("sap-icon://full-screen");
                     }
     
@@ -133,20 +135,62 @@ sap.ui.define([
                     });
                 },
     
-                handleClose: function (oEvent) {
+                handleDetailClose: function (oEvent) {
                     var sLayout = "",
-                        sIcon = this.byId("idFullScreenBTN").getIcon();
+                        sIcon = this.byId("idDetailFullScreenBTN").getIcon();
                     if (sIcon === "sap-icon://full-screen") {
-                        sLayout = "TwoColumnsMidExpanded";
+                        sLayout = "EndColumnFullScreen";
                     } else {
-                        sLayout = "ThreeColumnsMidExpanded";
-                        this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                        sLayout = "TwoColumnsMidExpanded";
+                        this.byId("idDetailFullScreenBTN").setIcon("sap-icon://full-screen");
                     }
-                    this.oRouter.navTo("detail", {
-                        parentMaterial: this.sParentID,
-                        layout: sLayout
-                    });
+                    this.oRouter.navTo("master");
                 },
+                onPressFilter : function()
+                {
+                    if (!this._oFilterDialog) {
+                        this._oFilterDialog = sap.ui.xmlfragment("com.sal.salhr.Fragments.FilterDialog", this);
+                        this.getView().addDependent(this._oFilterDialog);
+                    }
+                    if (Device.system.desktop) {
+                        this._oFilterDialog.addStyleClass("sapUiSizeCompact");
+                    }
+                    this._oFilterDialog.open();
+                },
+                handleFilterDialogConfirm: function (oEvent) {
+                    var oFilterSearch = [];
+                    if (oEvent.getParameters().filterString) {
+                        var filters = oEvent.getParameters().filterCompoundKeys,
+                       sStatusFilter =   filters.Status === undefined ? "" : Object.keys(filters.Status)[0],
+                       sDateFilter = filters.Date === undefined ? "" : Object.keys(filters.Date)[0];
+
+
+                       if (sStatusFilter != "") {
+                        oFilterSearch.push(new Filter("status", FilterOperator.EQ, sStatusFilter));
+                    }
+                    if (sDateFilter != "") {
+                        oFilterSearch.push(new Filter("Date", FilterOperator.EQ, sDateFilter));
+                    }
+
+
+                    if (oFilterSearch.length > 0) {
+                        
+                        this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
+                    }
+
+                
+                    }
+                    else{
+
+                        this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
+                        //this.byId("idTicketTable").getBinding("items").filter(oFilterSearch, "Application");
+                    }
+
+
+
+
+
+                }
 
             
 

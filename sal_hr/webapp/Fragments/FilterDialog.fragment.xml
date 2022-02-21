@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <ViewSettingsDialog confirm="handleFilterDialogConfirm">
+        <filterItems>
+            <ViewSettingsFilterItem text="Status" key="Status" multiSelect="false">
+                <items>
+                    <ViewSettingsItem text="Appproved" key="APPROVED"/>
+                    <ViewSettingsItem text="Rejected" key="CANCELLED"/>
+                    <ViewSettingsItem text="Pending" key="PENDING"/>
+                </items>
+            </ViewSettingsFilterItem>
+            <ViewSettingsFilterItem items="{tickets}" text="Date" key="Date" multiSelect="false">
+                <items>
+                    <ViewSettingsItem key="{requestDate}" text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd.MM.yyyy'}}"/>
+                </items>
+            </ViewSettingsFilterItem>
+        </filterItems>
+    </ViewSettingsDialog>
+</core:FragmentDefinition>

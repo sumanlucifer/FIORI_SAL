@@ -31,6 +31,23 @@
                                                 }}"/>
             <Label id="idDisplayLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}"/>
             <Text text="{displayQuantity}"/>
+             
         </form:content>
+    </form:SimpleForm>
+    <form:SimpleForm id="idDisplayattachmentForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <form:content>
+        <UploadCollection class="uploadClasstest" maximumFileSize="10"  multiple="true" 
+                                    fileSizeExceed="onFileSizeExceed" filenameLengthExceed="onFileNameLengthExceed" 
+                                    maximumFilenameLength="500" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" 
+                                    beforeUploadStarts="onBeforeUploadStarts" mode="None" 
+                                    items="{cust_attachmentNav}" 
+                                    selectionChange="onAttachmentChange" instantUpload="false" change="onAttachmentChange" fileDeleted="onFileDeleted">
+                                    <items>
+                                        <UploadCollectionItem url="{parts: ['fileName','fileContent']}" enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false" 
+                                        fileName="{fileName}" deletePress="onDeleteDocumentPress">
+                                        </UploadCollectionItem>
+                                    </items>
+             </UploadCollection>
+         </form:content>
     </form:SimpleForm>
 </core:FragmentDefinition>

@@ -13,12 +13,12 @@
                     <Title id="idPageTitle" text="{LocalViewModel>/PageTitle}"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request 48865">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {ticketCode}">
                         <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{i18n>RequestID} :2411"/>
+                    <Label text="{i18n>RequestID} :{ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
                     <Button text="Modify" type="Emphasized" press="onEditPress"/>
@@ -37,7 +37,7 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Status}"/>
-                        <ObjectStatus text="{approvalStatus}" state="Warning"/>
+                        <ObjectStatus text="{approvalStatus}" state="Success"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>

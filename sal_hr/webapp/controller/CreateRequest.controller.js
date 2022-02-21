@@ -1,10 +1,12 @@
 sap.ui.define([ 
     "./BaseController",
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox",
+    "sap/m/upload/Uploader"
 ],
 
-    function (BaseController, Controller,JSONModel) {
+    function (BaseController, Controller,JSONModel,MessageBox,Uploader) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateRequest", {
             onInit: function () {
@@ -15,22 +17,27 @@ sap.ui.define([
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
 
-                var sReturnDate= new Date();
-                sReturnDate.setDate(new Date().getDate() + 1);
-                if(sReturnDate.getDay() === 5){
-                    sReturnDate.setDate(sReturnDate.getDate() + 2);
+                this.sReturnDate= new Date();
+                this.sRequesting = 0;
+                this.sReturnDate.setDate(new Date().getDate() + 1);
+                if(this.sReturnDate.getDay() === 5){
+                    this.sReturnDate.setDate(sReturnDate.getDate() + 2);
                     
-                }else if(sReturnDate.getDay() === 6){
-                    sReturnDate.setDate(sReturnDate.getDate() + 1);
+                }else if(this.sReturnDate.getDay() === 6){
+                    this.sReturnDate.setDate(sReturnDate.getDate() + 1);
                    
+                }else{
+                    this.sRequesting = 1;
                 }
                 var oLocalViewModel = new JSONModel({
                     startDate: new Date(),    
                     endDate: new Date(),
-                    returnDate : sReturnDate,
+                    returnDate : this.sReturnDate,
+                    requestDay : this.sRequesting,
                     availBal : false,
                     recurringAbs : false,
-                    busy:false  
+                    busy:false,
+                    uploadAttachment:true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -79,7 +86,19 @@ sap.ui.define([
                 });
 
                 this.getView().bindElement({
-                    path: sKey
+                    path: sKey,
+                    events: {
+                        change: function (oEvent) {                        
+                            var oContextBinding = oEvent.getSource();
+                            oContextBinding.refresh(false);
+                        }.bind(this),
+                        dataRequested: function () {
+                            this.getView().setBusy(true);
+                        }.bind(this),
+                        dataReceived: function () {
+                            this.getView().setBusy(false);
+                        }.bind(this)
+                    }
                 });
                 
              
@@ -103,10 +122,11 @@ sap.ui.define([
                         this.oFragment = sap.ui.xmlfragment("idLeaveFragment",this.fragmentName ,this);
                         oLayout.addContent(this.oFragment);
                         break;
+                    // Business Trip Module
                     case "2":
                         oLayout.destroyContent();
                         this.fragmentName = "com.sal.salhr.Fragments.CreateBusinessTrip";
-                        var oFragment = sap.ui.xmlfragment(this.fragmentName ,this);
+                        var oFragment = sap.ui.xmlfragment("idBusinessTrip",this.fragmentName ,this);
                         oLayout.addContent(oFragment);
                         break;                                                                   
                   }
@@ -116,38 +136,64 @@ sap.ui.define([
             },
             
             onRaiseRequestPress: function (oAdditionalData, aReservationItems) {
+                var oCreatePayload = this.getCreatePayload();
+                this.getView().setBusy(true);
+               
+                this.mainModel.create("/SF_Leave", oCreatePayload, {
+                    success: function (oData, oResponse) {
+                        sap.m.MessageBox.success("Request Submitted Successfully.");
+                        this.getView().setBusy(false);
+                        this.getView().getModel().refresh();
+                        this.oRouter.navTo("detail", {
+                            parentMaterial: this.sParentID,
+                            layout: "TwoColumnsMidExpanded"
+
+                        });
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);  
+                        this.getView().getModel().refresh();
+                        this.getView().setBusy(false);
+                       
+                    }.bind(this)
+                })
+            },
+            getCreatePayload:function(){
+                var sAttachmentFileContent, sAttahmentFileName;
                 var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getValue();
                 sStartDate = Date.parse(sStartDate);
                 var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
                 sEndDate = Date.parse(sEndDate);
                 var sTimeType =  sap.ui.core.Fragment.byId("idLeaveFragment", "idTimeType").getSelectedKey();
-                var oPayload =
-                {
-                "endDate":"/Date(" + sEndDate + ")/",
-                "loaActualReturnDate": null,
-                "timeType": sTimeType,
-                "loaExpectedReturnDate": null,
-                "loaStartJobInfoId": null,
-                "startDate": "/Date(" + sStartDate + ")/",
-                "cust_KronosPayCodeEditID": null,
-                "startTime": null,
-                "loaEndJobInfoId": null,
-                "approvalStatus": null,
-                "undeterminedEndDate": false,
-                "userId": "12002024",
-                "recurrenceGroup": null,
-                "fractionQuantity": "1",
-                "endTime": null
-                }                     
-                ;
-                this.mainModel.create("/SF_Leave", oPayload, {
-                    success: function (oData, oResponse) {
-                        sap.m.MessageBox.success("Request Submitted Successfully.");
-                    }.bind(this),
-                    error: function (oError) {
-                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);  
-                    }.bind(this)
-                })
+                if(this.isAttachment === true){
+                    sAttachmentFileContent = this.fileContent;
+                    sAttahmentFileName = this.fileName;
+                }else{
+                    sAttachmentFileContent = "";
+                    sAttahmentFileName = "";
+                }
+              
+                return {
+                    "endDate": "/Date(" + sEndDate + ")/",
+                    "loaActualReturnDate": null,
+                    "timeType": sTimeType,
+                    "loaExpectedReturnDate": null,
+                    "loaStartJobInfoId": null,
+                    "startDate": "/Date(" + sStartDate + ")/",
+                    "cust_KronosPayCodeEditID": null,
+                    "startTime": null,
+                    "loaEndJobInfoId": null,
+                    "approvalStatus": null,
+                    "undeterminedEndDate": false,
+                    "userId": "12002024",
+                    "recurrenceGroup": null,
+                    "fractionQuantity": "1",
+                    "endTime": null,
+                    "isAttachmentNew": true,
+                    "attachmentFileContent": sAttachmentFileContent,
+                    "attachmentFileName": sAttahmentFileName,
+                    "attachmentUserId": "Extentia"
+                };
             },
             onLeaveStartDatChange:function(oEvent){
                 var oneDay = 24 * 60 * 60 * 1000;
@@ -155,7 +201,7 @@ sap.ui.define([
                 var sStartDate = oEvent.getSource().getDateValue();
                
                 this.sRequestDay = "";
-                if(sEndDate < sStartDate){
+                if(sEndDate <= sStartDate){
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -167,7 +213,8 @@ sap.ui.define([
                     // this.sRequestDay = Math.round(Math.abs((new Date(sEndDate) - sStartDate) / oneDay)) + 1;
                     
                     this.sRequestDay = this.dateDifference(sStartDate,sEndDate);
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
+                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
+                    this.getView().getModel("LocalViewModel").setProperty("/requestDay",this.sRequestDay);
                 }
             },
             onLeaveEndDateChange:function(oEvent){
@@ -175,7 +222,7 @@ sap.ui.define([
                 var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
                 var sEndDate = oEvent.getSource().getDateValue();
                 
-                if(sEndDate < sStartDate){
+                if(sEndDate <= sStartDate){
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("End Date should be later than Start Date");
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -186,8 +233,8 @@ sap.ui.define([
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueStateText("");
                     // this.sRequestDay = Math.round(Math.abs((sEndDate - new Date(sStartDate)) / oneDay)) + 1 ;
                     this.sRequestDay = this.dateDifference(sStartDate,sEndDate,oEvent);
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                   
+                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
+                    this.getView().getModel("LocalViewModel").setProperty("/requestDay",this.sRequestDay);
                 }
             },
             onSelectRecurringAbsc:function(oEvent){
@@ -198,7 +245,7 @@ sap.ui.define([
                  }
             },
             dateDifference:function(startDate, endDate) {
-         
+               
                 startDate.setHours(12,0,0,0);
                 endDate.setHours(12,0,0,0);
       
@@ -225,107 +272,162 @@ sap.ui.define([
                   }
                   startDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/startDate").getDate());
                 }
-                var sReturnDate = new Date();
-                sReturnDate.setDate(endDate.getDate() + 1);
+                // var data = this.getView().getModel("LocalViewModel").getData();
+                // var sReturnDate = jQuery.extend(true,[],data);
+
+                var sReturnDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
+
+                
+
+                sReturnDate.setDate(sReturnDate.getDate() + 1);
+
                 if(sReturnDate.getDay() === 5){
                     sReturnDate.setDate(sReturnDate.getDate() + 2);
+                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
                     this.getView().getModel("LocalViewModel").setProperty("/returnDate",sReturnDate);
                 }else if(sReturnDate.getDay() === 6){
                     sReturnDate.setDate(sReturnDate.getDate() + 1);
                     this.getView().getModel("LocalViewModel").setProperty("/returnDate",sReturnDate);
+                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
                 }else {
-                    sReturnDate.setDate(endDate.getDate() + 1);
+                    sReturnDate.setDate(sReturnDate.getDate() + 1);
+                    this.getView().getModel("LocalViewModel").setProperty("/returnDate",sReturnDate);
+                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
                 }
-               
+                endDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/endDate").getDate());
                 return days + 1;
               },
               onAttachmentChange:function(oEvent){
                   debugger;
-                var rowObj = oEvent.getSource().getBindingContext().getObject();
-                var that = this
-                var oFiles = oEvent.getParameters().files;
-                var SubType = "absence_doc";
-                var Type = "ABSENCE";
-    
-                this.oFiles = oFiles;
-                var fileName = oFiles[0].name;
-    
-                var fileType = oFiles[0].type;
-    
-                fileType = fileType === "application/pdf" ? "application/pdf" : "application/octet-stream";
-    
-    
-                var fileSize = oFiles[0].size;
-                for (var i = 0; i < oFiles.length; i++) {
-                    var fileName = oFiles[i].name;
-                    var fileSize = oFiles[i].size;
-                    this._getImageData(URL.createObjectURL(oFiles[i]), function (base64) {
-                        that._addData(base64, fileName, fileType, fileSize, rowObj, oFiles);
-                    }, fileName);
-                }
+                  var that= this;
+                //   var file = sap.ui.core.Fragment.byId("idLeaveFragment", "UploadCollection").getFocusDomRef().files[0];
+                     var file = oEvent.getParameters().files[0];
+                  //Input = "458076",
+                  var Filename = file.name,
+                      Filetype = file.type,
+                      Filesize = file.size;
+      
+                
+                  //code for base64/binary array 
+                  this._getImageData((file), function (Filecontent) {
+                      that._addData(Filecontent, Filename, Filetype, Filesize);
+                  });
               },
               _getImageData: function (url, callback, fileName) {
-                var xhr = new XMLHttpRequest();
-                xhr.onload = function () {
-                    var reader = new FileReader();
-                    var fileByteArray = [];
-                    reader.readAsArrayBuffer(xhr.response);
-                    reader.onloadend = function (evt) {
-                        if (evt.target.readyState == FileReader.DONE) {
-                            var arrayBuffer = evt.target.result,
-                                array = new Int8Array(arrayBuffer);
-                            for (var i = 0; i < array.length; i++) {
-                                fileByteArray.push(array[i]);
-                            }
-                            callback(fileByteArray);
-                        }
+                var reader = new FileReader();
+
+                reader.onloadend = function (evt) {
+                    if (evt.target.readyState === FileReader.DONE) {
+    
+                        var binaryString = evt.target.result,
+                            base64file = btoa(binaryString);
+    
+                        callback(base64file);
                     }
                 };
-                xhr.open('GET', url);
-                xhr.responseType = 'blob';
-                xhr.send();
+                reader.readAsBinaryString(url);
             },
-            _addData: function (base64, fileName, fileType, fileSize, rowObj, oFiles) {
+            _addData: function (Filecontent, Filename, Filetype, Filesize) {
                 this.getViewModel("LocalViewModel").setProperty(
                     "/busy",
                     true
                 );
-    
+                this.fileContent = Filecontent;
+                this.fileName = Filename;
+                this.isAttachment = true;
     
               
              
-                var documents = {                 
-                        
-                            "module": "GENERIC_OBJECT",
-                            "fileContent": "On leave",
-                            "fileName": fileName,
-                             "userId": "Extentia"                      
-                    
-                };
+                // return {                 
+                      
+                            
+                //             "fileContent": Filecontent,
+                //             "fileName": Filename
+                            
+                // };
     
                
                 debugger;
-                var sPath = "/SF_Attachment"
-                this.mainModel.create(sPath, documents, {
-                    success: function (oData, oResponse) {
+                // var sPath = "/SF_Attachment"
+                // this.mainModel.create(sPath, documents, {
+                //     success: function (oData, oResponse) {
                         
     
     
-                        this.getView().getModel().refresh();
-                        // this._updateDocumentService(oData.ID, fileType);
-                        //   this.getView().getModel("ManageMDCCModel").getData().MDCCItems[rowId].MapItems = true;
-                        //   this.getView().getModel("ManageMDCCModel").refresh();
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getModel("LocalViewModel").setProperty(
-                            "/busy",
-                            false
-                        );
+                //         this.getView().getModel().refresh();
+                //         this.attachmentId = oData.attachmentId + "L";
+                //         // this._updateDocumentService(oData.ID, fileType);
+                //         //   this.getView().getModel("ManageMDCCModel").getData().MDCCItems[rowId].MapItems = true;
+                //         //   this.getView().getModel("ManageMDCCModel").refresh();
+                //     }.bind(this),
+                //     error: function (oError) {
+                //         this.getModel("LocalViewModel").setProperty(
+                //             "/busy",
+                //             false
+                //         );
     
-                       // sap.m.MessageBox.error("Error uploading document");
-                    }
-                });
+                //        // sap.m.MessageBox.error("Error uploading document");
+                //     }
+                // });
             },
+            onFileDeleted: function(oEvent) {
+                debugger;
+                MessageToast.show("Event fileDeleted triggered");
+            },
+            onTimeTyeChange:function(oEvent){
+                 var sType = oEvent.getSource().getSelectedKey();
+                 if(sType === "S110" || sType === "500"){
+                    this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment' , false);
+                 }else {
+                    this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment' , true);
+                 }
+            },
+            onFileSizeExceed: function () {
+                MessageBox.error("File size exceeded, Please upload file upto 10MB.");
+            },
+    
+            onFileNameLengthExceed: function () {
+                MessageBox.error("File name length exceeded, Please upload file with name lenght upto 50 characters.");
+            },
+            onUploadComplete: function(oEvent) {
+                var sUploadedFileName = oEvent.getParameter("files")[0].fileName;
+                setTimeout(function() {
+                    var oUploadCollection = sap.ui.core.Fragment.byId("idLeaveFragment", "UploadCollection");
+    
+                    for (var i = 0; i < oUploadCollection.getItems().length; i++) {
+                        if (oUploadCollection.getItems()[i].getFileName() === sUploadedFileName) {
+                            oUploadCollection.removeItem(oUploadCollection.getItems()[i]);
+                            break;
+                        }
+                    }
+    
+                    // delay the success message in order to see other messages before
+                   
+                }.bind(this), 8000);
+            },
+            onCreateCancelPress:function(){
+                this.oRouter.navTo("detail", {
+                    parentMaterial: this.sParentID,
+                    layout: "TwoColumnsMidExpanded"
+
+                });
+                this.mainModel.refresh();
+            },
+            onCreateResetPress:function(){
+                var dataReset = {
+                    startDate: new Date(),    
+                    endDate: new Date(),
+                    returnDate : this.sReturnDate,
+                    requestDay : this.sRequesting,
+                    availBal : false,
+                    recurringAbs : false,
+                    busy:false,
+                    uploadAttachment:true
+                };
+                this.getView().getModel("LocalViewModel").setData(dataReset);
+                this.getView().getModel("LocalViewModel").refresh();
+            }
+    
 
              
         });

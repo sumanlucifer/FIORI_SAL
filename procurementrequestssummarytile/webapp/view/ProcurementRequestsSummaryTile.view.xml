@@ -1,0 +1,21 @@
+<mvc:View
+    controllerName="com.sal.summarytiles.procurementrequestssummarytile.controller.ProcurementRequestsSummaryTile"
+    xmlns="sap.suite.ui.microchart"
+    xmlns:m="sap.m"
+    xmlns:mvc="sap.ui.core.mvc">
+    <m:GenericTile id="idProcReq_SummaryTile" header="Requests" subheader="Sent by me" frameType="TwoByOne">
+        <m:tileContent>
+            <m:TileContent id="idHRReq_SummaryTileContent" frameType="TwoByOne">
+                <m:content>
+                    <ComparisonMicroChart id="idProcurementReq_Chart" view="Wide" size="Responsive">
+                        <data>
+                            <ComparisonMicroChartData id="idProcurementReq_Rejected" title="Rejected" value="{totalRejected}" color="Critical"/>
+                            <ComparisonMicroChartData id="idProcurementReq_Pending" title="Pending" value="{totalPending}" color="Good"/>
+                            <ComparisonMicroChartData id="idProcurementReq_Approved" title="Approved" value="{totalApproved}" color="Error"/>
+                        </data>
+                    </ComparisonMicroChart>
+                </m:content>
+            </m:TileContent>
+        </m:tileContent>
+    </m:GenericTile>
+</mvc:View>

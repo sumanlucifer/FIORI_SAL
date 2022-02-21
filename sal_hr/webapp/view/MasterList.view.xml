@@ -7,64 +7,54 @@
 >
    <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false" class="page" >
         <f:title>
-            <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding" stickySubheaderProvider="Table">
+            <f:DynamicPageTitle id="dynamicPageTitle" backgroundDesign="Transparent" class="sapUiNoContentPadding" >
                 <f:heading>
-                    <Title text="Human Resource"/>
-                </f:heading>
-              
+                    <Title id="idTitleHuman" text="{i18n>humanResource}"/>
+                </f:heading>         
             </f:DynamicPageTitle>
-        </f:title>
-	
-	
+        </f:title>	
         <f:content>
               	<Table id="idMasterTable"
 		                    inset="false"
-		                    items="{/MasterSubModules}" 
-                                >
+		                    items="{/MasterSubModules}">
 		                     <headerToolbar>
-			                    <OverflowToolbar>
+			                    <OverflowToolbar id="idMasterOverFlow">
                                     <content>
                                     
-                                    <ToolbarSpacer />
+                                    <ToolbarSpacer id="idMasterToolBar"/>
                                     <SearchField id="idMasterListSearch" width="30%" placeholder="Search for Type" search=".onSearch" ></SearchField>
-                                    <Button icon="sap-icon://sort" press="onSort"/>
+                                    <Button id="idMasterButtonSort" icon="sap-icon://sort" press="onSort"/>
                                 </content>
                                     </OverflowToolbar>
                                 </headerToolbar>
                                 
                                 <columns>
                                 
-                                <Column width="3rem">
-                                    <Text text="Type" class="tblHeaderText"/>
+                                <Column id="idMasterType" width="3rem">
+                                    <Text id="idTextType" text="{i18n>type}" class="tblHeaderText"/>
                                 </Column>
-                                 <Column hAlign="Begin"  width="15rem">
+                                 <Column id="idMasterCol2" hAlign="Begin"  width="15rem">
                                     
                                 </Column>
-                                 <Column minScreenWidth="phone" demandPopin="false">
+                                 <Column id="idMasterCol3" minScreenWidth="Small" demandPopin="false" >
                                     
                                 </Column>
                                 
-                                <Column hAlign="End">
-                                    <Text text="Count" class="tblHeaderText" />
+                                <Column id="idMasterCount" hAlign="End" importance="High">
+                                    <Text id="idTextCount" text="{i18n>count}" class="tblHeaderText" />
                                 </Column>
                             </columns>
                                 <items>
                                     <ColumnListItem id="idMasterColumnList" type="Navigation" press="onMasterListPress">
                                       <cells>
-                                            <core:Icon src="{path:'name',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem" class="ListIcon"></core:Icon>        
-                                            <Text text="{name}" />
-                                             <Text text="{description}" wrapping="true" class="textDescription"/>
-                                            <Text text="{totalRequests}" class="infoColor"/>     
+                                            <core:Icon id="idMasterIcon" src="{path:'name',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem" class="ListIcon"></core:Icon>        
+                                            <Text id="idMasterNameTxt" text="{name}" />
+                                             <Text id="idMasterDescText" text="{description}" wrapping="true" class="textDescription"/>
+                                            <Text id="idTotalReq" text="{totalRequests}" class="infoColor"/>     
                                        </cells> 
                                     </ColumnListItem>
                                 </items>
-	                    </Table>
-
-
-
+	                </Table>
         </f:content>
-
-
-		
 	</f:DynamicPage>
 </mvc:View>

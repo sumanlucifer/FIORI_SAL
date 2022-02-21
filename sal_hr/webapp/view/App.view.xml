@@ -6,32 +6,7 @@
 	xmlns="sap.f"
 	xmlns:mvc="sap.ui.core.mvc"
 >
-    <!-- <Shell id="shell">
-        <App id="app">
-            <pages>
-                <Page id="page" title="{i18n>title}">
-                    <content>
-                   	<ui:Table id="idTb"
-				rows="{/MasterSubModules}"
-				selectionMode="MultiToggle"
-				visibleRowCount="7"
-				paste="onPaste"
-				ariaLabelledBy="title">
-				
-				<ui:columns>
-					<ui:Column width="11rem">
-						<Label text="Type" />
-						<ui:template>
-							<Text text="{name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-				</ui:columns>
-			</ui:Table>
-                    </content>
-                </Page>
-            </pages>
-        </App>
-    </Shell> -->
+   
 
     <m:App>
         <m:pages>

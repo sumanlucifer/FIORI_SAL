@@ -5,16 +5,41 @@ sap.ui.define([], function() {
 	return {
 			changeIcon: function(sValue) {
            
-			if (sValue === "Leaves") {
+			// if (sValue === "Leaves") {
 			 
-                return 'sap-icon://create-leave-request';
+            //     return 'sap-icon://create-leave-request';
 			
-			} else if (sValue === "Business Trip") {
-                return 'sap-icon://stethoscope';
-			} else if (sValue === "Health Insurance") {
+			// } else if (sValue === "Business Trip") {
+            //     return 'sap-icon://stethoscope';
+			// } else if (sValue === "Health Insurance") {
+            //     return 'sap-icon://flight';
+			// } 
+            switch (sValue) {
+                case 'Leaves':
+                return 'sap-icon://create-leave-request';
+                break;
+				case 'Business Trip':
                 return 'sap-icon://flight';
-			} 
-				
+                break;
+                case 'Health Insurance':
+                return 'sap-icon://stethoscope';
+                break;
+                case 'Loan and advance request':
+                return 'sap-icon://loan';
+                break;
+                case 'Business Card Request':
+                return 'sap-icon://business-card';
+                break;
+                case 'Airport Travel Pass':
+                return 'sap-icon://travel-expense';
+                break;
+                case 'ID card replacement request':
+                return 'sap-icon://business-card';
+                break;
+                case 'Apply for Jon vacancy':
+                return 'sap-icon://business-card';
+                break;
+            }    
 		},
         ticketStatusText: function (sValue) {
 

@@ -41,7 +41,9 @@ sap.ui.define([
                 switch (this.sParentID) {
                     // Leave Module
                     case "1":
+                        
                         sKey = oComponentModel.createKey("/SF_Leave", {
+                           
                             externalCode: this.sChildID
                         });
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
@@ -84,6 +86,10 @@ sap.ui.define([
                     path: sKey,
 
                     events: {
+                        change: function (oEvent) {                        
+                            var oContextBinding = oEvent.getSource();
+                            oContextBinding.refresh(false);
+                        }.bind(this),
                         dataRequested: function () {
                             this.getView().setBusy(true);
                         }.bind(this),
@@ -113,7 +119,7 @@ sap.ui.define([
                 this.getView().getModel().remove("/SF_Leave('" + sKey + "')", {
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
-                            MessageBox.success("Record Deleted successfully.");
+                            sap.m.MessageBox.success("Record Deleted successfully.");
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
@@ -141,10 +147,16 @@ sap.ui.define([
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
 
-                this.oRouter.navTo("detail", {
+                // this.oRouter.navTo("detail", {
+                //     parentMaterial: this.sParentID,
+                //     layout: sLayout
+                // });
+                this.oRouter.navTo("detailDetail", {
                     parentMaterial: this.sParentID,
+                    childModule:this.sChildID,
                     layout: sLayout
                 });
+
             },
 
             handleClose: function (oEvent) {
@@ -199,14 +211,38 @@ sap.ui.define([
             },
 
             fnGetLeaveRequestPayload: function () {
+                // return {
+                //     "endDate": this.getView().byId("idEditLeaveEndDatePicker").getValue(),
+                //     "timeType": this.getView().byId("idEditTimeTypeINP").getValue(),
+                //     "startDate": this.getView().byId("idStartLDatePicker").getValue(),
+                //     "undeterminedEndDate": false,
+                //     "userId": "12002024",
+                //     "fractionQuantity": "1"
+                // };
+
                 return {
-                    "endDate": this.getView().byId("idEditLeaveEndDatePicker").getValue(),
-                    "timeType": this.getView().byId("idEditTimeTypeINP").getValue(),
-                    "startDate": this.getView().byId("idStartLDatePicker").getValue(),
-                    "undeterminedEndDate": false,
-                    "userId": "12002024",
-                    "fractionQuantity": "1"
-                };
+                        "endDate": "/Date(1643740200000)/",
+                        "loaActualReturnDate": null,
+                        "timeType": "S110",
+                        "loaExpectedReturnDate": null,
+                        "loaStartJobInfoId": null,
+                        "startDate": "/Date(1643740200000)/",
+                        "cust_KronosPayCodeEditID": null,
+                        "startTime": null,
+                        "loaEndJobInfoId": null,
+                        "approvalStatus": null,
+                        "undeterminedEndDate": false,
+                        "userId": "12002024",
+                        "recurrenceGroup": null,
+                        "fractionQuantity": "1",
+                        "endTime": null,
+                        "isAttachmentNew": false,
+                        "attachmentId": "32575",
+                        "attachmentFileContent": "On leave",
+                        "attachmentFileName": "absense.txt",
+                        "attachmentUserId": "Extentia"
+                    
+                }
             },
 
             fnGetBusinessTripPayload: function () {

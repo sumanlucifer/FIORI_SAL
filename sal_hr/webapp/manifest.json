@@ -125,8 +125,6 @@
                 {
 					"pattern": "detail/{parentMaterial}/{layout}",
 					"name": "detail",
-                    "titleTarget": "",
-                    "greedy": false,
 					"target": [
                         "master",
 						 "detail"
@@ -135,8 +133,6 @@
                 {
 					"pattern": "detail/{parentMaterial}/detailDetail/{childModule}/{layout}",
 					"name": "detailDetail",
-                    "titleTarget": "",
-                    "greedy": false,
 					"target": [
                          "master",
 						 "detail",
@@ -161,33 +157,21 @@
             "targets": {
                 "master": {
 					"viewName": "MasterList",
-                    "viewLevel": 1,
-                    "viewType": "XML",
-                    "transition": "slide",
 					"controlAggregation": "beginColumnPages"
 				},
                 "detail": {
                     "viewName": "DetailPage",
-                    "viewLevel": 2,
-                    "viewType": "XML",
-                    "transition": "slide",
                     "controlAggregation": "midColumnPages"
                     
                 },
                 "detailDetail": {
                     "viewName": "DetailDetailPage",
-                    "viewLevel": 3,
-                    "viewType": "XML",
-                    "transition": "slide",
                     "controlAggregation": "endColumnPages"
                     
                 },
                 "RaiseRequest": {
-                    "viewName": "CreateRequest",
-                    "viewType": "XML",
-                    "controlAggregation": "endColumnPages",
-                    "transition": "slide",
-                    "viewLevel": 4                                 
+                    "viewName": "CreateRequest",                  
+                    "controlAggregation": "endColumnPages"                                  
                 }            
             }
         }

@@ -7,47 +7,26 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:layout="sap.ui.layout" height="100%">
-    <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="{/titleClickable}" class="page" >
+    <f:DynamicPage id="dynamicPageId" class="page" >
         <!-- DynamicPage Title -->
         <f:title>
-            <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding" stickySubheaderProvider="Table">
+            <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding" >
                 <f:heading>
                     <Title text="{name}"/>
                 </f:heading>
            
                 <f:navigationActions>
                     <Button text="Raise a Request" press="onPressRaiseRequest" type="Emphasized"/>
-                    <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
-                    <Button id="idCloseButton" icon="sap-icon://decline" type="Transparent" press="handleClose" />
+                    <Button id="idDetailFullScreenBTN" icon="sap-icon://full-screen" press="handleDetailFullScreen" type="Transparent" />
+                    <Button id="idCloseButton" icon="sap-icon://decline" type="Transparent" press="handleDetailClose" />
                     
                 </f:navigationActions>
             </f:DynamicPageTitle>
         </f:title>
         <!-- DynamicPage Header -->
         <f:header>
-            <f:DynamicPageHeader pinnable="true">
-                <!-- <layout:HorizontalLayout allowWrapping="true">
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute text="Total Request"/>
-                        <Label design="Bold" text="{totalRequests}"/>
-                    </layout:VerticalLayout>
-
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute text="In Process"/>
-                        <Label design="Bold" text="{totalPending}"/>
-                    </layout:VerticalLayout>
-
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute text="Done"/>
-                        <Label design="Bold" text="{totalApproved}"/>
-                    </layout:VerticalLayout>
-
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute text="Open"/>
-                        <Label design="Bold" text="{totalPending}"/>
-                    </layout:VerticalLayout>
-
-                </layout:HorizontalLayout> -->
+            <f:DynamicPageHeader id="idDetailHeader" pinnable="true">
+             
 
                 	<FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
 				
@@ -77,9 +56,9 @@
                         <content>
                             <Title text="{name} Request" level="H2"/>
                             <ToolbarSpacer />
-                            <SearchField placeholder="Search for requests" width="30%" search=".onSearch"></SearchField>
+                            <SearchField placeholder="Search for Job ID" width="30%" search=".onSearch"></SearchField>
                             <Button icon="sap-icon://sort" press="onSort"/>
-                            <Button icon="sap-icon://filter"/>
+                            <Button icon="sap-icon://filter" press="onPressFilter"/>
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>
