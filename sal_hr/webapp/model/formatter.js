@@ -15,7 +15,7 @@ sap.ui.define([], function() {
             //     return 'sap-icon://flight';
 			// } 
             switch (sValue) {
-                case 'Leaves':
+                case 'Leave':
                 return 'sap-icon://create-leave-request';
                 break;
 				case 'Business Trip':
@@ -39,6 +39,10 @@ sap.ui.define([], function() {
                 case 'Apply for Jon vacancy':
                 return 'sap-icon://business-card';
                 break;
+                case 'Bank Details':
+                return 'sap-icon://quality-issue';
+                break;
+
             }    
 		},
         ticketStatusText: function (sValue) {

@@ -58,6 +58,47 @@ sap.ui.define([
         dismissBusyDialog: function () {
             BusyIndicator.hide();
         },
+        _getTicketData: function (sId) {
+
+            var idFILTER = new sap.ui.model.Filter({
+            
+            path: "ID",
+            
+            operator: sap.ui.model.FilterOperator.EQ,
+            
+            value1: sId
+            
+            });
+            
+            var filter = [];
+            
+            filter.push(idFILTER);
+            
+            
+            
+            var oComponentModel = this.getComponentModel();   
+            oComponentModel.read("/Tickets", {
+            
+            filters: [filter],
+            
+            success: function (oData, oResponse) {
+            
+            this._bindView(oData);
+            
+            }.bind(this),
+            
+            error: function (oError) {
+            
+            sap.m.MessageBox.error(JSON.stringify(oError));
+            
+            }
+            
+            });
+            
+            
+            
+            
+            },
 
         /**
         * Adds a history entry in the FLP page history
@@ -84,7 +125,7 @@ sap.ui.define([
                     });
                 }
             };
-        })()
+        })
     });
 
 }

@@ -31,13 +31,16 @@ sap.ui.define([
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
                 this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                this._bindView();
+                // this._bindView();
+                this._getTicketData(this.sChildID);
             },
 
-            _bindView: function () {
+            _bindView: function (data) {
+                var object = data.results[0];
+                this.object = data.results[0];
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
-
+                var that = this;
                 switch (this.sParentID) {
                     // Leave Module
                     case "1":
@@ -46,6 +49,20 @@ sap.ui.define([
                            
                             externalCode: this.sChildID
                         });
+                        this.getView().getModel().read("/SF_Leave('" + this.sChildID + "')", {
+                            urlParameters: {
+                                "$expand": "cust_attachmentNav"
+                            },
+                            success: function (oData) {
+                                var oAttachModel = new JSONModel(oData.cust_attachmentNav);
+                                that.getView().setModel(oAttachModel,"attachmentModel");
+                            },
+                            error: function (oError) {
+        
+                            }
+        
+                        });
+
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
                         this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
@@ -78,13 +95,29 @@ sap.ui.define([
 
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance");
                         break;
+                     //  Bank Request Module 
+                    case "13":
+
+                            debugger;
+                            sKey = oComponentModel.createKey("/SF_BankDetails", {
+                                effectiveStartDate: object.effectiveStartDate,
+                                externalCode: object.externalCode
+    
+    
+                            });
+                            this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", true);
+                            this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
+                            this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
+                            this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
+                            this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Bank Change Request");
+                            break;    
                 }
 
                 this.getView().getModel("LocalViewModel").refresh();
 
                 this.getView().bindElement({
                     path: sKey,
-
+                   
                     events: {
                         change: function (oEvent) {                        
                             var oContextBinding = oEvent.getSource();
@@ -181,7 +214,7 @@ sap.ui.define([
                 switch (this.sParentID) {
                     // Leave Module
                     case "1":
-                        sEntityPath = "/SF_Leave";
+                        sEntityPath = "/SF_Leave('" + this.sChildID + "')";
                         oPayloadObj = this.fnGetLeaveRequestPayload();
                         break;
 
@@ -196,6 +229,19 @@ sap.ui.define([
                         // sEntityPath="/Health_Insurance";
                         // oPayloadObj = this.fnGetHealthInsurancePayload();
                         break;
+                      // Bankrequest change Module
+                    case "13":
+
+                            var oComponentModel = this.getComponentModel(),
+                               sKey = oComponentModel.createKey("/SF_BankDetails", {
+                                effectiveStartDate: this.object.effectiveStartDate,
+                                externalCode: this.object.externalCode
+    
+    
+                            });
+                            sEntityPath= sKey;
+                            oPayloadObj = this.fnBankRequestChangePayload();
+                            break;    
                 }
 
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
@@ -220,13 +266,21 @@ sap.ui.define([
                 //     "fractionQuantity": "1"
                 // };
 
+                var sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
+                var sattachmentFileContent= this.getView().getModel("attachmentModel").getData().fileContent;
+                var sattachmentFileID= this.getView().getModel("attachmentModel").getData().attachmentId;
+                var sEndDate = this.getView().byId("idEditLeaveEndDatePicker").getValue();
+                sEndDate = Date.parse(sEndDate);
+                var sStartDate = this.getView().byId("idStartLDatePicker").getValue();
+                sStartDate = Date.parse(sStartDate);
+                
                 return {
-                        "endDate": "/Date(1643740200000)/",
+                        "endDate": "/Date("+sEndDate+")/" ,
                         "loaActualReturnDate": null,
                         "timeType": "S110",
                         "loaExpectedReturnDate": null,
                         "loaStartJobInfoId": null,
-                        "startDate": "/Date(1643740200000)/",
+                        "startDate": "/Date("+sStartDate+")/" ,
                         "cust_KronosPayCodeEditID": null,
                         "startTime": null,
                         "loaEndJobInfoId": null,
@@ -237,12 +291,13 @@ sap.ui.define([
                         "fractionQuantity": "1",
                         "endTime": null,
                         "isAttachmentNew": false,
-                        "attachmentId": "32575",
-                        "attachmentFileContent": "On leave",
-                        "attachmentFileName": "absense.txt",
+                        "attachmentId": sattachmentFileID,
+                        "attachmentFileContent": "on Leave",
+                        "attachmentFileName": sattachmentFileName,
                         "attachmentUserId": "Extentia"
                     
                 }
+              
             },
 
             fnGetBusinessTripPayload: function () {
@@ -252,6 +307,14 @@ sap.ui.define([
 
             fnGetHealthInsurancePayload: function () {
                 return {
+                };
+            },
+            fnBankRequestChangePayload: function () {
+                return {
+                    "externalCode": "12002425",
+                    "effectiveStartDate": this.getView().byId("idEditFromDatePicker").getDateValue(),
+                    "cust_bankName": this.getView().byId("idEditBankNameINP").getValue(),
+                    "cust_iban": this.getView().byId("idEditIBANINP").getValue()
                 };
             }
 

@@ -81,9 +81,9 @@
                     <ColumnListItem press="onPressTicketItem" vAlign="Middle" type="Navigation">
                         <cells>
                             <!-- <Text text="{ticketCode}" /> -->
-                            <Text text="{employeeId}" />
-                            <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd.MM.yyyy'}}" />
                             <Text text="{ticketCode}" />
+                            <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd.MM.yyyy'}}" />
+                            <Text text="{externalCode}" />
                            
                            <ObjectStatus text="{path:'status',formatter:'.formatter.ticketStatusText'}" state="{path:'status',formatter:'.formatter.ticketStatus'}" />
                         </cells>

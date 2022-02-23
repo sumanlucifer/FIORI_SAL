@@ -37,7 +37,8 @@ sap.ui.define([
                     availBal : false,
                     recurringAbs : false,
                     busy:false,
-                    uploadAttachment:true
+                    uploadAttachment:true,
+                    currentDate:new Date()
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -128,18 +129,41 @@ sap.ui.define([
                         this.fragmentName = "com.sal.salhr.Fragments.CreateBusinessTrip";
                         var oFragment = sap.ui.xmlfragment("idBusinessTrip",this.fragmentName ,this);
                         oLayout.addContent(oFragment);
-                        break;                                                                   
+                        break;  
+                    // Bank Request Module      
+                    case "13":
+                            oLayout.destroyContent();               
+                            this.fragmentName = "com.sal.salhr.Fragments.CreateBankAccountRequest";       
+                            var oFragment = sap.ui.xmlfragment("idBankChangerequestFragment",this.fragmentName ,this); 
+                            oLayout.addContent(oFragment);
+                            
+                            break;                                                                   
                   }
 
                
                
             },
             
-            onRaiseRequestPress: function (oAdditionalData, aReservationItems) {
-                var oCreatePayload = this.getCreatePayload();
-                this.getView().setBusy(true);
+            onRaiseRequestPress: function () {
+                var oPayload,sPath;
+                
+                switch (this.sParentID) {
+                    // Leave Module
+                    case "1":
+                     oPayload = this.getCreatePayload();
+                     sPath = "/SF_Leave";
+                     break;
+                    // Bank Request Module
+                    case "13":
+                    oPayload = this.getBankRequestPayload();
+                    sPath = "/SF_BankDetails";
+                    break;
+                }    
+
                
-                this.mainModel.create("/SF_Leave", oCreatePayload, {
+                this.getView().setBusy(true);
+              
+                this.mainModel.create(sPath, oPayload, {
                     success: function (oData, oResponse) {
                         sap.m.MessageBox.success("Request Submitted Successfully.");
                         this.getView().setBusy(false);
@@ -194,6 +218,17 @@ sap.ui.define([
                     "attachmentFileName": sAttahmentFileName,
                     "attachmentUserId": "Extentia"
                 };
+            },
+            getBankRequestPayload:function(){
+                var sEffectiveStartDate = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idFromDatePicker").getDateValue();
+                var sCust_bankName = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").getValue();
+                var scust_iban = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").getValue();
+                return {
+                    "externalCode": "12002425",
+                    "effectiveStartDate": sEffectiveStartDate,
+                    "cust_bankName": sCust_bankName,
+                    "cust_iban": scust_iban
+                  };
             },
             onLeaveStartDatChange:function(oEvent){
                 var oneDay = 24 * 60 * 60 * 1000;
@@ -413,6 +448,20 @@ sap.ui.define([
                 });
                 this.mainModel.refresh();
             },
+            onResetPress:function(){
+                switch (this.sParentID) {
+                    // Leave Module
+                    case "1":
+                    this.onCreateResetPress();
+                     break;
+                    // Bank Request Module
+                    case "13":
+                        this.onBankRequestResetPress();
+                    break;
+                }    
+              
+               
+            },
             onCreateResetPress:function(){
                 var dataReset = {
                     startDate: new Date(),    
@@ -426,6 +475,15 @@ sap.ui.define([
                 };
                 this.getView().getModel("LocalViewModel").setData(dataReset);
                 this.getView().getModel("LocalViewModel").refresh();
+            },
+            onBankRequestResetPress:function(){
+                
+                // sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idFromDatePicker").setValue(new Date());
+                sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValue();
+                sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValue();
+                this.getView().getModel("LocalViewModel").setProperty("/currentDate",new Date());
+                this.getView().getModel("LocalViewModel").refresh();
+
             }
     
 

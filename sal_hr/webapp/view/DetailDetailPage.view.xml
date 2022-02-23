@@ -107,6 +107,35 @@
                         </IconTabFilter>
                     </items>
                 </IconTabBar>
+                <IconTabBar id="idBankRequestTabBar" visible="{= ${LocalViewModel>/BankRequestModel} === true ? true : false }">
+                    <items>
+                       <IconTabFilter id="idDisplayBankRequestDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
+
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.DisplayBankRequest" type="XML"/>
+
+                        </IconTabFilter>
+
+                        <IconTabFilter id="idEditBankRequestDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.EditBankRequest" type="XML"/>
+
+                        </IconTabFilter>
+
+                        <IconTabFilter text="{i18n>Resolution}">
+
+                            <Text text="" />
+
+                        </IconTabFilter>
+
+                        <IconTabFilter text="{i18n>History}">
+
+                            <Text text="" />
+
+                        </IconTabFilter>
+
+                    </items>
+
+                </IconTabBar>
             </VBox>
         </f:content>
         <f:footer>

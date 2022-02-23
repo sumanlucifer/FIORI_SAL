@@ -74,7 +74,7 @@ sap.ui.define([
                 debugger;
                 this.oRouter.navTo("detailDetail", {                  
                     parentMaterial: this.sParentID,
-                    childModule: oEvent.getSource().getBindingContext().getObject().externalCode,
+                    childModule: oEvent.getSource().getBindingContext().getObject().ID,
                     layout: "ThreeColumnsMidExpanded"
 
                 });

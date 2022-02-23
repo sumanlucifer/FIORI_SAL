@@ -13,9 +13,9 @@
                                                     pattern: 'MMMM dd, yyyy'
                                                 }}"/>
             <Label id="idDisplayLeaveTypeLBL" text="{i18n>Leave Type}"/>
-            <Text text="{timeType}"/>
-            <Label id="idDisplayLeaveCommentsLBL" text="{i18n>Comments}"/>
-            <Text text="{comment}" />
+            <Text text="{externalName_localized}"/>
+            <!-- <Label id="idDisplayLeaveCommentsLBL" text="{i18n>Comments}"/>
+            <Text text="{comment}" /> -->
             <core:Title id="idDisplayLeaveEmptyTitle" text=" "/>
             <!-- <Label id="idDisplayLeaveRequestDateLBL" text="{i18n>Request Date}"/>
             <Text text="{path:'createdDateTime',
@@ -40,11 +40,11 @@
                                     fileSizeExceed="onFileSizeExceed" filenameLengthExceed="onFileNameLengthExceed" 
                                     maximumFilenameLength="500" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" 
                                     beforeUploadStarts="onBeforeUploadStarts" mode="None" 
-                                    items="{cust_attachmentNav}" 
+                                    
                                     selectionChange="onAttachmentChange" instantUpload="false" change="onAttachmentChange" fileDeleted="onFileDeleted">
                                     <items>
-                                        <UploadCollectionItem url="{parts: ['fileName','fileContent']}" enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false" 
-                                        fileName="{fileName}" deletePress="onDeleteDocumentPress">
+                                        <UploadCollectionItem url="{parts: ['attachmentModel>/fileName','attachmentModel>/fileContent']}" enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false" 
+                                        fileName="{attachmentModel>/fileName}" deletePress="onDeleteDocumentPress">
                                         </UploadCollectionItem>
                                     </items>
              </UploadCollection>

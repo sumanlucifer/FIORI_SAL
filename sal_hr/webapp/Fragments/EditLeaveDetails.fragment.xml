@@ -13,9 +13,9 @@
                                                     pattern: 'MMMM dd, yyyy'
                                                 }}" change="handleChange"/>
             <Label id="ideditLeaveTypeLBL" text="{i18n>Leave Type}"/>
-            <Input id="idEditTimeTypeINP" value="{timeType}"/>
-            <Label id="ideditCommentsLBL" text="{i18n>Comments}"/>
-            <TextArea value="{comment}"/>
+            <Input id="idEditTimeTypeINP" value="{externalName_localized}"/>
+            <!-- <Label id="ideditCommentsLBL" text="{i18n>Comments}"/>
+            <TextArea value="{comment}"/> -->
             <core:Title id="idLeaveEmptyTitle" text=" "/>
             <!-- <Label id="idLeaveRequestDateLBL" text="{i18n>Request Date}"/>
                                 <DatePicker id="idRequestDatePicker" value="Oct 5,2021" change="handleChange"/> -->
@@ -28,5 +28,21 @@
             <Label id="idLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}"/>
             <Text text="{displayQuantity}"/>
         </form:content>
+    </form:SimpleForm>
+    <form:SimpleForm id="idEditattachmentForm" layout="ResponsiveGridLayout" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <form:content>
+        <UploadCollection class="uploadClasstest" maximumFileSize="10"  multiple="true" 
+                                    fileSizeExceed="onFileSizeExceed" filenameLengthExceed="onFileNameLengthExceed" 
+                                    maximumFilenameLength="500" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" 
+                                    beforeUploadStarts="onBeforeUploadStarts" mode="None" 
+                                    
+                                    selectionChange="onAttachmentChange" instantUpload="false" change="onAttachmentChange" fileDeleted="onFileDeleted">
+                                    <items>
+                                        <UploadCollectionItem url="{parts: ['attachmentModel>/fileName','attachmentModel>/fileContent']}" enableEdit="true" enableDelete="true" visibleDelete="true" visibleEdit="true" 
+                                        fileName="{attachmentModel>/fileName}" deletePress="onDeleteDocumentPress">
+                                        </UploadCollectionItem>
+                                    </items>
+             </UploadCollection>
+         </form:content>
     </form:SimpleForm>
 </core:FragmentDefinition>

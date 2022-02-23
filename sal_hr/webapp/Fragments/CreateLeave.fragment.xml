@@ -86,19 +86,11 @@
                     <l:GridData span="XL2 L3 M4 S4" />
                 </layoutData>
             </Input>
-
-
-
-
-                           </fm:SimpleForm>
-
-                                           <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">      
+                             </fm:SimpleForm>
+                                           <!-- <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">      
                                     <Label text="Comment" />
                                     <TextArea ></TextArea>
-
-
-
-                                                                   </fm:SimpleForm>       
+                             </fm:SimpleForm>        -->
 
 <!-- 
  <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" class="style-RemoveTitleHeight">              -->

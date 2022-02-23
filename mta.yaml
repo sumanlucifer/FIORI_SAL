@@ -102,6 +102,10 @@ modules:
       - comsalplantmaintenancereqsummary.zip
       name: comsalplantmaintenancereqsummary
       target-path: resources/
+    - artifacts:
+      - comsalchatbotview.zip
+      name: comsalchatbotview
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -245,6 +249,16 @@ modules:
 - name: comsalplantmaintenancereqsummary
   type: html5
   path: plantmaintenancereqsummary
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalchatbotview
+  type: html5
+  path: chatbotview
   build-parameters:
     build-result: dist
     builder: custom
