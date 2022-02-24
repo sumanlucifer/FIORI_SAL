@@ -1,6 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:form="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:upload="sap.m.upload">
     <form:SimpleForm id="idNewDisplayLeaveRquestSimpleForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <form:content>
             <Title id="idLeaveDisplayRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
@@ -36,7 +37,7 @@
     </form:SimpleForm>
     <form:SimpleForm id="idDisplayattachmentForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <form:content>
-        <UploadCollection class="uploadClasstest" maximumFileSize="10"  multiple="true" 
+        <!-- <UploadCollection class="uploadClasstest" maximumFileSize="10"  multiple="true" 
                                     fileSizeExceed="onFileSizeExceed" filenameLengthExceed="onFileNameLengthExceed" 
                                     maximumFilenameLength="500" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" 
                                     beforeUploadStarts="onBeforeUploadStarts" mode="None" 
@@ -47,7 +48,32 @@
                                         fileName="{attachmentModel>/fileName}" deletePress="onDeleteDocumentPress">
                                         </UploadCollectionItem>
                                     </items>
-             </UploadCollection>
+             </UploadCollection> -->
+         	<upload:UploadSet
+				id="UploadSet"
+				instantUpload="false"
+				showIcons="false"
+				uploadEnabled="false"
+				terminationEnabled="false"
+				fileTypes="txt,doc,png"
+				maxFileNameLength="30"
+				maxFileSize="200"
+				mediaTypes="text/plain,application/msword,image/jpeg"
+				
+				>
+				<upload:toolbar>
+                <OverflowToolbar>
+                <Button text="Download Attachment" press="onDownLoadPress"/>
+                </OverflowToolbar>
+			</upload:toolbar>
+			<upload:items>
+				<upload:UploadSetItem
+						fileName="{attachmentModel>/fileName}"
+						mediaType="attachmentModel>/mimeType}"	
+						>
+				</upload:UploadSetItem>
+			</upload:items>
+		</upload:UploadSet>    
          </form:content>
     </form:SimpleForm>
 </core:FragmentDefinition>

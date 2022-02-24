@@ -18,9 +18,12 @@
     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
     
             <Label text="Time Type" required="true" />
-            <Select id="idTimeType" items="{ path: '/SF_Leave_TimeType'}"                       
+            <Select id="idTimeType" items="{ path: '/SF_Leave_TimeType',
+                                                sorter : {
+                                                 path : 'externalName_defaultValue' 
+                                             } }"                       
                                                          change="onTimeTyeChange">
-                <core:Item key="{externalCode}" text="{externalName_localized}" />
+                <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
             </Select>
 
                         <Label text="Available Balance" />

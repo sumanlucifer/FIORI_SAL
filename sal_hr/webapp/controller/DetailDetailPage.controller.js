@@ -47,15 +47,17 @@ sap.ui.define([
                         
                         sKey = oComponentModel.createKey("/SF_Leave", {
                            
-                            externalCode: this.sChildID
+                            externalCode: object.externalCode
                         });
-                        this.getView().getModel().read("/SF_Leave('" + this.sChildID + "')", {
+                        this.getView().getModel().read("/SF_Leave('" + object.externalCode + "')", {
                             urlParameters: {
                                 "$expand": "cust_attachmentNav"
                             },
                             success: function (oData) {
                                 var oAttachModel = new JSONModel(oData.cust_attachmentNav);
                                 that.getView().setModel(oAttachModel,"attachmentModel");
+                              
+                               
                             },
                             error: function (oError) {
         
@@ -316,7 +318,19 @@ sap.ui.define([
                     "cust_bankName": this.getView().byId("idEditBankNameINP").getValue(),
                     "cust_iban": this.getView().byId("idEditIBANINP").getValue()
                 };
+            },
+            onDownLoadPress:function(){
+                
+                
+                var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
+                                var fName = this.getView().getModel("attachmentModel").getData().fileName;
+                                fName = fName.split(".")[0];
+                                
+                                fContent = atob(fContent);
+                
+                             sap.ui.core.util.File.save(fContent, fName,"txt");
             }
+           
 
 
         });

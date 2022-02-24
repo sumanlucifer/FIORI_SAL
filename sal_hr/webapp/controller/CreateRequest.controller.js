@@ -21,10 +21,10 @@ sap.ui.define([
                 this.sRequesting = 0;
                 this.sReturnDate.setDate(new Date().getDate() + 1);
                 if(this.sReturnDate.getDay() === 5){
-                    this.sReturnDate.setDate(sReturnDate.getDate() + 2);
+                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
                     
                 }else if(this.sReturnDate.getDay() === 6){
-                    this.sReturnDate.setDate(sReturnDate.getDate() + 1);
+                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
                    
                 }else{
                     this.sRequesting = 1;

@@ -1,15 +1,10 @@
-sap.ui.define([
-        "sap/ui/core/UIComponent",
-        "sap/ui/Device",
-        "com/sal/chatbotview/model/models"
-    ],
-    function (UIComponent, Device, models) {
-        "use strict";
+sap.ui.define(["sap/fe/core/AppComponent"], function(AppComponent) {
+    "use strict";
 
-        return UIComponent.extend("com.sal.chatbotview.Component", {
-            metadata: {
-                manifest: "json"
-            },
+    return AppComponent.extend("com.sal.chatbotview.Component", {
+        metadata: {
+            manifest: "json"
+        },
             onInit: function () {
                
                 this.renderRecastChatbot();
@@ -17,14 +12,15 @@ sap.ui.define([
             },
     
             renderRecastChatbot: function() {
+                debugger;
                 if (!document.getElementById("cai-webchat")) {
                     var s = document.createElement("script");
                     s.setAttribute("id", "cai-webchat");
                     s.setAttribute("src", "https://cdn.cai.tools.sap/webchat/webchat.js");
                     document.body.appendChild(s);
                 }
-                s.setAttribute("channelId", "15c31348-867a-40b9-9157-cf594ecdba7b");
-                s.setAttribute("token", "3fdcb50dfe8b7bef23974ebd11a9fcd3");
+                s.setAttribute("channelId", "2565bad7-4bb7-46fe-88f2-8d8633fe20af");
+                s.setAttribute("token","87f2c4ca82653d1a79ec35c1c43287ff");
             }, 
     
          _getRenderer: function(){

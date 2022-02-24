@@ -4,7 +4,7 @@ sap.ui.define([], function() {
 
 	return {
 			changeIcon: function(sValue) {
-           
+            debugger;
 			// if (sValue === "Leaves") {
 			 
             //     return 'sap-icon://create-leave-request';
@@ -15,31 +15,31 @@ sap.ui.define([], function() {
             //     return 'sap-icon://flight';
 			// } 
             switch (sValue) {
-                case 'Leave':
+                case 1:
                 return 'sap-icon://create-leave-request';
                 break;
-				case 'Business Trip':
+				case 2:
                 return 'sap-icon://flight';
                 break;
-                case 'Health Insurance':
+                case 3:
                 return 'sap-icon://stethoscope';
                 break;
-                case 'Loan and advance request':
+                case 4:
                 return 'sap-icon://loan';
                 break;
-                case 'Business Card Request':
+                case 5:
                 return 'sap-icon://business-card';
                 break;
-                case 'Airport Travel Pass':
+                case 6:
                 return 'sap-icon://travel-expense';
                 break;
-                case 'ID card replacement request':
+                case 7:
                 return 'sap-icon://business-card';
                 break;
-                case 'Apply for Jon vacancy':
+                case 8:
                 return 'sap-icon://business-card';
                 break;
-                case 'Bank Details':
+                case 13:
                 return 'sap-icon://quality-issue';
                 break;
 

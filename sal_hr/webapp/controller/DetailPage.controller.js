@@ -169,7 +169,7 @@ sap.ui.define([
                         oFilterSearch.push(new Filter("status", FilterOperator.EQ, sStatusFilter));
                     }
                     if (sDateFilter != "") {
-                        oFilterSearch.push(new Filter("Date", FilterOperator.EQ, sDateFilter));
+                        oFilterSearch.push(new Filter("requestDate", FilterOperator.EQ, sDateFilter));
                     }
 
 
