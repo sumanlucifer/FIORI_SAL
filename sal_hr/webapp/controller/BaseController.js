@@ -73,16 +73,10 @@ sap.ui.define([
             var filter = [];
             
             filter.push(idFILTER);
-            
-            
-            
             var oComponentModel = this.getComponentModel();   
-            oComponentModel.read("/Tickets", {
-            
-            filters: [filter],
-            
-            success: function (oData, oResponse) {
-            
+            oComponentModel.read("/Tickets", {        
+            filters: [filter],       
+            success: function (oData, oResponse) {    
             this._bindView(oData);
             
             }.bind(this),

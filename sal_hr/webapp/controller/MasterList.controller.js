@@ -46,7 +46,9 @@ sap.ui.define([
                 var aFilters = [];
                 var sQuery = oEvent.getSource().getValue();
                 if (sQuery && sQuery.length > 0) {
+                    
                     aFilters.push( this.createFilter("name", FilterOperator.Contains, sQuery, true) );
+                   
                 }
     
               

@@ -5,7 +5,7 @@ sap.ui.define(["sap/fe/core/AppComponent"], function(AppComponent) {
         metadata: {
             manifest: "json"
         },
-            onInit: function () {
+            init: function () {
                
                 this.renderRecastChatbot();
                 this._getRenderer();

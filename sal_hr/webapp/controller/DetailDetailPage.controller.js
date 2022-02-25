@@ -36,6 +36,7 @@ sap.ui.define([
             },
 
             _bindView: function (data) {
+                debugger;
                 var object = data.results[0];
                 this.object = data.results[0];
                 var oComponentModel = this.getComponentModel(),
@@ -49,6 +50,7 @@ sap.ui.define([
                            
                             externalCode: object.externalCode
                         });
+                        var sTicketCode = this.object.ticketCode;
                         this.getView().getModel().read("/SF_Leave('" + object.externalCode + "')", {
                             urlParameters: {
                                 "$expand": "cust_attachmentNav"
@@ -56,7 +58,7 @@ sap.ui.define([
                             success: function (oData) {
                                 var oAttachModel = new JSONModel(oData.cust_attachmentNav);
                                 that.getView().setModel(oAttachModel,"attachmentModel");
-                              
+                                that.getView().getModel("attachmentModel").setProperty("/ticketCode",sTicketCode);
                                
                             },
                             error: function (oError) {
@@ -150,11 +152,13 @@ sap.ui.define([
                     MessageBox.error("Please enter sKey ID to delete the record.");
                     return;
                 }
-
-                this.getView().getModel().remove("/SF_Leave('" + sKey + "')", {
+                this.getView().setBusy(true); 
+                this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
+                            this.getView().setBusy(false);
                             sap.m.MessageBox.success("Record Deleted successfully.");
+                            this.getView().getModel().refresh();
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
@@ -162,12 +166,13 @@ sap.ui.define([
                             });
 
                         } else {
+                            this.getView().setBusy(false);
                             MessageBox.error("Record Not able to delete.");
                         }
-                    },
+                    }.bind(this),
                     error: function (oError) {
-
-                    }
+                        this.getView().setBusy(false);
+                    }.bind(this),
 
                 });
             },
@@ -216,7 +221,7 @@ sap.ui.define([
                 switch (this.sParentID) {
                     // Leave Module
                     case "1":
-                        sEntityPath = "/SF_Leave('" + this.sChildID + "')";
+                        sEntityPath = "/SF_Leave('" + this.object.externalCode + "')";
                         oPayloadObj = this.fnGetLeaveRequestPayload();
                         break;
 
@@ -245,14 +250,16 @@ sap.ui.define([
                             oPayloadObj = this.fnBankRequestChangePayload();
                             break;    
                 }
-
+                this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
                     success: function (oResponse) {
+                        this.getView().setBusy(false);
                         sap.m.MessageBox.success("Request Submitted successfully.");
                         this.getView().getModel().refresh();
                     }.bind(this),
                     error: function (oError) {
-                        sap.m.MessageBox.error("Error occured during submit");
+                        this.getView().setBusy(false);
+                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
                         this.getView().getModel().refresh();
                     }.bind(this)
                 });
@@ -324,11 +331,12 @@ sap.ui.define([
                 
                 var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
                                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
+                                var sfileExtension = this.getView().getModel("attachmentModel").getData().fileExtension;
                                 fName = fName.split(".")[0];
                                 
                                 fContent = atob(fContent);
                 
-                             sap.ui.core.util.File.save(fContent, fName,"txt");
+                             sap.ui.core.util.File.save(fContent, fName,sfileExtension);
             }
            
 

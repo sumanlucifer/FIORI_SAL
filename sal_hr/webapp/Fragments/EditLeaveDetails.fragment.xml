@@ -12,8 +12,8 @@
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
                                                 }}" change="handleChange"/>
-            <Label id="ideditLeaveTypeLBL" text="{i18n>Leave Type}"/>
-            <Input id="idEditTimeTypeINP" value="{externalName_localized}"/>
+            <!-- <Label id="ideditLeaveTypeLBL" text="{i18n>Leave Type}"/>
+            <Input id="idEditTimeTypeINP" value="{externalName_localized}"/> -->
             <!-- <Label id="ideditCommentsLBL" text="{i18n>Comments}"/>
             <TextArea value="{comment}"/> -->
             <core:Title id="idLeaveEmptyTitle" text=" "/>
@@ -25,8 +25,8 @@
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
                                                 }}" change="handleChange"/>
-            <Label id="idLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}"/>
-            <Text text="{displayQuantity}"/>
+            <!-- <Label id="idLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}"/>
+            <Text text="{displayQuantity}"/> -->
         </form:content>
     </form:SimpleForm>
     <form:SimpleForm id="idEditattachmentForm" layout="ResponsiveGridLayout" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">

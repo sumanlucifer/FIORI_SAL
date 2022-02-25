@@ -81,19 +81,36 @@ sap.ui.define([
 
             },
             onSearch: function (oEvent) {
-                var oTableSearchState = [],
-                    sQuery = oEvent.getParameter("query");
-                    
+                // var oTableSearchState = [],
+                var sQuery = oEvent.getParameter("query");
+                var aFilters = [];
                 if (sQuery && sQuery.length > 0) {
-                    oTableSearchState = [new Filter("employeeId", FilterOperator.Contains, sQuery)];
+
+                    var aFilters = new sap.ui.model.Filter({
+                        filters: [
+                               this.createFilter("ticketCode", FilterOperator.Contains, sQuery, true),  
+                                // this.createFilter("ticketCode", sap.ui.model.FilterOperator.Contains, sQuery)
+                               this.createFilter("externalCode", FilterOperator.Contains, sQuery,true),
+                               this.createFilter("status", FilterOperator.Contains, sQuery,true)
+                               
+                        ],
+                        and:false
+                       
+                    });
+                   
+                    
+                
                 }
     
-                this.oTicketTable.getBinding("items").filter(oTableSearchState, "Application");
+                this.oTicketTable.getBinding("items").filter(aFilters, "Application");
+            },
+            createFilter: function(key, operator, value, useToLower) {
+                return new Filter(useToLower ? "tolower(" + key + ")" : key, operator, useToLower ? "'" + value.toLowerCase() + "'" : value);
             },
             onSort: function () {
                 this._bDescendingSort = !this._bDescendingSort;
                 var oBinding = this.oTicketTable.getBinding("items"),
-                    oSorter = new Sorter("employeeId", this._bDescendingSort);
+                    oSorter = new Sorter("ticketCode", this._bDescendingSort);
     
                 oBinding.sort(oSorter);
             },

@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns:networkgraph="sap.suite.ui.commons.networkgraph"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:fm="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <VBox>
+        <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="When would you like your changes to take effect? " required="true" />
+            <DatePicker id="idEffectDatePicker" value="{path:'LocalViewModel>/todaysDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/todaysDate}" change="onDateChange"/>
+        </fm:SimpleForm>
+        <fm:SimpleForm title="ID Replacement Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="PRN" />
+            <Input id="idPRNInp" value="{userId}" enabled= "false"/>
+
+            <Label text="First Name" />
+            <Input id="idFirstNameInp" value="{firstName}" enabled= "false"/>
+
+            <Label text="Last Name" />
+            <Input id="idLastNameInp" value="{lastName}" enabled= "false"/>
+
+            <Label text="Second Name" />
+            <Input id="idSecondNameInp" value="{middleName}" enabled= "false"/>
+
+            <Label text="Job Title" />
+            <Input id="idJobTitleInp" value="{jobTitle}" enabled= "false"/>
+
+            <Label text="Seniority Date" />
+            <DatePicker id="idSeniorityDate" value="{path:'seniorityDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/>
+
+            <Label text="Cost Centre" />
+            <Input id="idCostCentreInp" value="{costCentre}" enabled= "false"/>
+
+            <Label text="Nationality" />
+            <Input id="idNationalityInp" value="{nationality}" enabled= "false"/>
+
+            <Label text="Pay Grade" />
+            <Input id="idPayGradeInp" value="{payGrade}" enabled= "false"/>
+
+            <Label text="Blood Group" />
+            <Input id="idBloodGroupInp" value="{bloodGroup}"/>
+
+            <Label text="Emergency Phone" />
+            <Input id="idEmergencyPhoneInp" value="{emergencyNumber}" />
+        </fm:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>
