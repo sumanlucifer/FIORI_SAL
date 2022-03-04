@@ -63,14 +63,14 @@
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
-                    <Column width="14em" importance="High">
+                    <Column width="10rem" importance="High">
                         <Label text="Job Card ID" class="tblHeaderText"/>
                     </Column>
 
-                    <Column hAlign="End" importance="Low" width="auto" popinDisplay="Inline" >
+                    <Column  importance="Low" popinDisplay="Inline" >
                         <Label text="Request Date" class="tblHeaderText" />
                     </Column>
-                    <Column  hAlign="End" width="auto" importance="Low" popinDisplay="Inline" >
+                    <Column width="18rem" importance="Low" popinDisplay="Inline" >
                         <Label text="SAP Ticket ID" class="tblHeaderText" />
                     </Column>
                     <Column  hAlign="End" width="auto" importance="High">

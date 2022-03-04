@@ -16,7 +16,7 @@
         <f:content>
               	<Table id="idMasterTable"
 		                    inset="false"
-		                    items="{/MasterSubModules}">
+		                    items="{/MasterModules(1)/masterSubModule}">
 		                     <headerToolbar>
 			                    <OverflowToolbar id="idMasterOverFlow">
                                     <content>
@@ -31,7 +31,7 @@
                                 <columns>
                                 
                                 <Column id="idMasterType" width="3rem">
-                                    <Text id="idTextType" text="{i18n>type}" class="tblHeaderText"/>
+                                    <Label id="idTextType" text="{i18n>type}" class="tblHeaderText"/>
                                 </Column>
                                  <Column id="idMasterCol2" hAlign="Begin"  width="15rem">
                                     
@@ -40,8 +40,8 @@
                                     
                                 </Column>
                                 
-                                <Column id="idMasterCount" hAlign="End" importance="High">
-                                    <Text id="idTextCount" text="{i18n>count}" class="tblHeaderText" />
+                                <Column id="idMasterCount" hAlign="End" importance="Low" popinDisplay="Inline">
+                                    <Label id="idTextCount" text="{i18n>count}" class="tblHeaderText" />
                                 </Column>
                             </columns>
                                 <items>

@@ -14,13 +14,18 @@ sap.ui.define([
                     LeaveModule: false,
                     BusineesTripModule: false,
                     HealthModule: false,
-                    PageTitle: null
+                    PageTitle: null,
+                    Modify: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("detailDetail").attachPatternMatched(this._onObjectMatched, this);
+                // var oUploadSet = this.byId("UploadSet"); 
+                // oUploadSet.getDefaultFileUploader().setButtonOnly(false);
+                // oUploadSet.getDefaultFileUploader().setTooltip("");
+
             },
 
             _onObjectMatched: function (oEvent) {
@@ -39,32 +44,45 @@ sap.ui.define([
                 debugger;
                 var object = data.results[0];
                 this.object = data.results[0];
+
+                if (object.status === "APPROVED") {
+                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                } else {
+                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var that = this;
                 switch (this.sParentID) {
                     // Leave Module
                     case "1":
-                        
+
                         sKey = oComponentModel.createKey("/SF_Leave", {
-                           
+
                             externalCode: object.externalCode
                         });
                         var sTicketCode = this.object.ticketCode;
                         this.getView().getModel().read("/SF_Leave('" + object.externalCode + "')", {
                             urlParameters: {
-                                "$expand": "cust_attachmentNav"
+                                "$expand": "cust_attachmentNav, timeTypeNav"
                             },
                             success: function (oData) {
                                 var oAttachModel = new JSONModel(oData.cust_attachmentNav);
-                                that.getView().setModel(oAttachModel,"attachmentModel");
-                                that.getView().getModel("attachmentModel").setProperty("/ticketCode",sTicketCode);
-                               
+                                var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
+                                that.getView().setModel(oAttachModel, "attachmentModel");
+                                that.getView().setModel(oTimeTypeModel, "timeTypeModel");
+                                that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
+                                var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
+                                if (sType === "S110" || sType === "500") {
+                                    that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                                } else {
+                                    that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                }
                             },
                             error: function (oError) {
-        
+
                             }
-        
+
                         });
 
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
@@ -72,7 +90,12 @@ sap.ui.define([
                         this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
 
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
+
                         break;
+
+
+
+
 
                     // Business Trip Module
                     case "2":
@@ -99,31 +122,31 @@ sap.ui.define([
 
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance");
                         break;
-                     //  Bank Request Module 
+                    //  Bank Request Module 
                     case "13":
 
-                            debugger;
-                            sKey = oComponentModel.createKey("/SF_BankDetails", {
-                                effectiveStartDate: object.effectiveStartDate,
-                                externalCode: object.externalCode
-    
-    
-                            });
-                            this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", true);
-                            this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                            this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
-                            this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                            this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Bank Change Request");
-                            break;    
+                        debugger;
+                        sKey = oComponentModel.createKey("/SF_BankDetails", {
+                            effectiveStartDate: object.effectiveStartDate,
+                            externalCode: object.externalCode
+
+
+                        });
+                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", true);
+                        this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Bank Change Request");
+                        break;
                 }
 
                 this.getView().getModel("LocalViewModel").refresh();
 
                 this.getView().bindElement({
                     path: sKey,
-                   
+
                     events: {
-                        change: function (oEvent) {                        
+                        change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();
                             oContextBinding.refresh(false);
                         }.bind(this),
@@ -139,6 +162,7 @@ sap.ui.define([
 
             onEditPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
+
             },
 
             onCancelPress: function () {
@@ -152,29 +176,28 @@ sap.ui.define([
                     MessageBox.error("Please enter sKey ID to delete the record.");
                     return;
                 }
-                this.getView().setBusy(true); 
-                this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {
-                    success: function (oData) {
-                        if (oData !== "" || oData !== undefined) {
-                            this.getView().setBusy(false);
-                            sap.m.MessageBox.success("Record Deleted successfully.");
-                            this.getView().getModel().refresh();
-                            this.oRouter.navTo("detail", {
-                                parentMaterial: this.sParentID,
-                                layout: "TwoColumnsMidExpanded"
+                this.getView().setBusy(true);
+                switch (this.sParentID) {
+                    // Leave Module
+                    case "1":
+                        this.fnDeleteLeaveRequest();
 
-                            });
+                        break;
+                    // Business Trip Module
+                    case "2":
 
-                        } else {
-                            this.getView().setBusy(false);
-                            MessageBox.error("Record Not able to delete.");
-                        }
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getView().setBusy(false);
-                    }.bind(this),
+                        break;
+                    // Health Module
+                    case "13":
+                        this.fnDeleteBankAccount();
+                        break;
+                    //  Bank Request Module 
+                    case "7":
+                        this.fnDeleteIDReplacement();
+                        break;
+                }
 
-                });
+
             },
 
             handleFullScreen: function (oEvent) {
@@ -193,7 +216,7 @@ sap.ui.define([
                 // });
                 this.oRouter.navTo("detailDetail", {
                     parentMaterial: this.sParentID,
-                    childModule:this.sChildID,
+                    childModule: this.sChildID,
                     layout: sLayout
                 });
 
@@ -236,19 +259,19 @@ sap.ui.define([
                         // sEntityPath="/Health_Insurance";
                         // oPayloadObj = this.fnGetHealthInsurancePayload();
                         break;
-                      // Bankrequest change Module
+                    // Bankrequest change Module
                     case "13":
 
-                            var oComponentModel = this.getComponentModel(),
-                               sKey = oComponentModel.createKey("/SF_BankDetails", {
+                        var oComponentModel = this.getComponentModel(),
+                            sKey = oComponentModel.createKey("/SF_BankDetails", {
                                 effectiveStartDate: this.object.effectiveStartDate,
                                 externalCode: this.object.externalCode
-    
-    
+
+
                             });
-                            sEntityPath= sKey;
-                            oPayloadObj = this.fnBankRequestChangePayload();
-                            break;    
+                        sEntityPath = sKey;
+                        oPayloadObj = this.fnBankRequestChangePayload();
+                        break;
                 }
                 this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
@@ -274,39 +297,51 @@ sap.ui.define([
                 //     "userId": "12002024",
                 //     "fractionQuantity": "1"
                 // };
+                if (this.isAttachmentNew === true) {
+                    var sattachmentFileName = this.fileName;
+                    var sattachmentFileContent = this.fileContent;
+                    var sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
+                    var isAttachmentNew = true;
 
-                var sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
-                var sattachmentFileContent= this.getView().getModel("attachmentModel").getData().fileContent;
-                var sattachmentFileID= this.getView().getModel("attachmentModel").getData().attachmentId;
+                } else {
+                    sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
+                    sattachmentFileContent = this.getView().getModel("attachmentModel").getData().fileContent;
+                    sattachmentFileID = sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
+                    sattachmentFileContent = this.getView().getModel("attachmentModel").getData().fileContent;
+                    sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
+                }
+
+
                 var sEndDate = this.getView().byId("idEditLeaveEndDatePicker").getValue();
                 sEndDate = Date.parse(sEndDate);
                 var sStartDate = this.getView().byId("idStartLDatePicker").getValue();
                 sStartDate = Date.parse(sStartDate);
-                
+                isAttachmentNew = false;
+
                 return {
-                        "endDate": "/Date("+sEndDate+")/" ,
-                        "loaActualReturnDate": null,
-                        "timeType": "S110",
-                        "loaExpectedReturnDate": null,
-                        "loaStartJobInfoId": null,
-                        "startDate": "/Date("+sStartDate+")/" ,
-                        "cust_KronosPayCodeEditID": null,
-                        "startTime": null,
-                        "loaEndJobInfoId": null,
-                        "approvalStatus": null,
-                        "undeterminedEndDate": false,
-                        "userId": "12002024",
-                        "recurrenceGroup": null,
-                        "fractionQuantity": "1",
-                        "endTime": null,
-                        "isAttachmentNew": false,
-                        "attachmentId": sattachmentFileID,
-                        "attachmentFileContent": "on Leave",
-                        "attachmentFileName": sattachmentFileName,
-                        "attachmentUserId": "Extentia"
-                    
+                    "endDate": "/Date(" + sEndDate + ")/",
+                    "loaActualReturnDate": null,
+                    "timeType": "S110",
+                    "loaExpectedReturnDate": null,
+                    "loaStartJobInfoId": null,
+                    "startDate": "/Date(" + sStartDate + ")/",
+                    "cust_KronosPayCodeEditID": null,
+                    "startTime": null,
+                    "loaEndJobInfoId": null,
+                    "approvalStatus": null,
+                    "undeterminedEndDate": false,
+                    "userId": "12002024",
+                    "recurrenceGroup": null,
+                    "fractionQuantity": "1",
+                    "endTime": null,
+                    "isAttachmentNew": isAttachmentNew,
+                    "attachmentId": sattachmentFileID,
+                    "attachmentFileContent": sattachmentFileContent,
+                    "attachmentFileName": sattachmentFileName,
+                    "attachmentUserId": "Extentia"
+
                 }
-              
+
             },
 
             fnGetBusinessTripPayload: function () {
@@ -326,19 +361,133 @@ sap.ui.define([
                     "cust_iban": this.getView().byId("idEditIBANINP").getValue()
                 };
             },
-            onDownLoadPress:function(){
-                
-                
+            onDownLoadPress: function () {
                 var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
-                                var fName = this.getView().getModel("attachmentModel").getData().fileName;
-                                var sfileExtension = this.getView().getModel("attachmentModel").getData().fileExtension;
-                                fName = fName.split(".")[0];
-                                
-                                fContent = atob(fContent);
-                
-                             sap.ui.core.util.File.save(fContent, fName,sfileExtension);
+                var fName = this.getView().getModel("attachmentModel").getData().fileName;
+                var sfileExtension = this.getView().getModel("attachmentModel").getData().fileExtension;
+                fName = fName.split(".")[0];
+                fContent = atob(fContent);
+                sap.ui.core.util.File.save(fContent, fName, sfileExtension);
+            },
+            onFileDeleted: function (oEvent) {
+                var oUploadSet = this.byId("idEditUploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(true);
+            },
+            onFileAdded: function (oEvent) {
+                debugger;
+                var that = this;
+
+                //  var file = oEvent.getParameters().files[0];
+                var file = oEvent.getParameter("item");
+                var Filename = file.getFileName(),
+                    Filetype = file.getMediaType(),
+                    Filesize = file.getFileObject().size,
+                    Filedata = oEvent.getParameter("item").getFileObject();
+
+
+                //code for base64/binary array 
+                this._getImageData((Filedata), function (Filecontent) {
+                    that._addData(Filecontent, Filename, Filetype, Filesize);
+                });
+                var oUploadSet = this.byId("idEditUploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(false);
+
+                this.getView().getModel("attachmentModel").setProperty("/fileName", Filename);
+                this.getView().getModel("attachmentModel").setProperty("/mimeType", Filetype);
+                this.getView().getModel("attachmentModel").refresh();
+
+
+
+            },
+            _getImageData: function (url, callback, fileName) {
+                var reader = new FileReader();
+
+                reader.onloadend = function (evt) {
+                    if (evt.target.readyState === FileReader.DONE) {
+
+                        var binaryString = evt.target.result,
+                            base64file = btoa(binaryString);
+
+                        callback(base64file);
+                    }
+                };
+                reader.readAsBinaryString(url);
+            },
+            _addData: function (Filecontent, Filename, Filetype, Filesize) {
+                this.getViewModel("LocalViewModel").setProperty(
+                    "/busy",
+                    true
+                );
+                this.fileContent = Filecontent;
+                this.fileName = Filename;
+                this.isAttachmentNew = true;
+
+            },
+            fnDeleteLeaveRequest: function () {
+                this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {
+                    success: function (oData) {
+                        if (oData !== "" || oData !== undefined) {
+                            this.getView().setBusy(false);
+                            sap.m.MessageBox.success("Record Deleted successfully.");
+                            this.getView().getModel().refresh();
+                            this.oRouter.navTo("detail", {
+                                parentMaterial: this.sParentID,
+                                layout: "TwoColumnsMidExpanded"
+
+                            });
+
+                        } else {
+                            this.getView().setBusy(false);
+                            MessageBox.error("Record Not able to delete.");
+                        }
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getView().setBusy(false);
+                    }.bind(this),
+
+                });
+            },
+            fnDeleteBankAccount: function () {
+               
+                var oComponentModel = this.getComponentModel(),
+                    sPath = oComponentModel.createKey("/SF_BankDetails", {
+                        effectiveStartDate: this.object.effectiveStartDate,
+                        externalCode: this.object.externalCode
+                    });
+                this.getView().getModel().remove(`${sPath}`, {
+                    success: function (oData) {
+                        if (oData !== "" || oData !== undefined) {
+                            sap.m.MessageBox.success("Record Deleted successfully.");
+                            this.oRouter.navTo("detail", {
+                                parentMaterial: this.sParentID,
+                                layout: "TwoColumnsMidExpanded"
+
+                            });
+                        } else {
+                            sap.m.MessageBox.error("Record Not able to delete.");
+                        }
+                    },
+                    error: function (oError) {
+                    }
+
+                });
+
+            },
+
+            fnDeleteIDReplacement: function () {
+                var sUserID = "12002425",
+                    sEffectiveStartDate = "2022-02-24T00:00:00",
+                    sPath = "/SF_IDReplacement(User='" + sUserID + "',effectiveStartDate=datetime'" + sEffectiveStartDate + "')";
+                this.mainModel.remove(sPath, {
+                    success: function (oData) {
+                        sap.m.MessageBox.success("Request Submitted Successfully.");
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    }.bind(this)
+                });
             }
-           
+
 
 
         });

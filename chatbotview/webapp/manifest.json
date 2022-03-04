@@ -38,6 +38,10 @@
     "sap.flp":{
         "type": "plugin"
     },
+    "sap.cloud": {
+        "public": true,
+        "service": "employee_portal_service"
+    },
     "sap.ui": {
         "technology": "UI5",
         "icons": {

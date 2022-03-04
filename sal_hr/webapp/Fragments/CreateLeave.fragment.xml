@@ -1,7 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:l="sap.ui.layout"
     xmlns:fm="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:upload="sap.m.upload">
 
 
 
@@ -19,6 +20,13 @@
     
             <Label text="Time Type" required="true" />
             <Select id="idTimeType" items="{ path: '/SF_Leave_TimeType',
+            filters: [
+    {
+      path: 'category',
+      operator: 'EQ',
+      value1: 'ABSENCE'
+    }
+  ],
                                                 sorter : {
                                                  path : 'externalName_defaultValue' 
                                              } }"                       
@@ -26,12 +34,12 @@
                 <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
             </Select>
 
-                        <!-- <Label text="Available Balance" />
-            <Input value=" " enabled="false" width="40%">
+                        <Label text="Available Balance" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }" />
+            <Input value="20" enabled="false" width="40%" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }">
                 <layoutData>
                     <l:GridData span="XL2 L3 M4 S4" />
                 </layoutData>
-            </Input> -->
+            </Input>
 
        </fm:SimpleForm>
 
@@ -51,19 +59,19 @@
 
 
 
-        <fm:SimpleForm layout="ColumnLayout"   columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+        <!-- <fm:SimpleForm layout="ColumnLayout"   columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight"> -->
                          
-            <Label text="Requesting" />
-            <Input id="idRequestDay" value="{LocalViewModel>/requestDay} day " enabled="false">
+            <!-- <Label /> -->
+            <!-- <Input id="idRequestDay" value="{LocalViewModel>/requestDay} day " enabled="false">
                 <layoutData>
                     <l:GridData span="XL2 L3 M4 S4" />
                 </layoutData>
-            </Input>
+            </Input> -->
 
-            <Label text="Returning to Work On" />
-            <DatePicker id="idReturning" value="{path:'LocalViewModel>/returnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/>
+            <!-- <Label /> -->
+            <!-- <DatePicker id="idReturning" value="{path:'LocalViewModel>/returnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/> -->
 
-          </fm:SimpleForm>
+          <!-- </fm:SimpleForm> -->
 
 
                    <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">             
@@ -80,7 +88,7 @@
             </Select>
 
             <Label visible="{LocalViewModel>/recurringAbs}" text="Ends On" required="true"/>
-            <DatePicker visible="{LocalViewModel>/recurringAbs}" id="idEndonDate" value="{path:'LocalViewModel>/endsOnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" change="onLeaveStartDatChange"/>
+            <DatePicker visible="{LocalViewModel>/recurringAbs}" id="idEndonDate" value="{path:'LocalViewModel>/endsOnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" />
 
 
                                                   <!-- <Label visible="{LocalViewModel>/recurringAbs}" text="Total Requesting" />
@@ -97,12 +105,12 @@
 
 <!-- 
  <fm:SimpleForm layout="ColumnLayout"  columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" class="style-RemoveTitleHeight">              -->
-              <UploadCollection id="UploadCollection"
+              <!-- <UploadCollection id="UploadCollection"
      maximumFilenameLength="55" 
      maximumFileSize="10"
      multiple="false" 
      sameFilenameAllowed="true" 
-     instantUpload="false" 
+     instantUpload="true" 
      noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" 
      change="onAttachmentChange" 
      fileDeleted="onFileDeleted" 
@@ -111,9 +119,26 @@
      typeMissmatch="onTypeMissmatch" 
      uploadComplete="onUploadComplete" 
      beforeUploadStarts="onBeforeUploadStarts" 
-     visible="{LocalViewModel>/uploadAttachment}"/>  
+     visible="{LocalViewModel>/uploadAttachment}"/>   -->
                         <!-- </fm:SimpleForm>  -->
-
+        <upload:UploadSet
+				id="UploadSet"
+				instantUpload="true"
+				showIcons="true"
+				uploadEnabled="true"
+				terminationEnabled="true"
+				fileTypes="txt,doc,png,pdf"
+				maxFileNameLength="30"
+				maxFileSize="200"
+				mediaTypes="text/plain,application/msword,image/jpeg"
+				uploadUrl="../../../../upload"
+                afterItemRemoved="onFileDeleted"
+                afterItemAdded="onFileAdded"
+                visible="{LocalViewModel>/uploadAttachment}"
+				>
+			
+			
+		</upload:UploadSet> 
 
                     </VBox> 
        

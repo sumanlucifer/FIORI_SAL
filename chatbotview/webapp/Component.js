@@ -1,7 +1,12 @@
-sap.ui.define(["sap/fe/core/AppComponent"], function(AppComponent) {
+sap.ui.define([
+    "sap/ui/core/UIComponent",
+    "sap/ui/Device",
+    "chattest/model/models"
+],
+function (UIComponent, Device, models) {
     "use strict";
 
-    return AppComponent.extend("com.sal.chatbotview.Component", {
+    return UIComponent.extend("com.sal.chatbotview.Component", {
         metadata: {
             manifest: "json"
         },
@@ -19,8 +24,9 @@ sap.ui.define(["sap/fe/core/AppComponent"], function(AppComponent) {
                     s.setAttribute("src", "https://cdn.cai.tools.sap/webchat/webchat.js");
                     document.body.appendChild(s);
                 }
-                s.setAttribute("channelId", "2565bad7-4bb7-46fe-88f2-8d8633fe20af");
-                s.setAttribute("token","87f2c4ca82653d1a79ec35c1c43287ff");
+                s.setAttribute("channelId", "15c31348-867a-40b9-9157-cf594ecdba7b");
+                s.setAttribute("token","3fdcb50dfe8b7bef23974ebd11a9fcd3");
+                s.setAttribute("apiRoot","https://sal-btp-cf-dev-8glkufj3.sapcai.eu10.hana.ondemand.com/public/api");
             }, 
     
          _getRenderer: function(){

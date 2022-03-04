@@ -14,14 +14,14 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {attachmentModel>/ticketCode}">
-                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" />
+                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="handleClose"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
                     <Label text="RequestID:{attachmentModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress"/>
+                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
                     <Button text="Withdraw" type="Emphasized" press="onWithdrawPress"/>
                 </f:actions>
                 <f:navigationActions>
@@ -37,7 +37,7 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Status}"/>
-                        <ObjectStatus text="{approvalStatus}" state="Success"/>
+                        <ObjectStatus id="idStatus" text="{approvalStatus}" state="Success"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>

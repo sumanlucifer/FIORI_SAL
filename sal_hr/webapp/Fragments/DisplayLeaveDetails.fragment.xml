@@ -14,7 +14,7 @@
                                                     pattern: 'MMMM dd, yyyy'
                                                 }}"/>
             <Label id="idDisplayLeaveTypeLBL" text="{i18n>Leave Type}"/>
-            <Text text="{externalName_localized}"/>
+            <Text text="{timeTypeModel>/externalName_defaultValue}"/>
             <!-- <Label id="idDisplayLeaveCommentsLBL" text="{i18n>Comments}"/>
             <Text text="{comment}" /> -->
             <core:Title id="idDisplayLeaveEmptyTitle" text=" "/>
@@ -52,14 +52,14 @@
          	<upload:UploadSet
 				id="UploadSet"
 				instantUpload="false"
-				showIcons="false"
+				showIcons="true"
 				uploadEnabled="false"
 				terminationEnabled="false"
 				fileTypes="txt,doc,png"
 				maxFileNameLength="30"
 				maxFileSize="200"
 				mediaTypes="text/plain,application/msword,image/jpeg"
-				
+                visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : false}"				
 				>
 				<upload:toolbar>
                 <OverflowToolbar>

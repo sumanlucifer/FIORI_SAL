@@ -106,6 +106,10 @@ modules:
       - comsalchatbotview.zip
       name: comsalchatbotview
       target-path: resources/
+    - artifacts:
+      - chat.zip
+      name: chat
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -259,6 +263,16 @@ modules:
 - name: comsalchatbotview
   type: html5
   path: chatbotview
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: chat
+  type: html5
+  path: chat
   build-parameters:
     build-result: dist
     builder: custom

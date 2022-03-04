@@ -9,7 +9,7 @@ sap.ui.define([
     "sap/ui/Device"
 ],
 
-    function (BaseController, Controller,JSONModel,formatter,Sorter,Filter,FilterOperator,Device) {
+    function (BaseController, Controller, JSONModel, formatter, Sorter, Filter, FilterOperator, Device) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.DetailPage", {
@@ -35,18 +35,18 @@ sap.ui.define([
             },
 
             _bindView: function () {
-              
+
                 var oComponentModel = this.getComponentModel(),
-                sKey = null;
-               
-                var sKey = oComponentModel.createKey("/MasterSubModules", {                 
+                    sKey = null;
+
+                var sKey = oComponentModel.createKey("/MasterSubModules", {
                     ID: this.sParentID
                 });
 
                 this.getView().bindElement({
                     path: sKey,
                     events: {
-                        change: function (oEvent) {                        
+                        change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();
                             oContextBinding.refresh(false);
                         }.bind(this),
@@ -59,12 +59,13 @@ sap.ui.define([
                     }
                 });
 
-                
-            },
-            
 
-          
+            },
+
+
+
             onPressRaiseRequest: function () {
+
                 this.oRouter.navTo("RaiseRequest", {
                     parentMaterial: this.sParentID,
                     layout: "EndColumnFullScreen"
@@ -72,7 +73,8 @@ sap.ui.define([
             },
             onPressTicketItem: function (oEvent) {
                 debugger;
-                this.oRouter.navTo("detailDetail", {                  
+
+                this.oRouter.navTo("detailDetail", {
                     parentMaterial: this.sParentID,
                     childModule: oEvent.getSource().getBindingContext().getObject().ID,
                     layout: "ThreeColumnsMidExpanded"
@@ -88,128 +90,142 @@ sap.ui.define([
 
                     var aFilters = new sap.ui.model.Filter({
                         filters: [
-                               this.createFilter("ticketCode", FilterOperator.Contains, sQuery, true),  
-                                // this.createFilter("ticketCode", sap.ui.model.FilterOperator.Contains, sQuery)
-                               this.createFilter("externalCode", FilterOperator.Contains, sQuery,true),
-                               this.createFilter("status", FilterOperator.Contains, sQuery,true)
-                               
+                            this.createFilter("ticketCode", FilterOperator.Contains, sQuery, true),
+                            // this.createFilter("ticketCode", sap.ui.model.FilterOperator.Contains, sQuery)
+                            this.createFilter("externalCode", FilterOperator.Contains, sQuery, true),
+                            this.createFilter("status", FilterOperator.Contains, sQuery, true)
+
                         ],
-                        and:false
-                       
+                        and: false
+
                     });
-                   
-                    
-                
+
+
+
                 }
-    
+
                 this.oTicketTable.getBinding("items").filter(aFilters, "Application");
             },
-            createFilter: function(key, operator, value, useToLower) {
+            createFilter: function (key, operator, value, useToLower) {
                 return new Filter(useToLower ? "tolower(" + key + ")" : key, operator, useToLower ? "'" + value.toLowerCase() + "'" : value);
             },
             onSort: function () {
                 this._bDescendingSort = !this._bDescendingSort;
                 var oBinding = this.oTicketTable.getBinding("items"),
                     oSorter = new Sorter("ticketCode", this._bDescendingSort);
-    
+
                 oBinding.sort(oSorter);
             },
-            onPersonalizationDialogPress: function(){
+            onPersonalizationDialogPress: function () {
                 var oView = this.getView();
                 this.oJSONModel = new JSONModel();
-                if (!this._pPersonalizationDialog){
-                this._pPersonalizationDialog = Fragment.load({
-                id: oView.getId(),
-                name: "com.sal.salhr.Fragments.TicketP13nDialog",
-                    controller: this
-                }).then(function(oPersonalizationDialog){
-                    oView.addDependent(oPersonalizationDialog);
-                    oPersonalizationDialog.setModel(this.oJSONModel);
-                    return oPersonalizationDialog;
+                if (!this._pPersonalizationDialog) {
+                    this._pPersonalizationDialog = Fragment.load({
+                        id: oView.getId(),
+                        name: "com.sal.salhr.Fragments.TicketP13nDialog",
+                        controller: this
+                    }).then(function (oPersonalizationDialog) {
+                        oView.addDependent(oPersonalizationDialog);
+                        oPersonalizationDialog.setModel(this.oJSONModel);
+                        return oPersonalizationDialog;
                     }.bind(this));
-                    }
-                    this._pPersonalizationDialog.then(function(oPersonalizationDialog){
+                }
+                this._pPersonalizationDialog.then(function (oPersonalizationDialog) {
                     this.oJSONModel.setProperty("/ShowResetEnabled", this._isChangedColumnsItems());
                     this.oDataBeforeOpen = deepExtend({}, this.oJSONModel.getData());
                     oPersonalizationDialog.open();
-                        }.bind(this));
-                },
+                }.bind(this));
+            },
 
-                handleDetailFullScreen: function (oEvent) {
-                    debugger;
-                    var sLayout = "";
-                    if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
-                        sLayout = "MidColumnFullScreen";
-                        oEvent.getSource().setIcon("sap-icon://exit-full-screen");
-                    } else {
-                        sLayout = "TwoColumnsMidExpanded";
-                        oEvent.getSource().setIcon("sap-icon://full-screen");
-                    }
-    
-                    this.oRouter.navTo("detail", {
-                        parentMaterial: this.sParentID,
-                        layout: sLayout
-                    });
-                },
-    
-                handleDetailClose: function (oEvent) {
-                    var sLayout = "",
-                        sIcon = this.byId("idDetailFullScreenBTN").getIcon();
-                    if (sIcon === "sap-icon://full-screen") {
-                        sLayout = "EndColumnFullScreen";
-                    } else {
-                        sLayout = "TwoColumnsMidExpanded";
-                        this.byId("idDetailFullScreenBTN").setIcon("sap-icon://full-screen");
-                    }
-                    this.oRouter.navTo("master");
-                },
-                onPressFilter : function()
-                {
-                    if (!this._oFilterDialog) {
-                        this._oFilterDialog = sap.ui.xmlfragment("com.sal.salhr.Fragments.FilterDialog", this);
-                        this.getView().addDependent(this._oFilterDialog);
-                    }
-                    if (Device.system.desktop) {
-                        this._oFilterDialog.addStyleClass("sapUiSizeCompact");
-                    }
-                    this._oFilterDialog.open();
-                },
-                handleFilterDialogConfirm: function (oEvent) {
-                    var oFilterSearch = [];
-                    if (oEvent.getParameters().filterString) {
-                        var filters = oEvent.getParameters().filterCompoundKeys,
-                       sStatusFilter =   filters.Status === undefined ? "" : Object.keys(filters.Status)[0],
-                       sDateFilter = filters.Date === undefined ? "" : Object.keys(filters.Date)[0];
-
-
-                       if (sStatusFilter != "") {
-                        oFilterSearch.push(new Filter("status", FilterOperator.EQ, sStatusFilter));
-                    }
-                    if (sDateFilter != "") {
-                        oFilterSearch.push(new Filter("requestDate", FilterOperator.EQ, sDateFilter));
-                    }
-
-
-                    if (oFilterSearch.length > 0) {
-                        
-                        this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
-                    }
-
-                
-                    }
-                    else{
-
-                        this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
-                        //this.byId("idTicketTable").getBinding("items").filter(oFilterSearch, "Application");
-                    }
-
-
-
-
-
+            handleDetailFullScreen: function (oEvent) {
+                debugger;
+                var sLayout = "";
+                if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
+                    sLayout = "MidColumnFullScreen";
+                    oEvent.getSource().setIcon("sap-icon://exit-full-screen");
+                } else {
+                    sLayout = "TwoColumnsMidExpanded";
+                    oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
 
-            
+                this.oRouter.navTo("detail", {
+                    parentMaterial: this.sParentID,
+                    layout: sLayout
+                });
+            },
+
+            handleDetailClose: function (oEvent) {
+                var sLayout = "",
+                    sIcon = this.byId("idDetailFullScreenBTN").getIcon();
+                if (sIcon === "sap-icon://full-screen") {
+                    sLayout = "EndColumnFullScreen";
+                } else {
+                    sLayout = "TwoColumnsMidExpanded";
+                    this.byId("idDetailFullScreenBTN").setIcon("sap-icon://full-screen");
+                }
+                this.oRouter.navTo("master");
+            },
+            onPressFilter: function () {
+                if (!this._oFilterDialog) {
+                    this._oFilterDialog = sap.ui.xmlfragment("com.sal.salhr.Fragments.FilterDialog", this);
+                    this.getView().addDependent(this._oFilterDialog);
+                }
+                if (Device.system.desktop) {
+                    this._oFilterDialog.addStyleClass("sapUiSizeCompact");
+                }
+                this._oFilterDialog.open();
+            },
+            handleFilterDialogConfirm: function (oEvent) {
+                var oFilterSearch = [];
+
+                var sDate = oEvent.getSource().getFilterItems()[1].getCustomControl().getValue();
+
+                var iMonth = parseInt(sDate.split("/")[0]),
+                    iDay = parseInt(sDate.split("/")[1]) + 1,
+                    iYear = parseInt(sDate.split("/")[2]),
+
+                    sconcatDate = `${iMonth}/${iDay}/${iYear}`,
+                    sParsedDate = Date.parse(sconcatDate);
+
+                // var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern: "yyyy-MM-dd"}),
+                // oDate = dateFormat.format(new Date(sDate));
+                // oDate = oDate + "T00:00:00";
+
+
+
+                var filters = oEvent.getParameters().filterCompoundKeys,
+                    sStatusFilter = filters.Status === undefined ? "" : Object.keys(filters.Status)[0],
+                    sDateFilter = sDate === "" ? "" : sParsedDate;
+
+
+                if (sStatusFilter != "") {
+                    oFilterSearch.push(new Filter("status", FilterOperator.EQ, sStatusFilter));
+                }
+                if (sDateFilter != "") {
+                    oFilterSearch.push(new Filter("requestDate", FilterOperator.EQ, sDateFilter));
+                }
+                if (oFilterSearch.length > 0) {
+                    this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
+                    oFilterSearch = [];
+                    oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+                   
+                }
+                else {
+
+                    this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
+                    //this.byId("idTicketTable").getBinding("items").filter(oFilterSearch, "Application");
+                }
+
+
+
+
+
+
+
+
+            }
+
+
 
         });
     });        
