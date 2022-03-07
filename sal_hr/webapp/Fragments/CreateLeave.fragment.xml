@@ -35,7 +35,7 @@
             </Select>
 
                         <Label text="Available Balance" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }" />
-            <Input value="20" enabled="false" width="40%" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }">
+            <Input value="{LeaveBalModel>/balance}" enabled="false" width="40%" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }">
                 <layoutData>
                     <l:GridData span="XL2 L3 M4 S4" />
                 </layoutData>
@@ -127,10 +127,9 @@
 				showIcons="true"
 				uploadEnabled="true"
 				terminationEnabled="true"
-				fileTypes="txt,doc,png,pdf"
-				maxFileNameLength="30"
+				fileTypes="txt,png,jpg,jpeg,pdf"
+				maxFileNameLength="255"
 				maxFileSize="200"
-				mediaTypes="text/plain,application/msword,image/jpeg"
 				uploadUrl="../../../../upload"
                 afterItemRemoved="onFileDeleted"
                 afterItemAdded="onFileAdded"

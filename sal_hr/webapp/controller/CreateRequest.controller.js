@@ -339,11 +339,12 @@ sap.ui.define([
 
             onLeaveStartDatChange: function (oEvent) {
                 var oneDay = 24 * 60 * 60 * 1000;
-                var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
+                var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
                 var sStartDate = oEvent.getSource().getDateValue();
 
                 this.sRequestDay = "";
-                if (sEndDate <= sStartDate) {
+                // if (sEndDate <= sStartDate) {
+                   if(new Date(sEndDate.getTime() < new Date(sStartDate).getTime())){
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -545,10 +546,15 @@ sap.ui.define([
 
             },
             fnGetLeaveBalance:function(){
-                  this.getView().getModel.read("/GetLeaveBalance",{
+                debugger;
+                var that = this;
+                  this.getView().getModel().read("/SF_Leave_AccountBalance", {
+                  urlParameters: {
+                    "$filter": "(userId eq '12002024' and timeAccountType eq 'Annual_vacation')"
+                },
                       success:function(oData){
-                        var oLeaveBalModel = new JSONModel(oData);
-                        this.getView().setModel(oLeaveBalModel, "LeaveBalModel");
+                        var oLeaveBalModel = new JSONModel(oData.results[0]);
+                        that.getView().setModel(oLeaveBalModel, "LeaveBalModel");
                       },
                       error:function(){
 

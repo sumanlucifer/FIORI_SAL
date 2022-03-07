@@ -150,7 +150,35 @@
                         "RaiseRequest"
                     ]
 
-                }
+                },
+                {
+                    "pattern": "DisciplinaryRequest/{parentMaterial}/{layout}",  
+                    "name": "DisciplinaryRequest",        
+                    "layout":"EndColumnFullScreen",            
+                    "titleTarget": "",           
+                    "greedy": false,             
+                    "target": [            
+                    "DisciplinaryRequest"              
+                    ]
+                    },
+                    
+                    {
+                    
+                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
+                    
+                    "name": "DisciplinaryRequestDetail",
+                    
+                    "target": [
+                    
+                    "master",
+                    
+                    "detail",
+                    
+                    "DisciplinaryRequestDetail"
+                    
+                    ]
+                    
+                    }
 				
                 
             ],
@@ -172,7 +200,15 @@
                 "RaiseRequest": {
                     "viewName": "CreateRequest",                  
                     "controlAggregation": "endColumnPages"                                  
-                }            
+                },
+                "DisciplinaryRequest": {
+                    "viewName": "CreateDisciplinaryRequest",             
+                    "controlAggregation": "endColumnPages"             
+                    },               
+                    "DisciplinaryRequestDetail": {             
+                    "viewName": "DisciplinaryRequestDetailpage",         
+                    "controlAggregation": "endColumnPages"       
+                    }            
             }
         }
     },
