@@ -1,8 +1,11 @@
+
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
     xmlns:upload="sap.m.upload">
-    <form:SimpleForm id="idNewDisplayLeaveRquestSimpleForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+
+
+    <form:SimpleForm id="idNewDisplayTripRquestSimpleForm" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" layout="ResponsiveGridLayout" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <form:content>
             <Title id="idLeaveDisplayRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
 
@@ -18,8 +21,20 @@
             <Text text="{cust_SeverityNav/label_defaultValue}"/>
              <Label text="Incident Status"  />
             <Text text="{cust_IncidentStatusNav/label_defaultValue}"/>
+
+
+
+
              <Label text="Incident Category"  />               
             <Text text="{cust_ReasonNav/label_defaultValue}"/>
+
+
+
+
+
+
+            <core:Title id="idEmptyTitle" text=" "/>
+
             <Label text="Incident Description Details"  />
             <Text text="{cust_IncidentDetails}"/>
             <Label text="When would you like your changes to take effect"  />
@@ -30,14 +45,23 @@
                                                 }}"/>
 
 
-
+             
+          
         </form:content>
+
+   
+        
+        
+        
     </form:SimpleForm>
+
+
+
     <form:SimpleForm id="idDisplayattachmentForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <form:content>
-
-
-            <upload:UploadSet 
+ 
+     
+    <upload:UploadSet 
 				id="UploadSet"
 				instantUpload="false"
 				showIcons="false"
@@ -61,10 +85,11 @@
 						>
 				</upload:UploadSetItem>
 			</upload:items>
-		</upload:UploadSet>    
-
-   
+		</upload:UploadSet> 
          </form:content>
     </form:SimpleForm>
 
+
+
+   
 </core:FragmentDefinition>
