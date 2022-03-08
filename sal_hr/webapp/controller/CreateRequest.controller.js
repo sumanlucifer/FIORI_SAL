@@ -344,7 +344,7 @@ sap.ui.define([
 
                 this.sRequestDay = "";
                 // if (sEndDate <= sStartDate) {
-                   if(new Date(sEndDate.getTime() < new Date(sStartDate).getTime())){
+                   if(new Date(sEndDate).getTime() < new Date(sStartDate).getTime()){
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -355,9 +355,9 @@ sap.ui.define([
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").setValueStateText("");
                     // this.sRequestDay = Math.round(Math.abs((new Date(sEndDate) - sStartDate) / oneDay)) + 1;
 
-                    this.sRequestDay = this.dateDifference(sStartDate, sEndDate);
+                    // this.sRequestDay = this.dateDifference(sStartDate, sEndDate);
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                    this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
+                    // this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
                 }
             },
             onLeaveEndDateChange: function (oEvent) {
@@ -365,7 +365,8 @@ sap.ui.define([
                 var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
                 var sEndDate = oEvent.getSource().getDateValue();
 
-                if (sEndDate <= sStartDate) {
+                // if (sEndDate <= sStartDate) {
+                    if(new Date(sEndDate).getTime() < new Date(sStartDate).getTime()){
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("End Date should be later than Start Date");
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -375,9 +376,9 @@ sap.ui.define([
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueState();
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueStateText("");
                     // this.sRequestDay = Math.round(Math.abs((sEndDate - new Date(sStartDate)) / oneDay)) + 1 ;
-                    this.sRequestDay = this.dateDifference(sStartDate, sEndDate, oEvent);
+                    // this.sRequestDay = this.dateDifference(sStartDate, sEndDate, oEvent);
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                    this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
+                    // this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
                 }
             },
             onSelectRecurringAbsc: function (oEvent) {

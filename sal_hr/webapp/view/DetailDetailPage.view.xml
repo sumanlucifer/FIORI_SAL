@@ -22,7 +22,7 @@
                 </f:expandedContent>
                 <f:actions>
                     <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress"/>
+                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
                 </f:actions>
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->

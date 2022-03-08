@@ -16,7 +16,7 @@
                 </f:heading>
            
                 <f:navigationActions>
-                    <Button text="Raise a Request" press="onPressRaiseRequest" type="Emphasized"/>
+                    <Button text="Raise Request" press="onPressRaiseRequest" type="Emphasized"/>
                     <Button id="idDetailFullScreenBTN" icon="sap-icon://full-screen" press="handleDetailFullScreen" type="Transparent" />
                     <Button id="idCloseButton" icon="sap-icon://decline" type="Transparent" press="handleDetailClose" />
                     
@@ -34,23 +34,28 @@
 					        <Label text="Total Requests" class="tblHeaderText"/>
 					        <Text text="{totalRequests}" class="sapUiTinyMarginTop dataPointsColor "/>
 				        </VBox>
-				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="In Process" class="tblHeaderText"/>
-					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
-				        </VBox>
-				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Done" class="tblHeaderText"/>
+                        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Approved" class="tblHeaderText"/>
 					        <Text text="{totalApproved}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
+				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Pending" class="tblHeaderText"/>
+					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
                          <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Open" class="tblHeaderText"/>
-					        <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataPointsColor"/>
+					        <Label text="Rejected" class="tblHeaderText"/>
+					        <Text text="{totalRejected}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
 			        </FlexBox>
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-              <Table id="idTicketTable" items="{tickets}" inset="false" autoPopinMode="true">
+              <Table id="idTicketTable" items="{ path: 'tickets', sorter: [
+      {
+        path: 'createdAt', 
+        descending: 'true'   
+      }
+    ]}" inset="false" autoPopinMode="true">
                 <headerToolbar>
                     <OverflowToolbar>
                         <content>
@@ -82,7 +87,7 @@
                         <cells>
                             <!-- <Text text="{ticketCode}" /> -->
                             <Text text="{ticketCode}" />
-                            <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions:{pattern:'dd.MM.yyyy'}}" />
+                            <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date'}" />
                             <Text text="{externalCode}" />
                            
                            <ObjectStatus text="{path:'status',formatter:'.formatter.ticketStatusText'}" state="{path:'status',formatter:'.formatter.ticketStatus'}" />

@@ -28,6 +28,10 @@
                     "localUri": "localService/metadata.xml"
                 }
             },
+            "chatbotService": {
+                "uri": "/cai-chatbot",
+                "type": "JSON"
+            },
             "annotation": {
                 "type": "ODataAnnotation",
                 "uri": "annotations/annotation.xml",

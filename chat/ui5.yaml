@@ -9,9 +9,9 @@ server:
     configuration:
       ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
       backend:
-      - path: /public/api
+      - path: /cai-chatbot
         pathPrefix: /
-        url: https://api.cai.tools.sap
+        url: https://sal-btp-cf-dev-8glkufj3.sapcai.eu10.hana.ondemand.com
         xfwd: true
       ui5:
         path: 

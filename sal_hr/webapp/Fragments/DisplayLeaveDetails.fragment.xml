@@ -58,6 +58,8 @@
 				fileTypes="txt,doc,png"
 				maxFileNameLength="30"
 				maxFileSize="200"
+                editEnabled="false"
+                removeEnabled="false"
 				mediaTypes="text/plain,application/msword,image/jpeg"
                 visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : false}"				
 				>
