@@ -46,6 +46,7 @@ sap.ui.define([], function() {
                 return 'sap-icon://quality-issue';
                 break;
 
+
             }    
 		},
         ticketStatusText: function (sValue) {
