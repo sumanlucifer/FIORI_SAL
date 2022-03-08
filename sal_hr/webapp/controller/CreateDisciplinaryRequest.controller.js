@@ -30,12 +30,7 @@ sap.ui.define([
                     this.sRequesting = 1;
                 }
                 var oLocalViewModel = new JSONModel({
-                    startDate: new Date(),    
-                    endDate: new Date(),
-                    returnDate : this.sReturnDate,
-                    requestDay : this.sRequesting,
-                    availBal : false,
-                    recurringAbs : false,
+                    currentDate: new Date(),    
                     busy:false,
                     uploadAttachment:true,
                     currentDate:new Date()
@@ -137,6 +132,7 @@ sap.ui.define([
                         sap.m.MessageBox.success("Request Submitted Successfully.");
                         this.getView().setBusy(false);
                         this.getView().getModel().refresh();
+                        this.onResetPress();
                         this.oRouter.navTo("detail", {
                             parentMaterial: this.sParentID,
                             layout: "TwoColumnsMidExpanded"
@@ -152,54 +148,64 @@ sap.ui.define([
                 })
             },
 
-            onAttachmentChange:function(oEvent){
-                  
-                var that= this;
+            onFileAdded: function (oEvent) {
+                debugger;
+                var that = this;
 
-                   var file = oEvent.getParameters().files[0];
-      
-                var Filename = file.name,
-                    Filetype = file.type,
-                    Filesize = file.size;
-    
-              
+                //  var file = oEvent.getParameters().files[0];
+                var file = oEvent.getParameter("item");
+                var Filename = file.getFileName(),
+                    Filetype = file.getMediaType(),
+                    Filesize = file.getFileObject().size,
+                    Filedata = oEvent.getParameter("item").getFileObject();
+
+
                 //code for base64/binary array 
-                this._getImageData((file), function (Filecontent) {
+                this._getImageData((Filedata), function (Filecontent) {
                     that._addData(Filecontent, Filename, Filetype, Filesize);
                 });
+                var oUploadSet = this.byId("UploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(false);
+
+
             },
             _getImageData: function (url, callback, fileName) {
-              var reader = new FileReader();
+                var reader = new FileReader();
 
-              reader.onloadend = function (evt) {
-                  if (evt.target.readyState === FileReader.DONE) {
-  
-                      var binaryString = evt.target.result,
-                          base64file = btoa(binaryString);
-  
-                      callback(base64file);
-                  }
-              };
-              reader.readAsBinaryString(url);
-          },
-          _addData: function (Filecontent, Filename, Filetype, Filesize) {
-              this.getViewModel("LocalViewModel").setProperty(
-                  "/busy",
-                  true
-              );
-              this.fileContent = Filecontent;
-              this.fileName = Filename;
-              this.isAttachment = true;
-  
-            
+                reader.onloadend = function (evt) {
+                    if (evt.target.readyState === FileReader.DONE) {
 
-          },
+                        var binaryString = evt.target.result,
+                            base64file = btoa(binaryString);
+
+                        callback(base64file);
+                    }
+                };
+                reader.readAsBinaryString(url);
+            },
+            _addData: function (Filecontent, Filename, Filetype, Filesize) {
+                this.getViewModel("LocalViewModel").setProperty(
+                    "/busy",
+                    true
+                );
+                this.fileContent = Filecontent;
+                this.fileName = Filename;
+                this.isAttachment = true;
+
+            },
+            onFileDeleted: function (oEvent) {
+                var oUploadSet = this.byId("UploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(true);
+            },
             getDisciplinaryCreatePayload:function(){
                 var sAttachmentFileContent, sAttahmentFileName;
-                var sIncidentStartDate = this.byId("idIncidentStartDate").getValue();
-                sIncidentStartDate = Date.parse(sIncidentStartDate);
-                var sEffectiveStartDate = this.byId("idEffectStartDate").getValue();
-                sEffectiveStartDate = Date.parse(sEffectiveStartDate);
+                var sIncidentStartDate = this.byId("idIncidentStartDate").getDateValue();
+                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                sIncidentStartDate = dateFormat.format(new Date(sIncidentStartDate));
+                sIncidentStartDate = sIncidentStartDate + "T00:00:00";
+                var sEffectiveStartDate = this.byId("idEffectStartDate").getDateValue();
+                sEffectiveStartDate = dateFormat.format(new Date(sEffectiveStartDate));
+                sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
                 var sIncidentCategory = this.byId("idIncidenCategiory").getSelectedKey();
                 var sIncidentStatus = this.byId("idIncidentStatus").getSelectedKey();
                 var sSeverity = this.byId("idSeverity").getSelectedKey();
@@ -217,13 +223,13 @@ sap.ui.define([
                  }
               
                 return{
-                    "cust_DateofIncident": `/Date(${sIncidentStartDate})/`,
+                    "cust_DateofIncident": sIncidentStartDate,
                     "cust_IncidentStatus": sIncidentStatus,
                     "cust_IncidentDetails": sIncidentDesc,
                     "cust_Reason": sIncidentCategory,
                     "cust_Severity": sSeverity,
                     "cust_warningType": sWarningType,
-                    "effectiveStartDate": `/Date(${sEffectiveStartDate})/`,
+                    "effectiveStartDate": sEffectiveStartDate,
                     "externalCode": "12002291",
                     "externalName": null,
                     "attachmentFileContent":sAttachmentFileContent,
@@ -338,52 +344,8 @@ sap.ui.define([
                 endDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/endDate").getDate());
                 return days + 1;
               },
-              onAttachmentChange:function(oEvent){
-                  
-                  var that= this;
-                //   var file = sap.ui.core.Fragment.byId("idLeaveFragment", "UploadCollection").getFocusDomRef().files[0];
-                     var file = oEvent.getParameters().files[0];
-                  //Input = "458076",
-                  var Filename = file.name,
-                      Filetype = file.type,
-                      Filesize = file.size;
-      
-                
-                  //code for base64/binary array 
-                  this._getImageData((file), function (Filecontent) {
-                      that._addData(Filecontent, Filename, Filetype, Filesize);
-                  });
-              },
-              _getImageData: function (url, callback, fileName) {
-                var reader = new FileReader();
-
-                reader.onloadend = function (evt) {
-                    if (evt.target.readyState === FileReader.DONE) {
-    
-                        var binaryString = evt.target.result,
-                            base64file = btoa(binaryString);
-    
-                        callback(base64file);
-                    }
-                };
-                reader.readAsBinaryString(url);
-            },
-            _addData: function (Filecontent, Filename, Filetype, Filesize) {
-                this.getViewModel("LocalViewModel").setProperty(
-                    "/busy",
-                    true
-                );
-                this.fileContent = Filecontent;
-                this.fileName = Filename;
-                this.isAttachment = true;
-    
-         
-
-            },
-            onFileDeleted: function(oEvent) {
-                debugger;
-                MessageToast.show("Event fileDeleted triggered");
-            },
+            
+          
             onTimeTyeChange:function(oEvent){
                  var sType = oEvent.getSource().getSelectedKey();
                  if(sType === "S110" || sType === "500"){
@@ -430,17 +392,17 @@ sap.ui.define([
             },
             onCreateResetPress:function(){
                 var dataReset = {
-                    startDate: new Date(),    
+                    currentDate: new Date(),    
                     endDate: new Date(),
-                    returnDate : this.sReturnDate,
-                    requestDay : this.sRequesting,
-                    availBal : false,
-                    recurringAbs : false,
                     busy:false,
                     uploadAttachment:true
                 };
                 this.getView().getModel("LocalViewModel").setData(dataReset);
                 this.getView().getModel("LocalViewModel").refresh();
+                this.byId("UploadSet").removeAllItems();
+                var oUploadSet = this.byId("UploadSet");
+                this.byId("idIncidentDescription").setValue("");
+                oUploadSet.getDefaultFileUploader().setEnabled(true);
             }
     
 

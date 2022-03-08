@@ -200,6 +200,11 @@ sap.ui.define([
                 }
                 this._oFilterDialog.open();
             },
+
+            onReset : function(oEvent)
+            {
+             oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+            },
             handleFilterDialogConfirm: function (oEvent) {
                 var oFilterSearch = [];
 
@@ -232,7 +237,7 @@ sap.ui.define([
                 if (oFilterSearch.length > 0) {
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     oFilterSearch = [];
-                    oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+
                    
                 }
                 else {
