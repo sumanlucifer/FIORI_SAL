@@ -45,6 +45,9 @@ sap.ui.define([
                 debugger;
                 var object = data.results[0];
                 this.object = data.results[0];
+                var oHeaderModel = new JSONModel(data.results[0]);
+                this.getView().setModel(oHeaderModel, "headerModel");
+
 
                 if (object.status === "APPROVED") {
                     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
@@ -72,9 +75,9 @@ sap.ui.define([
                                 var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
                                 that.getView().setModel(oAttachModel, "attachmentModel");
                                 that.getView().setModel(oTimeTypeModel, "timeTypeModel");
-                                that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
+                                // that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
                                 var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
-                                if (sType === "S110" || sType === "500") {
+                                if (sType === "S110" || sType === "500" || sType === "460") {
                                     that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                 } else {
                                     that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
