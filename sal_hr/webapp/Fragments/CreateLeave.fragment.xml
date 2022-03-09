@@ -121,6 +121,13 @@
      beforeUploadStarts="onBeforeUploadStarts" 
      visible="{LocalViewModel>/uploadAttachment}"/>   -->
                         <!-- </fm:SimpleForm>  -->
+                        <HBox>
+
+<Text text="Attachments:" class="sapUiSmallMarginTop" visible="{LocalViewModel>/uploadAttachment}"/>
+
+<Text text="*" class="sapUiMediumMarginBottom redColor" visible="{LocalViewModel>/uploadAttachment}" />
+
+</HBox>
         <upload:UploadSet
 				id="UploadSet"
 				instantUpload="true"

@@ -66,6 +66,29 @@ sap.ui.define([
 
             onPressRaiseRequest: function () {
 
+                // switch (this.sParentID) {
+                //     // Leave Module
+                //     case "1":
+                //         this.oRouter.navTo("RaiseRequest", {
+                //             parentMaterial: this.sParentID,
+                //             layout: "EndColumnFullScreen"
+                //         })
+                //         break;
+                //     // Business Trip Module
+                //     case "1":
+                //         this.oRouter.navTo("RaiseRequest", {
+                //                 parentMaterial: this.sParentID,
+                //                 layout: "EndColumnFullScreen"
+                //         })
+                //         break;
+                //     // Disciplinary Request Module
+                //     case "12":
+                //         this.oRouter.navTo("DisciplinaryRequest", {
+                //             parentMaterial: this.sParentID,
+                //             layout: "EndColumnFullScreen"
+                //         })
+                //         break;
+                // }
                 if (this.sParentID === "12") {
 
                     this.oRouter.navTo("DisciplinaryRequest", {

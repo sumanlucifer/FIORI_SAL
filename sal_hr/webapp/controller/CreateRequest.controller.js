@@ -224,19 +224,28 @@ sap.ui.define([
             },
             fnGetLeaveRequestPayload: function () {
                 var sAttachmentFileContent, sAttahmentFileName;
-                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getValue();
-                sStartDate = Date.parse(sStartDate);
+                // var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getValue();
+                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
+                // sStartDate = Date.parse(sStartDate);
+                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                oStartDate = dateFormat.format(new Date(sStartDate));
+                sStartDate = oStartDate + "T00:00:00";
                 var sRecSelected = sap.ui.core.Fragment.byId("idLeaveFragment", "idRecCheckbox").getSelected();
                 if (sRecSelected === false) {
-                    var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
+                    // var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
+                    var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
+
                     var sRecAbsGroup = null;
 
                 } else {
-                    sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getValue();
+                    // sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getValue();
+                     sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getDateValue();
                     sRecAbsGroup = sap.ui.core.Fragment.byId("idLeaveFragment", "idRecAbsc").getSelectedKey();
                 }
 
-                sEndDate = Date.parse(sEndDate);
+                // sEndDate = Date.parse(sEndDate);
+                var oEndDate = dateFormat.format(new Date(sEndDate));
+                sEndDate = oEndDate + "T00:00:00";
                 var sTimeType = sap.ui.core.Fragment.byId("idLeaveFragment", "idTimeType").getSelectedKey();
 
 
@@ -249,12 +258,14 @@ sap.ui.define([
                 }
 
                 return {
-                    "endDate": "/Date(" + sEndDate + ")/",
+                    // "endDate": "/Date(" + sEndDate + ")/",
+                    "endDate":sEndDate,
                     "loaActualReturnDate": null,
                     "timeType": sTimeType,
                     "loaExpectedReturnDate": null,
                     "loaStartJobInfoId": null,
-                    "startDate": "/Date(" + sStartDate + ")/",
+                    // "startDate": "/Date(" + sStartDate + ")/",
+                    "startDate":sStartDate,
                     "cust_KronosPayCodeEditID": null,
                     "startTime": null,
                     "loaEndJobInfoId": null,
@@ -492,7 +503,7 @@ sap.ui.define([
             },
             onTimeTyeChange: function (oEvent) {
                 var sType = oEvent.getSource().getSelectedKey();
-                if (sType === "S110" || sType === "500") {
+                if (sType === "S110" || sType === "500" || sType === "460") {
                     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                 } else {
                     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
