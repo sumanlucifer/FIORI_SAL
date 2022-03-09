@@ -15,7 +15,8 @@ sap.ui.define([
                     BusineesTripModule: false,
                     HealthModule: false,
                     PageTitle: null,
-                    Modify: true
+                    Modify: true,
+                    IDCardModule: false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -121,6 +122,39 @@ sap.ui.define([
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
 
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance");
+                        break;
+                    // ID Card Replacement
+                    case "7":
+                        var sUserID = this.object.externalCode,
+                            sEffectiveStartDate = this.object.effectiveStartDate,
+                            sKey = oComponentModel.createKey("/SF_IDReplacement", {
+                                User: sUserID,
+                                effectiveStartDate: sEffectiveStartDate
+                            });
+
+
+
+                        this.getView().bindElement({
+                            path: sKey,
+                            parameters: {
+                                expand: "cust_idReplacementDetails, UserNav"
+                            },
+                            events: {
+                                dataRequested: function () {
+                                    this.getView().setBusy(true);
+                                }.bind(this),
+                                dataReceived: function () {
+                                    this.getView().setBusy(false);
+                                }.bind(this)
+                            }
+                        });
+                        that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
+                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", true);
+                        this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "ID Replacement Changes");
                         break;
                     //  Bank Request Module 
                     case "13":
@@ -369,28 +403,27 @@ sap.ui.define([
                 // fContent = atob(fContent);
                 // sap.ui.core.util.File.save(fContent, fName, sfileExtension);
                 var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
-                var fileext =  this.getView().getModel("attachmentModel").getData().fileExtension;
-                var mimeType =  this.getView().getModel("attachmentModel").getData().mimeType;
-                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
-                  fName = fName.split(".")[0];
-                                 debugger;
-                               if(fileext === "pdf" || fileext === "png")
-                               {
-                                 var decodedPdfContent = atob(fContent);
-                                 var byteArray = new Uint8Array(decodedPdfContent.length)
-                                 for (var i = 0; i < decodedPdfContent.length; i++) {
-                                     byteArray[i] = decodedPdfContent.charCodeAt(i);
-                                 }
-                                 var blob = new Blob([byteArray.buffer], { type: mimeType });
-                                 var _pdfurl = URL.createObjectURL(blob);
-                                 var a = document.createElement('a');
-                                 a.href = _pdfurl;
-                                 a.download = fName;
-                                 a.dispatchEvent(new MouseEvent('click'));
-                               }
-                               else{
-                                 sap.ui.core.util.File.save(fContent, fName,fileext, mimeType);
-                               }
+                var fileext = this.getView().getModel("attachmentModel").getData().fileExtension;
+                var mimeType = this.getView().getModel("attachmentModel").getData().mimeType;
+                var fName = this.getView().getModel("attachmentModel").getData().fileName;
+                fName = fName.split(".")[0];
+                debugger;
+                if (fileext === "pdf" || fileext === "png") {
+                    var decodedPdfContent = atob(fContent);
+                    var byteArray = new Uint8Array(decodedPdfContent.length)
+                    for (var i = 0; i < decodedPdfContent.length; i++) {
+                        byteArray[i] = decodedPdfContent.charCodeAt(i);
+                    }
+                    var blob = new Blob([byteArray.buffer], { type: mimeType });
+                    var _pdfurl = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = _pdfurl;
+                    a.download = fName;
+                    a.dispatchEvent(new MouseEvent('click'));
+                }
+                else {
+                    sap.ui.core.util.File.save(fContent, fName, fileext, mimeType);
+                }
             },
             onFileDeleted: function (oEvent) {
                 var oUploadSet = this.byId("idEditUploadSet");
@@ -471,7 +504,7 @@ sap.ui.define([
                 });
             },
             fnDeleteBankAccount: function () {
-               
+
                 var oComponentModel = this.getComponentModel(),
                     sPath = oComponentModel.createKey("/SF_BankDetails", {
                         effectiveStartDate: this.object.effectiveStartDate,
@@ -498,15 +531,30 @@ sap.ui.define([
             },
 
             fnDeleteIDReplacement: function () {
-                var sUserID = "12002425",
-                    sEffectiveStartDate = "2022-02-24T00:00:00",
-                    sPath = "/SF_IDReplacement(User='" + sUserID + "',effectiveStartDate=datetime'" + sEffectiveStartDate + "')";
-                this.mainModel.remove(sPath, {
+                this.getView().setBusy(true);
+                var sUserID = this.object.externalCode,
+                    sEffectiveStartDate = new Date(this.object.effectiveStartDate),
+                    sPath = this.getComponentModel().createKey("/SF_IDReplacement", {
+                        User: sUserID,
+                        effectiveStartDate: sEffectiveStartDate
+                    });
+                this.getView().getModel().remove(sPath, {
                     success: function (oData) {
-                        sap.m.MessageBox.success("Request Submitted Successfully.");
+                        if (oData !== "" || oData !== undefined) {
+                            this.getView().setBusy(false);
+                            sap.m.MessageBox.success("Record Deleted successfully.");
+                            this.getView().getModel().refresh();
+                            this.oRouter.navTo("detail", {
+                                parentMaterial: this.sParentID,
+                                layout: "TwoColumnsMidExpanded"
+                            });
+                        } else {
+                            this.getView().setBusy(false);
+                            MessageBox.error("Record Not able to delete.");
+                        }
                     }.bind(this),
                     error: function (oError) {
-                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        this.getView().setBusy(false);
                     }.bind(this)
                 });
             }

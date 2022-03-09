@@ -136,6 +136,13 @@
                     </items>
 
                 </IconTabBar>
+                <IconTabBar id="idIDCardRequestTabBar" visible="{= ${LocalViewModel>/IDCardModule} === true ? true : false }">
+                    <items>
+                    <IconTabFilter id="idDisplayIDCardRequestDetailsITB" text="{i18n>Details}">
+                    <core:Fragment fragmentName="com.sal.salhr.Fragments.DisplayIDReplacementRequest" type="XML"/>
+                    </IconTabFilter>
+                    </items>
+                </IconTabBar>
             </VBox>
         </f:content>
         <f:footer>
