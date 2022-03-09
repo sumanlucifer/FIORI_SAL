@@ -324,17 +324,17 @@ sap.ui.define([
             },
             fnValidateIDReplacementFields: function () {
                 var bValidationOk = true,
-                    oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
+                oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
 
-                if (new Date(oEffectiveDatePicker.getValue()).getTime() < new Date(this.todaysDate).getTime()) {
-                    oEffectiveDatePicker.setValueState("Error");
-                    oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
-                    bValidationOk = false;
+                if (oEffectiveDatePicker.getValue() === "") {
+                oEffectiveDatePicker.setValueState("Error");
+                oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
+                bValidationOk = false;
                 } else {
-                    oEffectiveDatePicker.setValueState("None");
+                oEffectiveDatePicker.setValueState("None");
                 }
                 return bValidationOk;
-            },
+                },
 
 
             onLeaveStartDatChange: function (oEvent) {
@@ -514,6 +514,9 @@ sap.ui.define([
                     case "1":
                         this.onCreateResetPress();
                         break;
+                    case "7":
+                        this.onIDCardRequestResetPress();
+                        break;
                     // Bank Request Module
                     case "13":
                         this.onBankRequestResetPress();
@@ -521,6 +524,19 @@ sap.ui.define([
                 }
 
 
+            },
+            onIDCardRequestResetPress:function(){
+                this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
+            },
+            onDateChange: function () {
+                var oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
+                if (oEffectiveDatePicker.getValue() === "") {
+                oEffectiveDatePicker.setValueState("Error");
+                oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
+                } else {
+                oEffectiveDatePicker.setValueState("None");
+                }
+  
             },
             onCreateResetPress: function () {
                 var dataReset = {

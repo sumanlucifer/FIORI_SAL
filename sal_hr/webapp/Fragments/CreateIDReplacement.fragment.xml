@@ -6,7 +6,7 @@
     <VBox>
         <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="When would you like your changes to take effect? " required="true" />
-            <DatePicker id="idEffectDatePicker" value="{path:'LocalViewModel>/todaysDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/todaysDate}" change="onDateChange"/>
+            <DatePicker id="idEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}" change="onDateChange"/>
         </fm:SimpleForm>
         <fm:SimpleForm title="ID Replacement Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="PRN" />
@@ -37,10 +37,10 @@
             <Input id="idPayGradeInp" value="{payGrade}" enabled= "false"/>
 
             <Label text="Blood Group" />
-            <Input id="idBloodGroupInp" value="{bloodGroup}"/>
+            <Input id="idBloodGroupInp" value="{bloodGroup}" enabled= "false"/>
 
             <Label text="Emergency Phone" />
-            <Input id="idEmergencyPhoneInp" value="{emergencyNumber}" />
+            <Input id="idEmergencyPhoneInp" value="{emergencyNumber}" enabled= "false" />
         </fm:SimpleForm>
     </VBox>
 </core:FragmentDefinition>

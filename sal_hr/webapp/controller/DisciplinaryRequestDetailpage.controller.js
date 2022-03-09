@@ -245,8 +245,8 @@ sap.ui.define([
                 var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
                var fileext =  this.getView().getModel("attachmentModel").getData().fileExtension;
                var mimeType =  this.getView().getModel("attachmentModel").getData().mimeType;
-                                var fName = this.getView().getModel("attachmentModel").getData().fileName;
-                                fName = fName.split(".")[0];
+                var fName = this.getView().getModel("attachmentModel").getData().fileName;
+                 fName = fName.split(".")[0];
                                 debugger;
                               if(fileext === "pdf" || fileext === "png")
                               {

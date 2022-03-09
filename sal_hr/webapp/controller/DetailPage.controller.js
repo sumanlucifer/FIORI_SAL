@@ -69,42 +69,42 @@ sap.ui.define([
                 if (this.sParentID === "12") {
 
                     this.oRouter.navTo("DisciplinaryRequest", {
-                    
-                    parentMaterial: this.sParentID,
-                    
-                    layout: "EndColumnFullScreen"
-                    
-                    })
-                    
-                    }else {
-                        this.oRouter.navTo("RaiseRequest", {
-                            parentMaterial: this.sParentID,
-                            layout: "EndColumnFullScreen"
-                        })
-                    }
 
-              
+                        parentMaterial: this.sParentID,
+
+                        layout: "EndColumnFullScreen"
+
+                    })
+
+                } else {
+                    this.oRouter.navTo("RaiseRequest", {
+                        parentMaterial: this.sParentID,
+                        layout: "EndColumnFullScreen"
+                    })
+                }
+
+
             },
             onPressTicketItem: function (oEvent) {
                 debugger;
 
                 if (this.sParentID === "12") {
-                    this.oRouter.navTo("DisciplinaryRequestDetail", {           
-                    parentMaterial: this.sParentID,        
-                    childModule: oEvent.getSource().getBindingContext().getObject().ID,     
-                    layout: "ThreeColumnsMidExpanded"     
+                    this.oRouter.navTo("DisciplinaryRequestDetail", {
+                        parentMaterial: this.sParentID,
+                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                        layout: "ThreeColumnsMidExpanded"
                     });
-                    
-                    }else {
-                        this.oRouter.navTo("detailDetail", {
-                            parentMaterial: this.sParentID,
-                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                            layout: "ThreeColumnsMidExpanded"
-        
-                        });
-                    }
 
-               
+                } else {
+                    this.oRouter.navTo("detailDetail", {
+                        parentMaterial: this.sParentID,
+                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                        layout: "ThreeColumnsMidExpanded"
+
+                    });
+                }
+
+
 
             },
             onSearch: function (oEvent) {
@@ -200,6 +200,9 @@ sap.ui.define([
                 }
                 this._oFilterDialog.open();
             },
+            onReset: function (oEvent) {
+                oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+            },
             handleFilterDialogConfirm: function (oEvent) {
                 var oFilterSearch = [];
 
@@ -232,8 +235,8 @@ sap.ui.define([
                 if (oFilterSearch.length > 0) {
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     oFilterSearch = [];
-                    oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
-                   
+                    // oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+
                 }
                 else {
 
