@@ -150,39 +150,60 @@ sap.ui.define([
                 // }
                 return bValid;
             },
-            onAttachmentChange:function(oEvent){
-                var that= this;
-              //   var file = sap.ui.core.Fragment.byId("idLeaveFragment", "UploadCollection").getFocusDomRef().files[0];
-                   var file = oEvent.getParameters().files[0];
-                //Input = "458076",
-                var Filename = file.name,
-                    Filetype = file.type,
-                    Filesize = file.size;
+            onFileAdded: function (oEvent) {
+                debugger;
+                var that = this;
+
+                //  var file = oEvent.getParameters().files[0];
+                var file = oEvent.getParameter("item");
+                var Filename = file.getFileName(),
+                    Filetype = file.getMediaType(),
+                    Filesize = file.getFileObject().size,
+                    Filedata = oEvent.getParameter("item").getFileObject();
+
+
                 //code for base64/binary array 
-                this._getImageData((file), function (Filecontent) {
+                this._getImageData((Filedata), function (Filecontent) {
                     that._addData(Filecontent, Filename, Filetype, Filesize);
                 });
+                var oUploadSet = this.byId("idEditUploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(false);
+
+                this.getView().getModel("attachmentModel").setProperty("/fileName", Filename);
+                this.getView().getModel("attachmentModel").setProperty("/mimeType", Filetype);
+                this.getView().getModel("attachmentModel").refresh();
+
+
+
             },
             _getImageData: function (url, callback, fileName) {
-              var reader = new FileReader();
-              reader.onloadend = function (evt) {
-                  if (evt.target.readyState === FileReader.DONE) {
-                      var binaryString = evt.target.result,
-                          base64file = btoa(binaryString);
-                      callback(base64file);
-                  }
-              };
-              reader.readAsBinaryString(url);
-          },
-          _addData: function (Filecontent, Filename, Filetype, Filesize) {
-              this.getViewModel("LocalViewModel").setProperty(
-                  "/busy",
-                  true
-              );
-              this.fileContent = Filecontent;
-              this.fileName = Filename;
-              this.isAttachment = true;
-          },
+                var reader = new FileReader();
+
+                reader.onloadend = function (evt) {
+                    if (evt.target.readyState === FileReader.DONE) {
+
+                        var binaryString = evt.target.result,
+                            base64file = btoa(binaryString);
+
+                        callback(base64file);
+                    }
+                };
+                reader.readAsBinaryString(url);
+            },
+            _addData: function (Filecontent, Filename, Filetype, Filesize) {
+                this.getViewModel("LocalViewModel").setProperty(
+                    "/busy",
+                    true
+                );
+                this.fileContent = Filecontent;
+                this.fileName = Filename;
+                this.isAttachmentNew = true;
+
+            },
+            onFileDeleted: function (oEvent) {
+                var oUploadSet = this.byId("idEditUploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(true);
+            },
             onSavePress: function () {
                 if (!this._validateMandatoryFields()) {
                     return;
@@ -221,16 +242,21 @@ sap.ui.define([
                 sIncidentStatus = this.getView().byId("idEditIncidentStatus").getSelectedKey(),
                 sIncidentCategory = this.getView().byId("idEditIncidenCategiory").getSelectedKey(),
                 sIncidentDetails = this.getView().byId("idIncidentDescription").getValue(),
-                sIncidentDate = this.getView().byId("idIncidentStartDate").getValue(),
-                sIncidentDate = Date.parse(sIncidentDate);
+                sIncidentDate = this.getView().byId("idIncidentStartDate").getDateValue(),
+                sEffectiveStartDateDate = this.getView().byId("idEditEffectStartDate").getDateValue(),
+                dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
+                sIncidentDate = dateFormat.format(new Date(sIncidentDate));
+                sIncidentDate = sIncidentDate + "T00:00:00";
+                sEffectiveStartDateDate = dateFormat.format(new Date(sEffectiveStartDateDate));
+                sEffectiveStartDateDate = sEffectiveStartDateDate + "T00:00:00";
                 return {
-                    "cust_DateofIncident": `/Date(${sIncidentDate})/`,
+                    "cust_DateofIncident": sIncidentDate,
                     "cust_IncidentStatus": sIncidentStatus,
                     "cust_IncidentDetails": sIncidentDetails,
                     "cust_Reason": sIncidentCategory,
                     "cust_Severity": sSeverity,
                     "cust_warningType": sWarningType,
-                    "effectiveStartDate": "/Date(1648233000000)/",
+                    "effectiveStartDate": sEffectiveStartDateDate,
                     "externalCode": "12002291",
                     "externalName": null,
                     "attachmentFileContent": sattachmentFileContent,

@@ -66,19 +66,16 @@
       <Label id="idEditDateLBL" text="{i18n>whenWouldYouLiketoText}" />
                         <DatePicker id="idEditEffectStartDate" value="{path:'cust_DateofIncident', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: false}}"  change="onLeaveStartDatChdange"/>
           </fm:SimpleForm>
-              <UploadCollection id="UploadCollection"
-     maximumFilenameLength="55" 
-     maximumFileSize="10"
-     multiple="false" 
-     sameFilenameAllowed="true" 
-     instantUpload="false" 
-     noDataDescription="Drop files or use the &quot;Add&quot; button to keep files ready for upload" 
-     change="onAttachmentChange" 
-     fileDeleted="onFileDeleted" 
-     filenameLengthExceed="onFilenameLengthExceed" 
-     fileSizeExceed="onFileSizeExceed" 
-     typeMissmatch="onTypeMissmatch" 
-     uploadComplete="onUploadComplete" 
-     beforeUploadStarts="onBeforeUploadStarts" 
-     visible="{LocalViewModel>/uploadAttachment}"/>  
+            <upload:UploadSet
+				id="idEditUploadSet"
+				instantUpload="true"
+				showIcons="true"
+				uploadEnabled="true"
+				terminationEnabled="true"
+				maxFileNameLength="30"
+				maxFileSize="200"
+                afterItemRemoved="onFileDeleted"
+                afterItemAdded="onFileAdded"	
+				>
+		</upload:UploadSet>
 </core:FragmentDefinition>

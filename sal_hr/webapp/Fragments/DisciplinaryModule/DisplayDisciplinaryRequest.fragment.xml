@@ -66,6 +66,7 @@
 				instantUpload="false"
 				showIcons="false"
 				uploadEnabled="false"
+                
 				fileTypes="txt,doc,png"
 				maxFileNameLength="30"
 				maxFileSize="200"
@@ -78,9 +79,10 @@
 			</upload:toolbar>
 			<upload:items>
 				<upload:UploadSetItem
-                        
-						fileName="{attachmentModel>/fileName}"
-						mediaType="attachmentModel>/mimeType}"	
+                visibleEdit="false"
+                visibleRemove="false"
+				fileName="{attachmentModel>/fileName}"
+				mediaType="attachmentModel>/mimeType}"	
                         
 						>
 				</upload:UploadSetItem>

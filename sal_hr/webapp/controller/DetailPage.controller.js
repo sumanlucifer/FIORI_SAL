@@ -200,13 +200,10 @@ sap.ui.define([
                 }
                 this._oFilterDialog.open();
             },
-            onReset: function (oEvent) {
-                oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
-            },
+            
             handleFilterDialogConfirm: function (oEvent) {
                 var oFilterSearch = [];
 
-                var sDate = oEvent.getSource().getFilterItems()[1].getCustomControl().getValue();
 
                 var iMonth = parseInt(sDate.split("/")[0]),
                     iDay = parseInt(sDate.split("/")[1]) + 1,
@@ -235,8 +232,8 @@ sap.ui.define([
                 if (oFilterSearch.length > 0) {
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     oFilterSearch = [];
-                    // oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
 
+                   
                 }
                 else {
 

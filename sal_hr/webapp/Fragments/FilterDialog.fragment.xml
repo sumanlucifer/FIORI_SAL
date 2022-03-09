@@ -1,10 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
-    <ViewSettingsDialog confirm="handleFilterDialogConfirm" reset="onReset">
-        <filterItems>
-            <ViewSettingsFilterItem text="Status" key="Status" multiSelect="false">
                 <items>
-                    <ViewSettingsItem text="Appproved" key="APPROVED"/>
                     <ViewSettingsItem text="Rejected" key="CANCELLED"/>
                     <ViewSettingsItem text="Pending" key="PENDING"/>
                 </items>
