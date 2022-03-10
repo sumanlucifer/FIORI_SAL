@@ -224,19 +224,28 @@ sap.ui.define([
             },
             fnGetLeaveRequestPayload: function () {
                 var sAttachmentFileContent, sAttahmentFileName;
-                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getValue();
-                sStartDate = Date.parse(sStartDate);
+                // var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getValue();
+                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
+                // sStartDate = Date.parse(sStartDate);
+                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                oStartDate = dateFormat.format(new Date(sStartDate));
+                sStartDate = oStartDate + "T00:00:00";
                 var sRecSelected = sap.ui.core.Fragment.byId("idLeaveFragment", "idRecCheckbox").getSelected();
                 if (sRecSelected === false) {
-                    var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
+                    // var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
+                    var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
+
                     var sRecAbsGroup = null;
 
                 } else {
-                    sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getValue();
+                    // sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getValue();
+                     sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getDateValue();
                     sRecAbsGroup = sap.ui.core.Fragment.byId("idLeaveFragment", "idRecAbsc").getSelectedKey();
                 }
 
-                sEndDate = Date.parse(sEndDate);
+                // sEndDate = Date.parse(sEndDate);
+                var oEndDate = dateFormat.format(new Date(sEndDate));
+                sEndDate = oEndDate + "T00:00:00";
                 var sTimeType = sap.ui.core.Fragment.byId("idLeaveFragment", "idTimeType").getSelectedKey();
 
 
@@ -249,12 +258,14 @@ sap.ui.define([
                 }
 
                 return {
-                    "endDate": "/Date(" + sEndDate + ")/",
+                    // "endDate": "/Date(" + sEndDate + ")/",
+                    "endDate":sEndDate,
                     "loaActualReturnDate": null,
                     "timeType": sTimeType,
                     "loaExpectedReturnDate": null,
                     "loaStartJobInfoId": null,
-                    "startDate": "/Date(" + sStartDate + ")/",
+                    // "startDate": "/Date(" + sStartDate + ")/",
+                    "startDate":sStartDate,
                     "cust_KronosPayCodeEditID": null,
                     "startTime": null,
                     "loaEndJobInfoId": null,
@@ -324,17 +335,17 @@ sap.ui.define([
             },
             fnValidateIDReplacementFields: function () {
                 var bValidationOk = true,
-                    oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
+                oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
 
-                if (new Date(oEffectiveDatePicker.getValue()).getTime() < new Date(this.todaysDate).getTime()) {
-                    oEffectiveDatePicker.setValueState("Error");
-                    oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
-                    bValidationOk = false;
+                if (oEffectiveDatePicker.getValue() === "") {
+                oEffectiveDatePicker.setValueState("Error");
+                oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
+                bValidationOk = false;
                 } else {
-                    oEffectiveDatePicker.setValueState("None");
+                oEffectiveDatePicker.setValueState("None");
                 }
                 return bValidationOk;
-            },
+                },
 
 
             onLeaveStartDatChange: function (oEvent) {
@@ -344,7 +355,7 @@ sap.ui.define([
 
                 this.sRequestDay = "";
                 // if (sEndDate <= sStartDate) {
-                   if(new Date(sEndDate.getTime() < new Date(sStartDate).getTime())){
+                   if(new Date(sEndDate).getTime() < new Date(sStartDate).getTime()){
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -355,9 +366,9 @@ sap.ui.define([
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").setValueStateText("");
                     // this.sRequestDay = Math.round(Math.abs((new Date(sEndDate) - sStartDate) / oneDay)) + 1;
 
-                    this.sRequestDay = this.dateDifference(sStartDate, sEndDate);
+                    // this.sRequestDay = this.dateDifference(sStartDate, sEndDate);
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                    this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
+                    // this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
                 }
             },
             onLeaveEndDateChange: function (oEvent) {
@@ -365,7 +376,8 @@ sap.ui.define([
                 var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
                 var sEndDate = oEvent.getSource().getDateValue();
 
-                if (sEndDate <= sStartDate) {
+                // if (sEndDate <= sStartDate) {
+                    if(new Date(sEndDate).getTime() < new Date(sStartDate).getTime()){
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("End Date should be later than Start Date");
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -375,9 +387,9 @@ sap.ui.define([
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueState();
                     sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueStateText("");
                     // this.sRequestDay = Math.round(Math.abs((sEndDate - new Date(sStartDate)) / oneDay)) + 1 ;
-                    this.sRequestDay = this.dateDifference(sStartDate, sEndDate, oEvent);
+                    // this.sRequestDay = this.dateDifference(sStartDate, sEndDate, oEvent);
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                    this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
+                    // this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
                 }
             },
             onSelectRecurringAbsc: function (oEvent) {
@@ -491,7 +503,7 @@ sap.ui.define([
             },
             onTimeTyeChange: function (oEvent) {
                 var sType = oEvent.getSource().getSelectedKey();
-                if (sType === "S110" || sType === "500") {
+                if (sType === "S110" || sType === "500" || sType === "460") {
                     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                 } else {
                     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
@@ -513,6 +525,9 @@ sap.ui.define([
                     case "1":
                         this.onCreateResetPress();
                         break;
+                    case "7":
+                        this.onIDCardRequestResetPress();
+                        break;
                     // Bank Request Module
                     case "13":
                         this.onBankRequestResetPress();
@@ -520,6 +535,19 @@ sap.ui.define([
                 }
 
 
+            },
+            onIDCardRequestResetPress:function(){
+                this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
+            },
+            onDateChange: function () {
+                var oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
+                if (oEffectiveDatePicker.getValue() === "") {
+                oEffectiveDatePicker.setValueState("Error");
+                oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
+                } else {
+                oEffectiveDatePicker.setValueState("None");
+                }
+  
             },
             onCreateResetPress: function () {
                 var dataReset = {

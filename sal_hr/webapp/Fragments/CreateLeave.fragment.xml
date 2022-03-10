@@ -47,10 +47,10 @@
                         <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                          
             <Label text="Start Date" required="true"/>
-            <DatePicker id="idStartDate" value="{path:'LocalViewModel>/startDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" change="onLeaveStartDatChange"/>
+            <DatePicker id="idStartDate" value="{path:'LocalViewModel>/startDate', type:'sap.ui.model.type.Date'}"  change="onLeaveStartDatChange"/>
 
             <Label text="{i18n>EndDate}" required="true" visible="{= ${LocalViewModel>/recurringAbs} === false ? true : false }"/>
-            <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" visible="{= ${LocalViewModel>/recurringAbs} === false ? true : false }" change="onLeaveEndDateChange"/>
+            <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date'}" visible="{= ${LocalViewModel>/recurringAbs} === false ? true : false }" change="onLeaveEndDateChange"/>
 
 
 
@@ -121,16 +121,21 @@
      beforeUploadStarts="onBeforeUploadStarts" 
      visible="{LocalViewModel>/uploadAttachment}"/>   -->
                         <!-- </fm:SimpleForm>  -->
+                        <HBox>
+
+<Text text="Attachments:" class="sapUiSmallMarginTop" visible="{LocalViewModel>/uploadAttachment}"/>
+
+<Text text="*" class="sapUiMediumMarginBottom redColor" visible="{LocalViewModel>/uploadAttachment}" />
+
+</HBox>
         <upload:UploadSet
 				id="UploadSet"
 				instantUpload="true"
 				showIcons="true"
 				uploadEnabled="true"
 				terminationEnabled="true"
-				fileTypes="txt,png,jpg,jpeg,pdf"
 				maxFileNameLength="255"
 				maxFileSize="200"
-				uploadUrl="../../../../upload"
                 afterItemRemoved="onFileDeleted"
                 afterItemAdded="onFileAdded"
                 visible="{LocalViewModel>/uploadAttachment}"

@@ -4,8 +4,8 @@
   "routes": [
 
     {
-        "source": "^/public/api/(.*)$",
-        "target": "/public/api/$1",
+        "source": "^/cai-chatbot/(.*)$",
+        "target": "$1",
         "destination": "CAI_CHAT_BOT",
         "authenticationType": "none",
         "csrfProtection": false

@@ -66,45 +66,68 @@ sap.ui.define([
 
             onPressRaiseRequest: function () {
 
+                // switch (this.sParentID) {
+                //     // Leave Module
+                //     case "1":
+                //         this.oRouter.navTo("RaiseRequest", {
+                //             parentMaterial: this.sParentID,
+                //             layout: "EndColumnFullScreen"
+                //         })
+                //         break;
+                //     // Business Trip Module
+                //     case "1":
+                //         this.oRouter.navTo("RaiseRequest", {
+                //                 parentMaterial: this.sParentID,
+                //                 layout: "EndColumnFullScreen"
+                //         })
+                //         break;
+                //     // Disciplinary Request Module
+                //     case "12":
+                //         this.oRouter.navTo("DisciplinaryRequest", {
+                //             parentMaterial: this.sParentID,
+                //             layout: "EndColumnFullScreen"
+                //         })
+                //         break;
+                // }
                 if (this.sParentID === "12") {
 
                     this.oRouter.navTo("DisciplinaryRequest", {
-                    
-                    parentMaterial: this.sParentID,
-                    
-                    layout: "EndColumnFullScreen"
-                    
-                    })
-                    
-                    }else {
-                        this.oRouter.navTo("RaiseRequest", {
-                            parentMaterial: this.sParentID,
-                            layout: "EndColumnFullScreen"
-                        })
-                    }
 
-              
+                        parentMaterial: this.sParentID,
+
+                        layout: "EndColumnFullScreen"
+
+                    })
+
+                } else {
+                    this.oRouter.navTo("RaiseRequest", {
+                        parentMaterial: this.sParentID,
+                        layout: "EndColumnFullScreen"
+                    })
+                }
+
+
             },
             onPressTicketItem: function (oEvent) {
                 debugger;
 
                 if (this.sParentID === "12") {
-                    this.oRouter.navTo("DisciplinaryRequestDetail", {           
-                    parentMaterial: this.sParentID,        
-                    childModule: oEvent.getSource().getBindingContext().getObject().ID,     
-                    layout: "ThreeColumnsMidExpanded"     
+                    this.oRouter.navTo("DisciplinaryRequestDetail", {
+                        parentMaterial: this.sParentID,
+                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                        layout: "ThreeColumnsMidExpanded"
                     });
-                    
-                    }else {
-                        this.oRouter.navTo("detailDetail", {
-                            parentMaterial: this.sParentID,
-                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                            layout: "ThreeColumnsMidExpanded"
-        
-                        });
-                    }
 
-               
+                } else {
+                    this.oRouter.navTo("detailDetail", {
+                        parentMaterial: this.sParentID,
+                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                        layout: "ThreeColumnsMidExpanded"
+
+                    });
+                }
+
+
 
             },
             onSearch: function (oEvent) {
@@ -200,15 +223,10 @@ sap.ui.define([
                 }
                 this._oFilterDialog.open();
             },
-
-            onReset : function(oEvent)
-            {
-             oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
-            },
+            
             handleFilterDialogConfirm: function (oEvent) {
                 var oFilterSearch = [];
 
-                var sDate = oEvent.getSource().getFilterItems()[1].getCustomControl().getValue();
 
                 var iMonth = parseInt(sDate.split("/")[0]),
                     iDay = parseInt(sDate.split("/")[1]) + 1,

@@ -68,6 +68,8 @@
 			</upload:toolbar>
 			<upload:items>
 				<upload:UploadSetItem
+                         visibleEdit="false"
+                visibleRemove="false"
 						fileName="{attachmentModel>/fileName}"
 						mediaType="attachmentModel>/mimeType}"	
 						>

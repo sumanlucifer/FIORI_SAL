@@ -4,12 +4,13 @@
     xmlns:f="sap.f"
     xmlns:l="sap.ui.layout"
     xmlns:core="sap.ui.core"
-    xmlns:fm="sap.ui.layout.form" xmlns:upload="sap.m.upload" height="100%">
+    xmlns:fm="sap.ui.layout.form"
+    xmlns:upload="sap.m.upload" height="100%">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
         <!-- DynamicPage Title -->
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
-               <f:heading>
+                <f:heading>
                     <Title id="idPageTitle" text="New {name} Request" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
@@ -20,96 +21,76 @@
             </f:DynamicPageTitle>
         </f:title>
         <f:content>
-                   <l:VerticalLayout  class="sapUiNoMargin sapUiNoContentPadding">
+            <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
                 <l:content>
-           <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-            <Label text="Incident Start Date" required="true"/>
-            <DatePicker id="idIncidentStartDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" change="onLeaveStartDatChange"/>
-       </fm:SimpleForm>
-    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-    <Label text="Warning Type" required="true" />
-            <Select id="idWarningType" items="{ path: '/SF_PickListValueV2',
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                        <Label text="Incident Start Date" required="true"/>
+                        <DatePicker id="idIncidentStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" change="onLeaveStartDatChange"/>
+                    </fm:SimpleForm>
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                        <Label text="Warning Type" required="true" />
+                        <Select id="idWarningType" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {
                                                  path : 'label_defaultValue' 
                                              },
         filters : [
             { path : 'PickListV2_id', operator : 'EQ', value1 : 'warningType'}
         ]
-                                              }"                       
-                                                         change="onTimeTyeChange">
-                <core:Item key="{externalCode}" text="{label_defaultValue}" />
-            </Select>
-  <Label text="Severity" required="true" />
-            <Select id="idSeverity" items="{ path: '/SF_PickListValueV2',
+                                              }" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                        </Select>
+                        <Label text="Severity" required="true" />
+                        <Select id="idSeverity" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {
                                                  path : 'label_defaultValue' 
                                              },
                                                      filters : [
             { path : 'PickListV2_id', operator : 'EQ', value1 : 'severity'}
-        ] }"                       
-                                                         change="onTimeTyeChange">
-                <core:Item key="{externalCode}" text="{label_defaultValue}" />
-            </Select>
-       </fm:SimpleForm>
-                        <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                               <Label text="Incident Status" required="true" />
-            <Select id="idIncidentStatus" items="{ path: '/SF_PickListValueV2',
+        ] }" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                        </Select>
+                    </fm:SimpleForm>
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                        <Label text="Incident Status" required="true" />
+                        <Select id="idIncidentStatus" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {
                                                  path : 'label_defaultValue' 
                                              },
          filters : [
             { path : 'PickListV2_id', operator : 'EQ', value1 : 'ess_status'}
-        ] }"                       
-                                                         change="onTimeTyeChange">
-                <core:Item key="{externalCode}" text="{label_defaultValue}" />
-            </Select>
-            <Label text="Incident Category" required="true" />
-            <Select id="idIncidenCategiory" items="{ path: '/SF_PickListValueV2',
+        ] }" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                        </Select>
+                        <Label text="Incident Category" required="true" />
+                        <Select id="idIncidenCategiory" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {
                                                  path : 'label_defaultValue' 
                                              },
                                               filters : [
             { path : 'PickListV2_id', operator : 'EQ', value1 : 'reason'}
-        ]  }"                       
-                                                         change="onTimeTyeChange">
-                <core:Item key="{externalCode}" text="{label_defaultValue}" />
-            </Select>
-                        </fm:SimpleForm>
-        <fm:SimpleForm layout="ColumnLayout"   columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-           <Label required="true"  text="Incident Description Details" />
-            <Input id="idIncidentDescription"  value="" >
-                <layoutData>
-                    <l:GridData span="XL2 L3 M4 S4" />
-                </layoutData>
-            </Input>
-      <Label id="idDateLBL" text="{i18n>whenWouldYouLiketoText}" />
-                        <DatePicker id="idEffectStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: false}}"  change="onLeaveStartDatChdange"/>
-          </fm:SimpleForm>
+        ]  }" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                        </Select>
+                    </fm:SimpleForm>
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                        <Label required="true" text="Incident Description Details" />
+                        <Input id="idIncidentDescription" value="">
+                            <layoutData>
+                                <l:GridData span="XL2 L3 M4 S4" />
+                            </layoutData>
+                        </Input>
+                        <Label id="idDateLBL" text="{i18n>whenWouldYouLiketoText}" />
+                        <DatePicker id="idEffectStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: false}}" change="onLeaveStartDatChdange"/>
+                    </fm:SimpleForm>
+                    <HBox>
 
+                        <Text text="Attachments:" class="sapUiSmallMarginTop" />
 
-<HBox>
-        <Text text="Attachments" class="sapUiSmallMarginTop" />
-            <Text text="*" class="sapUiMediumMarginBottom redColor" />
-</HBox>
+                        <Text text="*" class="sapUiMediumMarginBottom redColor" />
 
-
-                <upload:UploadSet
-				id="UploadSet"
-				instantUpload="true"
-				showIcons="true"
-				uploadEnabled="true"
-				terminationEnabled="true"
-				maxFileNameLength="255"
-				maxFileSize="200"
-                afterItemRemoved="onFileDeleted"
-                afterItemAdded="onFileAdded"
-                visible="{LocalViewModel>/uploadAttachment}"
-				>
-		</upload:UploadSet> 
-
-
-
-
+                    </HBox>
+                    <upload:UploadSet id="UploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                    </upload:UploadSet>
                 </l:content>
             </l:VerticalLayout>
         </f:content>
@@ -119,7 +100,7 @@
                 <ToolbarSpacer id="idToolbarSpacer"/>
                 <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
                 <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
-                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}"  press="onRaiseRequestPress" class="RaiseRequestButton"/>
+                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

@@ -13,6 +13,13 @@
 
 }
 
+.redColor {
+    position: absolute;
+    top: 10px;
+    font-weight: 600;
+    color: red !important;
+ }
+
 
 .RaiseRequestButton .sapMBtnInner {
     background-color: #8A2BE2;

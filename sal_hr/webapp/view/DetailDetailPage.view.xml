@@ -13,16 +13,16 @@
                     <Title id="idPageTitle" text="{LocalViewModel>/PageTitle}"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {attachmentModel>/ticketCode}">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
                         <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="handleClose"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="RequestID:{attachmentModel>/ticketCode}"/>
+                    <Label id="idRquestId" text="RequestID:{headerModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
                     <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress"/>
+                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
                 </f:actions>
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
@@ -37,15 +37,15 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Status}"/>
-                        <ObjectStatus id="idStatus" text="{approvalStatus}" state="Success"/>
+                        <ObjectStatus id="idStatus" text="{headerModel>/status}" state="Success"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>
-                        <ObjectAttribute text="{userId}"/>
+                        <ObjectAttribute text="{headerModel>/employeeId}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DueBy Date}"/>
-                        <ObjectAttribute text="{path:'endDate',
+                        <ObjectAttribute text="{path:'headerModel>/modifiedAt',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
@@ -135,6 +135,13 @@
 
                     </items>
 
+                </IconTabBar>
+                <IconTabBar id="idIDCardRequestTabBar" visible="{= ${LocalViewModel>/IDCardModule} === true ? true : false }">
+                    <items>
+                    <IconTabFilter id="idDisplayIDCardRequestDetailsITB" text="{i18n>Details}">
+                    <core:Fragment fragmentName="com.sal.salhr.Fragments.DisplayIDReplacementRequest" type="XML"/>
+                    </IconTabFilter>
+                    </items>
                 </IconTabBar>
             </VBox>
         </f:content>

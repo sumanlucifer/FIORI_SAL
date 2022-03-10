@@ -58,6 +58,7 @@ sap.ui.define([
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
                
                 this._bindView("/MasterSubModules" + this.sParentID);
+                this.onResetPress();
 
                 
             },

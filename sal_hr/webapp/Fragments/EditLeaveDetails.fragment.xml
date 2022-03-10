@@ -32,41 +32,26 @@
     </form:SimpleForm>
     <form:SimpleForm id="idEditattachmentForm" layout="ResponsiveGridLayout" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <form:content>
-        <!-- <UploadCollection class="uploadClasstest" maximumFileSize="10"  multiple="true" 
-                                    fileSizeExceed="onFileSizeExceed" filenameLengthExceed="onFileNameLengthExceed" 
-                                    maximumFilenameLength="500" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" 
-                                    beforeUploadStarts="onBeforeUploadStarts" mode="None" 
-                                    
-                                    selectionChange="onAttachmentChange" instantUpload="false" change="onAttachmentChange" fileDeleted="onFileDeleted">
+            <!-- <UploadCollection class="uploadClasstest" maximumFileSize="10" multiple="true" fileSizeExceed="onFileSizeExceed" filenameLengthExceed="onFileNameLengthExceed" maximumFilenameLength="500" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts" mode="None" selectionChange="onAttachmentChange" instantUpload="false" change="onAttachmentChange" fileDeleted="onFileDeleted">
                                     <items>
-                                        <UploadCollectionItem url="{parts: ['attachmentModel>/fileName','attachmentModel>/fileContent']}" enableEdit="true" enableDelete="true" visibleDelete="true" visibleEdit="true" 
-                                        fileName="{attachmentModel>/fileName}" deletePress="onDeleteDocumentPress">
+                                        <UploadCollectionItem url="{parts: ['attachmentModel>/fileName','attachmentModel>/fileContent']}" enableEdit="true" enableDelete="true" visibleDelete="true" visibleEdit="true" fileName="{attachmentModel>/fileName}" deletePress="onDeleteDocumentPress">
                                         </UploadCollectionItem>
                                     </items>
              </UploadCollection> -->
-            <upload:UploadSet
-				id="idEditUploadSet"
-				instantUpload="true"
-				showIcons="true"
-				uploadEnabled="false"
-				terminationEnabled="true"
-				fileTypes="txt,doc,png,pdf"
-				maxFileNameLength="30"
-				maxFileSize="200"
-				mediaTypes="text/plain,application/msword,image/jpeg"
-				uploadUrl="../../../../upload"
-                afterItemRemoved="onFileDeleted"
-                afterItemAdded="onFileAdded"	
-				>
-				
-			<upload:items>
-				<upload:UploadSetItem
-						fileName="{attachmentModel>/fileName}"
-						mediaType="attachmentModel>/mimeType}"	
-						>
-				</upload:UploadSetItem>
-			</upload:items>
-		</upload:UploadSet>     
-         </form:content>
+            <HBox>
+
+                <Text text="Attachments:" class="sapUiSmallMarginTop" />
+
+                <Text text="*" class="sapUiMediumMarginBottom redColor" />
+
+            </HBox>
+            <upload:UploadSet id="idEditUploadSet" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true" fileTypes="txt,doc,png,pdf" maxFileNameLength="30" maxFileSize="200" mediaTypes="text/plain,application/msword,image/jpeg" uploadUrl="../../../../upload" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
+
+                <upload:items>
+                    <upload:UploadSetItem fileName="{attachmentModel>/fileName}" mediaType="attachmentModel>/mimeType}">
+                    </upload:UploadSetItem>
+                </upload:items>
+            </upload:UploadSet>
+        </form:content>
     </form:SimpleForm>
 </core:FragmentDefinition>
