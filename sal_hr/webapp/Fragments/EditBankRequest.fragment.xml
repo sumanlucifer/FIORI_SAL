@@ -9,7 +9,7 @@
                         <Label id="idEditDateLBL" text="{i18n>whenWouldYouLiketoText}" />
 
 
-                                    <DatePicker id="idEditFromDatePicker" value="{path:'effectiveStartDate',
+                                    <DatePicker id="idEditFromDatePicker" enabled="false" value="{path:'effectiveStartDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
@@ -18,9 +18,9 @@
 
                         
                         <Label id="idEditIBANLBL" text="{i18n>IBAN}" />
-                        <Input id="idEditIBANINP" value="{cust_iban}"  />
+                        <Input liveChange="onChangeInpIBAN" id="idEditIBANINP" value="{cust_iban}"  />
                         <Label id="idEditBankNameLBL" text="{i18n>BankName}"/>
-                        <Input id="idEditBankNameINP" value="{cust_bankName}"  />
+                        <Input liveChange="onChangeInpBankName" id="idEditBankNameINP" value="{cust_bankName}"  />
 
                     </form:content>
                    </form:SimpleForm>

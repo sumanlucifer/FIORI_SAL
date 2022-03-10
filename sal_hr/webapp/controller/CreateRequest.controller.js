@@ -228,7 +228,7 @@ sap.ui.define([
                 var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
                 // sStartDate = Date.parse(sStartDate);
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                oStartDate = dateFormat.format(new Date(sStartDate));
+                    oStartDate = dateFormat.format(new Date(sStartDate));
                 sStartDate = oStartDate + "T00:00:00";
                 var sRecSelected = sap.ui.core.Fragment.byId("idLeaveFragment", "idRecCheckbox").getSelected();
                 if (sRecSelected === false) {
@@ -239,7 +239,7 @@ sap.ui.define([
 
                 } else {
                     // sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getValue();
-                     sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getDateValue();
+                    sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getDateValue();
                     sRecAbsGroup = sap.ui.core.Fragment.byId("idLeaveFragment", "idRecAbsc").getSelectedKey();
                 }
 
@@ -259,13 +259,13 @@ sap.ui.define([
 
                 return {
                     // "endDate": "/Date(" + sEndDate + ")/",
-                    "endDate":sEndDate,
+                    "endDate": sEndDate,
                     "loaActualReturnDate": null,
                     "timeType": sTimeType,
                     "loaExpectedReturnDate": null,
                     "loaStartJobInfoId": null,
                     // "startDate": "/Date(" + sStartDate + ")/",
-                    "startDate":sStartDate,
+                    "startDate": sStartDate,
                     "cust_KronosPayCodeEditID": null,
                     "startTime": null,
                     "loaEndJobInfoId": null,
@@ -296,7 +296,7 @@ sap.ui.define([
                 var sCust_bankName = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").getValue();
                 var scust_iban = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").getValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                oDate = dateFormat.format(new Date(sEffectiveStartDate));
+                    oDate = dateFormat.format(new Date(sEffectiveStartDate));
                 oDate = oDate + "T00:00:00";
                 return {
                     "externalCode": "12002425",
@@ -305,6 +305,43 @@ sap.ui.define([
                     "cust_iban": scust_iban
                 };
             },
+
+            onChangeInpIBAN: function (oEve) {
+                var sValue = oEve.getSource().getValue();
+
+                if (!sValue.match(/^[0-9a-z]+$/)) {
+              
+
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("Error");
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueStateText("Please enter only alpha-numeric characters");
+                }
+
+                else{
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("None");
+
+                }
+
+            },
+
+            
+            onChangeInpBankName: function (oEve) {
+                var sValue = oEve.getSource().getValue();
+
+                if (!sValue.match(/^[0-9a-z]+$/)) {
+              
+
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("Error");
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueStateText("Please enter only alpha-numeric characters");
+                }
+
+                else{
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("None");
+
+                }
+
+            },
+
+
             fnGetIDReplacementRequestPayload: function () {
                 var oDataObj = this.getView().getBindingContext().getObject(),
                     sEffectiveStartDate = sap.ui.getCore().byId("idEffectDatePicker").getValue();
@@ -335,17 +372,17 @@ sap.ui.define([
             },
             fnValidateIDReplacementFields: function () {
                 var bValidationOk = true,
-                oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
+                    oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
 
                 if (oEffectiveDatePicker.getValue() === "") {
-                oEffectiveDatePicker.setValueState("Error");
-                oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
-                bValidationOk = false;
+                    oEffectiveDatePicker.setValueState("Error");
+                    oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
+                    bValidationOk = false;
                 } else {
-                oEffectiveDatePicker.setValueState("None");
+                    oEffectiveDatePicker.setValueState("None");
                 }
                 return bValidationOk;
-                },
+            },
 
 
             onLeaveStartDatChange: function (oEvent) {
@@ -355,7 +392,7 @@ sap.ui.define([
 
                 this.sRequestDay = "";
                 // if (sEndDate <= sStartDate) {
-                   if(new Date(sEndDate).getTime() < new Date(sStartDate).getTime()){
+                if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -377,7 +414,7 @@ sap.ui.define([
                 var sEndDate = oEvent.getSource().getDateValue();
 
                 // if (sEndDate <= sStartDate) {
-                    if(new Date(sEndDate).getTime() < new Date(sStartDate).getTime()){
+                if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("End Date should be later than Start Date");
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
@@ -536,18 +573,18 @@ sap.ui.define([
 
 
             },
-            onIDCardRequestResetPress:function(){
+            onIDCardRequestResetPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
             },
             onDateChange: function () {
                 var oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
                 if (oEffectiveDatePicker.getValue() === "") {
-                oEffectiveDatePicker.setValueState("Error");
-                oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
+                    oEffectiveDatePicker.setValueState("Error");
+                    oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
                 } else {
-                oEffectiveDatePicker.setValueState("None");
+                    oEffectiveDatePicker.setValueState("None");
                 }
-  
+
             },
             onCreateResetPress: function () {
                 var dataReset = {
@@ -573,21 +610,21 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").refresh();
 
             },
-            fnGetLeaveBalance:function(){
+            fnGetLeaveBalance: function () {
                 debugger;
                 var that = this;
-                  this.getView().getModel().read("/SF_Leave_AccountBalance", {
-                  urlParameters: {
-                    "$filter": "(userId eq '12002024' and timeAccountType eq 'Annual_vacation')"
-                },
-                      success:function(oData){
+                this.getView().getModel().read("/SF_Leave_AccountBalance", {
+                    urlParameters: {
+                        "$filter": "(userId eq '12002024' and timeAccountType eq 'Annual_vacation')"
+                    },
+                    success: function (oData) {
                         var oLeaveBalModel = new JSONModel(oData.results[0]);
                         that.getView().setModel(oLeaveBalModel, "LeaveBalModel");
-                      },
-                      error:function(){
+                    },
+                    error: function () {
 
-                      }
-                  })
+                    }
+                })
 
             }
 

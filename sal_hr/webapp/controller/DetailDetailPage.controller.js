@@ -206,6 +206,41 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
+            onChangeInpIBAN: function (oEve) {
+                var sValue = oEve.getSource().getValue();
+
+                if (!sValue.match(/^[0-9a-z]+$/)) {
+              
+
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("Error");
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueStateText("Please enter only alpha-numeric characters");
+                }
+
+                else{
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("None");
+
+                }
+
+            },
+
+            
+            onChangeInpBankName: function (oEve) {
+                var sValue = oEve.getSource().getValue();
+
+                if (!sValue.match(/^[0-9a-z]+$/)) {
+              
+
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("Error");
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueStateText("Please enter only alpha-numeric characters");
+                }
+
+                else{
+                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("None");
+
+                }
+
+            },
+
             onWithdrawPress: function () {
                 // var sKey = "038718668910415eb3f3773a68fee340";
                 var sKey = this.sChildID;
