@@ -57,12 +57,13 @@ sap.ui.define([
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var that = this;
+                var sTicketCode = this.object.ticketCode;
+                var oAttachModel = new JSONModel();
+                that.getView().setModel(oAttachModel, "attachmentModel");
                 switch (this.sParentID) {
                     // Leave Module
                     case "1":
-
                         sKey = oComponentModel.createKey("/SF_Leave", {
-
                             externalCode: object.externalCode
                         });
                         var sTicketCode = this.object.ticketCode;
@@ -71,7 +72,7 @@ sap.ui.define([
                                 "$expand": "cust_attachmentNav, timeTypeNav"
                             },
                             success: function (oData) {
-                                var oAttachModel = new JSONModel(oData.cust_attachmentNav);
+                                oAttachModel = new JSONModel(oData.cust_attachmentNav);
                                 var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
                                 that.getView().setModel(oAttachModel, "attachmentModel");
                                 that.getView().setModel(oTimeTypeModel, "timeTypeModel");
@@ -92,7 +93,8 @@ sap.ui.define([
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
                         this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-
+                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
 
                         break;
@@ -110,7 +112,8 @@ sap.ui.define([
                         this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", true);
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-
+                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Business Trip Request");
                         break;
 
@@ -123,7 +126,8 @@ sap.ui.define([
                         this.getView().getModel("LocalViewModel").setProperty("/HealthModule", true);
                         this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
-
+                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance");
                         break;
                     // ID Card Replacement
@@ -134,8 +138,6 @@ sap.ui.define([
                                 User: sUserID,
                                 effectiveStartDate: sEffectiveStartDate
                             });
-
-
 
                         this.getView().bindElement({
                             path: sKey,
@@ -159,6 +161,7 @@ sap.ui.define([
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "ID Replacement Changes");
                         break;
+
                     //  Bank Request Module 
                     case "13":
 
@@ -173,28 +176,31 @@ sap.ui.define([
                         this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Bank Change Request");
                         break;
                 }
 
                 this.getView().getModel("LocalViewModel").refresh();
+                if (this.sParentID !== "7") {
+                    this.getView().bindElement({
+                        path: sKey,
 
-                this.getView().bindElement({
-                    path: sKey,
-
-                    events: {
-                        change: function (oEvent) {
-                            var oContextBinding = oEvent.getSource();
-                            oContextBinding.refresh(false);
-                        }.bind(this),
-                        dataRequested: function () {
-                            this.getView().setBusy(true);
-                        }.bind(this),
-                        dataReceived: function () {
-                            this.getView().setBusy(false);
-                        }.bind(this)
-                    }
-                });
+                        events: {
+                            change: function (oEvent) {
+                                var oContextBinding = oEvent.getSource();
+                                oContextBinding.refresh(false);
+                            }.bind(this),
+                            dataRequested: function () {
+                                this.getView().setBusy(true);
+                            }.bind(this),
+                            dataReceived: function () {
+                                this.getView().setBusy(false);
+                            }.bind(this)
+                        }
+                    });
+                }
             },
 
             onEditPress: function () {

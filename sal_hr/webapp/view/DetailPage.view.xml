@@ -69,15 +69,27 @@
                 </headerToolbar>
                 <columns>
                     <Column width="10rem" importance="High">
-                        <Label text="Job Card ID" class="tblHeaderText"/>
-                    </Column>
-
-                    <Column  importance="Low" popinDisplay="Inline" >
-                        <Label text="Request Date" class="tblHeaderText" />
+                        <Label text="ID" class="tblHeaderText"/>
                     </Column>
                     <Column width="18rem" importance="Low" popinDisplay="Inline" >
-                        <Label text="SAP Ticket ID" class="tblHeaderText" />
+                        <Label text="SAP ID" class="tblHeaderText" />
                     </Column>
+                     <Column importance="Low" popinDisplay="Inline" >
+                        <Label text="Effective From" class="tblHeaderText" />
+                    </Column>
+                     <Column importance="Low" popinDisplay="Inline" >
+                        <Label text="Summary" class="tblHeaderText" />
+                    </Column>
+                    <Column  importance="Low" popinDisplay="Inline" >
+                        <Label text="Date of Creation" class="tblHeaderText" />
+                    </Column>
+                      <Column  importance="Low" popinDisplay="Inline" >
+                        <Label text="Pending With" class="tblHeaderText" />
+                    </Column>
+                     <Column  importance="Low" popinDisplay="Inline" >
+                        <Label text="Targeted SLA" class="tblHeaderText" />
+                    </Column>
+                    
                     <Column  hAlign="End" width="auto" importance="High">
                         <Label text="Status" class="tblHeaderText" />
                     </Column>
@@ -87,8 +99,13 @@
                         <cells>
                             <!-- <Text text="{ticketCode}" /> -->
                             <Text text="{ticketCode}" />
+                             <Text text="{externalCode}" />
+                             <Text text="" />
+                             <Text text="" />
+
                             <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date'}" />
-                            <Text text="{externalCode}" />
+                             <Text text="" />
+                             <Text text="" />
                            
                            <ObjectStatus text="{path:'status',formatter:'.formatter.ticketStatusText'}" state="{path:'status',formatter:'.formatter.ticketStatus'}" />
                         </cells>
