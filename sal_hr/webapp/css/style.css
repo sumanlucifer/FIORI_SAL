@@ -30,3 +30,10 @@
 .ListIcon {
     color : #8A2BE2;
     }
+
+.redColor {
+    position: absolute;
+    top: 10px;
+    font-weight: 600;
+    color: red !important;
+}

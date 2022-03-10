@@ -21,8 +21,8 @@
                     <Label text="{i18n>RequestID} :{ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress"/>
+                    <Button text="Modify" type="Emphasized" visible="{= ${LocalViewModel>/Modify} === true ? true : false }" press="onEditPress"/>
+                    <Button text="Withdraw" visible="{= ${LocalViewModel>/Modify} === true ? true : false }" type="Emphasized" press="onWithdrawPress"/>
                 </f:actions>
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->

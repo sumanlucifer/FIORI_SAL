@@ -66,8 +66,6 @@
 				instantUpload="false"
 				showIcons="false"
 				uploadEnabled="false"
-                
-				fileTypes="txt,doc,png"
 				maxFileNameLength="30"
 				maxFileSize="200"
                 visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : true}"				

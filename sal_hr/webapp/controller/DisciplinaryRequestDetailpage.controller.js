@@ -29,6 +29,12 @@ sap.ui.define([
             _bindView: function (data) {
                 var object = data.results[0];
                 this.object = data.results[0];
+
+                if (object.status === "APPROVED") {
+                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                } else {
+                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                     this.effectiveStartDate = object.effectiveStartDate;

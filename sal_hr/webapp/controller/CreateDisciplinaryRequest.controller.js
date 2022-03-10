@@ -10,6 +10,7 @@ sap.ui.define([
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateDisciplinaryRequest", {
             onInit: function () {
+
                 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("DisciplinaryRequest").attachPatternMatched(this._onObjectMatched, this);
@@ -49,6 +50,7 @@ sap.ui.define([
 
             // },
             _onObjectMatched: function (oEvent) {
+                this.onResetPress();
                 
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
