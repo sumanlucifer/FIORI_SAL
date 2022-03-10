@@ -192,10 +192,7 @@ sap.ui.define([
                     // Id Card Replacement
                     case "7":
                         sEntityPath = "/SF_IDReplacement";
-                        bValidationOk = this.fnValidateIDReplacementFields();
-                        if (bValidationOk) {
-                            oPayloadObj = this.fnGetIDReplacementRequestPayload();
-                        }
+                        oPayloadObj = this.fnGetIDReplacementRequestPayload();
                         break;
                 }
 
@@ -310,31 +307,31 @@ sap.ui.define([
                 var sValue = oEve.getSource().getValue();
 
                 if (!sValue.match(/^[0-9a-z]+$/)) {
-              
+
 
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("Error");
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueStateText("Please enter only alpha-numeric characters");
                 }
 
-                else{
+                else {
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("None");
 
                 }
 
             },
 
-            
+
             onChangeInpBankName: function (oEve) {
                 var sValue = oEve.getSource().getValue();
 
                 if (!sValue.match(/^[0-9a-z]+$/)) {
-              
+
 
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("Error");
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueStateText("Please enter only alpha-numeric characters");
                 }
 
-                else{
+                else {
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("None");
 
                 }
@@ -370,19 +367,7 @@ sap.ui.define([
                     }
                 };
             },
-            fnValidateIDReplacementFields: function () {
-                var bValidationOk = true,
-                    oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
 
-                if (oEffectiveDatePicker.getValue() === "") {
-                    oEffectiveDatePicker.setValueState("Error");
-                    oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
-                    bValidationOk = false;
-                } else {
-                    oEffectiveDatePicker.setValueState("None");
-                }
-                return bValidationOk;
-            },
 
 
             onLeaveStartDatChange: function (oEvent) {
@@ -576,16 +561,7 @@ sap.ui.define([
             onIDCardRequestResetPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
             },
-            onDateChange: function () {
-                var oEffectiveDatePicker = sap.ui.getCore().byId("idEffectDatePicker");
-                if (oEffectiveDatePicker.getValue() === "") {
-                    oEffectiveDatePicker.setValueState("Error");
-                    oEffectiveDatePicker.setValueStateText("Effective start Date should be minimum today's date");
-                } else {
-                    oEffectiveDatePicker.setValueState("None");
-                }
 
-            },
             onCreateResetPress: function () {
                 var dataReset = {
                     startDate: new Date(),
