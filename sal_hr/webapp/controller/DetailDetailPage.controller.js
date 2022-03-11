@@ -215,7 +215,7 @@ sap.ui.define([
             onChangeInpIBAN: function (oEve) {
                 var sValue = oEve.getSource().getValue();
 
-                if (!sValue.match(/^[0-9a-z]+$/)) {
+                if (!sValue.match(/^[a-z0-9\s]*$/)) {
               
 
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("Error");
@@ -233,7 +233,7 @@ sap.ui.define([
             onChangeInpBankName: function (oEve) {
                 var sValue = oEve.getSource().getValue();
 
-                if (!sValue.match(/^[0-9a-z]+$/)) {
+                if (!sValue.match(/^[a-z0-9\s]*$/)) {
               
 
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("Error");
