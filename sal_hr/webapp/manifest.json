@@ -148,6 +148,36 @@
                     ]
                 },
                 {
+                    "pattern": "LeaveRequest/{parentMaterial}/{layout}",
+                    "name": "LeaveRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "LeaveRequest"
+                    ]
+                },
+                {
+                    "pattern": "IDCardRequest/{parentMaterial}/{layout}",
+                    "name": "IDCardRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "IDCardRequest"
+                    ]
+                },
+                {
+                    "pattern": "BankAccChangeRequest/{parentMaterial}/{layout}",
+                    "name": "BankAccChangeRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "BankAccChangeRequest"
+                    ]
+                },
+                {
                     "pattern": "DisciplinaryRequest/{parentMaterial}/{layout}",
                     "name": "DisciplinaryRequest",
                     "layout": "EndColumnFullScreen",
@@ -158,31 +188,39 @@
                     ]
                 },
                 {
-                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
+                    "pattern": "detail/{parentMaterial}/LeaveRequestDetail/{childModule}/{layout}",
+                    "name": "LeaveRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "LeaveRequestDetail"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/IDCardRequestDetail/{childModule}/{layout}",
+                    "name": "IDCardRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "IDCardRequestDetail"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/BankAccChangeDetail/{childModule}/{layout}",
+                    "name": "BankAccChangeDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "BankAccChangeDetail"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
                     "name": "DisciplinaryRequestDetail",
                     "target": [
                         "master",
                         "detail",
                         "DisciplinaryRequestDetail"
-                    ]
-                },
-                {
-                    "pattern": "AirportPassRequest/{parentMaterial}/{layout}",
-                    "name": "AirportPassRequest",
-                    "layout": "EndColumnFullScreen",
-                    "titleTarget": "",
-                    "greedy": false,
-                    "target": [
-                        "AirportPassRequest"
-                    ]
-                },
-                {
-                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
-                    "name": "AirportPassRequestDetail",
-                    "target": [
-                        "master",
-                        "detail",
-                        "AirportPassRequestDetail"
                     ]
                 }
             ],
@@ -203,22 +241,39 @@
                     "viewName": "CreateRequest",
                     "controlAggregation": "endColumnPages"
                 },
+                "LeaveRequest": {
+                    "viewName": "CreateLeaveRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "IDCardRequest": {
+                    "viewName": "CreateIDCardRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "BankAccChangeRequest": {
+                    "viewName": "CreateBankAccChangeRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "DisciplinaryRequest": {
                     "viewName": "CreateDisciplinaryRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "LeaveRequestDetail": {
+                    "viewName": "LeaveRequestDetail",
+                    "controlAggregation": "endColumnPages"
+                },
+                "IDCardRequestDetail": {
+                    "viewName": "IDCardRequestDetail",
+                    "controlAggregation": "endColumnPages"
+                },
+                "BankAccChangeDetail": {
+                    "viewName": "BankAccChangeDetail",
                     "controlAggregation": "endColumnPages"
                 },
                 "DisciplinaryRequestDetail": {
                     "viewName": "DisciplinaryRequestDetailpage",
                     "controlAggregation": "endColumnPages"
-                },
-                "AirportPassRequest": {
-                    "viewName": "CreateAirportPassRequest",
-                    "controlAggregation": "endColumnPages"
-                },
-                "AirportPassRequestDetail": {
-                    "viewName": "AirportPassRequestDetailpage",
-                    "controlAggregation": "endColumnPages"
                 }
+               
             }
         }
     },
