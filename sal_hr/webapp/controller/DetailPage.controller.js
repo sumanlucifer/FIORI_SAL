@@ -66,67 +66,112 @@ sap.ui.define([
 
             onPressRaiseRequest: function () {
 
-                // switch (this.sParentID) {
-                //     // Leave Module
-                //     case "1":
-                //         this.oRouter.navTo("RaiseRequest", {
-                //             parentMaterial: this.sParentID,
-                //             layout: "EndColumnFullScreen"
-                //         })
-                //         break;
-                //     // Business Trip Module
-                //     case "1":
-                //         this.oRouter.navTo("RaiseRequest", {
-                //                 parentMaterial: this.sParentID,
-                //                 layout: "EndColumnFullScreen"
-                //         })
-                //         break;
-                //     // Disciplinary Request Module
-                //     case "12":
-                //         this.oRouter.navTo("DisciplinaryRequest", {
-                //             parentMaterial: this.sParentID,
-                //             layout: "EndColumnFullScreen"
-                //         })
-                //         break;
-                // }
-                if (this.sParentID === "12") {
-
-                    this.oRouter.navTo("DisciplinaryRequest", {
-
-                        parentMaterial: this.sParentID,
-
-                        layout: "EndColumnFullScreen"
-
-                    })
-
-                } else {
-                    this.oRouter.navTo("RaiseRequest", {
-                        parentMaterial: this.sParentID,
-                        layout: "EndColumnFullScreen"
-                    })
+                switch (this.sParentID) {
+                    // Leave Request Module
+                    case "1":
+                        this.oRouter.navTo("LeaveRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
+                    // ID Card Request Module
+                    case "7":
+                        this.oRouter.navTo("IDCardRequest", {
+                                parentMaterial: this.sParentID,
+                                layout: "EndColumnFullScreen"
+                        })
+                        break;
+                    // Disciplinary Request Module
+                    case "12":
+                        this.oRouter.navTo("DisciplinaryRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
+                    //  Bank Account Change Request Module 
+                    case "13":
+                            this.oRouter.navTo("BankAccChangeRequest", {
+                                parentMaterial: this.sParentID,
+                                layout: "EndColumnFullScreen"
+                            })
+                            break;
                 }
 
+           // ***********  old code ***********************
+
+                // if (this.sParentID === "12") {
+
+                //     this.oRouter.navTo("DisciplinaryRequest", {
+
+                //         parentMaterial: this.sParentID,
+
+                //         layout: "EndColumnFullScreen"
+
+                //     })
+
+                // } else {
+                //     this.oRouter.navTo("RaiseRequest", {
+                //         parentMaterial: this.sParentID,
+                //         layout: "EndColumnFullScreen"
+                //     })
+                // }
+        //    ************************************************************
 
             },
             onPressTicketItem: function (oEvent) {
                 debugger;
-
-                if (this.sParentID === "12") {
-                    this.oRouter.navTo("DisciplinaryRequestDetail", {
-                        parentMaterial: this.sParentID,
-                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                        layout: "ThreeColumnsMidExpanded"
+                switch (this.sParentID) {
+                    // Leave Request Module
+                    case "1":
+                        this.oRouter.navTo("LeaveRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+                    // ID Card Request Module
+                    case "7":
+                        this.oRouter.navTo("IDCardRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+                    // Disciplinary Request Module
+                    case "12":
+                        this.oRouter.navTo("DisciplinaryRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
                     });
-
-                } else {
-                    this.oRouter.navTo("detailDetail", {
-                        parentMaterial: this.sParentID,
-                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                        layout: "ThreeColumnsMidExpanded"
-
-                    });
+                        break;
+                    //  Bank Account Change Request Module 
+                    case "13":
+                            this.oRouter.navTo("BankAccChangeDetail", {
+                                parentMaterial: this.sParentID,
+                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                                layout: "ThreeColumnsMidExpanded"
+                            })
+                            break;
                 }
 
+                   // ***********  old code ***********************
+                // if (this.sParentID === "12") {
+                //     this.oRouter.navTo("DisciplinaryRequestDetail", {
+                //         parentMaterial: this.sParentID,
+                //         childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                //         layout: "ThreeColumnsMidExpanded"
+                //     });
+
+                // } else {
+                //     this.oRouter.navTo("detailDetail", {
+                //         parentMaterial: this.sParentID,
+                //         childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                //         layout: "ThreeColumnsMidExpanded"
+
+                //     });
+                // }
+              //    ************************************************************
 
 
             },

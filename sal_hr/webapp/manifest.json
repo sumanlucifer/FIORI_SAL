@@ -54,7 +54,9 @@
     },
     "sap.ui5": {
         "flexEnabled": true,
-        "config": { "fullWidth": true },
+        "config": {
+            "fullWidth": true
+        },
         "rootView": {
             "viewName": "com.sal.salhr.view.App",
             "type": "XML",
@@ -78,7 +80,6 @@
                     "bundleName": "com.sal.salhr.i18n.i18n"
                 }
             },
-            
             "": {
                 "type": "sap.ui.model.odata.v2.ODataModel",
                 "settings": {
@@ -107,108 +108,172 @@
                 "async": true,
                 "viewPath": "com.sal.salhr.view",
                 "controlId": "flexibleColumnLayout",
-                "controlAggregation" : "pages",
+                "controlAggregation": "pages",
                 "clearControlAggregation": false,
-				"transition": "slide"
-				
-				
+                "transition": "slide"
             },
             "routes": [
                 {
-					"pattern": "",
-					"name": "master",
-					"target": [
-						"master"
-					
-					]
-				},
+                    "pattern": "",
+                    "name": "master",
+                    "target": [
+                        "master"
+                    ]
+                },
                 {
-					"pattern": "detail/{parentMaterial}/{layout}",
-					"name": "detail",
-					"target": [
+                    "pattern": "detail/{parentMaterial}/{layout}",
+                    "name": "detail",
+                    "target": [
                         "master",
-						 "detail"
-					]
-				},
+                        "detail"
+                    ]
+                },
                 {
-					"pattern": "detail/{parentMaterial}/detailDetail/{childModule}/{layout}",
-					"name": "detailDetail",
-					"target": [
-                         "master",
-						 "detail",
-                         "detailDetail"
-					]
-				},
-              
+                    "pattern": "detail/{parentMaterial}/detailDetail/{childModule}/{layout}",
+                    "name": "detailDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "detailDetail"
+                    ]
+                },
                 {
                     "pattern": "RaiseRequest/{parentMaterial}/{layout}",
                     "name": "RaiseRequest",
-                    "layout":"EndColumnFullScreen",
+                    "layout": "EndColumnFullScreen",
                     "titleTarget": "",
                     "greedy": false,
                     "target": [
                         "RaiseRequest"
                     ]
-
                 },
                 {
-                    "pattern": "DisciplinaryRequest/{parentMaterial}/{layout}",  
-                    "name": "DisciplinaryRequest",        
-                    "layout":"EndColumnFullScreen",            
-                    "titleTarget": "",           
-                    "greedy": false,             
-                    "target": [            
-                    "DisciplinaryRequest"              
-                    ]
-                    },
-                    
-                    {
-                    
-                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
-                    
-                    "name": "DisciplinaryRequestDetail",
-                    
+                    "pattern": "LeaveRequest/{parentMaterial}/{layout}",
+                    "name": "LeaveRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
                     "target": [
-                    
-                    "master",
-                    
-                    "detail",
-                    
-                    "DisciplinaryRequestDetail"
-                    
+                        "LeaveRequest"
                     ]
-                    
-                    }
-				
-                
+                },
+                {
+                    "pattern": "IDCardRequest/{parentMaterial}/{layout}",
+                    "name": "IDCardRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "IDCardRequest"
+                    ]
+                },
+                {
+                    "pattern": "BankAccChangeRequest/{parentMaterial}/{layout}",
+                    "name": "BankAccChangeRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "BankAccChangeRequest"
+                    ]
+                },
+                {
+                    "pattern": "DisciplinaryRequest/{parentMaterial}/{layout}",
+                    "name": "DisciplinaryRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "DisciplinaryRequest"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/LeaveRequestDetail/{childModule}/{layout}",
+                    "name": "LeaveRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "LeaveRequestDetail"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/IDCardRequestDetail/{childModule}/{layout}",
+                    "name": "IDCardRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "IDCardRequestDetail"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/BankAccChangeDetail/{childModule}/{layout}",
+                    "name": "BankAccChangeDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "BankAccChangeDetail"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
+                    "name": "DisciplinaryRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "DisciplinaryRequestDetail"
+                    ]
+                }
             ],
             "targets": {
                 "master": {
-					"viewName": "MasterList",
-					"controlAggregation": "beginColumnPages"
-				},
+                    "viewName": "MasterList",
+                    "controlAggregation": "beginColumnPages"
+                },
                 "detail": {
                     "viewName": "DetailPage",
                     "controlAggregation": "midColumnPages"
-                    
                 },
                 "detailDetail": {
                     "viewName": "DetailDetailPage",
                     "controlAggregation": "endColumnPages"
-                    
                 },
                 "RaiseRequest": {
-                    "viewName": "CreateRequest",                  
-                    "controlAggregation": "endColumnPages"                                  
+                    "viewName": "CreateRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "LeaveRequest": {
+                    "viewName": "CreateLeaveRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "IDCardRequest": {
+                    "viewName": "CreateIDCardRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "BankAccChangeRequest": {
+                    "viewName": "CreateBankAccChangeRequest",
+                    "controlAggregation": "endColumnPages"
                 },
                 "DisciplinaryRequest": {
-                    "viewName": "CreateDisciplinaryRequest",             
-                    "controlAggregation": "endColumnPages"             
-                    },               
-                    "DisciplinaryRequestDetail": {             
-                    "viewName": "DisciplinaryRequestDetailpage",         
-                    "controlAggregation": "endColumnPages"       
-                    }            
+                    "viewName": "CreateDisciplinaryRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "LeaveRequestDetail": {
+                    "viewName": "LeaveRequestDetail",
+                    "controlAggregation": "endColumnPages"
+                },
+                "IDCardRequestDetail": {
+                    "viewName": "IDCardRequestDetail",
+                    "controlAggregation": "endColumnPages"
+                },
+                "BankAccChangeDetail": {
+                    "viewName": "BankAccChangeDetail",
+                    "controlAggregation": "endColumnPages"
+                },
+                "DisciplinaryRequestDetail": {
+                    "viewName": "DisciplinaryRequestDetailpage",
+                    "controlAggregation": "endColumnPages"
+                }
+               
             }
         }
     },
