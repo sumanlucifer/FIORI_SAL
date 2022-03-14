@@ -1,10 +1,29 @@
-<core:FragmentDefinition xmlns:networkgraph="sap.suite.ui.commons.networkgraph"
+<mvc:View controllerName="com.sal.salhr.controller.CreateIDCardRequest"
+    xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
+    xmlns:f="sap.f"
     xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
     xmlns:fm="sap.ui.layout.form"
-    xmlns:core="sap.ui.core">
-    <VBox>
-        <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+    xmlns:upload="sap.m.upload" height="100%">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle id="idDynamicPageTitle">
+                <f:heading>
+                    <Title id="idPageTitle" text="New ID Card Request" class="sapUiSmallMarginBegin"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New ID Card Request" class="sapUiSmallMarginBegin">
+                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
+                <l:content>
+                 <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="When would you like your changes to take effect? " required="true" />
             <DatePicker id="idEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}" enabled="false"/>
         </fm:SimpleForm>
@@ -42,5 +61,17 @@
             <Label text="Emergency Phone" />
             <Input id="idEmergencyPhoneInp" value="{emergencyNumber}" enabled= "false" />
         </fm:SimpleForm>
-    </VBox>
-</core:FragmentDefinition>
+                </l:content>
+            </l:VerticalLayout>
+        </f:content>
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar id="idOverflowToolbar" visible="true">
+                <ToolbarSpacer id="idToolbarSpacer"/>
+                <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
+                <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
+                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

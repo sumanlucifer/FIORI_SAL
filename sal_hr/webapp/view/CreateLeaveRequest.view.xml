@@ -1,0 +1,138 @@
+<mvc:View controllerName="com.sal.salhr.controller.CreateLeaveRequest"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:fm="sap.ui.layout.form"
+    xmlns:upload="sap.m.upload" height="100%">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle id="idDynamicPageTitle">
+                <f:heading>
+                    <Title id="idPageTitle" text="New Leave Request" class="sapUiSmallMarginBegin"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Leave Request" class="sapUiSmallMarginBegin">
+                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
+                <l:content>
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+
+                        <Label text="Time Type" required="true" />
+                        <Select id="idTimeType" items="{ path: '/SF_Leave_TimeType',
+                                                            filters: [
+                                                                        {
+                                                                             path: 'category',
+                                                                             operator: 'EQ',
+                                                                             value1: 'ABSENCE'
+                                                                         }
+                                                                     ],
+                                                         sorter : {
+                                                             path : 'externalName_defaultValue' 
+                                                        } }" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
+                        </Select>
+
+                        <Label text="Available Balance" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }" />
+                        <Input value="{LeaveBalModel>/balance}" enabled="false" width="40%" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }">
+                            <layoutData>
+                                <l:GridData span="XL2 L3 M4 S4" />
+                            </layoutData>
+                        </Input>
+
+                    </fm:SimpleForm>
+
+
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+
+                        <Label text="Start Date" required="true"/>
+                        <DatePicker id="idStartDate" value="{path:'LocalViewModel>/startDate', type:'sap.ui.model.type.Date'}" change="onLeaveStartDatChange"/>
+
+                        <Label text="{i18n>EndDate}" required="true" visible="{= ${LocalViewModel>/recurringAbs} === false ? true : false }"/>
+                        <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date'}" visible="{= ${LocalViewModel>/recurringAbs} === false ? true : false }" change="onLeaveEndDateChange"/>
+
+
+
+                    </fm:SimpleForm>
+
+
+
+
+                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight"> -->
+
+                    <!-- <Label /> -->
+                    <!-- <Input id="idRequestDay" value="{LocalViewModel>/requestDay} day " enabled="false">
+                <layoutData>
+                    <l:GridData span="XL2 L3 M4 S4" />
+                </layoutData>
+            </Input> -->
+
+                    <!-- <Label /> -->
+                    <!-- <DatePicker id="idReturning" value="{path:'LocalViewModel>/returnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/> -->
+
+                    <!-- </fm:SimpleForm> -->
+
+
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                        <CheckBox id="idRecCheckbox" text="Recurring Absence" select="onSelectRecurringAbsc"></CheckBox>
+                    </fm:SimpleForm>
+
+
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                        <Label text="Recurs" required="true" visible="{LocalViewModel>/recurringAbs}"/>
+                        <Select id="idRecAbsc" visible="{LocalViewModel>/recurringAbs}">
+                            <core:Item key="Daily" text="Daily" />
+                            <core:Item key="Weekly" text="Weekly" />
+                            <core:Item key="BiWeekly" text="BiWeekly" />
+                        </Select>
+
+                        <Label visible="{LocalViewModel>/recurringAbs}" text="Ends On" required="true"/>
+                        <DatePicker visible="{LocalViewModel>/recurringAbs}" id="idEndonDate" value="{path:'LocalViewModel>/endsOnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" />
+
+
+                        <!-- <Label visible="{LocalViewModel>/recurringAbs}" text="Total Requesting" />
+            <Input visible="{LocalViewModel>/recurringAbs}" value=" " enabled="false">
+                <layoutData>
+                    <l:GridData span="XL2 L3 M4 S4" />
+                </layoutData>
+            </Input> -->
+                    </fm:SimpleForm>
+                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">      
+                                    <Label text="Comment" />
+                                    <TextArea ></TextArea>
+                             </fm:SimpleForm>        -->
+
+
+
+                    <HBox>
+
+                        <Text text="Attachments:" class="sapUiSmallMarginTop" visible="{LocalViewModel>/uploadAttachment}"/>
+
+                        <Text text="*" class="sapUiMediumMarginBottom redColor" visible="{LocalViewModel>/uploadAttachment}" />
+
+                    </HBox>
+                    <upload:UploadSet id="UploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+
+
+                    </upload:UploadSet>
+                </l:content>
+            </l:VerticalLayout>
+        </f:content>
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar id="idOverflowToolbar" visible="true">
+                <ToolbarSpacer id="idToolbarSpacer"/>
+                <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
+                <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
+                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

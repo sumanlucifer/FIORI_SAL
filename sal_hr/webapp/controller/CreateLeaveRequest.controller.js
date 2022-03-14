@@ -9,12 +9,12 @@ sap.ui.define([
 
     function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter) {
         "use strict";
-        return BaseController.extend("com.sal.salhr.controller.CreateRequest", {
+        return BaseController.extend("com.sal.salhr.controller.CreateLeaveRequest", {
             onInit: function () {
                 debugger;
                 this.oRouter = this.getRouter();
-                this.oRouter.getRoute("RaiseRequest").attachPatternMatched(this._onObjectMatched, this);
-                // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
+                this.oRouter.getRoute("LeaveRequest").attachPatternMatched(this._onObjectMatched, this);
+
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
 
@@ -44,45 +44,23 @@ sap.ui.define([
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
 
-
-
-
-                // this.getView().addEventDelegate({
-                //     onBeforeShow: function (evt) {
-
-                //         that.loadFragment();
-
-                //     }.bind(this),
-                //     onAfterHide: function (evt) {
-
-                //     }
-                // });
             },
-            // onRouteMatched: function (oEvent) {
-            //     this.sParentID = oEvent.getParameter("arguments").parentMaterial;
-            //     this.loadFragment();
 
-            // },
             _onObjectMatched: function (oEvent) {
                 debugger;
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
-                // if (sLayout == 'TwoColumnsMidExpanded') {
-                //     this.byId("idViewBOQListButton").setPressed(false);
-                //     this.getViewModel("objectViewModel").setProperty("/sViewBOQButtonName", "View BOQ List");
-                // }
-                // this.getView().getModel().setProperty("/busy", false);
+
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
                 this._bindView("/MasterSubModules" + this.sParentID);
                 this.loadFragment();
 
             },
-            _bindView: function (sObjectPath) {
-                var objectViewModel = this.getViewModel("objectViewModel");
-                var that = this;
+            _bindView: function () {
+
                 var oComponentModel = this.getComponentModel();
-                //    var sTickets = sObjectPath + "/tickets";
+
                 var sKey = oComponentModel.createKey("/MasterSubModules", {
                     ID: this.sParentID
                 });
@@ -107,94 +85,11 @@ sap.ui.define([
 
 
             },
-            loadFragment: function () {
-                debugger;
-
-
-                var sType = this.sParentID;
-
-                var oLayout = this.getView().byId('idLeaveLayout');
-
-
-                switch (sType) {
-                    // Leave Module
-                    case "1":
-                        oLayout.destroyContent();
-                        this.fragmentName = "com.sal.salhr.Fragments.CreateLeave";
-                        this.oFragment = sap.ui.xmlfragment("idLeaveFragment", this.fragmentName, this);
-                        oLayout.addContent(this.oFragment);
-                        this.fnGetLeaveBalance();
-                        break;
-                    // Business Trip Module
-                    case "2":
-                        oLayout.destroyContent();
-                        this.fragmentName = "com.sal.salhr.Fragments.CreateBusinessTrip";
-                        var oFragment = sap.ui.xmlfragment("idBusinessTrip", this.fragmentName, this);
-                        oLayout.addContent(oFragment);
-                        break;
-                    //    Bank Request Cahnge 
-                    case "7":
-                        oLayout.destroyContent();
-                        var sKey = this.getComponentModel().createKey("/EmpInfo", {
-                            userId: "12002425"
-                        });
-                        this.getView().bindElement({
-                            path: sKey,
-                            events: {
-                                change: function (oEvent) {
-                                    var oContextBinding = oEvent.getSource();
-                                    oContextBinding.refresh(false);
-                                }.bind(this),
-                                dataRequested: function () {
-                                    this.getView().setBusy(true);
-                                }.bind(this),
-                                dataReceived: function () {
-                                    this.getView().setBusy(false);
-                                    this.fragmentName = "com.sal.salhr.Fragments.CreateIDReplacement";
-                                    this.oFragment = sap.ui.xmlfragment(this.fragmentName, this);
-                                    oLayout.addContent(this.oFragment);
-                                }.bind(this)
-                            }
-                        });
-                        break;
-
-                    // Bank Request Module  
-                    case "13":
-                        oLayout.destroyContent();
-                        this.fragmentName = "com.sal.salhr.Fragments.CreateBankAccountRequest";
-                        var oFragment = sap.ui.xmlfragment("idBankChangerequestFragment", this.fragmentName, this);
-                        oLayout.addContent(oFragment);
-
-                        break;
-                }
-
-
-
-            },
 
             onRaiseRequestPress: function () {
-                var sEntityPath = "",
-                    oPayloadObj = {},
-                    bValidationOk = false;
+                var sEntityPath = "/SF_Leave",
+                    oPayloadObj = this.fnGetLeaveRequestPayload();
 
-
-                switch (this.sParentID) {
-                    // Leave Module
-                    case "1":
-                        sEntityPath = "/SF_Leave";
-                        oPayloadObj = this.fnGetLeaveRequestPayload();
-                        break;
-                    // Bank Request Module
-                    case "13":
-                        oPayloadObj = this.fnGetBankRequestPayload();
-                        sEntityPath = "/SF_BankDetails";
-                        break;
-                    // Id Card Replacement
-                    case "7":
-                        sEntityPath = "/SF_IDReplacement";
-                        oPayloadObj = this.fnGetIDReplacementRequestPayload();
-                        break;
-                }
 
 
                 this.getView().setBusy(true);
@@ -221,29 +116,29 @@ sap.ui.define([
             },
             fnGetLeaveRequestPayload: function () {
                 var sAttachmentFileContent, sAttahmentFileName;
-                // var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getValue();
-                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
-                // sStartDate = Date.parse(sStartDate);
+
+                var sStartDate = this.getView().byId("idStartDate").getDateValue();
+
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                     oStartDate = dateFormat.format(new Date(sStartDate));
                 sStartDate = oStartDate + "T00:00:00";
-                var sRecSelected = sap.ui.core.Fragment.byId("idLeaveFragment", "idRecCheckbox").getSelected();
+                var sRecSelected = this.getView().byId("idRecCheckbox").getSelected();
                 if (sRecSelected === false) {
-                    // var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
-                    var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
+
+                    var sEndDate = this.getView().byId("idEndDate").getDateValue();
 
                     var sRecAbsGroup = null;
 
                 } else {
-                    // sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getValue();
-                    sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndonDate").getDateValue();
-                    sRecAbsGroup = sap.ui.core.Fragment.byId("idLeaveFragment", "idRecAbsc").getSelectedKey();
+
+                    sEndDate = this.getView().byId("idEndonDate").getDateValue();
+                    sRecAbsGroup = this.getView().byId("idRecAbsc").getSelectedKey();
                 }
 
                 // sEndDate = Date.parse(sEndDate);
                 var oEndDate = dateFormat.format(new Date(sEndDate));
                 sEndDate = oEndDate + "T00:00:00";
-                var sTimeType = sap.ui.core.Fragment.byId("idLeaveFragment", "idTimeType").getSelectedKey();
+                var sTimeType = this.getView().byId("idTimeType").getSelectedKey();
 
 
                 if (this.isAttachment === true) {
@@ -276,95 +171,6 @@ sap.ui.define([
                     "attachmentFileContent": sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
                     "attachmentUserId": "Extentia"
-                };
-            },
-            fnGetBankRequestPayload: function () {
-                // var sEffectiveStartDate = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idFromDatePicker").getDateValue();
-                // var sCust_bankName = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").getValue();
-                // var scust_iban = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").getValue();
-                // return {
-                //     "externalCode": "12002425",
-                //     "effectiveStartDate": sEffectiveStartDate,
-                //     "cust_bankName": sCust_bankName,
-                //     "cust_iban": scust_iban
-                //   };
-
-                var sEffectiveStartDate = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idFromDatePicker").getDateValue();
-                var sCust_bankName = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").getValue();
-                var scust_iban = sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").getValue();
-                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                    oDate = dateFormat.format(new Date(sEffectiveStartDate));
-                oDate = oDate + "T00:00:00";
-                return {
-                    "externalCode": "12002425",
-                    "effectiveStartDate": oDate,
-                    "cust_bankName": sCust_bankName,
-                    "cust_iban": scust_iban
-                };
-            },
-
-            onChangeInpIBAN: function (oEve) {
-                var sValue = oEve.getSource().getValue();
-
-                if (!sValue.match(/^[a-z0-9\s]*$/)) {
-
-
-                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("Error");
-                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueStateText("Please enter only alpha-numeric characters");
-                }
-
-                else {
-                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("None");
-
-                }
-
-            },
-
-
-            onChangeInpBankName: function (oEve) {
-                var sValue = oEve.getSource().getValue();
-
-                if (!sValue.match(/^[a-z0-9\s]*$/)) {
-
-
-                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("Error");
-                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueStateText("Please enter only alpha-numeric characters");
-                }
-
-                else {
-                    sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("None");
-
-                }
-
-            },
-
-
-            fnGetIDReplacementRequestPayload: function () {
-                var oDataObj = this.getView().getBindingContext().getObject(),
-                    sEffectiveStartDate = sap.ui.getCore().byId("idEffectDatePicker").getValue();
-
-                return {
-                    "User": oDataObj.userId,
-                    "effectiveStartDate": new Date(sEffectiveStartDate),
-                    // "effectiveStartDate": "/Date(1645660800000)/",
-                    "cust_idReplacementDetails": {
-                        "cust_bloodGroup": oDataObj.bloodGroup,
-                        "cust_idReplacement_effectiveStartDate": new Date(sEffectiveStartDate),
-                        // "cust_idReplacement_effectiveStartDate": "/Date(1645660800000)/",
-
-                        "externalCode": "46986",
-                        "cust_idReplacement_User": oDataObj.userId,
-                        "cust_lname": oDataObj.lastName,
-                        "cust_jobTitle": oDataObj.jobTitle,
-                        "cust_payGrade": oDataObj.payGrade,
-                        "cust_emergencyPhone": oDataObj.emergencyNumber,
-                        "cust_fname": oDataObj.firstName,
-                        "cust_nationality": oDataObj.nationality,
-                        "cust_sname": oDataObj.middleName,
-                        "cust_prn": oDataObj.userId,
-                        "cust_seniorityDate": new Date(oDataObj.seniorityDate)
-                        // "cust_seniorityDate": "/Date(1645660800000)/"
-                    }
                 };
             },
 
@@ -447,8 +253,7 @@ sap.ui.define([
                     }
                     startDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/startDate").getDate());
                 }
-                // var data = this.getView().getModel("LocalViewModel").getData();
-                // var sReturnDate = jQuery.extend(true,[],data);
+
 
                 var sReturnDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
 
@@ -540,24 +345,11 @@ sap.ui.define([
                 this.mainModel.refresh();
             },
             onResetPress: function () {
-                switch (this.sParentID) {
-                    // Leave Module
-                    case "1":
-                        this.onCreateResetPress();
-                        break;
-                    case "7":
-                        this.onIDCardRequestResetPress();
-                        break;
-                    // Bank Request Module
-                    case "13":
-                        this.onBankRequestResetPress();
-                        break;
-                }
+
+                this.onCreateResetPress();
 
 
-            },
-            onIDCardRequestResetPress: function () {
-                this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
+
             },
 
             onCreateResetPress: function () {
@@ -571,36 +363,11 @@ sap.ui.define([
                     busy: false,
                     uploadAttachment: true
                 };
-                sap.ui.core.Fragment.byId("idLeaveFragment", "idRecCheckbox").setSelected(false);
+                this.getView().byId("idRecCheckbox").setSelected(false);
                 this.getView().getModel("LocalViewModel").setData(dataReset);
                 this.getView().getModel("LocalViewModel").refresh();
-            },
-            onBankRequestResetPress: function () {
-
-                // sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idFromDatePicker").setValue(new Date());
-                sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValue();
-                sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValue();
-                this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
-                this.getView().getModel("LocalViewModel").refresh();
-
-            },
-            fnGetLeaveBalance: function () {
-                debugger;
-                var that = this;
-                this.getView().getModel().read("/SF_Leave_AccountBalance", {
-                    urlParameters: {
-                        "$filter": "(userId eq '12002024' and timeAccountType eq 'Annual_vacation')"
-                    },
-                    success: function (oData) {
-                        var oLeaveBalModel = new JSONModel(oData.results[0]);
-                        that.getView().setModel(oLeaveBalModel, "LeaveBalModel");
-                    },
-                    error: function () {
-
-                    }
-                })
-
             }
+
 
 
 
