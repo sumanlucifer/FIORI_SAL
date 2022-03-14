@@ -11,7 +11,7 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New {name} Request" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="New {name}" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="New {name} Request" class="sapUiSmallMarginBegin">

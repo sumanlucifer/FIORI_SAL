@@ -9,7 +9,7 @@ sap.ui.define([
 
         return Controller.extend("com.sal.salhr.controller.App", {
             onInit: function () {
-                debugger;
+            
                 this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
                 this.oOwnerComponent = this.getOwnerComponent();
                 this.oRouter = this.oOwnerComponent.getRouter();
@@ -21,7 +21,7 @@ sap.ui.define([
             onRouteMatched: function (oEvent) {
                 var sRouteName = oEvent.getParameter("name"),
                     oArguments = oEvent.getParameter("arguments");
-                debugger;
+            
                 // Save the current route name
                 this.currentRouteName = sRouteName;
                 this.currentParent = oArguments.parentMaterial;

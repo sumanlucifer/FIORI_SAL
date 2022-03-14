@@ -99,7 +99,20 @@ sap.ui.define([
 
                     })
 
-                } else {
+                } 
+                if (this.sParentID === "5") {
+
+                    this.oRouter.navTo("BusinessCardRequest", {
+
+                        parentMaterial: this.sParentID,
+
+                        layout: "EndColumnFullScreen"
+
+                    })
+
+                } 
+                
+                else {
                     this.oRouter.navTo("RaiseRequest", {
                         parentMaterial: this.sParentID,
                         layout: "EndColumnFullScreen"
@@ -109,7 +122,7 @@ sap.ui.define([
 
             },
             onPressTicketItem: function (oEvent) {
-                debugger;
+                
 
                 if (this.sParentID === "12") {
                     this.oRouter.navTo("DisciplinaryRequestDetail", {
@@ -118,7 +131,18 @@ sap.ui.define([
                         layout: "ThreeColumnsMidExpanded"
                     });
 
-                } else {
+                } 
+                
+                if (this.sParentID === "5") {
+                    this.oRouter.navTo("BusinessCardRequestDetail", {
+                        parentMaterial: this.sParentID,
+                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                        layout: "ThreeColumnsMidExpanded"
+                    });
+
+                } 
+                
+                else {
                     this.oRouter.navTo("detailDetail", {
                         parentMaterial: this.sParentID,
                         childModule: oEvent.getSource().getBindingContext().getObject().ID,
