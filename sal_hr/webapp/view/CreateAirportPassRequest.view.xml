@@ -1,0 +1,145 @@
+<mvc:View controllerName="com.sal.salhr.controller.CreateAirportPassRequest"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:fm="sap.ui.layout.form"
+    xmlns:upload="sap.m.upload" height="100%">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle id="idDynamicPageTitle">
+                <f:heading>
+                    <Title id="idPageTitle" text="New {name} Request" class="sapUiSmallMarginBegin"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New {name} Request" class="sapUiSmallMarginBegin">
+                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
+                <l:content>
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                        <Label text="When would you like your changes to take effect? " required="true" />
+                        <DatePicker id="idAirportPassEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}" />
+                    </fm:SimpleForm>
+                    <fm:SimpleForm title="Airport Pass Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                        <Label text="Type Of Pass" required="true" />
+
+
+                        <Select id="idTypeOfPassSLT" items="{ path: '/SF_PickListValueV2',
+                                                sorter : {
+                                                 path : 'label_defaultValue' 
+                                             },
+                                             filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'cust_typeOfPass'} ]
+                                              }" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                        </Select>
+
+                        <Label text="National ID" required="true" />
+                        <Input id="idNationalIDInp" value="{cust_toAirportPassItem/cust_nationalID}" enabled= "false"/>
+
+                        <Label text="Date of Bith" required="true" />
+                        <Input id="idDateofBithInp" value="{lastName}" enabled= "false"/>
+
+                        <Label text="Mobile Number" required="true" />
+                        <Input id="idMobileNumberInp" value="{middleName}" enabled= "false"/>
+
+                        <Label text="Nationality" required="true" />
+                        <Input id="idNationalityInp" value="{jobTitle}" />
+
+                        <Label text="Airport Location" required="true" />                        
+                        <Select id="idAirPortLocatonSLT" items="{ path: '/SF_PickListValueV2',
+                                                sorter : {
+                                                 path : 'label_defaultValue' 
+                                             },
+                                             filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'cust_airportLocation'} ]
+                                              }" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                        </Select>
+
+                        <Label text="Permit Date" required="true" />
+                        <DatePicker id="idPermitDate" value="{path:'seniorityDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}"/>
+
+                        <Label text="Purpose of Permit" required="true" />
+                        <TextArea id="idPurposeofPermitInp" value="{costCentre}"/>
+                    </fm:SimpleForm>
+
+                    <!-- <Label text="Personal ID Copy" required="true" class="sapUiSmallMarginBegin"/> -->
+                    <upload:UploadSet id="UploadSetPersonalID" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                        <upload:toolbar>
+                            <OverflowToolbar>
+                                <Label text="Personal ID Copy" required="true"/>
+                                <ToolbarSpacer/>
+                            </OverflowToolbar>
+                        </upload:toolbar>
+                    </upload:UploadSet>
+
+                    <upload:UploadSet id="UploadSetPersonalPhoto" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                        <upload:toolbar>
+                            <OverflowToolbar>
+                                <Label text="Personal Photo" required="true" class="sapUiSmallMarginTop"/>
+                                <ToolbarSpacer/>
+                            </OverflowToolbar>
+                        </upload:toolbar>
+                    </upload:UploadSet>
+
+
+                    <upload:UploadSet id="UploadSetPersonalCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                        <upload:toolbar>
+                            <OverflowToolbar>
+                                <Label text="Personal ID Copy" required="true" class="sapUiSmallMarginTop"/>
+                                <ToolbarSpacer/>
+                            </OverflowToolbar>
+                        </upload:toolbar>
+                    </upload:UploadSet>
+
+
+                    <upload:UploadSet id="UploadSetnonnationals" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                        <upload:toolbar>
+                            <OverflowToolbar>
+                                <Label text="Passport Copy for non-nationals" required="true" class="sapUiSmallMarginTop"/>
+                                <ToolbarSpacer/>
+                            </OverflowToolbar>
+                        </upload:toolbar>
+                    </upload:UploadSet>
+
+                    <upload:UploadSet id="UploadSetIDCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                        <upload:toolbar>
+                            <OverflowToolbar>
+                                <Label text="Company ID Copy" required="true" class="sapUiSmallMarginTop"/>
+                                <ToolbarSpacer/>
+                            </OverflowToolbar>
+                        </upload:toolbar>
+                    </upload:UploadSet>
+
+
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                        <Label text="{i18n>AcknowledgeText1}" required="true" />
+                        <Select id="idAcknowledgeTextFirstSLT" items="{ path: '/SF_Leave_TimeType'}" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
+                        </Select>
+
+                        <Label text="{i18n>AcknowledgeText2}" required="true" />
+                        <Select id="idAcknowledgeTextSecondSLT" items="{ path: '/SF_Leave_TimeType'}" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
+                        </Select>
+                    </fm:SimpleForm>
+                </l:content>
+            </l:VerticalLayout>
+        </f:content>
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar id="idOverflowToolbar" visible="true">
+                <ToolbarSpacer id="idToolbarSpacer"/>
+                <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
+                <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
+                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>
