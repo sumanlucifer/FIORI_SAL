@@ -55,7 +55,7 @@
                         <Label text="Start Date" required="true"/>
                         <DatePicker id="idStartDate" value="{path:'LocalViewModel>/startDate', type:'sap.ui.model.type.Date'}" change="onLeaveStartDatChange"/>
 
-                        <Label text="{i18n>EndDate}" required="true" visible="{= ${LocalViewModel>/recurringAbs} === false ? true : false }"/>
+                        <Label text="{i18n>EndDate}" required="true" />
                         <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date'}" visible="{= ${LocalViewModel>/recurringAbs} === false ? true : false }" change="onLeaveEndDateChange"/>
 
 
@@ -80,21 +80,21 @@
                     <!-- </fm:SimpleForm> -->
 
 
-                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <CheckBox id="idRecCheckbox" text="Recurring Absence" select="onSelectRecurringAbsc"></CheckBox>
-                    </fm:SimpleForm>
+                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight"> -->
+                        <!-- <CheckBox id="idRecCheckbox" text="Recurring Absence" select="onSelectRecurringAbsc"></CheckBox> -->
+                    <!-- </fm:SimpleForm> -->
 
 
-                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <Label text="Recurs" required="true" visible="{LocalViewModel>/recurringAbs}"/>
-                        <Select id="idRecAbsc" visible="{LocalViewModel>/recurringAbs}">
-                            <core:Item key="Daily" text="Daily" />
-                            <core:Item key="Weekly" text="Weekly" />
-                            <core:Item key="BiWeekly" text="BiWeekly" />
-                        </Select>
+                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight"> -->
+                        <!-- <Label text="Recurs" required="true" visible="{LocalViewModel>/recurringAbs}"/> -->
+                        <!-- <Select id="idRecAbsc" visible="{LocalViewModel>/recurringAbs}"> -->
+                            <!-- <core:Item key="Daily" text="Daily" /> -->
+                            <!-- <core:Item key="Weekly" text="Weekly" /> -->
+                            <!-- <core:Item key="BiWeekly" text="BiWeekly" /> -->
+                        <!-- </Select> -->
 
-                        <Label visible="{LocalViewModel>/recurringAbs}" text="Ends On" required="true"/>
-                        <DatePicker visible="{LocalViewModel>/recurringAbs}" id="idEndonDate" value="{path:'LocalViewModel>/endsOnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" />
+                        <!-- <Label visible="{LocalViewModel>/recurringAbs}" text="Ends On" required="true"/> -->
+                        <!-- <DatePicker visible="{LocalViewModel>/recurringAbs}" id="idEndonDate" value="{path:'LocalViewModel>/endsOnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" /> -->
 
 
                         <!-- <Label visible="{LocalViewModel>/recurringAbs}" text="Total Requesting" />
@@ -103,7 +103,7 @@
                     <l:GridData span="XL2 L3 M4 S4" />
                 </layoutData>
             </Input> -->
-                    </fm:SimpleForm>
+                    <!-- </fm:SimpleForm> -->
                     <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">      
                                     <Label text="Comment" />
                                     <TextArea ></TextArea>
