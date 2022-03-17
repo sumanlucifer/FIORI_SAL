@@ -24,12 +24,19 @@
             <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
                 <l:content>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <Label text="{i18n>whenWouldYouLiketoText}" required="true"/>
-                        <DatePicker id="idIncidentStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" change="onLeaveStartDatChange"/>
-                    </fm:SimpleForm>
-                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label text="Job Title" required="true" />
                         <Input id="idCreateJobTitle" value="">
+                            <layoutData>
+                                <l:GridData span="XL2 L3 M4 S4" />
+                            </layoutData>
+                        </Input>
+
+
+
+                    </fm:SimpleForm>
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                        <Label id="idDateLBL" text="P.O BOX" />
+                        <Input  id="idCreatePOBOX" value="">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -62,12 +69,9 @@
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
                         </Input>
-                        <Label id="idDateLBL" text="{i18n>whenWouldYouLiketoText}" />
-                        <Input  id="idCreatePOBOX" value="">
-                            <layoutData>
-                                <l:GridData span="XL2 L3 M4 S4" />
-                            </layoutData>
-                        </Input>
+
+                        <Label text="{i18n>whenWouldYouLiketoText}" required="true"/>
+                        <DatePicker id="idIncidentStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" change="onLeaveStartDatChange"/>
                     </fm:SimpleForm>
 
                 </l:content>

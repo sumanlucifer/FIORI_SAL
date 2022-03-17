@@ -188,6 +188,16 @@
                     ]
                 },
                 {
+                    "pattern": "BusinessCardRequest/{parentMaterial}/{layout}",
+                    "name": "BusinessCardRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "BusinessCardRequest"
+                    ]
+                },
+                {
                     "pattern": "detail/{parentMaterial}/LeaveRequestDetail/{childModule}/{layout}",
                     "name": "LeaveRequestDetail",
                     "target": [
@@ -221,6 +231,15 @@
                         "master",
                         "detail",
                         "DisciplinaryRequestDetail"
+                    ]
+                },
+                {
+                    "pattern": "BusinessRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
+                    "name": "BusinessRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "BusinessRequestDetail"
                     ]
                 }
             ],
@@ -257,6 +276,10 @@
                     "viewName": "CreateDisciplinaryRequest",
                     "controlAggregation": "endColumnPages"
                 },
+                "BusinessCardRequest": {
+                    "viewName": "CreateBusinessCardRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "LeaveRequestDetail": {
                     "viewName": "LeaveRequestDetail",
                     "controlAggregation": "endColumnPages"
@@ -272,8 +295,11 @@
                 "DisciplinaryRequestDetail": {
                     "viewName": "DisciplinaryRequestDetailpage",
                     "controlAggregation": "endColumnPages"
+                },
+                "BusinessRequestDetail": {
+                    "viewName": "BusinessCardRequestDetailpage",
+                    "controlAggregation": "endColumnPages"
                 }
-               
             }
         }
     },

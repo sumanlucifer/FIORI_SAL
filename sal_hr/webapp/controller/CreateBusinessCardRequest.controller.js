@@ -93,21 +93,41 @@ sap.ui.define([
             },
             _validateMandatoryFields: function () {
                 var bValid = true;
-                if (this.byId("idIncidentDescription").getValue() === "") {
-                    this.byId("idIncidentDescription").setValueState("Error");
-                    this.byId("idIncidentDescription").setValueStateText(
-                        "Please enter incident description details"
+                if (this.byId("idCreateJobTitle").getValue() === "") {
+                    this.byId("idCreateJobTitle").setValueState("Error");
+                    this.byId("idCreateJobTitle").setValueStateText(
+                        "Please enter job title"
                     );
                     bValid = false;
                 } else {
-                    this.byId("idIncidentDescription").setValueState("None");
-                    this.byId("idIncidentDescription").setValueStateText(null);
+                    this.byId("idCreateJobTitle").setValueState("None");
+                    this.byId("idCreateJobTitle").setValueStateText(null);
                 }
 
-                if (this.isAttachment !== true) {
-                    sap.m.MessageBox.error("Please upload attachments.");
+
+
+                if (this.byId("idCreateEmail").getValue() === "") {
+                    this.byId("idCreateEmail").setValueState("Error");
+                    this.byId("idCreateEmail").setValueStateText(
+                        "Please enter email"
+                    );
                     bValid = false;
+                } else {
+                    this.byId("idCreateEmail").setValueState("None");
+                    this.byId("idCreateEmail").setValueStateText(null);
                 }
+
+                if (this.byId("idCreateMobile").getValue() === "") {
+                    this.byId("idCreateMobile").setValueState("Error");
+                    this.byId("idCreateMobile").setValueStateText(
+                        "Please enter Mobile Number"
+                    );
+                    bValid = false;
+                } else {
+                    this.byId("idCreateMobile").setValueState("None");
+                    this.byId("idCreateMobile").setValueStateText(null);
+                }
+                
 
 
 
@@ -116,10 +136,10 @@ sap.ui.define([
             },
 
             onRaiseRequestPress: function () {
-                // if (!this._validateMandatoryFields()) {
+                if (!this._validateMandatoryFields()) {
 
-                //     return;
-                // }
+                    return;
+                }
 
                 var oPayload, sPath;
 

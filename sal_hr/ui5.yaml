@@ -19,6 +19,7 @@ server:
         backend:
           - path: /odata
             url: https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de3438ae57.cfapps.eu10.hana.ondemand.com
+            destination: human-resource-srv
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

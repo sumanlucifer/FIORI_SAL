@@ -87,6 +87,22 @@
 				mediaType="attachmentModel>/mimeType}"	
                         
 						>
+                         <upload:attributes>
+						<ObjectAttribute
+								title="Uploaded On"
+                                        text="{path:'attachmentModel>/lastModifiedDateTime',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"
+								/>
+					</upload:attributes>
+                       <upload:attributes>
+						<ObjectAttribute
+								title="File Size"
+								text="{attachmentModel>/fileSize} bytes"
+								/>
+					</upload:attributes>
 				</upload:UploadSetItem>
 			</upload:items>
 		</upload:UploadSet> 

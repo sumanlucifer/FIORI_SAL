@@ -5,25 +5,25 @@
     <form:SimpleForm id="idNewDisplayTripRquestSimpleForm" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" layout="ResponsiveGridLayout" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <form:content>
             <Title id="idLeaveDisplayRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
+            <Label text="Job Title"  />               
+            <Text text="{cust_jobTitle}"/>
             <Label text="Division" />
+            <Text text="{cust_location}"/>
+           <Label text="Email"  />
+            <Text text="{cust_email}"/>
+            <Label text="Mobile"  />
+            <Text text="{cust_mobile}"/>
+             <Label text="Office Number"  />
+            <Text text="{cust_officeNumber}"/>
+            <Label text="P.O BOX"  />               
+            <Text text="{cust_poBox}"/>
+            <!-- <core:Title id="idEmptyTitle" text=" "/> -->
+            <Label text="When would you like your changes to take effect"  />
             <Text text="{path:'effectiveStartDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
                                                 }}"/>
-           <Label text="Email"  />
-            <Text text=""/>
-            <Label text="Mobile"  />
-            <Text text=""/>
-             <Label text="Office Number"  />
-            <Text text=""/>
-             <Label text="P.O BOX"  />               
-            <Text text=""/>
-            <core:Title id="idEmptyTitle" text=" "/>
-            <Label text="Incident Description Details"  />
-            <Text text=""/>
-            <Label text="When would you like your changes to take effect"  />
-            <Text text=""/>
         </form:content>
     </form:SimpleForm>
 </core:FragmentDefinition>
