@@ -17,6 +17,7 @@ sap.ui.define([
 
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
+                this.attachReq = true;
 
                 this.sReturnDate = new Date();
                 this.sRequesting = 1;
@@ -77,6 +78,7 @@ sap.ui.define([
                         }.bind(this),
                         dataReceived: function () {
                             this.getView().setBusy(false);
+                            this.fnGetLeaveBalance();
                         }.bind(this)
                     }
                 });
@@ -91,30 +93,38 @@ sap.ui.define([
                     oPayloadObj = this.fnGetLeaveRequestPayload();
 
 
+                if(this.bValid!= false){
+                    this.getView().setBusy(true);
 
-                this.getView().setBusy(true);
-
-                this.mainModel.create(sEntityPath, oPayloadObj, {
-                    success: function (oData, oResponse) {
-                        sap.m.MessageBox.success("Request Submitted Successfully.");
-                        this.getView().setBusy(false);
-                        this.getView().getModel().refresh();
-                        this.oRouter.navTo("detail", {
-                            parentMaterial: this.sParentID,
-                            layout: "TwoColumnsMidExpanded"
-
-                        });
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getView().setBusy(false);
-                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
-                        this.getView().getModel().refresh();
-
-
-                    }.bind(this)
-                })
+                    this.mainModel.create(sEntityPath, oPayloadObj, {
+                        success: function (oData, oResponse) {
+                            sap.m.MessageBox.success("Request Submitted Successfully.");
+                            this.getView().setBusy(false);
+                            this.getView().getModel().refresh();
+                            this.oRouter.navTo("detail", {
+                                parentMaterial: this.sParentID,
+                                layout: "TwoColumnsMidExpanded"
+    
+                            });
+                        }.bind(this),
+                        error: function (oError) {
+                            this.getView().setBusy(false);
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            this.getView().getModel().refresh();
+    
+    
+                        }.bind(this)
+                    })
+                }
+               
             },
             fnGetLeaveRequestPayload: function () {
+             
+                if(this.attachReq === true){
+                    sap.m.MessageBox.error("Please upload the attachments.");
+                    this.bValid = false;
+                }else {
+                    this.bValid = true;                    
                 var sAttachmentFileContent, sAttahmentFileName;
 
                 var sStartDate = this.getView().byId("idStartDate").getDateValue();
@@ -122,18 +132,21 @@ sap.ui.define([
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                     oStartDate = dateFormat.format(new Date(sStartDate));
                 sStartDate = oStartDate + "T00:00:00";
-                var sRecSelected = this.getView().byId("idRecCheckbox").getSelected();
-                if (sRecSelected === false) {
 
-                    var sEndDate = this.getView().byId("idEndDate").getDateValue();
+                var sEndDate = this.getView().byId("idEndDate").getDateValue();
 
-                    var sRecAbsGroup = null;
+                // var sRecSelected = this.getView().byId("idRecCheckbox").getSelected();
+                // if (sRecSelected === false) {
 
-                } else {
+                //     var sEndDate = this.getView().byId("idEndDate").getDateValue();
 
-                    sEndDate = this.getView().byId("idEndonDate").getDateValue();
-                    sRecAbsGroup = this.getView().byId("idRecAbsc").getSelectedKey();
-                }
+                //     var sRecAbsGroup = null;
+
+                // } else {
+
+                //     sEndDate = this.getView().byId("idEndonDate").getDateValue();
+                //     sRecAbsGroup = this.getView().byId("idRecAbsc").getSelectedKey();
+                // }
 
                 // sEndDate = Date.parse(sEndDate);
                 var oEndDate = dateFormat.format(new Date(sEndDate));
@@ -145,8 +158,12 @@ sap.ui.define([
                     sAttachmentFileContent = this.fileContent;
                     sAttahmentFileName = this.fileName;
                 } else {
-                    sAttachmentFileContent = "on Leave";
-                    sAttahmentFileName = "Leave.txt";
+
+                   
+                        sAttachmentFileContent = "on Leave";
+                        sAttahmentFileName = "Leave.txt";
+                    
+                    
                 }
 
                 return {
@@ -164,7 +181,7 @@ sap.ui.define([
                     "approvalStatus": null,
                     "undeterminedEndDate": false,
                     "userId": "12002024",
-                    "recurrenceGroup": sRecAbsGroup,
+                    "recurrenceGroup": null,
                     "fractionQuantity": "1",
                     "endTime": null,
                     "isAttachmentNew": true,
@@ -172,34 +189,33 @@ sap.ui.define([
                     "attachmentFileName": sAttahmentFileName,
                     "attachmentUserId": "Extentia"
                 };
-            },
+            }   
+        },
 
             onLeaveStartDatChange: function (oEvent) {
                 var oneDay = 24 * 60 * 60 * 1000;
-                var sEndDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getValue();
-                var sStartDate = oEvent.getSource().getDateValue();
+                
+                var sStartDate = oEvent.getSource().getValue();
+                this.getView().byId("idEndDate").setValue(sStartDate);
 
-                this.sRequestDay = "";
-                // if (sEndDate <= sStartDate) {
-                if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
-                    oEvent.getSource().setValueState("Error");
-                    oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
-                } else {
-                    oEvent.getSource().setValueState();
-                    oEvent.getSource().setValueStateText("");
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").setValueState();
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").setValueStateText("");
-                    // this.sRequestDay = Math.round(Math.abs((new Date(sEndDate) - sStartDate) / oneDay)) + 1;
 
-                    // this.sRequestDay = this.dateDifference(sStartDate, sEndDate);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                    // this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
-                }
+               
+              
+                // if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
+                //     oEvent.getSource().setValueState("Error");
+                //     oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
+                //     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
+                // } else {
+                //     oEvent.getSource().setValueState();
+                //     oEvent.getSource().setValueStateText("");
+                //     this.getView().byId("idEndDate").setValueState();
+                //     this.getView().byId("idEndDate").setValueStateText("");
+                   
+                // }
             },
             onLeaveEndDateChange: function (oEvent) {
                 var oneDay = 24 * 60 * 60 * 1000;
-                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
+                var sStartDate = this.getView().byId("idStartDate").getDateValue();
                 var sEndDate = oEvent.getSource().getDateValue();
 
                 // if (sEndDate <= sStartDate) {
@@ -210,8 +226,8 @@ sap.ui.define([
                 } else {
                     oEvent.getSource().setValueState();
                     oEvent.getSource().setValueStateText("");
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueState();
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueStateText("");
+                    this.getView().byId("idStartDate").setValueState();
+                    this.getView().byId("idStartDate").setValueStateText("");
                     // this.sRequestDay = Math.round(Math.abs((sEndDate - new Date(sStartDate)) / oneDay)) + 1 ;
                     // this.sRequestDay = this.dateDifference(sStartDate, sEndDate, oEvent);
                     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
@@ -293,7 +309,7 @@ sap.ui.define([
                 this._getImageData((Filedata), function (Filecontent) {
                     that._addData(Filecontent, Filename, Filetype, Filesize);
                 });
-                var oUploadSet = sap.ui.core.Fragment.byId("idLeaveFragment", "UploadSet");
+                var oUploadSet = this.getView().byId("UploadSet");
                 oUploadSet.getDefaultFileUploader().setEnabled(false);
 
 
@@ -323,15 +339,17 @@ sap.ui.define([
 
             },
             onFileDeleted: function (oEvent) {
-                var oUploadSet = sap.ui.core.Fragment.byId("idLeaveFragment", "UploadSet");
+                var oUploadSet = this.getView().byId("UploadSet");
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
             },
             onTimeTyeChange: function (oEvent) {
                 var sType = oEvent.getSource().getSelectedKey();
                 if (sType === "S110" || sType === "500" || sType === "460") {
                     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                    this.attachReq = false;
                 } else {
                     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                    this.attachReq = true;
                 }
             },
 
@@ -366,7 +384,26 @@ sap.ui.define([
                 this.getView().byId("idRecCheckbox").setSelected(false);
                 this.getView().getModel("LocalViewModel").setData(dataReset);
                 this.getView().getModel("LocalViewModel").refresh();
+            },
+
+            fnGetLeaveBalance: function () {
+                debugger;
+                var that = this;
+                this.getView().getModel().read("/SF_Leave_AccountBalance", {
+                    urlParameters: {
+                        "$filter": "(userId eq '12002024' and timeAccountType eq 'Annual_vacation')"
+                    },
+                    success: function (oData) {
+                        var oLeaveBalModel = new JSONModel(oData.results[0]);
+                        that.getView().setModel(oLeaveBalModel, "LeaveBalModel");
+                    },
+                    error: function () {
+
+                    }
+                })
+
             }
+
 
 
 

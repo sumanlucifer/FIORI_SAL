@@ -188,6 +188,16 @@
                     ]
                 },
                 {
+                    "pattern": "BusinessTripRequest/{parentMaterial}/{layout}",
+                    "name": "BusinessTripRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "BusinessTripRequest"
+                    ]
+                },
+                {
                     "pattern": "detail/{parentMaterial}/LeaveRequestDetail/{childModule}/{layout}",
                     "name": "LeaveRequestDetail",
                     "target": [
@@ -255,6 +265,10 @@
                 },
                 "DisciplinaryRequest": {
                     "viewName": "CreateDisciplinaryRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "BusinessTripRequest": {
+                    "viewName": "CreateBusinessTripRequest",
                     "controlAggregation": "endColumnPages"
                 },
                 "LeaveRequestDetail": {

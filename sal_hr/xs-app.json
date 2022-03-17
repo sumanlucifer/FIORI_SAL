@@ -7,7 +7,7 @@
         "source": "^/odata/(.*)$",
         "target": "/odata/$1",
         "destination": "human-resource-srv",
-        "authenticationType": "none",
+        "authenticationType": "xsuaa",
         "csrfProtection": false
     },
     

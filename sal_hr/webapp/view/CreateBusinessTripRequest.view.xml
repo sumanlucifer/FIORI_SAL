@@ -1,0 +1,195 @@
+<mvc:View controllerName="com.sal.salhr.controller.CreateBusinessTripRequest"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:upload="sap.m.upload" height="100%">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle id="idDynamicPageTitle">
+                <f:heading>
+                    <Title id="idPageTitle" text="New Business Trip Request" class="sapUiSmallMarginBegin"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Business Trip Request" class="sapUiSmallMarginBegin">
+                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+        <VBox>
+           <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="When would you like your changes to take effect? " required="true" />
+            <DatePicker id="idEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+        </form:SimpleForm>
+        <form:SimpleForm title="Business Travel Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Request Type" required="true"/>
+            <Select id="idReqType" change="onReqTypeChange">
+                <core:Item key="Initial" text="Raise Initial Request" />
+                <core:Item key="Return" text="Return and Closure" />
+            </Select>
+
+            <Label text="Per Diem - Pay Component" required="true"/>
+            <Input value="{firstName}"/>
+           
+            <Label text="Total Travel Amount" required="true" />
+            <Input value="{lastName}" />
+
+
+         </form:SimpleForm>    
+           <form:SimpleForm title="Travel Request" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Trip Category" required="true"/>
+            <Select change="onTimeTyeChange">
+                <core:Item key="Business" text="Business" />
+                <core:Item key="Trainig" text="Training" />
+            </Select>
+
+            <Label text="Airline ticket to be booked by HR?" required="true"/>
+            <Select id="idHRBook" change="onTimeTyeChange">
+                <core:Item key="Yes" text="Yes" />
+                <core:Item key="No" text="No" />
+            </Select>
+           
+            <Label text="Hotel Booking Required?" required="true" />
+            <Select change="onTimeTyeChange">
+                <core:Item key="Yes" text="Yes" />
+                <core:Item key="No" text="No" />
+            </Select>
+
+
+         </form:SimpleForm>   
+           <form:SimpleForm title="Travel Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Travel Date" required="true"/>
+            <DatePicker ></DatePicker>
+
+            <Label text="Return Date" required="true"/>
+            <DatePicker ></DatePicker>
+           
+            <Label text="Desired Airline Ticket Travel Time" required="true" />
+            <Input value="{lastName}" />
+
+            <Label text="Destination Country"/>
+            <Select change="onTimeTyeChange">
+               
+            </Select>
+
+             <Label text="City(Saudi)"/>
+            <Select change="onTimeTyeChange">
+               
+            </Select>
+             
+             <Label text="Other City" />
+            <Input value="{lastName}" />
+
+              <Label text="City (Other Country)" />
+            <Input value="{lastName}" />
+
+             <Label text="Inside/Otside Kingdom" required="true" />
+            <Input value="{lastName}" />
+
+              <Label text="Per Diem" />
+            <Input value="{lastName}" />
+
+             <Label text="Total Per Diem" />
+            <Input value="{lastName}" />
+
+
+
+         </form:SimpleForm>   
+          <form:SimpleForm title="Flight Deatils" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Travel Date" required="true"/>
+           <DatePicker ></DatePicker>
+
+            <Label text="Travel To"/>
+            <Input value="{firstName}"/>
+           
+            <Label text="Flight Number" />
+            <Input  value="{lastName}" />
+
+             <Label text="Departure Time"/>
+            <Input value="{firstName}"/>
+           
+            <Label text="Arrival Time" />
+            <Input  value="{lastName}" />
+
+              <Label text="Pay Component"/>
+            <Input value="{firstName}"/>
+           
+            <Label text="Ticket Amount" />
+            <Input  value="{lastName}" />
+
+            
+            
+
+
+         </form:SimpleForm>   
+         <VBox >
+         <Label text="Attach Boarding Pass" />
+            <upload:UploadSet id="UploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+
+
+                    </upload:UploadSet>
+         </VBox>
+          
+          <form:SimpleForm title="Visa Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Visa Type" required="true"/>
+            <Select  change="onTimeTyeChange">
+                <core:Item key="No Visa" text="No Visa" />
+                <core:Item key="Visa Fee" text="Visa Fee" />
+            </Select>
+
+            <Label text="Pay Component Visa" required="true"/>
+            <Input value="{firstName}"/>
+           
+            <Label text="Visa Amount" required="true" />
+            <Input value="{lastName}" />
+
+
+         </form:SimpleForm>   
+          <VBox>
+         <Label text="Attach Visa Copy" />
+            <upload:UploadSet  instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+
+
+                    </upload:UploadSet>
+         </VBox>
+          <VBox>
+         <Label text="Attach Embassy Receipt" />
+            <upload:UploadSet  instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+
+
+                    </upload:UploadSet>
+         </VBox>
+          <form:SimpleForm title="Employee Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Employee Name" required="true"/>
+            <Input></Input>
+
+            <Label text="Pay Grade" required="true"/>
+            <Input  value="{firstName}"/>
+           
+            <Label text="Cost Center" required="true" />
+            <Input value="{lastName}" />
+
+             <Label text="Emergency Phone Number" required="true" />
+            <Input value="{lastName}" /> 
+
+         </form:SimpleForm>   
+
+        
+        </VBox>     
+        </f:content>
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar id="idOverflowToolbar" visible="true">
+                <ToolbarSpacer id="idToolbarSpacer"/>
+                <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
+                <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
+                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

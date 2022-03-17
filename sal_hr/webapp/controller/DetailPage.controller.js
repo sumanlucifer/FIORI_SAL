@@ -74,6 +74,13 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
+                    // Business Trip Module    
+                    case "2":
+                            this.oRouter.navTo("BusinessTripRequest", {
+                                parentMaterial: this.sParentID,
+                                layout: "EndColumnFullScreen"
+                            })
+                        break;        
                     // ID Card Request Module
                     case "7":
                         this.oRouter.navTo("IDCardRequest", {

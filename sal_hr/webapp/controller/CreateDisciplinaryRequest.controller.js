@@ -106,7 +106,7 @@ sap.ui.define([
 
                 if(this.isAttachment !== true)
                 {
-                    sap.m.MessageBox.error("Please upload attachments.");
+                    sap.m.MessageBox.error("Please upload the attachments.");
                     bValid = false;
                 }
 
