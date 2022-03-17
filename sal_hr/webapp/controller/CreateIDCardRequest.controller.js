@@ -88,7 +88,7 @@ sap.ui.define([
         
 
             onRaiseRequestPress: function () {
-                var sEntityPath = "/SF_IDReplacement";
+                var sEntityPath = "/SF_IDReplacement",
                         oPayloadObj = this.fnGetIDReplacementRequestPayload();
                       
 
