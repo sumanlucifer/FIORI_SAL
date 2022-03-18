@@ -295,7 +295,7 @@ sap.ui.define([
             handleFilterDialogConfirm: function (oEvent) {
                 var oFilterSearch = [];
 
-
+                var sDate = oEvent.getSource().getFilterItems()[1].getCustomControl().getValue();
                 var iMonth = parseInt(sDate.split("/")[0]),
                     iDay = parseInt(sDate.split("/")[1]) + 1,
                     iYear = parseInt(sDate.split("/")[2]),

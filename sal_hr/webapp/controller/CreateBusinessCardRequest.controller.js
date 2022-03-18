@@ -127,12 +127,32 @@ sap.ui.define([
                     this.byId("idCreateMobile").setValueState("None");
                     this.byId("idCreateMobile").setValueStateText(null);
                 }
-                
+
 
 
 
 
                 return bValid;
+            },
+            onEmailChange: function (oEve) {
+
+                var sValue = oEve.getSource().getValue();
+
+                var validRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+                if (!sValue.match(validRegex)) {
+
+                    this.byId("idCreateEmail").setValueState("Error");
+                    this.byId("idCreateEmail").setValueStateText(
+                        "Please enter valid Email"
+                    );
+                }
+
+                else {
+                    this.getView().byId("idCreateEmail").setValueState("None");
+
+                }
+
             },
 
             onRaiseRequestPress: function () {
@@ -223,7 +243,7 @@ sap.ui.define([
 
                 var sIncidentStartDate = this.byId("idIncidentStartDate").getDateValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                sIncidentStartDate = dateFormat.format(new Date(sIncidentStartDate));
+                    sIncidentStartDate = dateFormat.format(new Date(sIncidentStartDate));
                 sIncidentStartDate = sIncidentStartDate + "T00:00:00";
                 var sCustOfficeNo = this.byId("idCreateOfficeNo").getValue();
                 var sCustEmail = this.byId("idCreateEmail").getValue();
@@ -245,28 +265,7 @@ sap.ui.define([
                 };
             },
 
-            onLeaveStartDatChange1: function (oEvent) {
-                var oneDay = 24 * 60 * 60 * 1000;
-                var sEndDate = this.byId("idIncidentStartDate").getDateValue();
-                var sStartDate = oEvent.getSource().getDateValue();
 
-                this.sRequestDay = "";
-                if (sEndDate <= sStartDate) {
-                    oEvent.getSource().setValueState("Error");
-                    oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
-                    this.byId("idIncidentStartDate").setValue("");
-                } else {
-                    oEvent.getSource().setValueState();
-                    oEvent.getSource().setValueStateText("");
-                    this.byId("idIncidentStartDate").setValueState();
-                    this.byId("idIncidentStartDate").setValueStateText("");
-                    // this.sRequestDay = Math.round(Math.abs((new Date(sEndDate) - sStartDate) / oneDay)) + 1;
-
-                    this.sRequestDay = this.dateDifference(sStartDate, sEndDate);
-
-                    this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
-                }
-            },
             onLeaveEndDateChange: function (oEvent) {
                 var oneDay = 24 * 60 * 60 * 1000;
                 var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
@@ -288,62 +287,9 @@ sap.ui.define([
                 }
             },
 
-            dateDifference: function (startDate, endDate) {
-
-                startDate.setHours(12, 0, 0, 0);
-                endDate.setHours(12, 0, 0, 0);
-
-                var totalDays = Math.round((endDate - startDate) / 8.64e7);
-
-
-                var wholeWeeks = totalDays / 7 | 0;
-
-
-                var days = wholeWeeks * 5;
-
-
-                if (totalDays % 7) {
-                    startDate.setDate(startDate.getDate() + wholeWeeks * 7);
-
-                    while (startDate < endDate) {
-
-                        startDate.setDate(startDate.getDate() + 1);
-
-
-                        if (startDate.getDay() != 5 && startDate.getDay() != 6) {
-                            ++days;
-                        }
-                    }
-                    startDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/startDate").getDate());
-                }
-                // var data = this.getView().getModel("LocalViewModel").getData();
-                // var sReturnDate = jQuery.extend(true,[],data);
-
-                var sReturnDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
 
 
 
-                sReturnDate.setDate(sReturnDate.getDate() + 1);
-
-                if (sReturnDate.getDay() === 5) {
-                    sReturnDate.setDate(sReturnDate.getDate() + 2);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
-                    this.getView().getModel("LocalViewModel").setProperty("/returnDate", sReturnDate);
-                } else if (sReturnDate.getDay() === 6) {
-                    sReturnDate.setDate(sReturnDate.getDate() + 1);
-                    this.getView().getModel("LocalViewModel").setProperty("/returnDate", sReturnDate);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
-                } else {
-                    sReturnDate.setDate(sReturnDate.getDate() + 1);
-                    this.getView().getModel("LocalViewModel").setProperty("/returnDate", sReturnDate);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
-                }
-                endDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/endDate").getDate());
-                return days + 1;
-            },
-
-
-         
 
             onCreateCancelPress: function () {
                 this.oRouter.navTo("detail", {
@@ -367,6 +313,12 @@ sap.ui.define([
                 };
                 this.getView().getModel("LocalViewModel").setData(dataReset);
                 this.getView().getModel("LocalViewModel").refresh();
+                this.byId("idCreateOfficeNo").setValue("");
+                this.byId("idCreateEmail").setValue("");
+                this.byId("idCreateMobile").setValue("");
+                this.byId("idCreateDivision").setValue("");
+                this.byId("idCreatePOBOX").setValue("");
+                this.byId("idCreateJobTitle").setValue("");
             }
 
 
