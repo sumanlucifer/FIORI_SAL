@@ -44,7 +44,7 @@
 				        </VBox>
                          <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					        <Label text="Rejected" class="tblHeaderText"/>
-					        <Text text="{totalRejected}" class="sapUiTinyMarginTop dataPointsColor"/>
+					        <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
 			        </FlexBox>
             </f:DynamicPageHeader>

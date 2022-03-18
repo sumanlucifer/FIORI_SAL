@@ -56,7 +56,7 @@ sap.ui.define([
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
                 this._bindView("/MasterSubModules" + this.sParentID);
-                this.loadFragment();
+               
 
             },
             _bindView: function () {
@@ -79,12 +79,12 @@ sap.ui.define([
                         }.bind(this),
                         dataReceived: function () {
                             this.getView().setBusy(false);
-                            this.fnGetLeaveBalance();
+                           
                         }.bind(this)
                     }
                 });
 
-
+                this.fnGetLeaveBalance();
 
 
             },
@@ -154,6 +154,12 @@ sap.ui.define([
                 sEndDate = oEndDate + "T00:00:00";
                 var sTimeType = this.getView().byId("idTimeType").getSelectedKey();
 
+                if(sTimeType === "460"){
+                    var sQtyHrs = this.getView().byId("TP1").getValue();
+                }else{
+                    sQtyHrs ="00:00";
+                }
+
 
                 if (this.isAttachment === true) {
                     sAttachmentFileContent = this.fileContent;
@@ -189,6 +195,7 @@ sap.ui.define([
                     "attachmentFileContent": sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
                     "attachmentUserId": "Extentia"
+                  
                 };
             }   
         },
@@ -354,6 +361,16 @@ sap.ui.define([
                     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
                     this.attachReq = true;
                 }
+
+                if(sType === "460"){
+                    this.getView().byId("idReqMeetingForm").setVisible(true);
+                    this.getView().byId("idAvailBal").setVisible(false);
+                    this.getView().byId("idAvailBalValue").setVisible(false);
+                }else{
+                    this.getView().byId("idReqMeetingForm").setVisible(false);
+                    // this.getView().byId("idAvailBal").setVisible(true);
+                    // this.getView().byId("idAvailBalValue").setVisible(true);
+                }
             },
 
 
@@ -405,6 +422,23 @@ sap.ui.define([
                     }
                 })
 
+            },
+            handleTimeChange:function(oEvent){
+                var oTimePicker = this.byId("TP1"),
+                    oTP = oEvent.getSource(),
+                    sValue = oEvent.getParameter("value");
+
+
+                if (sValue > "08:00") {
+                    oTimePicker.setValueState("Error");
+                    // oTimePicker.setValueText("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
+                    this.getView().byId("idRaiseRequestBTN").setEnabled(false);
+                    sap.m.MessageBox.error("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
+                } else {
+                    oTimePicker.setValueState();
+                    
+                    this.getView().byId("idRaiseRequestBTN").setEnabled(true);
+                }
             }
 
 

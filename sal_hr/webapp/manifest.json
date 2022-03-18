@@ -289,13 +289,10 @@
                     "viewName": "CreateDisciplinaryRequest",
                     "controlAggregation": "endColumnPages"
                 },
-<<<<<<< HEAD
-=======
                 "BusinessCardRequest": {
                     "viewName": "CreateBusinessCardRequest",
                     "controlAggregation": "endColumnPages"
                 },
->>>>>>> feature/suman
                 "BusinessTripRequest": {
                     "viewName": "CreateBusinessTripRequest",
                     "controlAggregation": "endColumnPages"
