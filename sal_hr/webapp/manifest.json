@@ -188,6 +188,19 @@
                     ]
                 },
                 {
+                    "pattern": "BusinessCardRequest/{parentMaterial}/{layout}",
+                    "name": "BusinessCardRequest",
+
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "BusinessCardRequest"
+
+                    ]
+                },
+
+                {
                     "pattern": "BusinessTripRequest/{parentMaterial}/{layout}",
                     "name": "BusinessTripRequest",
                     "layout": "EndColumnFullScreen",
@@ -276,6 +289,13 @@
                     "viewName": "CreateDisciplinaryRequest",
                     "controlAggregation": "endColumnPages"
                 },
+<<<<<<< HEAD
+=======
+                "BusinessCardRequest": {
+                    "viewName": "CreateBusinessCardRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+>>>>>>> feature/suman
                 "BusinessTripRequest": {
                     "viewName": "CreateBusinessTripRequest",
                     "controlAggregation": "endColumnPages"

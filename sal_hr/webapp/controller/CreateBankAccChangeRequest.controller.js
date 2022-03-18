@@ -91,8 +91,8 @@ sap.ui.define([
          
 
             onRaiseRequestPress: function () {
-                var oPayloadObj = this.fnGetBankRequestPayload();
-                        sEntityPath = "/SF_BankDetails";
+                var oPayloadObj = this.fnGetBankRequestPayload(),
+                sEntityPath = "/SF_BankDetails";
                    
 
 
