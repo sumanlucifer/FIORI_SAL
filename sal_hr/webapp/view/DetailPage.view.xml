@@ -77,7 +77,7 @@
                      <Column importance="Low" popinDisplay="Inline" >
                         <Label text="Effective From" class="tblHeaderText" />
                     </Column>
-                     <Column importance="Low" popinDisplay="Inline" >
+                     <Column width="28rem" importance="Low" popinDisplay="Inline" >
                         <Label text="Summary" class="tblHeaderText" />
                     </Column>
                     <Column  importance="Low" popinDisplay="Inline" >
@@ -101,7 +101,7 @@
                             <Text text="{ticketCode}" />
                              <Text text="{externalCode}" />
                              <Text text="" />
-                             <Text text="" />
+                             <Text text="{summary}" />
 
                             <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date'}" />
                              <Text text="" />

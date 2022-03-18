@@ -62,7 +62,13 @@ sap.ui.define([
 
             },
 
+            onReset : function(oEvent)
 
+            {
+            
+            oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+            
+            },
 
             onPressRaiseRequest: function () {
 

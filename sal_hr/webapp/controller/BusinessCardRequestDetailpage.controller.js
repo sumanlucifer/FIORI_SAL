@@ -78,7 +78,7 @@ sap.ui.define([
 
                   var oComponentModel = this.getComponentModel(),
                     sKey = null,
-                    sKey = oComponentModel.createKey("/cust_businessCard", {
+                    sKey = oComponentModel.createKey("/SF_BusinessCard", {
                         User: this.User,
                         effectiveStartDate: this.effectiveStartDate,
 

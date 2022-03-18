@@ -156,8 +156,9 @@ sap.ui.define([
 
                 if(sTimeType === "460"){
                     var sQtyHrs = this.getView().byId("TP1").getValue();
+                    sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
                 }else{
-                    sQtyHrs ="00:00";
+                    sQtyHrs ="0.0";
                 }
 
 
@@ -194,7 +195,8 @@ sap.ui.define([
                     "isAttachmentNew": true,
                     "attachmentFileContent": sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
-                    "attachmentUserId": "Extentia"
+                    "attachmentUserId": "Extentia",
+                    "fractionQuantity":sQtyHrs
                   
                 };
             }   
