@@ -188,22 +188,13 @@
                     ]
                 },
                 {
-<<<<<<< HEAD
-                    "pattern": "BusinessCardRequest/{parentMaterial}/{layout}",
-                    "name": "BusinessCardRequest",
-=======
                     "pattern": "BusinessTripRequest/{parentMaterial}/{layout}",
                     "name": "BusinessTripRequest",
->>>>>>> feature/manasa
                     "layout": "EndColumnFullScreen",
                     "titleTarget": "",
                     "greedy": false,
                     "target": [
-<<<<<<< HEAD
-                        "BusinessCardRequest"
-=======
                         "BusinessTripRequest"
->>>>>>> feature/manasa
                     ]
                 },
                 {
@@ -285,13 +276,8 @@
                     "viewName": "CreateDisciplinaryRequest",
                     "controlAggregation": "endColumnPages"
                 },
-<<<<<<< HEAD
-                "BusinessCardRequest": {
-                    "viewName": "CreateBusinessCardRequest",
-=======
                 "BusinessTripRequest": {
                     "viewName": "CreateBusinessTripRequest",
->>>>>>> feature/manasa
                     "controlAggregation": "endColumnPages"
                 },
                 "LeaveRequestDetail": {

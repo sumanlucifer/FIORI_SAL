@@ -18,6 +18,7 @@ sap.ui.define([
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
                 this.attachReq = true;
+                this.isAttachment = false
 
                 this.sReturnDate = new Date();
                 this.sRequesting = 1;
@@ -120,7 +121,7 @@ sap.ui.define([
             },
             fnGetLeaveRequestPayload: function () {
              
-                if(this.attachReq === true){
+                if(this.attachReq === true && this.isAttachment === false){
                     sap.m.MessageBox.error("Please upload the attachments.");
                     this.bValid = false;
                 }else {
@@ -341,6 +342,8 @@ sap.ui.define([
             onFileDeleted: function (oEvent) {
                 var oUploadSet = this.getView().byId("UploadSet");
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
+                this.isAttachment = false;
+
             },
             onTimeTyeChange: function (oEvent) {
                 var sType = oEvent.getSource().getSelectedKey();
