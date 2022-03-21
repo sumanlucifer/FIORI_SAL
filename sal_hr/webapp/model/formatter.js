@@ -4,7 +4,6 @@ sap.ui.define([], function() {
 
 	return {
 			changeIcon: function(sValue) {
-            debugger;
 			// if (sValue === "Leaves") {
 			 
             //     return 'sap-icon://create-leave-request';

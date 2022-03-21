@@ -222,6 +222,25 @@
                         "detail",
                         "DisciplinaryRequestDetail"
                     ]
+                },
+                {
+                    "pattern": "AirportPassRequest/{parentMaterial}/{layout}",
+                    "name": "AirportPassRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "AirportPassRequest"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
+                    "name": "AirportPassRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "AirportPassRequestDetail"
+                    ]
                 }
             ],
             "targets": {
@@ -257,6 +276,10 @@
                     "viewName": "CreateDisciplinaryRequest",
                     "controlAggregation": "endColumnPages"
                 },
+                "AirportPassRequest": {
+                    "viewName": "CreateAirportPassRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "LeaveRequestDetail": {
                     "viewName": "LeaveRequestDetail",
                     "controlAggregation": "endColumnPages"
@@ -272,8 +295,11 @@
                 "DisciplinaryRequestDetail": {
                     "viewName": "DisciplinaryRequestDetailpage",
                     "controlAggregation": "endColumnPages"
+                },
+                "AirportPassRequestDetail": {
+                    "viewName": "AirportPassRequestDetailpage",
+                    "controlAggregation": "endColumnPages"
                 }
-               
             }
         }
     },

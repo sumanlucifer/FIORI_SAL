@@ -23,7 +23,6 @@ sap.ui.define([
 
             },
             _onObjectMatched: function (oEvent) {
-                debugger;
                 this._bDescendingSort = false;
                 this.oTicketTable = this.oView.byId("idTicketTable");
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
@@ -74,11 +73,18 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
+                    // Airport Travel Pass Request Module
+                    case "6":
+                        this.oRouter.navTo("AirportPassRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
                     // ID Card Request Module
                     case "7":
                         this.oRouter.navTo("IDCardRequest", {
-                                parentMaterial: this.sParentID,
-                                layout: "EndColumnFullScreen"
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
                         })
                         break;
                     // Disciplinary Request Module
@@ -90,14 +96,14 @@ sap.ui.define([
                         break;
                     //  Bank Account Change Request Module 
                     case "13":
-                            this.oRouter.navTo("BankAccChangeRequest", {
-                                parentMaterial: this.sParentID,
-                                layout: "EndColumnFullScreen"
-                            })
-                            break;
+                        this.oRouter.navTo("BankAccChangeRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
                 }
 
-           // ***********  old code ***********************
+                // ***********  old code ***********************
 
                 // if (this.sParentID === "12") {
 
@@ -115,11 +121,10 @@ sap.ui.define([
                 //         layout: "EndColumnFullScreen"
                 //     })
                 // }
-        //    ************************************************************
+                //    ************************************************************
 
             },
             onPressTicketItem: function (oEvent) {
-                debugger;
                 switch (this.sParentID) {
                     // Leave Request Module
                     case "1":
@@ -129,6 +134,16 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
+
+                    // Airport Travel Pass Request Module
+                    case "6":
+                        this.oRouter.navTo("AirportPassRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+
                     // ID Card Request Module
                     case "7":
                         this.oRouter.navTo("IDCardRequestDetail", {
@@ -143,19 +158,19 @@ sap.ui.define([
                             parentMaterial: this.sParentID,
                             childModule: oEvent.getSource().getBindingContext().getObject().ID,
                             layout: "ThreeColumnsMidExpanded"
-                    });
+                        });
                         break;
                     //  Bank Account Change Request Module 
                     case "13":
-                            this.oRouter.navTo("BankAccChangeDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
+                        this.oRouter.navTo("BankAccChangeDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
                 }
 
-                   // ***********  old code ***********************
+                // ***********  old code ***********************
                 // if (this.sParentID === "12") {
                 //     this.oRouter.navTo("DisciplinaryRequestDetail", {
                 //         parentMaterial: this.sParentID,
@@ -171,7 +186,7 @@ sap.ui.define([
 
                 //     });
                 // }
-              //    ************************************************************
+                //    ************************************************************
 
 
             },
@@ -231,7 +246,6 @@ sap.ui.define([
             },
 
             handleDetailFullScreen: function (oEvent) {
-                debugger;
                 var sLayout = "";
                 if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
                     sLayout = "MidColumnFullScreen";
@@ -268,7 +282,7 @@ sap.ui.define([
                 }
                 this._oFilterDialog.open();
             },
-            
+
             handleFilterDialogConfirm: function (oEvent) {
                 var oFilterSearch = [];
 
@@ -301,7 +315,7 @@ sap.ui.define([
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     oFilterSearch = [];
 
-                   
+
                 }
                 else {
 

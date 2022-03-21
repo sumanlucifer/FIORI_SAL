@@ -15,7 +15,7 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="New {name} Request" class="sapUiSmallMarginBegin">
-                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}" press="onBreadCrumbNavPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
             </f:DynamicPageTitle>
@@ -24,109 +24,102 @@
             <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
                 <l:content>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-                        <Label text="When would you like your changes to take effect? " required="true" />
-                        <DatePicker id="idAirportPassEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}" />
+                        <Label text="{i18n>whenWouldYouLiketoText}?" required="true" />
+                        <DatePicker id="idAirportPassEffectDatePicker" change="fnValidateDateValue" value="{path:'CreateAirpoPassModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"/>
                     </fm:SimpleForm>
-                    <fm:SimpleForm title="Airport Pass Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-                        <Label text="Type Of Pass" required="true" />
-
-
-                        <Select id="idTypeOfPassSLT" items="{ path: '/SF_PickListValueV2',
-                                                sorter : {
-                                                 path : 'label_defaultValue' 
-                                             },
-                                             filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'cust_typeOfPass'} ]
-                                              }" change="onTimeTyeChange">
-                            <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                    <fm:SimpleForm id="idAirportPassDetailsForm" title="{i18n>AirportPassDetails}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                        <Label text="{i18n>TypeOfPass}" required="true" />
+                        <Select id="idTypeOfPassSLT" selectedKey="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_typeOfPass}" items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'cust_typeOfPass'} ]
+                                       }" change="onTimeTyeChange">
+                            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
                         </Select>
 
-                        <Label text="National ID" required="true" />
-                        <Input id="idNationalIDInp" value="{cust_toAirportPassItem/cust_nationalID}" enabled= "false"/>
+                        <Label text="{i18n>NationalID}" required="true" />
+                        <Input id="idNationalIDInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_nationalID}" enabled= "false"/>
 
-                        <Label text="Date of Bith" required="true" />
-                        <Input id="idDateofBithInp" value="{lastName}" enabled= "false"/>
+                        <Label text="{i18n>DateofBith}" required="true" />
+                        <DatePicker id="idDateofBithInp" value="{path:'CreateAirpoPassModel>/cust_toAirportPassItem/cust_dateOfBirth', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" enabled= "false"/>
 
-                        <Label text="Mobile Number" required="true" />
-                        <Input id="idMobileNumberInp" value="{middleName}" enabled= "false"/>
+                        <Label text="{i18n>MobileNumber}" required="true" />
+                        <Input id="idMobileNumberInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_mobileNumber}" enabled= "false"/>
 
-                        <Label text="Nationality" required="true" />
-                        <Input id="idNationalityInp" value="{jobTitle}" />
+                        <Label text="{i18n>Nationality}" required="true" />
+                        <Input id="idNationalityInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_nationality}"/>
 
-                        <Label text="Airport Location" required="true" />                        
-                        <Select id="idAirPortLocatonSLT" items="{ path: '/SF_PickListValueV2',
+                        <Label text="{i18n>AirportLocation}" required="true" />
+                        <Select id="idAirPortLocatonSLT" showSecondaryValues="true" selectedKey="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_airportLoc}" change="onAirportLocationChange" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {
                                                  path : 'label_defaultValue' 
                                              },
                                              filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'cust_airportLocation'} ]
-                                              }" change="onTimeTyeChange">
-                            <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                                              }">
+                            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
                         </Select>
 
-                        <Label text="Permit Date" required="true" />
-                        <DatePicker id="idPermitDate" value="{path:'seniorityDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}"/>
+                        <Label text="{i18n>DomesticStationName}" required="true" visible="{= ${CreateAirpoPassModel>/cust_toAirportPassItem/cust_airportLoc} === 'Loc05' ? true : false}"/>
+                        <Input id="idDomasticStationInp" visible="{= ${CreateAirpoPassModel>/cust_toAirportPassItem/cust_airportLoc} === 'Loc05' ? true : false}" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_domStationName}"/>
 
-                        <Label text="Purpose of Permit" required="true" />
-                        <TextArea id="idPurposeofPermitInp" value="{costCentre}"/>
+                        <Label text="{i18n>PermitDate}" required="true" />
+                        <DatePicker id="idPermitDate" change="fnValidateDateValue" value="{path:'CreateAirpoPassModel>/cust_toAirportPassItem/cust_permitDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}"/>
+
+                        <Label text="{i18n>PurposeofPermit}" required="true" />
+                        <TextArea id="idPurposeofPermitInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_permitPurpose}"/>
                     </fm:SimpleForm>
 
-                    <!-- <Label text="Personal ID Copy" required="true" class="sapUiSmallMarginBegin"/> -->
-                    <upload:UploadSet id="UploadSetPersonalID" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                    <upload:UploadSet id="UploadSetPersonalID" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
                         <upload:toolbar>
                             <OverflowToolbar>
-                                <Label text="Personal ID Copy" required="true"/>
+                                <Label text="{i18n>PersonalIDCopy}" required="true"/>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
                         </upload:toolbar>
                     </upload:UploadSet>
 
-                    <upload:UploadSet id="UploadSetPersonalPhoto" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                    <upload:UploadSet id="UploadSetPersonalPhoto" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
                         <upload:toolbar>
                             <OverflowToolbar>
-                                <Label text="Personal Photo" required="true" class="sapUiSmallMarginTop"/>
-                                <ToolbarSpacer/>
-                            </OverflowToolbar>
-                        </upload:toolbar>
-                    </upload:UploadSet>
-
-
-                    <upload:UploadSet id="UploadSetPersonalCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
-                        <upload:toolbar>
-                            <OverflowToolbar>
-                                <Label text="Personal ID Copy" required="true" class="sapUiSmallMarginTop"/>
+                                <Label text="{i18n>PersonalPhoto}" required="true"/>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
                         </upload:toolbar>
                     </upload:UploadSet>
 
 
-                    <upload:UploadSet id="UploadSetnonnationals" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                    <upload:UploadSet id="UploadSetnonnationals" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
                         <upload:toolbar>
                             <OverflowToolbar>
-                                <Label text="Passport Copy for non-nationals" required="true" class="sapUiSmallMarginTop"/>
+                                <Label text="{i18n>PassportCopyfornonnationals}" required="false"/>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
                         </upload:toolbar>
                     </upload:UploadSet>
 
-                    <upload:UploadSet id="UploadSetIDCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                    <upload:UploadSet id="UploadSetCompanyIDCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
                         <upload:toolbar>
                             <OverflowToolbar>
-                                <Label text="Company ID Copy" required="true" class="sapUiSmallMarginTop"/>
+                                <Label text="{i18n>CompanyIDCopy}" required="true"/>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
                         </upload:toolbar>
                     </upload:UploadSet>
 
-
-                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                    <fm:SimpleForm id="idAcknowledgeTextForm" layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                         <Label text="{i18n>AcknowledgeText1}" required="true" />
-                        <Select id="idAcknowledgeTextFirstSLT" items="{ path: '/SF_Leave_TimeType'}" change="onTimeTyeChange">
-                            <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
+                        <Select id="idAcknowledgeTextFirstSLT" selectedKey="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_acknowledge1}" change="onTimeTyeChange">
+                            <core:Item key="Select" text="{i18n>Select}" />
+                            <core:Item key="true" text="{i18n>Yes}" />
+                            <core:Item key="false" text="{i18n>No}" />
                         </Select>
 
                         <Label text="{i18n>AcknowledgeText2}" required="true" />
-                        <Select id="idAcknowledgeTextSecondSLT" items="{ path: '/SF_Leave_TimeType'}" change="onTimeTyeChange">
-                            <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
+                        <Select id="idAcknowledgeTextSecondSLT" selectedKey="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_acknowledge2}" change="onTimeTyeChange">
+                            <core:Item key="Select" text="{i18n>Select}" />
+                            <core:Item key="true" text="{i18n>Yes}" />
+                            <core:Item key="false" text="{i18n>No}" />
                         </Select>
                     </fm:SimpleForm>
                 </l:content>

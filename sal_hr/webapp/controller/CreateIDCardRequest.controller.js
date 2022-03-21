@@ -43,10 +43,6 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
-
-
-
-
             },
            
             _onObjectMatched: function (oEvent) {
@@ -60,8 +56,6 @@ sap.ui.define([
              
             },
             _bindView: function () {
-              
-
                 var sKey = this.getComponentModel().createKey("/EmpInfo", {
                     userId: "12002425"
                 });
@@ -80,9 +74,6 @@ sap.ui.define([
                         }.bind(this)
                     }
                 });
-
-
-
 
             },
         
@@ -153,17 +144,13 @@ sap.ui.define([
                 });
                 this.mainModel.refresh();
             },
-            onResetPress: function () {           
-                    this.onIDCardRequestResetPress();
+            // onResetPress: function () {           
+            //         this.onIDCardRequestResetPress();
 
-            },
-            onIDCardRequestResetPress: function () {
-                this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
-            }
-
-           
-
-
+            // },
+            // onIDCardRequestResetPress: function () {
+            //     this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
+            // }
 
         });
     });      

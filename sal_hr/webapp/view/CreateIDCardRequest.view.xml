@@ -68,7 +68,7 @@
         <f:footer>
             <OverflowToolbar id="idOverflowToolbar" visible="true">
                 <ToolbarSpacer id="idToolbarSpacer"/>
-                <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
+                <!-- <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/> -->
                 <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
                 <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
             </OverflowToolbar>
