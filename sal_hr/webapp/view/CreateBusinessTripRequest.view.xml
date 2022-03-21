@@ -54,7 +54,7 @@
                 <core:Item key="No" text="No" />
             </Select>
            
-            <Label text="Hotel Booking Required?" required="true" />
+            <Label text="Hotel Booking Required?" />
             <Select id="idHotlBook" change="onHotelBookChange">
                 <core:Item key="Yes" text="Yes" />
                 <core:Item key="No" text="No" />
@@ -121,7 +121,7 @@
             <Input id="idTravelTo" value=""/>
            
             <Label text="Flight Number" />
-            <Input  id="idFlightNum" value="{lastName}" />
+            <Input  id="idFlightNum" value="" />
 
              <Label text="Departure Time"/>
             <Input id="idDepTime" value=""/>
@@ -148,7 +148,7 @@
                     </upload:UploadSet>
          </VBox>
           
-          <form:SimpleForm title="Visa Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+          <form:SimpleForm title="Visa Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="Visa Type" required="true"/>
             <Select  id="idVisaType" change="onVisaTypeChange">
                 <core:Item key="No Visa" text="No Visa" />
@@ -179,18 +179,18 @@
          </VBox>
           <form:SimpleForm title="Employee Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="Employee Name" required="true" />
-            <Input id="idCustEmpName" value="{cust_toDutyTravelItem/cust_empName}" enabled="false"></Input>
-             <!-- <Input id="idCustEmpName" value="{createdBy}" enabled="false"></Input> -->
+            <Input id="idCustEmpName" value="{CreateBusinessTripModel>/sFirstName}" enabled="false"></Input>
+            
 
 
             <Label text="Pay Grade" required="true"/>
-            <Input  id="idPayGrade" value="" enabled="false"/>
+            <Input  id="idPayGrade" value="{CreateBusinessTripModel>/sPayGrade}" enabled="false"/>
            
             <Label text="Cost Center" required="true" />
-            <Input id="idCostCenter" value="" enabled="false"/>
+            <Input id="idCostCenter" value="{CreateBusinessTripModel>/sCostCenter}" enabled="false"/>
 
              <Label text="Emergency Phone Number" />
-            <Input id="idEmergencyPhn" value="" /> 
+            <Input id="idEmergencyPhn" value="{CreateBusinessTripModel>/sPhnNum}" /> 
 
          </form:SimpleForm>   
 

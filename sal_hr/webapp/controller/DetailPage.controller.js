@@ -173,7 +173,6 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
-
                     // ID Card Request Module
                     case "7":
                         this.oRouter.navTo("IDCardRequestDetail", {

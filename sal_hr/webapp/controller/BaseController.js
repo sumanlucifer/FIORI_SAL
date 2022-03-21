@@ -121,10 +121,11 @@ sap.ui.define([
             };
         }),
 
-        fnGetEmpInfo: function (sExternalCode) {
+        fnGetEmpInfo: function (sExternalCode, sParentID) {
             var sKey = this.getView().getModel().createKey("/EmpInfo", {
                 userId: sExternalCode
             });
+            this.sParentID = sParentID;
             this.getView().bindElement({
                 path: sKey,
                 events: {
@@ -133,7 +134,16 @@ sap.ui.define([
                     }.bind(this),
                     dataReceived: function (oData) {
                         this.getView().setBusy(false);
-                        this.fnSetCreateAirpassLocalModel(oData.getParameter("data"));
+                        switch (this.sParentID) {
+                            case "2":
+                                this.fnSetCreateBusinessTripModel(oData.getParameter("data"));
+                                break;
+                            // Airport Travel Pass Request Module
+                            case "6":
+                                this.fnSetCreateAirpassLocalModel(oData.getParameter("data"));
+                                break;
+                        }
+
                     }.bind(this)
                 }
             });

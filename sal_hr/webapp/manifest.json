@@ -293,6 +293,10 @@
                     "viewName": "CreateLeaveRequest",
                     "controlAggregation": "endColumnPages"
                 },
+                "BusinessTripRequest": {
+                    "viewName": "CreateBusinessTripRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "IDCardRequest": {
                     "viewName": "CreateIDCardRequest",
                     "controlAggregation": "endColumnPages"
