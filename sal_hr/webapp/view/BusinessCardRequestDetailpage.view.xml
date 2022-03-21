@@ -14,7 +14,7 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {ticketCode}">
-                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}"/>
+                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="handleClose"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>

@@ -56,7 +56,7 @@ sap.ui.define([
               
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this._bindView("/MasterSubModules" + this.sParentID);
+                this._bindView();
               
 
             },
@@ -64,12 +64,16 @@ sap.ui.define([
              
                 var oComponentModel = this.getComponentModel();
                 //    var sTickets = sObjectPath + "/tickets";
-                var sKey = oComponentModel.createKey("/MasterSubModules", {
-                    ID: this.sParentID
+                var sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
+                    externalCode: "12002429",
+                    effectiveStartDate:"2022-03-13"
                 });
 
                 this.getView().bindElement({
                     path: sKey,
+                    parameters: {
+                        expand: "cust_toDutyTravelItem"
+                    },
                     events: {
                         change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();
@@ -78,7 +82,7 @@ sap.ui.define([
                         dataRequested: function () {
                             this.getView().setBusy(true);
                         }.bind(this),
-                        dataReceived: function () {
+                        dataReceived: function (oData) {
                             this.getView().setBusy(false);
                         }.bind(this)
                     }
@@ -91,7 +95,7 @@ sap.ui.define([
          
 
             onRaiseRequestPress: function () {
-                var oPayloadObj = this.fnGetBankRequestPayload();
+                var oPayloadObj = this.fnGetBusinessTripPayload();
                         sEntityPath = "/SF_BankDetails";
                    
 
@@ -155,10 +159,10 @@ sap.ui.define([
             onReqTypeChange:function(){
                 var sReqKey = this.getView().byId("idReqType").getSelectedKey();
                 if(sReqKey === "Initial"){
-                    this.getView().byId("idHRBook").setEnabled(false);
+                    this.getView().byId("idHRBook").setEnabled(true);
                     this.getView().byId("idHRBook").setValue("Yes");
                 }else {
-                    this.getView().byId("idHRBook").setEnabled(true);
+                    this.getView().byId("idHRBook").setEnabled(false);
                 }
             }
 
