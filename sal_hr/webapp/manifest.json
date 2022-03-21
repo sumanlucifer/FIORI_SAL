@@ -190,16 +190,13 @@
                 {
                     "pattern": "BusinessCardRequest/{parentMaterial}/{layout}",
                     "name": "BusinessCardRequest",
-
                     "layout": "EndColumnFullScreen",
                     "titleTarget": "",
                     "greedy": false,
                     "target": [
                         "BusinessCardRequest"
-
                     ]
                 },
-
                 {
                     "pattern": "BusinessTripRequest/{parentMaterial}/{layout}",
                     "name": "BusinessTripRequest",
@@ -254,6 +251,25 @@
                         "detail",
                         "BusinessRequestDetail"
                     ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
+                    "name": "AirportPassRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "AirportPassRequestDetail"
+                    ]
+                },
+                {
+                    "pattern": "AirportPassRequest/{parentMaterial}/{layout}",
+                    "name": "AirportPassRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "AirportPassRequest"
+                    ]
                 }
             ],
             "targets": {
@@ -297,6 +313,10 @@
                     "viewName": "CreateBusinessTripRequest",
                     "controlAggregation": "endColumnPages"
                 },
+                "AirportPassRequest": {
+                    "viewName": "CreateAirportPassRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "LeaveRequestDetail": {
                     "viewName": "LeaveRequestDetail",
                     "controlAggregation": "endColumnPages"
@@ -316,12 +336,15 @@
                 "BusinessRequestDetail": {
                     "viewName": "BusinessCardRequestDetailpage",
                     "controlAggregation": "endColumnPages"
+                },
+                "AirportPassRequestDetail": {
+                    "viewName": "AirportPassRequestDetailpage",
+                    "controlAggregation": "endColumnPages"
                 }
             }
+        },
+        "sap.cloud": {
+            "public": true,
+            "service": "employee_portal_service"
         }
-    },
-    "sap.cloud": {
-        "public": true,
-        "service": "employee_portal_service"
     }
-}

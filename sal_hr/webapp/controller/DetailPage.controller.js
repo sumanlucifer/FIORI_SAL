@@ -23,7 +23,6 @@ sap.ui.define([
 
             },
             _onObjectMatched: function (oEvent) {
-                debugger;
                 this._bDescendingSort = false;
                 this.oTicketTable = this.oView.byId("idTicketTable");
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
@@ -62,12 +61,10 @@ sap.ui.define([
 
             },
 
-            onReset : function(oEvent)
+            onReset: function (oEvent) {
 
-            {
-            
-            oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
-            
+                oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+
             },
 
             onPressRaiseRequest: function () {
@@ -82,19 +79,28 @@ sap.ui.define([
                         break;
                     // Business Trip Module    
                     case "2":
-                            this.oRouter.navTo("BusinessTripRequest", {
-                                parentMaterial: this.sParentID,
-                                layout: "EndColumnFullScreen"
-                            })
-                        break;     
-                        
-                     // Business Card Module    
+                        this.oRouter.navTo("BusinessTripRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
+
+                    // Business Card Module    
                     case "5":
                         this.oRouter.navTo("BusinessCardRequest", {
                             parentMaterial: this.sParentID,
-                                layout: "EndColumnFullScreen"
-                        })
+                            layout: "EndColumnFullScreen"
+                        });
                         break;
+
+                    // Airport Travel Pass Request Module
+                    case "6":
+                        this.oRouter.navTo("AirportPassRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        });
+                        break;
+
                     // ID Card Request Module
                     case "7":
                         this.oRouter.navTo("IDCardRequest", {
@@ -140,7 +146,6 @@ sap.ui.define([
 
             },
             onPressTicketItem: function (oEvent) {
-                debugger;
                 switch (this.sParentID) {
                     // Leave Request Module
                     case "1":
@@ -150,6 +155,7 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
+
                     // Business Card Module    
                     case "5":
                         this.oRouter.navTo("BusinessRequestDetail", {
@@ -158,6 +164,16 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
+
+                    // Airport Travel Pass Request Module
+                    case "6":
+                        this.oRouter.navTo("AirportPassRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+
                     // ID Card Request Module
                     case "7":
                         this.oRouter.navTo("IDCardRequestDetail", {
@@ -166,6 +182,7 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
+                        
                     // Disciplinary Request Module
                     case "12":
                         this.oRouter.navTo("DisciplinaryRequestDetail", {
@@ -174,6 +191,7 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         });
                         break;
+
                     //  Bank Account Change Request Module 
                     case "13":
                         this.oRouter.navTo("BankAccChangeDetail", {
@@ -260,7 +278,6 @@ sap.ui.define([
             },
 
             handleDetailFullScreen: function (oEvent) {
-                debugger;
                 var sLayout = "";
                 if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
                     sLayout = "MidColumnFullScreen";
