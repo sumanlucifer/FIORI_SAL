@@ -9,19 +9,16 @@ sap.ui.define([
 
         return Controller.extend("com.sal.salhr.controller.App", {
             onInit: function () {
-            
                 this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
                 this.oOwnerComponent = this.getOwnerComponent();
                 this.oRouter = this.oOwnerComponent.getRouter();
                 this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 // window.location.href= "https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de4a228034.cfapps.eu10.hana.ondemand.com/";
-               
-
             },
+            
             onRouteMatched: function (oEvent) {
                 var sRouteName = oEvent.getParameter("name"),
                     oArguments = oEvent.getParameter("arguments");
-            
                 // Save the current route name
                 this.currentRouteName = sRouteName;
                 this.currentParent = oArguments.parentMaterial;

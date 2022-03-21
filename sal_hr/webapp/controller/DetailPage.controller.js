@@ -23,7 +23,6 @@ sap.ui.define([
 
             },
             _onObjectMatched: function (oEvent) {
-                debugger;
                 this._bDescendingSort = false;
                 this.oTicketTable = this.oView.byId("idTicketTable");
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
@@ -80,19 +79,11 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
-                    // Business Trip Module    
-                    case "2":
-                            this.oRouter.navTo("BusinessTripRequest", {
-                                parentMaterial: this.sParentID,
-                                layout: "EndColumnFullScreen"
-                            })
-                        break;     
-                        
-                     // Business Card Module    
-                    case "5":
-                        this.oRouter.navTo("BusinessCardRequest", {
+                    // Airport Travel Pass Request Module
+                    case "6":
+                        this.oRouter.navTo("AirportPassRequest", {
                             parentMaterial: this.sParentID,
-                                layout: "EndColumnFullScreen"
+                            layout: "EndColumnFullScreen"
                         })
                         break;
                     // ID Card Request Module
@@ -140,7 +131,6 @@ sap.ui.define([
 
             },
             onPressTicketItem: function (oEvent) {
-                debugger;
                 switch (this.sParentID) {
                     // Leave Request Module
                     case "1":
@@ -150,9 +140,10 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
-                    // Business Card Module    
-                    case "5":
-                        this.oRouter.navTo("BusinessRequestDetail", {
+
+                    // Airport Travel Pass Request Module
+                    case "6":
+                        this.oRouter.navTo("AirportPassRequestDetail", {
                             parentMaterial: this.sParentID,
                             childModule: oEvent.getSource().getBindingContext().getObject().ID,
                             layout: "ThreeColumnsMidExpanded"
@@ -260,7 +251,6 @@ sap.ui.define([
             },
 
             handleDetailFullScreen: function (oEvent) {
-                debugger;
                 var sLayout = "";
                 if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
                     sLayout = "MidColumnFullScreen";

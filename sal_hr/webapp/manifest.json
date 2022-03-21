@@ -247,12 +247,22 @@
                     ]
                 },
                 {
-                    "pattern": "BusinessRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
-                    "name": "BusinessRequestDetail",
+                    "pattern": "AirportPassRequest/{parentMaterial}/{layout}",
+                    "name": "AirportPassRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "AirportPassRequest"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
+                    "name": "AirportPassRequestDetail",
                     "target": [
                         "master",
                         "detail",
-                        "BusinessRequestDetail"
+                        "AirportPassRequestDetail"
                     ]
                 }
             ],
@@ -289,12 +299,8 @@
                     "viewName": "CreateDisciplinaryRequest",
                     "controlAggregation": "endColumnPages"
                 },
-                "BusinessCardRequest": {
-                    "viewName": "CreateBusinessCardRequest",
-                    "controlAggregation": "endColumnPages"
-                },
-                "BusinessTripRequest": {
-                    "viewName": "CreateBusinessTripRequest",
+                "AirportPassRequest": {
+                    "viewName": "CreateAirportPassRequest",
                     "controlAggregation": "endColumnPages"
                 },
                 "LeaveRequestDetail": {
@@ -313,8 +319,8 @@
                     "viewName": "DisciplinaryRequestDetailpage",
                     "controlAggregation": "endColumnPages"
                 },
-                "BusinessRequestDetail": {
-                    "viewName": "BusinessCardRequestDetailpage",
+                "AirportPassRequestDetail": {
+                    "viewName": "AirportPassRequestDetailpage",
                     "controlAggregation": "endColumnPages"
                 }
             }
