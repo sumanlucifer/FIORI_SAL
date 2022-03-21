@@ -79,6 +79,12 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
+                    case "2":
+                        this.oRouter.navTo("BusinessTripRequest", {
+                                parentMaterial: this.sParentID,
+                                layout: "EndColumnFullScreen"
+                            })
+                            break;     
                     // Airport Travel Pass Request Module
                     case "6":
                         this.oRouter.navTo("AirportPassRequest", {

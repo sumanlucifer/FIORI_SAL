@@ -187,7 +187,7 @@ sap.ui.define([
                     this._fnUpdateAttachmentData();
 
                     var oPayloadObj = this.getView().getModel("DisplayEditAirpassModel").getProperty("/");
-                    oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ?  oPayload.cust_toAirportPassItem.cust_domStationName : null;
+                    oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ?  oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
 
                     this.getView().getModel().update(sKey, oPayloadObj, {
                         success: function (oResponse) {

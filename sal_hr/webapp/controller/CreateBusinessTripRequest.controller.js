@@ -56,9 +56,64 @@ sap.ui.define([
               
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this._bindView();
+                this.fnGetEmpInfo("12002429",this.sParentID);
               
 
+            },
+            fnSetCreateBusinessTripModel: function (oEmpInfoObj) {
+                this.EmpInfoObj = oEmpInfoObj;
+
+               var oCreateBusinessObj = {
+
+                sExternalCode: this.EmpInfoObj.userId,
+                    sFirstName: this.EmpInfoObj.firstName + " "  + this.EmpInfoObj. middleName + " " + this.EmpInfoObj.lastName,
+                    sPayGrade : this.EmpInfoObj.payGrade,
+                    sCostCenter : this.EmpInfoObj.costCentre,
+                    sPhnNum : this.EmpInfoObj.emergencyNumber
+               }
+                    // oCreateAirpassObj = {
+                    //     "externalCode": sExternalCode,
+                    //     "externalName": null,
+                    //     "effectiveStartDate": new Date(),
+                    //     "cust_toAirportPassItem": {
+                    //         "cust_mobileNumber": sMobileNumber,
+                    //         "cust_acknowledge2": null,
+                    //         "cust_acknowledge1": null,
+                    //         "cust_airportLoc": null,
+                    //         "cust_airportPassMain_effectiveStartDate": new Date(),
+                    //         "cust_airportPassMain_externalCode": sExternalCode,
+                    //         "cust_domStationName": null,
+                    //         "cust_nationality": sNationality,
+                    //         "cust_permitDate": null,
+                    //         "cust_permitPurpose": null,
+                    //         "cust_nationalID": sNationalID,
+                    //         "cust_typeOfPass": null,
+                    //         "externalCode": "95924",
+                    //         "externalName": null,
+                    //         "cust_dateOfBirth": sDateOfBirth
+                    //     },
+                    //     "isPersonalIdAttachmentNew": false,
+                    //     "personalIdAttachmentFileContent": "Personal ID",
+                    //     "personalIdAttachmentFileName": "Personal ID.txt",
+                    //     "personalIdAttachmentUserId": "Extentia",
+                    //     "isPersonalPhotoAttachmentNew": false,
+                    //     "personalPhotoAttachmentFileContent": "Personal photo",
+                    //     "personalPhotoAttachmentFileName": "Personal Photo.txt",
+                    //     "personalPhotoAttachmentUserId": "Extentia",
+                    //     "isPassportAttachmentNew": false,
+                    //     "passportAttachmentFileContent": "Passport",
+                    //     "passportAttachmentFileName": "Passport.txt",
+                    //     "passportAttachmentUserId": "Extentia",
+                    //     "isCompanyIdAttachmentNew": false,
+                    //     "companyIdAttachmentFileContent": "Company Id",
+                    //     "companyIdAttachmentFileName": "Company Id.txt",
+                    //     "companyIdAttachmentUserId": "Extentia"
+                    // },
+                    var oCreateBusinessTripModel = new JSONModel(oCreateBusinessObj);
+
+                this.getView().setModel(oCreateBusinessTripModel, "CreateBusinessTripModel");
+
+                // this._fnRemoveFileUploaderItems();
             },
             _bindView: function () {
              
@@ -123,22 +178,7 @@ sap.ui.define([
                 })
             },
           
-            fnGetBankRequestPayload: function () {
-             
-
-                var sEffectiveStartDate =  this.getView().byId("idFromDatePicker").getDateValue();
-                var sCust_bankName =  this.getView().byId("idBankNameINP").getValue();
-                var scust_iban =  this.getView().byId("idIBANINP").getValue();
-                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                    oDate = dateFormat.format(new Date(sEffectiveStartDate));
-                oDate = oDate + "T00:00:00";
-                return {
-                    "externalCode": "12002425",
-                    "effectiveStartDate": oDate,
-                    "cust_bankName": sCust_bankName,
-                    "cust_iban": scust_iban
-                };
-            },
+           
 
             onCreateCancelPress: function () {
                 this.oRouter.navTo("detail", {
@@ -159,10 +199,34 @@ sap.ui.define([
             onReqTypeChange:function(){
                 var sReqKey = this.getView().byId("idReqType").getSelectedKey();
                 if(sReqKey === "Initial"){
-                    this.getView().byId("idHRBook").setEnabled(true);
-                    this.getView().byId("idHRBook").setValue("Yes");
+                    this.byId("idHRBook").setEnabled(true);
+                    this.byId("idHRBook").setValue("Yes");
+                    this.byId("idPayComp").setEnabled(false);
+                    this.byId("idTravelAmt").setEnabled(false);
+                    this.byId("idTravelDate").setEnabled(true);
+                    this.byId("idTripCategory").setEnabled(true);
+                    this.byId("idDestCountry").setEnabled(true);
+                    this.byId("idCityCountry").setEnabled(true);
+                    this.byId("idCity").setEnabled(true);
+                    this.byId("idInsOutKingdom").setEnabled(false);
+                    this.byId("idPerDiem").setEnabled(false);
+                    this.byId("idTotalPErDiem").setEnabled(false);
+                    this.byId("idPayCompVisa").setEnabled(true);
+                    this.byId("idPayCom").setEnabled(false);
                 }else {
-                    this.getView().byId("idHRBook").setEnabled(false);
+                    this.byId("idHRBook").setEnabled(false);
+                    this.byId("idPayComp").setEnabled(false);
+                    this.byId("idTravelAmt").setEnabled(false);
+                    this.byId("idTravelDate").setEnabled(false);
+                    this.byId("idTripCategory").setEnabled(false);
+                    this.byId("idDestCountry").setEnabled(false);
+                    this.byId("idCityCountry").setEnabled(false);
+                    this.byId("idCity").setEnabled(false);
+                    this.byId("idInsOutKingdom").setEnabled(false);
+                    this.byId("idPerDiem").setEnabled(false);
+                    this.byId("idTotalPErDiem").setEnabled(false);
+                    this.byId("idPayCompVisa").setEnabled(false);
+                    this.byId("idPayCom").setEnabled(false);
                 }
             }
 

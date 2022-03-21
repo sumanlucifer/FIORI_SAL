@@ -28,7 +28,7 @@ sap.ui.define([
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this.fnGetEmpInfo("12002429");
+                this.fnGetEmpInfo("12002429",this.sParentID);
             },
 
             fnSetCreateAirpassLocalModel: function (oEmpInfoObj) {
