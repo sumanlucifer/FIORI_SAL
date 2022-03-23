@@ -4,7 +4,6 @@ sap.ui.define([], function() {
 
 	return {
 			changeIcon: function(sValue) {
-            
 			// if (sValue === "Leaves") {
 			 
             //     return 'sap-icon://create-leave-request';
@@ -16,35 +15,59 @@ sap.ui.define([], function() {
 			// } 
             switch (sValue) {
                 case 1:
-                return 'sap-icon://create-leave-request';
-                break;
-				case 2:
-                return 'sap-icon://flight';
-                break;
+                    return 'sap-icon://create-leave-request';
+                    break;
+                case 2:
+                    return 'sap-icon://flight';
+                    break;
                 case 3:
-                return 'sap-icon://stethoscope';
-                break;
+                    return 'sap-icon://stethoscope';
+                    break;
                 case 4:
-                return 'sap-icon://loan';
-                break;
+                    return 'sap-icon://loan';
+                    break;
                 case 5:
-                return 'sap-icon://business-card';
-                break;
+                    return 'sap-icon://business-card';
+                    break;
                 case 6:
-                return 'sap-icon://travel-expense';
-                break;
+                    return 'sap-icon://travel-expense';
+                    break;
                 case 7:
-                return 'sap-icon://business-card';
-                break;
+                    return 'sap-icon://business-card';
+                    break;
                 case 8:
-                return 'sap-icon://business-card';
-                break;
+                    return 'sap-icon://business-card';
+                    break;
+                case 9:
+                    return 'sap-icon://business-card';
+                    break;
+                case 10:
+                    return 'sap-icon://travel-expense';
+                    break;
+                case 11:
+                    return 'sap-icon://business-card';
+                    break;
                 case 12:
-                return 'sap-icon://quality-issue';
-                break;
+                    return 'sap-icon://quality-issue';
+                    break;
                 case 13:
-                return 'sap-icon://quality-issue';
-                break;
+                    return 'sap-icon://quality-issue';
+                    break;
+                case 14:
+                    return 'sap-icon://quality-issue';
+                    break;
+                case 15:
+                    return 'sap-icon://quality-issue';
+                    break;
+                case 16:
+                    return 'sap-icon://quality-issue';
+                    break;
+                case 17:
+                    return 'sap-icon://quality-issue';
+                    break;
+                case 18:
+                    return 'sap-icon://quality-issue';
+                    break;
 
 
             }    
@@ -53,7 +76,7 @@ sap.ui.define([], function() {
 
             switch (sValue) {
             case 'CANCELLED':
-            sValue = "Rejected";
+            sValue = "Cancelled";
             break;
             case 'APPROVED':
             sValue = "Approved";

@@ -16,7 +16,8 @@ sap.ui.define([
                     HealthModule: false,
                     PageTitle: null,
                     Modify: true,
-                    IDCardModule: false
+                    IDCardModule: false,
+                    meetingType:false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -73,12 +74,39 @@ sap.ui.define([
                                 that.getView().setModel(oAttachModel, "attachmentModel");
                                 that.getView().setModel(oTimeTypeModel, "timeTypeModel");
                                 // that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
-                                var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
-                                if (sType === "S110" || sType === "500" || sType === "460") {
-                                    that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                                } else {
-                                    that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                                }
+                                // var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
+
+                                // if (sType === "S110" || sType === "500" || sType === "460") {
+                                //     that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                                // } else {
+                                //     that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                // }
+                                switch (oData.timeType) {
+                                    // Leave Module
+                                    case "S110":
+                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+
+                                    break;
+                                    case "500":
+                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+
+                                    break;
+                                    case "460":
+                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+
+                                    break;
+                                    default:
+                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                                }    
+                                     
+
+
+
+
                             },
                             error: function (oError) {
 

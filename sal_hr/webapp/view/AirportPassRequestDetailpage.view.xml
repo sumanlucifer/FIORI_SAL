@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.sal.salhr.controller.DisciplinaryRequestDetailpage"
+<mvc:View controllerName="com.sal.salhr.controller.AirportPassRequestDetailpage"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
@@ -14,15 +14,15 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
-                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="handleClose"/>
+                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="onBreadCrumbNavPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="Request {headerModel>/ticketCode}"/>
+                    <Label text="{i18n>RequestID} :{headerModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
+                    <Button text="{i18n>Modify}" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
+                    <Button text="{i18n>Withdraw}" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
                 </f:actions>
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
@@ -40,19 +40,16 @@
                         <ObjectStatus text="{headerModel>/status}" state="Success"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute title="{i18n>Requested by}"/>
+                        <ObjectAttribute title="{i18n>Requestedby}"/>
                         <ObjectAttribute text="{headerModel>/employeeId}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
-                        <ObjectAttribute title="{i18n>DueBy Date}"/>
+                        <ObjectAttribute title="{i18n>DueByDate}"/>
                         <ObjectAttribute text="{path:'headerModel>/modifiedAt',
                                                 type: 'sap.ui.model.type.Date',
-                                                
-                                                    formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
-                                                     }
-                                                
-                                                }"/>
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -60,20 +57,20 @@
         <!-- DynamicPage Content -->
         <f:content>
             <VBox id="idContentVBox" width="100%">
-                <IconTabBar id="idLeaveiconTabBar" >
+                <IconTabBar id="idAirportPassRequesticonTabBar" >
                     <items>
-                        <IconTabFilter id="idLeaveDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.DisciplinaryModule.DisplayDisciplinaryRequest" type="XML"/>
+                        <IconTabFilter id="idAirportPassRequestDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.AirportTravelPassModule.DisplayAirportPassRequest" type="XML"/>
                         </IconTabFilter>
-                        <IconTabFilter id="idLeaveEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.DisciplinaryModule.EditDisciplinaryRequest" type="XML"/>
+                        <IconTabFilter id="idAirportPassRequestEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.AirportTravelPassModule.EditAirportPassRequest" type="XML"/>
                         </IconTabFilter>
-                        <IconTabFilter text="{i18n>Resolution}">
+                        <!-- <IconTabFilter text="{i18n>Resolution}">
                             <Text text="" />
                         </IconTabFilter>
                         <IconTabFilter text="{i18n>History}">
                             <Text text="" />
-                        </IconTabFilter>
+                        </IconTabFilter> -->
                     </items>
                 </IconTabBar>
 

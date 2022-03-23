@@ -15,7 +15,7 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="New {name}" class="sapUiSmallMarginBegin">
-                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}" press="onCreateCancelPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
             </f:DynamicPageTitle>

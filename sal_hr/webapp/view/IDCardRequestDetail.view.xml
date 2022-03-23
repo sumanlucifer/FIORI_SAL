@@ -14,11 +14,11 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
-                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}"/>
+                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="handleClose"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{i18n>RequestID} :{headerModel>/ticketCode}"/>
+                    <Label text="Request {headerModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
                     <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>

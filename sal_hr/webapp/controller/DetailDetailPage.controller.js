@@ -42,7 +42,6 @@ sap.ui.define([
             },
 
             _bindView: function (data) {
-                debugger;
                 var object = data.results[0];
                 this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
@@ -164,8 +163,6 @@ sap.ui.define([
 
                     //  Bank Request Module 
                     case "13":
-
-                        debugger;
                         sKey = oComponentModel.createKey("/SF_BankDetails", {
                             effectiveStartDate: object.effectiveStartDate,
                             externalCode: object.externalCode
@@ -451,7 +448,7 @@ sap.ui.define([
                 var mimeType = this.getView().getModel("attachmentModel").getData().mimeType;
                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
                 fName = fName.split(".")[0];
-                debugger;
+
                 if (fileext === "pdf" || fileext === "png") {
                     var decodedPdfContent = atob(fContent);
                     var byteArray = new Uint8Array(decodedPdfContent.length)
@@ -474,7 +471,6 @@ sap.ui.define([
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
             },
             onFileAdded: function (oEvent) {
-                debugger;
                 var that = this;
 
                 //  var file = oEvent.getParameters().files[0];

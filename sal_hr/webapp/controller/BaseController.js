@@ -49,7 +49,7 @@ sap.ui.define([
         getResourceBundle: function () {
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
-        
+
         //for controlling global busy indicator        
         presentBusyDialog: function () {
             BusyIndicator.show();
@@ -61,38 +61,38 @@ sap.ui.define([
         _getTicketData: function (sId) {
 
             var idFILTER = new sap.ui.model.Filter({
-            
-            path: "ID",
-            
-            operator: sap.ui.model.FilterOperator.EQ,
-            
-            value1: sId
-            
+
+                path: "ID",
+
+                operator: sap.ui.model.FilterOperator.EQ,
+
+                value1: sId
+
             });
-            
+
             var filter = [];
-            
+
             filter.push(idFILTER);
-            var oComponentModel = this.getComponentModel();   
-            oComponentModel.read("/Tickets", {        
-            filters: [filter],       
-            success: function (oData, oResponse) {    
-            this._bindView(oData);
-            
-            }.bind(this),
-            
-            error: function (oError) {
-            
-            sap.m.MessageBox.error(JSON.stringify(oError));
-            
-            }
-            
+            var oComponentModel = this.getComponentModel();
+            oComponentModel.read("/Tickets", {
+                filters: [filter],
+                success: function (oData, oResponse) {
+                    this._bindView(oData);
+
+                }.bind(this),
+
+                error: function (oError) {
+
+                    sap.m.MessageBox.error(JSON.stringify(oError));
+
+                }
+
             });
-            
-            
-            
-            
-            },
+
+
+
+
+        },
 
         /**
         * Adds a history entry in the FLP page history
@@ -119,8 +119,63 @@ sap.ui.define([
                     });
                 }
             };
-        })
-    });
+        }),
 
-}
-);
+        fnGetEmpInfo: function (sExternalCode, sParentID) {
+            var sKey = this.getView().getModel().createKey("/EmpInfo", {
+                userId: sExternalCode
+            });
+            this.sParentID = sParentID;
+            this.getView().bindElement({
+                path: sKey,
+                events: {
+                    dataRequested: function (oData) {
+                        this.getView().setBusy(true);
+                    }.bind(this),
+                    dataReceived: function (oData) {
+                        this.getView().setBusy(false);
+                        switch (this.sParentID) {
+                            case "2":
+                                this.fnSetCreateBusinessTripModel(oData.getParameter("data"));
+                                break;
+                            // Airport Travel Pass Request Module
+                            case "6":
+                                this.fnSetCreateAirpassLocalModel(oData.getParameter("data"));
+                                break;
+                        }
+
+                    }.bind(this)
+                }
+            });
+        },
+
+        fnValidateDateValue: function (oEvent) {
+            if (oEvent.getParameter("valid")) {
+                oEvent.getSource().setValueState("None");
+            } else {
+                oEvent.getSource().setValueState("Error");
+                oEvent.getSource().setValueStateText("Please enter a valid date value");
+            }
+        },
+
+        fnCalculateUserAge: function (oDateofbirth) {
+            var iBirthYear = oDateofbirth.getFullYear(),
+                iBirthMonth = oDateofbirth.getMonth(),
+                iBirthDay = oDateofbirth.getDate(),
+                oTtodayDate = new Date(),
+                iTodayYear = oTtodayDate.getFullYear(),
+                iTodayMonth = oTtodayDate.getMonth(),
+                iTodayDay = oTtodayDate.getDate(),
+                iAge = iTodayYear - iBirthYear;
+
+            if (iTodayMonth < (iBirthMonth - 1)) {
+                iAge--;
+            }
+            if (((iBirthMonth - 1) == iTodayMonth) && (iTodayDay < iBirthDay)) {
+                iAge--;
+            }
+
+            return iAge;
+        }
+    });
+});

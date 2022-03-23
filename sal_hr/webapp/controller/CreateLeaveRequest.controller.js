@@ -41,7 +41,9 @@ sap.ui.define([
                     recurringAbs: false,
                     busy: false,
                     uploadAttachment: true,
-                    currentDate: new Date()
+                    currentDate: new Date(),
+                    meetingType:false,
+                    availBal:false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -156,8 +158,9 @@ sap.ui.define([
 
                 if(sTimeType === "460"){
                     var sQtyHrs = this.getView().byId("TP1").getValue();
+                    sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
                 }else{
-                    sQtyHrs ="00:00";
+                    sQtyHrs ="0.0";
                 }
 
 
@@ -194,7 +197,8 @@ sap.ui.define([
                     "isAttachmentNew": true,
                     "attachmentFileContent": sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
-                    "attachmentUserId": "Extentia"
+                    "attachmentUserId": "Extentia",
+                    "fractionQuantity":sQtyHrs
                   
                 };
             }   
@@ -354,23 +358,60 @@ sap.ui.define([
             },
             onTimeTyeChange: function (oEvent) {
                 var sType = oEvent.getSource().getSelectedKey();
-                if (sType === "S110" || sType === "500" || sType === "460") {
-                    this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                    this.attachReq = false;
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                    this.attachReq = true;
-                }
+                var that = this;
+                // if (sType === "S110" || sType === "500" || sType === "460") {
+                //     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                //     this.attachReq = false;
+                // } else {
+                //     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                //     this.attachReq = true;
+                // }
 
-                if(sType === "460"){
-                    this.getView().byId("idReqMeetingForm").setVisible(true);
-                    this.getView().byId("idAvailBal").setVisible(false);
-                    this.getView().byId("idAvailBalValue").setVisible(false);
-                }else{
-                    this.getView().byId("idReqMeetingForm").setVisible(false);
-                    // this.getView().byId("idAvailBal").setVisible(true);
-                    // this.getView().byId("idAvailBalValue").setVisible(true);
-                }
+                // if(sType === "460"){
+                //     this.getView().byId("idReqMeetingForm").setVisible(true);
+                //     this.getView().byId("idAvailBal").setVisible(false);
+                //     this.getView().byId("idAvailBalValue").setVisible(false);
+                // }else{
+                //     this.getView().byId("idReqMeetingForm").setVisible(false);
+                //     // this.getView().byId("idAvailBal").setVisible(true);
+                //     // this.getView().byId("idAvailBalValue").setVisible(true);
+                // }
+
+                switch (sType) {
+                     case "S110":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', true);
+
+                    break;
+                    case "500":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+
+                    break;
+                    case "460":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+
+                    break;
+                    default:
+                        this.attachReq = true;
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                }    
+
+
+
+
+
+
+
             },
 
 

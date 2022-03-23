@@ -43,7 +43,7 @@
 					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
                          <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Rejected" class="tblHeaderText"/>
+					        <Label text="Cancelled" class="tblHeaderText"/>
 					        <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
 			        </FlexBox>
@@ -59,7 +59,7 @@
                 <headerToolbar>
                     <OverflowToolbar>
                         <content>
-                            <Title text="{name} Request" level="H2"/>
+                            <Title text="{name}" level="H2"/>
                             <ToolbarSpacer />
                             <SearchField placeholder="Search for Job ID" width="30%" search=".onSearch"></SearchField>
                             <Button icon="sap-icon://sort"  press="onSort"/>
@@ -77,7 +77,7 @@
                      <Column importance="Low" popinDisplay="Inline" >
                         <Label text="Effective From" class="tblHeaderText" />
                     </Column>
-                     <Column importance="Low" popinDisplay="Inline" >
+                     <Column width="28rem" importance="Low" popinDisplay="Inline" >
                         <Label text="Summary" class="tblHeaderText" />
                     </Column>
                     <Column  importance="Low" popinDisplay="Inline" >
@@ -101,19 +101,9 @@
                             <Text text="{ticketCode}" />
                              <Text text="{externalCode}" />
                              <Text text="" />
-                             <Text text="" />
+                             <Text text="{summary}" />
 
-
-  <Text text="{path:'requestDate',
-                                type: 'sap.ui.model.type.DateTime',
-                                formatOptions: {
-                                pattern: 'MM/dd/yyyy'
-                                }
-                            }"/>
-
-
-
-                            <!-- <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date'}" /> -->
+                            <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'}}" />
                              <Text text="" />
                              <Text text="" />
                            
