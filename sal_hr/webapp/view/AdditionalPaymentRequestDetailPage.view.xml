@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.sal.salhr.controller.DisciplinaryRequestDetailpage"
+<mvc:View controllerName="com.sal.salhr.controller.AdditionalPaymentRequestDetailPage"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
@@ -10,15 +10,15 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="{LocalViewModel>/PageTitle}"/>
+                    <Title id="idPageTitle" text="Bank Account Change Request"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {ticketCode}">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
                         <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{i18n>RequestID} :{ticketCode}"/>
+                    <Label text="{i18n>RequestID} :{headerModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
                     <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
@@ -37,36 +37,33 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Status}"/>
-                        <ObjectStatus text="{approvalStatus}" state="Success"/>
+                        <ObjectStatus text="{headerModel>/status}" state="Success"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>
-                        <ObjectAttribute text="{userId}"/>
+                        <ObjectAttribute text="{headerModel>/employeeId}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DueBy Date}"/>
-                        <ObjectAttribute text="{path:'endDate',
+                        <ObjectAttribute text="{path:'headerModel>/modifiedAt',
                                                 type: 'sap.ui.model.type.Date',
-                                                
-                                                    formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
-                                                     }
-                                                
-                                                }"/>
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
         <!-- DynamicPage Content -->
-        <f:content>
+     <f:content>
             <VBox id="idContentVBox" width="100%">
                 <IconTabBar id="idLeaveiconTabBar" >
                     <items>
-                        <IconTabFilter id="idLeaveDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.DisciplinaryModule.DisplayDisciplinaryRequest" type="XML"/>
+                        <IconTabFilter id="idBankDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.DisplayAdditionalPaymentRequest" type="XML"/>
                         </IconTabFilter>
-                        <IconTabFilter id="idLeaveEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.DisciplinaryModule.EditDisciplinaryRequest" type="XML"/>
+                        <IconTabFilter id="idBankEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.EditAdditionalPaymentRequest" type="XML"/>
                         </IconTabFilter>
                         <IconTabFilter text="{i18n>Resolution}">
                             <Text text="" />
@@ -76,10 +73,6 @@
                         </IconTabFilter>
                     </items>
                 </IconTabBar>
-
-             
-
-              
             </VBox>
         </f:content>
         <f:footer>

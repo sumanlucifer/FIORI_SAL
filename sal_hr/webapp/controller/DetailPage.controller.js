@@ -74,6 +74,14 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
+
+                    // Additional Payment Request Module
+                    case "10":
+                        this.oRouter.navTo("AdditionalPaymentRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
                     // Business Trip Module    
                     case "2":
                             this.oRouter.navTo("BusinessTripRequest", {
@@ -139,6 +147,15 @@ sap.ui.define([
                     // Leave Request Module
                     case "1":
                         this.oRouter.navTo("LeaveRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+
+                           // Additional Payment Request Module
+                    case "10":
+                        this.oRouter.navTo("AdditionalPaymentRequestDetail", {
                             parentMaterial: this.sParentID,
                             childModule: oEvent.getSource().getBindingContext().getObject().ID,
                             layout: "ThreeColumnsMidExpanded"
@@ -231,6 +248,10 @@ sap.ui.define([
                     oSorter = new Sorter("ticketCode", this._bDescendingSort);
 
                 oBinding.sort(oSorter);
+            },
+            onReset : function(oEvent)
+            {
+                oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
             },
             onPersonalizationDialogPress: function () {
                 var oView = this.getView();
