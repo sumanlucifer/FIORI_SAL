@@ -34,17 +34,21 @@
 					        <Label text="Total Requests" class="tblHeaderText"/>
 					        <Text text="{totalRequests}" class="sapUiTinyMarginTop dataPointsColor "/>
 				        </VBox>
+                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Pending" class="tblHeaderText"/>
+					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					        <Label text="Approved" class="tblHeaderText"/>
 					        <Text text="{totalApproved}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
-				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Pending" class="tblHeaderText"/>
-					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
-				        </VBox>
                          <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					        <Label text="Cancelled" class="tblHeaderText"/>
 					        <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
+                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Rejected" class="tblHeaderText"/>
+					        <Text text="{totalRejected}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
 			        </FlexBox>
             </f:DynamicPageHeader>
@@ -61,7 +65,7 @@
                         <content>
                             <Title text="{name}" level="H2"/>
                             <ToolbarSpacer />
-                            <SearchField placeholder="Search for Job ID" width="30%" search=".onSearch"></SearchField>
+                            <SearchField placeholder="Search for ID" width="30%" search=".onSearch"></SearchField>
                             <Button icon="sap-icon://sort" press="onSort"/>
                             <Button icon="sap-icon://filter" press="onPressFilter"/>
                         </content>
