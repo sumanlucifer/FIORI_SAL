@@ -243,14 +243,17 @@ sap.ui.define([
                 // Validate attachment sections
                 if (!this.getView().getModel("CreateAirpoPassModel").getProperty("/isPersonalIdAttachmentNew")) {
                     sValidationErrorMsg = "Please upload files for Personal ID Copy.";
+                    this.getView().setBusy(false);
                     return sValidationErrorMsg;
                 }
                 if (!this.getView().getModel("CreateAirpoPassModel").getProperty("/isPersonalPhotoAttachmentNew")) {
                     sValidationErrorMsg = "Please upload files for Personal Photo.";
+                    this.getView().setBusy(false);
                     return sValidationErrorMsg;
                 }
                 if (!this.getView().getModel("CreateAirpoPassModel").getProperty("/isCompanyIdAttachmentNew")) {
                     sValidationErrorMsg = "Please upload files for Company ID Copy.";
+                    this.getView().setBusy(false);
                     return sValidationErrorMsg;
                 }
 

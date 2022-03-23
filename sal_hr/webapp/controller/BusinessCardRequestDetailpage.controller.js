@@ -29,6 +29,11 @@ sap.ui.define([
             _bindView: function (data) {
                 var object = data.results[0];
                 this.object = data.results[0];
+
+                var oHeaderModel = new JSONModel(data.results[0]);
+                this.getView().setModel(oHeaderModel, "headerModel");
+
+
                 if (object.status === "APPROVED") {
                     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
                 } else {

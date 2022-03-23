@@ -61,12 +61,10 @@ sap.ui.define([
 
             },
 
-            onReset : function(oEvent)
+            onReset: function (oEvent) {
 
-            {
-            
-            oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
-            
+                oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+
             },
 
             onPressRaiseRequest: function () {
@@ -81,10 +79,17 @@ sap.ui.define([
                         break;
                     case "2":
                         this.oRouter.navTo("BusinessTripRequest", {
-                                parentMaterial: this.sParentID,
-                                layout: "EndColumnFullScreen"
-                            })
-                            break;     
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
+                    // Business Card Module
+                    case "5":
+                        this.oRouter.navTo("BusinessCardRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
                     // Airport Travel Pass Request Module
                     case "6":
                         this.oRouter.navTo("AirportPassRequest", {
@@ -145,6 +150,15 @@ sap.ui.define([
                             childModule: oEvent.getSource().getBindingContext().getObject().ID,
                             layout: "ThreeColumnsMidExpanded"
                         })
+                        break;
+                    // Business Card Module
+                    case "5":
+                        this.oRouter.navTo("BusinessRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+
                         break;
 
                     // Airport Travel Pass Request Module
