@@ -94,7 +94,7 @@
                         <Label text="Targeted SLA" class="tblHeaderText" />
                     </Column>
                     
-                    <Column  hAlign="End" width="auto" importance="High">
+                    <Column  hAlign="End" width="10rem" importance="High">
                         <Label text="Status" class="tblHeaderText" />
                     </Column>
                 </columns>

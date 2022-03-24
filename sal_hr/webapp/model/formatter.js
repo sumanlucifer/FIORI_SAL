@@ -76,7 +76,7 @@ sap.ui.define([], function() {
 
             switch (sValue) {
             case 'CANCELLED':
-            sValue = "CANCELED";
+            sValue = "CANCELLED";
             break;
             case 'APPROVED':
             sValue = "APPROVED";

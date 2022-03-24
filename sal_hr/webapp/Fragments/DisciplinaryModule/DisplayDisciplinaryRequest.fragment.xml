@@ -13,7 +13,7 @@
             <Text text="{path:'effectiveStartDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                    pattern: 'MM/dd/yyyy'
                                                 }}"/>
            <Label text="Warning Type"  />
             <Text text="{cust_warningTypeNav/label_defaultValue}"/>
@@ -41,7 +41,7 @@
             <Text text="{path:'cust_DateofIncident',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
 
 

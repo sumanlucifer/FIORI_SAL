@@ -6,7 +6,7 @@ sap.ui.define([
 
 ],
 
-    function (BaseController, Controller, JSONModel) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.BankAccChangeDetail", {
             formatter: formatter,

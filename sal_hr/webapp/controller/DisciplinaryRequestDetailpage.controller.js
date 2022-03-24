@@ -4,7 +4,7 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter"
 ],
-    function (BaseController, Controller, JSONModel) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.DisciplinaryRequestDetailpage", {
             formatter: formatter,

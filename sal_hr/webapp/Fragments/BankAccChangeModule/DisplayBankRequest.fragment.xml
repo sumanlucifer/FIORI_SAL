@@ -11,7 +11,7 @@
             <Text text="{path:'effectiveStartDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
 
                         

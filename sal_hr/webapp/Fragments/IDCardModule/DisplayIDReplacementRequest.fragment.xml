@@ -1,0 +1,48 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:tnt="sap.tnt"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Text class="sapUiSmallMarginBegin" text="Effective as of: {path:'effectiveStartDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+
+    <form:SimpleForm id="idDisplayIDRequestSimpleForm" layout="ResponsiveGridLayout" columnsM="1" columnsL="1" columnsXL="1" singleContainerFullSize="false" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="12">
+        <form:content>
+            <core:Title id="idDisplayIDDetails" text="ID Replacement Details" titleStyle="H6" level="H6"/>
+
+            <Label text="PRN" />
+            <Text text="{cust_idReplacementDetails/cust_prn}"/>
+
+            <Label text="First Name" />
+            <Text text="{cust_idReplacementDetails/cust_fname}"/>
+
+            <Label text="Last Name" />
+            <Text text="{cust_idReplacementDetails/cust_lname}"/>
+
+            <Label text="Second Name" />
+            <Text text="{cust_idReplacementDetails/cust_sname}"/>
+
+            <Label text="Job Title" />
+            <Text text="{cust_idReplacementDetails/cust_jobTitle}"/>
+
+            <Label text="Seniority Date" />
+            <Text text="{path:'cust_idReplacementDetails/cust_seniorityDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+
+            <Label text="Cost Centre" />
+            <Text text="{cust_idReplacementDetails/cust_costCentre}"/>
+
+            <Label text="Nationality" />
+            <Text text="{cust_idReplacementDetails/cust_nationality}"/>
+
+            <Label text="Pay Grade" />
+            <Text text="{cust_idReplacementDetails/cust_payGrade}"/>
+
+            <Label text="Blood Group" />
+            <Text text="{cust_idReplacementDetails/cust_bloodGroup}"/>
+
+            <Label text="Emergency Phone" />
+            <Text text="{cust_idReplacementDetails/cust_emergencyPhone}"/>
+        </form:content>
+    </form:SimpleForm>
+</core:FragmentDefinition>

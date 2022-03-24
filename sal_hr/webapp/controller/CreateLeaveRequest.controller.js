@@ -43,7 +43,8 @@ sap.ui.define([
                     uploadAttachment: true,
                     currentDate: new Date(),
                     meetingType:false,
-                    availBal:false
+                    availBal:false,
+                    halfDayType:false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -122,7 +123,7 @@ sap.ui.define([
                
             },
             fnGetLeaveRequestPayload: function () {
-             
+                var sQtyHrs;
                 if(this.attachReq === true && this.isAttachment === false){
                     sap.m.MessageBox.error("Please upload the attachments.");
                     this.bValid = false;
@@ -138,31 +139,32 @@ sap.ui.define([
 
                 var sEndDate = this.getView().byId("idEndDate").getDateValue();
 
-                // var sRecSelected = this.getView().byId("idRecCheckbox").getSelected();
-                // if (sRecSelected === false) {
+            
 
-                //     var sEndDate = this.getView().byId("idEndDate").getDateValue();
-
-                //     var sRecAbsGroup = null;
-
-                // } else {
-
-                //     sEndDate = this.getView().byId("idEndonDate").getDateValue();
-                //     sRecAbsGroup = this.getView().byId("idRecAbsc").getSelectedKey();
-                // }
-
-                // sEndDate = Date.parse(sEndDate);
+             
                 var oEndDate = dateFormat.format(new Date(sEndDate));
                 sEndDate = oEndDate + "T00:00:00";
                 var sTimeType = this.getView().byId("idTimeType").getSelectedKey();
 
-                if(sTimeType === "460"){
-                    var sQtyHrs = this.getView().byId("TP1").getValue();
-                    sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                }else{
-                    sQtyHrs ="0.0";
-                }
+                // if(sTimeType === "460"){
+                //     var sQtyHrs = this.getView().byId("TP1").getValue();
+                //     sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                // }else{
+                   
+                // }
 
+                switch (sTimeType) {
+                    case "460":
+                        sQtyHrs = this.getView().byId("TP1").getValue();
+                        sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                   break;
+                   case "HD1":         
+                     sQtyHrs ="0.5";
+                   break;
+                   default:
+                    sQtyHrs ="0.0";
+                }   
 
                 if (this.isAttachment === true) {
                     sAttachmentFileContent = this.fileContent;
@@ -192,7 +194,7 @@ sap.ui.define([
                     "undeterminedEndDate": false,
                     "userId": "12002024",
                     "recurrenceGroup": null,
-                    "fractionQuantity": "1",
+
                     "endTime": null,
                     "isAttachmentNew": true,
                     "attachmentFileContent": sAttachmentFileContent,
@@ -359,23 +361,7 @@ sap.ui.define([
             onTimeTyeChange: function (oEvent) {
                 var sType = oEvent.getSource().getSelectedKey();
                 var that = this;
-                // if (sType === "S110" || sType === "500" || sType === "460") {
-                //     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                //     this.attachReq = false;
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                //     this.attachReq = true;
-                // }
-
-                // if(sType === "460"){
-                //     this.getView().byId("idReqMeetingForm").setVisible(true);
-                //     this.getView().byId("idAvailBal").setVisible(false);
-                //     this.getView().byId("idAvailBalValue").setVisible(false);
-                // }else{
-                //     this.getView().byId("idReqMeetingForm").setVisible(false);
-                //     // this.getView().byId("idAvailBal").setVisible(true);
-                //     // this.getView().byId("idAvailBalValue").setVisible(true);
-                // }
+             
 
                 switch (sType) {
                      case "S110":
@@ -383,6 +369,7 @@ sap.ui.define([
                         this.attachReq = false;
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
 
                     break;
                     case "500":
@@ -390,6 +377,7 @@ sap.ui.define([
                         this.attachReq = false;
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
 
                     break;
                     case "460":
@@ -397,6 +385,15 @@ sap.ui.define([
                         this.attachReq = false;
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                    break;
+                    case "HD1":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        this.attachReq = true;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', true);
 
                     break;
                     default:
@@ -404,6 +401,8 @@ sap.ui.define([
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
                 }    
 
 
