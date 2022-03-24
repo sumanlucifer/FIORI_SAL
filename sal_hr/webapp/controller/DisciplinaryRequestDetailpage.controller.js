@@ -1,11 +1,14 @@
 sap.ui.define([
     "./BaseController",
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "com/sal/salhr/model/formatter"
 ],
     function (BaseController, Controller, JSONModel) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.DisciplinaryRequestDetailpage", {
+            formatter: formatter,
+            
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
@@ -29,6 +32,10 @@ sap.ui.define([
             _bindView: function (data) {
                 var object = data.results[0];
                 this.object = data.results[0];
+                
+                var oHeaderModel = new JSONModel(data.results[0]);
+                this.getView().setModel(oHeaderModel, "headerModel");
+
                 if (object.status === "APPROVED") {
                     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
                 } else {

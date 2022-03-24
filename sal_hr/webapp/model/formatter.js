@@ -76,13 +76,16 @@ sap.ui.define([], function() {
 
             switch (sValue) {
             case 'CANCELLED':
-            sValue = "Rejected";
+            sValue = "CANCELED";
             break;
             case 'APPROVED':
-            sValue = "Approved";
+            sValue = "APPROVED";
             break;
             case 'PENDING':
-            sValue = "Pending";
+            sValue = "PENDING";
+            break;
+            case 'REJECTED':
+            sValue = "REJECTED";
             break;
             }
             return sValue;
@@ -91,6 +94,9 @@ sap.ui.define([], function() {
             var returnStatus = "None";
             switch (sValue) {
             case 'CANCELLED':
+            returnStatus = "Error";
+            break;
+            case 'REJECTED':
             returnStatus = "Error";
             break;
             case 'APPROVED':

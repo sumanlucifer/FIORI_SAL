@@ -30,8 +30,11 @@
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
                                                 }}"/>
-            <Label id="idDisplayLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}"/>
-            <Text text="{displayQuantity}"/>
+            <Label id="idDisplayLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}" visible="{= ${LocalViewModel>/meetingType} === false ? true : false}"/>
+            <Text id="idRequestDays" text="{displayQuantity}" visible="{= ${LocalViewModel>/meetingType} === false ? true : false}"/>
+
+            <Label id="idDisplayLeaveTotalLeaveHrsLBL" text="{i18n>Total Hrs}" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/>
+            <Text id="idRequestHrs" text="{displayQuantity}" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/>
              
         </form:content>
     </form:SimpleForm>

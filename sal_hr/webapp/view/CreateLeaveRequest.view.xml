@@ -40,8 +40,8 @@
                             <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
                         </Select>
 
-                        <Label id="idAvailBal" text="Available Balance" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }" />
-                        <Input id="idAvailBalValue" value="{LeaveBalModel>/balance}" enabled="false" width="40%" visible="{= ${LocalViewModel>/uploadAttachment} === false ? true : false }">
+                        <Label id="idAvailBal" text="Available Balance" visible="{= ${LocalViewModel>/availBal} === true ? true : false }" />
+                        <Input id="idAvailBalValue" value="{LeaveBalModel>/balance}" enabled="false" width="40%" visible="{= ${LocalViewModel>/availBal} === true ? true : false }">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -62,7 +62,7 @@
 
                     </fm:SimpleForm>
 
-                      <fm:SimpleForm id="idReqMeetingForm" visible="false" layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                      <fm:SimpleForm id="idReqMeetingForm" visible="{= ${LocalViewModel>/meetingType} === true ? true : false }" layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                <Label id="idReq" text="Requesting" required="true"/>
                 <TimePicker id="TP1" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On" change="handleTimeChange"  />
             </fm:SimpleForm> 
