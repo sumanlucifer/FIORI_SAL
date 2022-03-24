@@ -5,9 +5,7 @@
 
     <Text class="sapUiSmallMarginBegin" text="Effective as of: {path:'effectiveStartDate',
                                                 type: 'sap.ui.model.type.Date',
-                                                formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
-                                                }}"/>
+                                                formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
 
     <form:SimpleForm id="idDisplayIDRequestSimpleForm" layout="ResponsiveGridLayout" columnsM="1" columnsL="1" columnsXL="1" singleContainerFullSize="false" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="12">
         <form:content>
@@ -29,7 +27,7 @@
             <Text text="{cust_idReplacementDetails/cust_jobTitle}"/>
 
             <Label text="Seniority Date" />
-            <Text text="{path:'cust_idReplacementDetails/cust_seniorityDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}"/>
+            <Text text="{path:'cust_idReplacementDetails/cust_seniorityDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
 
             <Label text="Cost Centre" />
             <Text text="{cust_idReplacementDetails/cust_costCentre}"/>

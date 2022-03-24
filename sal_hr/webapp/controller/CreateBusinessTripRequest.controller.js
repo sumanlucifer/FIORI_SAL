@@ -56,9 +56,7 @@ sap.ui.define([
               
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this.fnGetEmpInfo("12002429",this.sParentID);
-              
-
+                this.fnGetEmpInfo("12002024",this.sParentID);
             },
             fnSetCreateBusinessTripModel: function (oEmpInfoObj) {
                 this.EmpInfoObj = oEmpInfoObj;
@@ -120,7 +118,7 @@ sap.ui.define([
                 var oComponentModel = this.getComponentModel();
                 //    var sTickets = sObjectPath + "/tickets";
                 var sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
-                    externalCode: "12002429",
+                    externalCode: "12002024",
                     effectiveStartDate:"2022-03-13"
                 });
 

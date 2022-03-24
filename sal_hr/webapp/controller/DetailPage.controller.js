@@ -156,6 +156,15 @@ sap.ui.define([
                         })
                         break;
 
+                     // Business Trip Request Module
+                     case "2":
+                        this.oRouter.navTo("BusinessTripRequestDetailPage", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+
                     // Business Card Module    
                     case "5":
                         this.oRouter.navTo("BusinessRequestDetail", {

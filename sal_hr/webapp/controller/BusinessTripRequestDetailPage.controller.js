@@ -4,27 +4,24 @@ sap.ui.define([
     "com/sal/salhr/model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/Device"
+    "sap/ui/Device",
+    "sap/m/MessageBox"
 ],
 
-    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device) {
+    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device, MessageBox) {
         "use strict";
 
-        return BaseController.extend("com.sal.salhr.controller.AirportPassRequestDetailpage", {
+        return BaseController.extend("com.sal.salhr.controller.BusinessTripRequestDetailPage", {
             formatter: formatter,
             onInit: function () {
                 this.oRouter = this.getRouter();
-                this.oRouter.getRoute("AirportPassRequestDetail").attachPatternMatched(this._onObjectMatched, this);
+                this.oRouter.getRoute("BusinessTripRequestDetailPage").attachPatternMatched(this._onObjectMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
                     PageTitle: null,
                     Modify: true,
                     currentDate: new Date(),
-                    AirPortLocatonId: null,
-                    AirPortLocatoDesc: null,
-                    TypeOfPassId: null,
-                    TypeOfPassDesc: null
                 });
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
             },
@@ -38,12 +35,7 @@ sap.ui.define([
 
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
-                    this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                    this._getTicketData(this.sChildID);
-                }
-                if (sLayout === "EndColumnFullScreen" && this.byId("idFullScreenBTN").getIcon() == "sap-icon://full-screen") {
-                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
-                    this.byId("idFullScreenBTN").setIcon("sap-icon://exit-full-screen");
+                    this.byId("idBusinessTripetailsFullScreenBTN").setIcon("sap-icon://full-screen");
                     this._getTicketData(this.sChildID);
                 }
             },
@@ -61,84 +53,191 @@ sap.ui.define([
                 // }
 
                 var oComponentModel = this.getComponentModel();
-                var sKey = oComponentModel.createKey("/SF_AirportPassMain", {
-                    effectiveStartDate: object.effectiveStartDate,
-                    externalCode: object.externalCode
+                var sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
+                    // effectiveStartDate: object.effectiveStartDate,
+                    // externalCode: object.externalCode
+                    effectiveStartDate: "2022-03-14",
+                    externalCode: "12002428"
                 });
-
-                this.getView().setBusy(true);
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        $expand: "cust_toAirportPassItem,cust_toAirportPassItem/cust_typeOfPassNav,cust_toAirportPassItem/cust_airportLocNav,cust_toAirportPassItem/cust_companyIdNav,cust_toAirportPassItem/cust_passportCopyNav,cust_toAirportPassItem/cust_personalIdNav,cust_toAirportPassItem/cust_personalPhotoNav"
+                        $expand: "cust_toDutyTravelItem"
                     },
                     success: function (oData) {
-                        this._fnSetDisplayEditAirpassModel(oData);
+                        this._fnSetDisplayEditBusinessTripModel(oData);
                     }.bind(this),
                     error: function () {
                         this.getView().setBusy(false);
                     }.bind(this)
 
                 });
-                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Airport Travel Pass Request");
+
+                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Business Trip Request");
             },
 
-            _fnSetDisplayEditAirpassModel: function (oData) {
-                var oDisplayEditAirpassObj = {
-                    "externalCode": oData.externalCode,
-                    "externalName": oData.externalName,
-                    "effectiveStartDate": new Date(oData.effectiveStartDate),
-                    "cust_toAirportPassItem": {
-                        "cust_mobileNumber": oData.cust_toAirportPassItem.cust_mobileNumber,
-                        "cust_acknowledge2": oData.cust_toAirportPassItem.cust_acknowledge2,
-                        "cust_acknowledge1": oData.cust_toAirportPassItem.cust_acknowledge1,
-                        "cust_airportLoc": oData.cust_toAirportPassItem.cust_airportLoc,
-                        "cust_airportPassMain_effectiveStartDate": new Date(oData.cust_toAirportPassItem.cust_airportPassMain_effectiveStartDate),
-                        "cust_airportPassMain_externalCode": oData.cust_toAirportPassItem.cust_airportPassMain_externalCode,
-                        "cust_domStationName": oData.cust_toAirportPassItem.cust_domStationName,
-                        "cust_nationality": oData.cust_toAirportPassItem.cust_nationality,
-                        "cust_permitDate": oData.cust_toAirportPassItem.cust_permitDate,
-                        "cust_permitPurpose": oData.cust_toAirportPassItem.cust_permitPurpose,
-                        "cust_nationalID": oData.cust_toAirportPassItem.cust_nationalID,
-                        "cust_typeOfPass": oData.cust_toAirportPassItem.cust_typeOfPass,
-                        "externalCode": oData.cust_toAirportPassItem.externalCode,
-                        "externalName": oData.cust_toAirportPassItem.externalName,
-                        "cust_dateOfBirth": oData.cust_toAirportPassItem.cust_dateOfBirth
+            _fnSetDisplayEditBusinessTripModel: function (oData) {
+                var oTravelItemDetailsObj = oData.cust_toDutyTravelItem.results[0],
+                    oDisplayEditBusinessTripObj = {
+                        "externalCode": oData.externalCode,
+                        "effectiveStartDate": oData.effectiveStartDate,
+                        "cust_toDutyTravelItem": [
+                            {
+                                "cust_userId": oTravelItemDetailsObj.cust_userId,
+                                "cust_dutyTravelMain_externalCode": oTravelItemDetailsObj.cust_dutyTravelMain_externalCode,
+                                "cust_dutyTravelMain_effectiveStartDate": oTravelItemDetailsObj.cust_dutyTravelMain_effectiveStartDate,
+                                "externalCode": oTravelItemDetailsObj.externalCode,
+                                "externalName": oTravelItemDetailsObj.externalName,
+                                "cust_requestType": oTravelItemDetailsObj.cust_requestType,
+                                "cust_perDiemPayComp": oTravelItemDetailsObj.cust_perDiemPayComp,
+                                "cust_totalAmount": oTravelItemDetailsObj.cust_totalAmount,
+                                "cust_tripCategory": oTravelItemDetailsObj.cust_tripCategory,
+                                "cust_isCompany": oTravelItemDetailsObj.cust_isCompany,
+                                "cust_hotelBooking": oTravelItemDetailsObj.cust_hotelBooking,
+                                "cust_assignJustification": oTravelItemDetailsObj.cust_assignJustification,
+                                "cust_expenseTypeBusinessTravel": oTravelItemDetailsObj.cust_expenseTypeBusinessTravel,
+                                "cust_expenseTypeTrainingTravel": oTravelItemDetailsObj.cust_expenseTypeTrainingTravel,
+                                "cust_businessTicketAmount": oTravelItemDetailsObj.cust_businessTicketAmount,
+                                "cust_trainingExpenseAmount": oTravelItemDetailsObj.cust_trainingExpenseAmount,
+
+                                "cust_empName": oTravelItemDetailsObj.cust_empName,
+                                "cust_payGrade": oTravelItemDetailsObj.cust_payGrade,
+                                "cust_costCenter": oTravelItemDetailsObj.cust_costCenter,
+                                "cust_emerPhoneNum": oTravelItemDetailsObj.cust_emerPhoneNum,
+
+                                "cust_assignStartDate": oTravelItemDetailsObj.cust_assignStartDate,
+                                "cust_assignEndDate": oTravelItemDetailsObj.cust_assignEndDate,
+                                "cust_travelTime": oTravelItemDetailsObj.cust_travelTime,
+                                "cust_destination": oTravelItemDetailsObj.cust_destination,
+                                "cust_city": oTravelItemDetailsObj.cust_city,
+                                "cust_SAUotherCity": oTravelItemDetailsObj.cust_SAUotherCity,
+                                "cust_cityAll": oTravelItemDetailsObj.cust_cityAll,
+                                "cust_inOutKingdom": oTravelItemDetailsObj.cust_inOutKingdom,
+                                "cust_perDiem": oTravelItemDetailsObj.cust_perDiem,
+                                "cust_totalPerDiem": oTravelItemDetailsObj.cust_totalPerDiem,
+                                "cust_businessTravelDate": oTravelItemDetailsObj.cust_businessTravelDate,
+                                "cust_businessTravelFrom": oTravelItemDetailsObj.cust_businessTravelFrom,
+                                "cust_businessTravelTo": oTravelItemDetailsObj.cust_businessTravelTo,
+                                "cust_businessTravelFlightNum": oTravelItemDetailsObj.cust_businessTravelFlightNum,
+                                "cust_businessTravelDepTime": oTravelItemDetailsObj.cust_businessTravelDepTime,
+                                "cust_businessTravelArrTime": oTravelItemDetailsObj.cust_businessTravelArrTime,
+                                "cust_businessTravelPayComp": oTravelItemDetailsObj.cust_businessTravelPayComp,
+                                "cust_trainingTravelDate": oTravelItemDetailsObj.cust_trainingTravelDate,
+                                "cust_trainingTravelFrom": oTravelItemDetailsObj.cust_trainingTravelFrom,
+                                "cust_trainingTravelTo": oTravelItemDetailsObj.cust_trainingTravelTo,
+                                "cust_trainingTravelFlightNum": oTravelItemDetailsObj.cust_trainingTravelFlightNum,
+                                "cust_trainingTravelDepTime": oTravelItemDetailsObj.cust_trainingTravelDepTime,
+                                "cust_trainingTravelArrTime": oTravelItemDetailsObj.cust_trainingTravelArrTime,
+                                "cust_trainingTravelPayComp": oTravelItemDetailsObj.cust_trainingTravelPayComp,
+                                "cust_ticketAmount": oTravelItemDetailsObj.cust_ticketAmount,
+                                "cust_expenseTypeVisaFee": oTravelItemDetailsObj.cust_expenseTypeVisaFee,
+                                "cust_visaFeePayComp": oTravelItemDetailsObj.cust_visaFeePayComp,
+                                "cust_visaFeeExpenseAmount": oTravelItemDetailsObj.cust_visaFeeExpenseAmount,
+
+                                "cust_travelSDate1": oTravelItemDetailsObj.cust_travelSDate1,
+                                "cust_travelEDate1": oTravelItemDetailsObj.cust_travelEDate1,
+                                "cust_travelTime1": oTravelItemDetailsObj.cust_travelTime1,
+                                "cust_desti1": oTravelItemDetailsObj.cust_desti1,
+                                "cust_citySau1": oTravelItemDetailsObj.cust_citySau1,
+                                "cust_SAUotherCity2": oTravelItemDetailsObj.cust_SAUotherCity2,
+                                "cust_city1": oTravelItemDetailsObj.cust_city1,
+                                "cust_inOutKingdom1": oTravelItemDetailsObj.cust_inOutKingdom1,
+                                "cust_perDiem1": oTravelItemDetailsObj.cust_perDiem1,
+                                "cust_totalPerDiem1": oTravelItemDetailsObj.cust_totalPerDiem1,
+                                "cust_TravelDate1": oTravelItemDetailsObj.cust_TravelDate1,
+                                "cust_TravelFrom1": oTravelItemDetailsObj.cust_TravelFrom1,
+                                "cust_TravelTo1": oTravelItemDetailsObj.cust_TravelTo1,
+                                "cust_TravelFlightNum1": oTravelItemDetailsObj.cust_TravelFlightNum1,
+                                "cust_TravelDepTime1": oTravelItemDetailsObj.cust_TravelDepTime1,
+                                "cust_TravelArrTime1": oTravelItemDetailsObj.cust_TravelArrTime1,
+                                "cust_TravelPayComp1": oTravelItemDetailsObj.cust_TravelPayComp1,
+                                "cust_ticketAmount1": oTravelItemDetailsObj.cust_ticketAmount1,
+                                "cust_expenseTypeVisaFee1": oTravelItemDetailsObj.cust_expenseTypeVisaFee1,
+                                "cust_visaFeePayComp1": oTravelItemDetailsObj.cust_visaFeePayComp1,
+                                "cust_visaFeeExpenseAmount1": oTravelItemDetailsObj.cust_visaFeeExpenseAmount1,
+
+                                "cust_travelSDate2": oTravelItemDetailsObj.cust_travelSDate2,
+                                "cust_travelEDate2": oTravelItemDetailsObj.cust_travelEDate2,
+                                "cust_travelTime2": oTravelItemDetailsObj.cust_travelTime2,
+                                "cust_desti2": oTravelItemDetailsObj.cust_desti2,
+                                "cust_citySau2": oTravelItemDetailsObj.cust_citySau2,
+                                "cust_SAUotherCity3": oTravelItemDetailsObj.cust_SAUotherCity3,
+                                "cust_city2": oTravelItemDetailsObj.cust_city2,
+                                "cust_inOutKingdom2": oTravelItemDetailsObj.cust_inOutKingdom2,
+                                "cust_perDiem2": oTravelItemDetailsObj.cust_perDiem2,
+                                "cust_totalPerDiem2": oTravelItemDetailsObj.cust_totalPerDiem2,
+                                "cust_TravelDate2": oTravelItemDetailsObj.cust_TravelDate2,
+                                "cust_TravelFrom2": oTravelItemDetailsObj.cust_TravelFrom2,
+                                "cust_TravelTo2": oTravelItemDetailsObj.cust_TravelTo2,
+                                "cust_TravelFlightNum2": oTravelItemDetailsObj.cust_TravelFlightNum2,
+                                "cust_TravelDepTime2": oTravelItemDetailsObj.cust_TravelDepTime2,
+                                "cust_TravelArrTime2": oTravelItemDetailsObj.cust_TravelArrTime2,
+                                "cust_TravelPayComp2": oTravelItemDetailsObj.cust_TravelPayComp2,
+                                "cust_ticketAmount2": oTravelItemDetailsObj.cust_ticketAmount2,
+                                "cust_expenseTypeVisaFee2": oTravelItemDetailsObj.cust_expenseTypeVisaFee2,
+                                "cust_visaFeePayComp2": oTravelItemDetailsObj.cust_visaFeePayComp2,
+                                "cust_visaFeeExpenseAmount2": oTravelItemDetailsObj.cust_visaFeeExpenseAmount2,
+
+                                "cust_status": oTravelItemDetailsObj.cust_status,
+                                "cust_returnDate": oTravelItemDetailsObj.cust_returnDate,
+                                "cust_paymentType": oTravelItemDetailsObj.cust_paymentType,
+                                "mdfSystemRecordStatus": oTravelItemDetailsObj.mdfSystemRecordStatus,
+
+                                "travelattachment1FileContent": "create travel attache",
+                                "travelattachment1FileName": "tr1.txt",
+                                "isTravelAttach1New": true,
+                                "travelattachment1UserId": "Extentia",
+                                "travelattachment2FileContent": "create travel2 attache",
+                                "travelattachment2FileName": "tr2.txt",
+                                "isTravelAttach2New": true,
+                                "travelattachment2UserId": "Extentia",
+                                "businessTravelattachmentFileContent": "btravle create",
+                                "businessTravelattachmentFileName": "btravel.txt",
+                                "isbusinessTravelAttachNew": true,
+                                "businessTravelattachmentUserId": "Extentia",
+                                "trainingTravelattachmentFileContent": "btravle2create",
+                                "trainingTravelattachmentFileName": "btrave2.txt",
+                                "istrainingTravelAttachNew": true,
+                                "trainingTravelattachmentUserId": "Extentia",
+                                "receiptEmbassyattachmentFileContent": "btravle 3create",
+                                "receiptEmbassyattachmentFileName": "btrave3.txt",
+                                "isreceiptEmbassyAttachNew": true,
+                                "receiptEmbassyattachmentUserId": "Extentia",
+                                "receiptEmbassyattachment1FileContent": "btravle4 create",
+                                "receiptEmbassyattachment1FileName": "btrave4.txt",
+                                "isreceiptEmbassyAttach1New": true,
+                                "receiptEmbassyattachment1UserId": "Extentia",
+                                "receiptEmbassyattachment2FileContent": "emb22 create",
+                                "receiptEmbassyattachment2FileName": "emb22.txt",
+                                "isreceiptEmbassyAttach2New": true,
+                                "receiptEmbassyattachment2UserId": "Extentia",
+                                "visaCopyattachmentFileContent": "btravle 6 create",
+                                "visaCopyattachmentFileName": "btrave6.txt",
+                                "isvisaCopyAttachNew": true,
+                                "visaCopyattachmentUserId": "Extentia",
+                                "visaCopyattachment1FileContent": "btravle 7 create",
+                                "visaCopyattachment1FileName": "btrave7.txt",
+                                "isvisaCopyAttach1New": true,
+                                "visaCopyattachment1UserId": "Extentia",
+                                "visaCopyattachment2FileContent": "btravle 8 create",
+                                "visaCopyattachment2FileName": "btrave8.txt",
+                                "isvisaCopyAttach2New": true,
+                                "visaCopyattachment2UserId": "Extentia",
+                                "travelAttachment1Id": "34908",
+                                "travelAttachment2Id": "34909",
+                                "businessTravelAttachmentId": "34910",
+                                "trainingTravelAttachmentId": "34911",
+                                "receiptEmbassyAttachmentId": "34912",
+                                "receiptEmbassyAttachment1Id": "34913",
+                                "receiptEmbassyAttachment2Id": "34914",
+                                "visaCopyAttachmentId": "34915",
+                                "visaCopyAttachment1Id": "34916",
+                                "visaCopyAttachment2Id": "34917"
+                            }
+                        ]
                     },
-                    "isPersonalIdAttachmentNew": false,
-                    "personalIdAttachmentFileContent": "Personal ID",
-                    "personalIdAttachmentFileName": "Personal ID.txt",
-                    "personalIdAttachmentUserId": "Extentia",
-                    "isPersonalPhotoAttachmentNew": false,
-                    "personalPhotoAttachmentFileContent": "Personal photo",
-                    "personalPhotoAttachmentFileName": "Personal Photo.txt",
-                    "personalPhotoAttachmentUserId": "Extentia",
-                    "isPassportAttachmentNew": false,
-                    "passportAttachmentFileContent": "Passport",
-                    "passportAttachmentFileName": "Passport.txt",
-                    "passportAttachmentUserId": "Extentia",
-                    "isCompanyIdAttachmentNew": false,
-                    "companyIdAttachmentFileContent": "Company Id",
-                    "companyIdAttachmentFileName": "Company Id.txt",
-                    "companyIdAttachmentUserId": "Extentia"
-                },
-                    oAttachmentModel = new JSONModel({
-                        PersonalIdAttachment: oData.cust_toAirportPassItem.cust_personalIdNav,
-                        PersonalPhotoAttachment: oData.cust_toAirportPassItem.cust_personalPhotoNav,
-                        PassportAttachment: oData.cust_toAirportPassItem.cust_passportCopyNav,
-                        CompanyIdAttachment: oData.cust_toAirportPassItem.cust_companyIdNav,
-                    }),
-                    oDisplayEditAirpassModel = new JSONModel(oDisplayEditAirpassObj);
-
-                this.getView().setModel(oAttachmentModel, "AttachmentModel");
-                this.getView().setModel(oDisplayEditAirpassModel, "DisplayEditAirpassModel");
-
-                this.getView().getModel("LocalViewModel").setProperty("/AirPortLocatonId", oData.cust_toAirportPassItem.cust_airportLoc);
-                this.getView().getModel("LocalViewModel").setProperty("/AirPortLocatoDesc", oData.cust_toAirportPassItem.cust_airportLocNav.results[0].label_defaultValue);
-                this.getView().getModel("LocalViewModel").setProperty("/TypeOfPassId", oData.cust_toAirportPassItem.cust_typeOfPass);
-                this.getView().getModel("LocalViewModel").setProperty("/TypeOfPassDesc", oData.cust_toAirportPassItem.cust_typeOfPassNav.results[0].label_defaultValue);
-
-                this.getView().setBusy(false);
+                    oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj);
+                this.getView().setModel(oDisplayEditBusinessTripModel, "DisplayEditBusinessTripModel");
             },
 
             onEditPress: function () {
@@ -152,15 +251,17 @@ sap.ui.define([
             onWithdrawPress: function () {
                 this.getView().setBusy(true);
                 var oComponentModel = this.getComponentModel(),
-                    sKey = oComponentModel.createKey("/SF_AirportPassMain", {
-                        // effectiveStartDate: new Date("2022/03/19"),
+                    sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
+                        // effectiveStartDate: new Date("2022-04-13"),
+                        // externalCode: "12002427"
                         effectiveStartDate: this.object.effectiveStartDate,
                         externalCode: this.object.externalCode
                     });
                 oComponentModel.remove(sKey, {
                     success: function (oData) {
+                        this.getView().setBusy(false);
                         if (oData !== "" || oData !== undefined) {
-                            sap.m.MessageBox.success("Record Deleted successfully.");
+                            MessageBox.success("Record Deleted successfully.");
                             oComponentModel.refresh();
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
@@ -169,48 +270,52 @@ sap.ui.define([
                         } else {
                             MessageBox.error("Record Not able to delete.");
                         }
-                        this.getView().setBusy(false);
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
-                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-                    }.bind(this)
+                        MessageBox.error("Record Not able to delete.");
+                    }.bind(this),
                 });
             },
 
             onSavePress: function () {
-                var sValidationErrorMsg = this.fnValidateAirPassPayload(),
+                var
+                    // sValidationErrorMsg = this.fnValidateAirPassPayload(),
 
-                    sKey = this.getView().getModel().createKey("/SF_AirportPassMain", {
-                        effectiveStartDate: this.object.effectiveStartDate,
-                        externalCode: this.object.externalCode
+                    sKey = this.getView().getModel().createKey("/SF_DutyTravelMain", {
+                        // effectiveStartDate: object.effectiveStartDate,
+                        // externalCode: object.externalCode
+                        effectiveStartDate: "2022-03-14",
+                        externalCode: "12002428"
                     });
 
-                if (sValidationErrorMsg === "") {
-                    this.getView().setBusy(true);
+                // if (sValidationErrorMsg === "") {
+                this.getView().setBusy(true);
 
-                    this._fnUpdateAttachmentData();
+                // this._fnUpdateAttachmentData();
 
-                    var oPayloadObj = this.getView().getModel("DisplayEditAirpassModel").getProperty("/");
-                    oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
+                var oPayloadObj = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
+                oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany = (oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany === "Yes" ? true : false);
 
-                    this.getView().getModel().update(sKey, oPayloadObj, {
-                        success: function (oResponse) {
-                            this.getView().setBusy(false);
-                            sap.m.MessageBox.success("Requested changes updated successfully.");
-                            this.oRouter.navTo("detail", {
-                                parentMaterial: this.sParentID,
-                                layout: "TwoColumnsMidExpanded"
-                            });
-                        }.bind(this),
-                        error: function (oError) {
-                            this.getView().setBusy(false);
-                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-                        }.bind(this)
-                    });
-                } else {
-                    sap.m.MessageBox.error(sValidationErrorMsg);
-                }
+                // oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
+
+                this.getView().getModel().update(sKey, oPayloadObj, {
+                    success: function (oResponse) {
+                        this.getView().setBusy(false);
+                        MessageBox.success("Requested changes updated successfully.");
+                        this.oRouter.navTo("detail", {
+                            parentMaterial: this.sParentID,
+                            layout: "TwoColumnsMidExpanded"
+                        });
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getView().setBusy(false);
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    }.bind(this)
+                });
+                // } else {
+                //     MessageBox.error(sValidationErrorMsg);
+                // }
             },
 
             _fnUpdateAttachmentData: function () {
@@ -362,17 +467,14 @@ sap.ui.define([
                 // Validate attachment sections
                 if (this.getView().byId("idEditUploadSetPersonalID").getItems().length <= 0) {
                     sValidationErrorMsg = "Please upload files for Personal ID Copy.";
-                    this.getView().setBusy(false);
                     return sValidationErrorMsg;
                 }
                 if (this.getView().byId("idEditUploadSetPersonalPhoto").getItems().length <= 0) {
                     sValidationErrorMsg = "Please upload files for Personal Photo.";
-                    this.getView().setBusy(false);
                     return sValidationErrorMsg;
                 }
                 if (this.getView().byId("idEditUploadSetCompanyIDCopy").getItems().length <= 0) {
                     sValidationErrorMsg = "Please upload files for Company ID Copy.";
-                    this.getView().setBusy(false);
                     return sValidationErrorMsg;
                 }
 
@@ -440,22 +542,6 @@ sap.ui.define([
                             AttachmentFileName: "personalPhotoAttachmentFileName"
                         };
                         break;
-
-                    case "idEditUploadSetnonnationals":
-                        oUploadPropertyObj = {
-                            AttachmentNew: "isPassportAttachmentNew",
-                            AttachmentFileContent: "passportAttachmentFileContent",
-                            AttachmentFileName: "passportAttachmentFileName"
-                        };
-                        break;
-
-                    case "idEditUploadSetCompanyIDCopy":
-                        oUploadPropertyObj = {
-                            AttachmentNew: "isCompanyIdAttachmentNew",
-                            AttachmentFileContent: "companyIdAttachmentFileContent",
-                            AttachmentFileName: "companyIdAttachmentFileName"
-                        };
-                        break;
                 }
 
                 return oUploadPropertyObj;
@@ -480,20 +566,6 @@ sap.ui.define([
                         sFileName = oAttachmentData.PersonalPhotoAttachment.fileName.split(".")[0];
                         sFileext = oAttachmentData.PersonalPhotoAttachment.fileExtension;
                         sMimeType = oAttachmentData.PersonalPhotoAttachment.mimeType;
-                        break;
-
-                    case "idDisplayUploadSetPassportcopy":
-                        sFileContent = oAttachmentData.PassportAttachment.fileContent;
-                        sFileName = oAttachmentData.PassportAttachment.fileName.split(".")[0];
-                        sFileext = oAttachmentData.PassportAttachment.fileExtension;
-                        sMimeType = oAttachmentData.PassportAttachment.mimeType;
-                        break;
-
-                    case "idDisplayUploadSetCompanyIDCopy":
-                        sFileContent = oAttachmentData.CompanyIdAttachment.fileContent;
-                        sFileName = oAttachmentData.CompanyIdAttachment.fileName.split(".")[0];
-                        sFileext = oAttachmentData.CompanyIdAttachment.fileExtension;
-                        sMimeType = oAttachmentData.CompanyIdAttachment.mimeType;
                         break;
                 }
 
@@ -524,7 +596,7 @@ sap.ui.define([
                     sLayout = "ThreeColumnsMidExpanded";
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
-                this.oRouter.navTo("AirportPassRequestDetail", {
+                this.oRouter.navTo("BusinessTripRequestDetailPage", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,
                     layout: sLayout
@@ -533,12 +605,12 @@ sap.ui.define([
 
             handleClose: function (oEvent) {
                 var sLayout = "",
-                    sIcon = this.byId("idFullScreenBTN").getIcon();
+                    sIcon = this.byId("idBusinessTripetailsFullScreenBTN").getIcon();
                 if (sIcon === "sap-icon://full-screen") {
                     sLayout = "TwoColumnsMidExpanded";
                 } else {
                     sLayout = "ThreeColumnsMidExpanded";
-                    this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                    this.byId("idBusinessTripetailsFullScreenBTN").setIcon("sap-icon://full-screen");
                 }
                 this.oRouter.navTo("detail", {
                     parentMaterial: this.sParentID,
@@ -551,6 +623,11 @@ sap.ui.define([
                     parentMaterial: this.sParentID,
                     layout: "TwoColumnsMidExpanded"
                 });
+            },
+
+            onReqTypeChange: function () {
+
             }
         });
-    });        
+    });
+

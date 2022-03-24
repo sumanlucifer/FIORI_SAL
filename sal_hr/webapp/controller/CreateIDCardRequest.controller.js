@@ -108,7 +108,7 @@ sap.ui.define([
         
             fnGetIDReplacementRequestPayload: function () {
                 var oDataObj = this.getView().getBindingContext().getObject(),
-                    sEffectiveStartDate = this.getView().byId("idEffectDatePicker").getValue();
+                    sEffectiveStartDate = this.getView().byId("idEffectDatePicker").getText();
 
                 return {
                     "User": oDataObj.userId,

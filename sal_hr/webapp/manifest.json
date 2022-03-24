@@ -190,13 +190,16 @@
                 {
                     "pattern": "BusinessCardRequest/{parentMaterial}/{layout}",
                     "name": "BusinessCardRequest",
+
                     "layout": "EndColumnFullScreen",
                     "titleTarget": "",
                     "greedy": false,
                     "target": [
                         "BusinessCardRequest"
+
                     ]
                 },
+
                 {
                     "pattern": "BusinessTripRequest/{parentMaterial}/{layout}",
                     "name": "BusinessTripRequest",
@@ -244,16 +247,17 @@
                     ]
                 },
                 {
-                    "pattern": "BusinessRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
-                    "name": "BusinessRequestDetail",
+                    "pattern": "AirportPassRequest/{parentMaterial}/{layout}",
+                    "name": "AirportPassRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
                     "target": [
-                        "master",
-                        "detail",
-                        "BusinessRequestDetail"
+                        "AirportPassRequest"
                     ]
                 },
                 {
-                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
+                    "pattern": "detail/{parentMaterial}/AirportPassRequestDetail/{childModule}/{layout}",
                     "name": "AirportPassRequestDetail",
                     "target": [
                         "master",
@@ -262,13 +266,12 @@
                     ]
                 },
                 {
-                    "pattern": "AirportPassRequest/{parentMaterial}/{layout}",
-                    "name": "AirportPassRequest",
-                    "layout": "EndColumnFullScreen",
-                    "titleTarget": "",
-                    "greedy": false,
+                    "pattern": "detail/{parentMaterial}/BusinessTripRequestDetailPage/{childModule}/{layout}",
+                    "name": "BusinessTripRequestDetailPage",
                     "target": [
-                        "AirportPassRequest"
+                        "master",
+                        "detail",
+                        "BusinessTripRequestDetailPage"
                     ]
                 }
             ],
@@ -309,14 +312,6 @@
                     "viewName": "CreateDisciplinaryRequest",
                     "controlAggregation": "endColumnPages"
                 },
-                "BusinessCardRequest": {
-                    "viewName": "CreateBusinessCardRequest",
-                    "controlAggregation": "endColumnPages"
-                },
-                "BusinessTripRequest": {
-                    "viewName": "CreateBusinessTripRequest",
-                    "controlAggregation": "endColumnPages"
-                },
                 "AirportPassRequest": {
                     "viewName": "CreateAirportPassRequest",
                     "controlAggregation": "endColumnPages"
@@ -337,18 +332,19 @@
                     "viewName": "DisciplinaryRequestDetailpage",
                     "controlAggregation": "endColumnPages"
                 },
-                "BusinessRequestDetail": {
-                    "viewName": "BusinessCardRequestDetailpage",
-                    "controlAggregation": "endColumnPages"
-                },
                 "AirportPassRequestDetail": {
                     "viewName": "AirportPassRequestDetailpage",
                     "controlAggregation": "endColumnPages"
+                },
+                "BusinessTripRequestDetailPage": {
+                    "viewName": "BusinessTripRequestDetailPage",
+                    "controlAggregation": "endColumnPages"
                 }
             }
-        },
-        "sap.cloud": {
-            "public": true,
-            "service": "employee_portal_service"
         }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "employee_portal_service"
     }
+}

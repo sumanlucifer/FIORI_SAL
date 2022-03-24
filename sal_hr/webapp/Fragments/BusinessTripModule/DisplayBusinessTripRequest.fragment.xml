@@ -1,0 +1,124 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:upload="sap.m.upload">
+
+    <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="When would you like your changes to take effect? " />
+        <Text id="idDisplayEffectDatePicker" text="{path:'DisplayEditBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+    </form:SimpleForm>
+
+    <form:SimpleForm title="Business Travel Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="Request Type"/>
+        <Text id="idDisplayReqType" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType}"/>
+
+        <Label text="Per Diem - Pay Component"/>
+        <Text id="idDisplayPayComp" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiemPayComp}"/>
+
+        <Label text="Total Travel Amount" />
+        <Text id="idDisplayTravelAmt" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalAmount}"/>
+    </form:SimpleForm>
+
+    <form:SimpleForm title="Travel Request" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="Trip Category"/>
+        <Text id="idDisplayTripCategory" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory}"/>
+
+        <Label text="Airline ticket to be booked by HR?"/>
+        <Text id="idDisplayHRBook" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_isCompany}"/>
+       
+        <Label text="Hotel Booking Required?" />
+        <Text id="idDisplayHotlBook" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_hotelBooking}"/>
+    </form:SimpleForm>
+
+    <form:SimpleForm title="Travel Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="Travel Date"/>
+        <Text id="idDisplayTravelDate"  text="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+
+        <Label text="Return Date"/>
+        <Text id="idDisplayReturnDate" text="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_returnDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+
+        <Label text="Destination Country"/>
+        <Text id="idDisplayDestCountry" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_destination}"/>
+        
+        <Label text="City(Saudi)"/>
+        <Text id="idDisplayCity" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}"/>
+
+        <Label text="Other City" />
+        <Text id="idDisplayOtherCity" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}"/>
+
+        <Label text="City (Other Country)" />
+        <Text id="idDisplayCityCountry" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}" />
+
+        <Label text="Inside/Otside Kingdom" />
+        <Text id="idDisplayInsOutKingdom" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" />
+
+        <Label text="Per Diem" />
+        <Text id="idDisplayPerDiem" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}" />
+
+        <Label text="Total Per Diem" />
+        <Text id="idDisplayTotalPErDiem" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalPerDiem}" />
+    </form:SimpleForm>
+
+    <form:SimpleForm title="Flight Deatils" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="Travel Date" />
+        <Text id="idDisplayFlightTravelDate" text="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+
+
+        <Label text="Travel To"/>
+        <Text id="idDisplayTravelTo" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelTo}"/>
+
+        <Label text="Flight Number" />
+        <Text id="idDisplayFlightNum" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelFlightNum}" />
+
+        <Label text="Departure Time"/>
+        <Text id="idDisplayDepTime" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDepTime}"/>
+
+        <Label text="Arrival Time" />
+        <Text id="idDisplayArrivalTime" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelArrTime}" />
+
+        <Label text="Pay Component"/>
+        <Text id="idDisplayPayCom" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelPayComp}"/>
+
+        <Label text="Ticket Amount" />
+        <Text id="idDisplayTicketAmt" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}" />
+    </form:SimpleForm>
+
+    <VBox>
+        <Label text="Attach Boarding Pass" />
+        <upload:UploadSet id="idDisplayUploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200"  afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}"/>
+    </VBox>
+
+    <form:SimpleForm title="Visa Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="Visa Type"/>
+        <Text id="idDisplayVisaType" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee}"/>
+            
+        <Label text="Pay Component Visa"/>
+        <Text id="idDisplayPayCompVisa" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp}"/>
+
+        <Label text="Visa Amount" />
+        <Text id="idDisplayVisaAmt" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeeExpenseAmount}" />
+    </form:SimpleForm>
+
+    <VBox>
+        <Label text="Attach Visa Copy" />
+        <upload:UploadSet id="idDisplayAttachVisa" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200"  afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}"/>
+    </VBox>
+    <VBox>
+        <Label text="Attach Embassy Receipt" />
+        <upload:UploadSet id="idDisplayAttachEmbassyRec" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200"  afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}"/>
+    </VBox>
+
+    <form:SimpleForm title="Employee Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="Employee Name" />
+        <Text id="idDisplayCustEmpName" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_empName}" />
+
+        <Label text="Pay Grade"/>
+        <Text id="idDisplayPayGrade" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_payGrade}" />
+
+        <Label text="Cost Center" />
+        <Text id="idDisplayCostCenter" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_costCenter}" />
+
+        <Label text="Emergency Phone Number" />
+        <Text id="idDisplayEmergencyPhn" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_emerPhoneNum}" />
+    </form:SimpleForm>
+</core:FragmentDefinition>

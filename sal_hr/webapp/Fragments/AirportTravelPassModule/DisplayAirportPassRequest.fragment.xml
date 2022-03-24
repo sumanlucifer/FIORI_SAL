@@ -13,7 +13,7 @@
     </form:SimpleForm>
     <form:SimpleForm title="{i18n>AirportPassDetails}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>TypeOfPass}" />
-        <Text id="idDisplayTypeofPass" text="{LocalViewModel>/TypeOfPassDesc} - {LocalViewModel>/TypeOfPassId}"/>
+        <Text id="idDisplayTypeofPass" text="{LocalViewModel>/TypeOfPassDesc} ({LocalViewModel>/TypeOfPassId})"/>
 
         <Label text="{i18n>NationalID}" />
         <Text id="idDisplayNationalID" text="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationalID}"/>
@@ -32,7 +32,7 @@
         <Text id="idDisplayNationality" text="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationality}" />
 
         <Label text="{i18n>AirportLocation}"/>
-        <Text id="idDisplayAirportLoc" text="{LocalViewModel>/AirPortLocatoDesc} - {LocalViewModel>/AirPortLocatonId}"/>
+        <Text id="idDisplayAirportLoc" text="{LocalViewModel>/AirPortLocatoDesc} ({LocalViewModel>/AirPortLocatonId})"/>
 
         <Label text="{i18n>DomesticStationName}" visible="{= ${DisplayEditAirpassModel>/cust_toAirportPassItem/cust_airportLoc} === 'Loc05' ? true : false}"/>
         <Text id="iDisplayDomasticStation" visible="{= ${DisplayEditAirpassModel>/cust_toAirportPassItem/cust_airportLoc} === 'Loc05' ? true : false}" text="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_domStationName}"/>

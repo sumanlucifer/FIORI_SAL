@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.sal.salhr.controller.AirportPassRequestDetailpage"
+<mvc:View controllerName="com.sal.salhr.controller.BusinessTripRequestDetailPage"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
@@ -18,7 +18,7 @@
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{i18n>RequestID} {headerModel>/ticketCode}"/>
+                    <Label text="{i18n>RequestID}: {headerModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
                     <Button text="{i18n>Modify}" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
@@ -26,7 +26,7 @@
                 </f:actions>
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
-                    <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
+                    <Button id="idBusinessTripetailsFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
                     <Button icon="sap-icon://decline" type="Transparent" press="handleClose" />
                 </f:navigationActions>
             </f:DynamicPageTitle>
@@ -41,7 +41,7 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requestedby}"/>
-                        <ObjectAttribute text="{headerModel>/employeeId}"/>
+                        <ObjectAttribute text="{headerModel>/externalCreatedBy}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DueByDate}"/>
@@ -57,26 +57,16 @@
         <!-- DynamicPage Content -->
         <f:content>
             <VBox id="idContentVBox" width="100%">
-                <IconTabBar id="idAirportPassRequesticonTabBar" >
+                <IconTabBar id="idBusinessTripiconTabBar" >
                     <items>
-                        <IconTabFilter id="idAirportPassRequestDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.AirportTravelPassModule.DisplayAirportPassRequest" type="XML"/>
+                        <IconTabFilter id="idDisplayBusinessTripRequestITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.BusinessTripModule.DisplayBusinessTripRequest" type="XML"/>
                         </IconTabFilter>
-                        <IconTabFilter id="idAirportPassRequestEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.AirportTravelPassModule.EditAirportPassRequest" type="XML"/>
+                        <IconTabFilter id="idEditBusinessTripRequestITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.BusinessTripModule.EditBusinessTripRequest" type="XML"/>
                         </IconTabFilter>
-                        <!-- <IconTabFilter text="{i18n>Resolution}">
-                            <Text text="" />
-                        </IconTabFilter>
-                        <IconTabFilter text="{i18n>History}">
-                            <Text text="" />
-                        </IconTabFilter> -->
                     </items>
                 </IconTabBar>
-
-             
-
-              
             </VBox>
         </f:content>
         <f:footer>
