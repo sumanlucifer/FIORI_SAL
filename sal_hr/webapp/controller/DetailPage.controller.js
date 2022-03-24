@@ -84,15 +84,13 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
-
-                    // Business Card Module    
+                    // Business Card Module
                     case "5":
                         this.oRouter.navTo("BusinessCardRequest", {
                             parentMaterial: this.sParentID,
                             layout: "EndColumnFullScreen"
-                        });
+                        })
                         break;
-
                     // Airport Travel Pass Request Module
                     case "6":
                         this.oRouter.navTo("AirportPassRequest", {
@@ -154,6 +152,15 @@ sap.ui.define([
                             childModule: oEvent.getSource().getBindingContext().getObject().ID,
                             layout: "ThreeColumnsMidExpanded"
                         })
+                        break;
+                    // Business Card Module
+                    case "5":
+                        this.oRouter.navTo("BusinessRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+
                         break;
 
                     // Business Card Module    

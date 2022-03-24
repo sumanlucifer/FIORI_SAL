@@ -28,6 +28,16 @@
                         <DatePicker id="idIncidentStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" change="onLeaveStartDatChange"/>
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                         <Label text="PRN" required="true" />
+                        <Select id="idPRN" items="{ path: '/EmpInfo',
+                                              
+        filters : [
+            { path : 'managerId', operator : 'EQ', value1 : '12002187'}
+        ]
+                                              }" change="onTimeTyeChange">
+                            <core:Item key="{externalCode}" text="{userId}" />
+                        </Select>
+
                         <Label text="Warning Type" required="true" />
                         <Select id="idWarningType" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {

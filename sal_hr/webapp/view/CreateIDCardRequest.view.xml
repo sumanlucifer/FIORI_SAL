@@ -25,41 +25,41 @@
                 <l:content>
                  <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="When would you like your changes to take effect? " required="true" />
-            <DatePicker id="idEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}" enabled="false"/>
+            <Text id="idEffectDatePicker" text="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
         </fm:SimpleForm>
         <fm:SimpleForm title="ID Replacement Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="PRN" />
-            <Input id="idPRNInp" value="{userId}" enabled= "false"/>
+            <Text id="idPRNInp" text="{userId}"/>
 
             <Label text="First Name" />
-            <Input id="idFirstNameInp" value="{firstName}" enabled= "false"/>
+            <Text id="idFirstNameInp" text="{firstName}"/>
 
             <Label text="Last Name" />
-            <Input id="idLastNameInp" value="{lastName}" enabled= "false"/>
+            <Text id="idLastNameInp" text="{lastName}"/>
 
             <Label text="Second Name" />
-            <Input id="idSecondNameInp" value="{middleName}" enabled= "false"/>
+            <Text id="idSecondNameInp" text="{middleName}"/>
 
             <Label text="Job Title" />
-            <Input id="idJobTitleInp" value="{jobTitle}" enabled= "false"/>
+            <Text id="idJobTitleInp" text="{jobTitle}"/>
 
             <Label text="Seniority Date" />
-            <DatePicker id="idSeniorityDate" value="{path:'seniorityDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/>
+            <Text id="idSeniorityDate" text="{path:'seniorityDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
 
             <Label text="Cost Centre" />
-            <Input id="idCostCentreInp" value="{costCentre}" enabled= "false"/>
+            <Text id="idCostCentreInp" text="{costCentre}"/>
 
             <Label text="Nationality" />
-            <Input id="idNationalityInp" value="{nationality}" enabled= "false"/>
+            <Text id="idNationalityInp" text="{nationality}"/>
 
             <Label text="Pay Grade" />
-            <Input id="idPayGradeInp" value="{payGrade}" enabled= "false"/>
+            <Text id="idPayGradeInp" text="{payGrade}"/>
 
             <Label text="Blood Group" />
-            <Input id="idBloodGroupInp" value="{bloodGroup}" enabled= "false"/>
+            <Text id="idBloodGroupInp" text="{bloodGroup}"/>
 
             <Label text="Emergency Phone" />
-            <Input id="idEmergencyPhoneInp" value="{emergencyNumber}" enabled= "false" />
+            <Text id="idEmergencyPhoneInp" text="{emergencyNumber}" />
         </fm:SimpleForm>
                 </l:content>
             </l:VerticalLayout>

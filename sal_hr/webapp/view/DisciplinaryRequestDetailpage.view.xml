@@ -13,12 +13,12 @@
                     <Title id="idPageTitle" text="{LocalViewModel>/PageTitle}"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {ticketCode}">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
                         <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="handleClose"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{i18n>RequestID} :{ticketCode}"/>
+                    <Label text="Request {headerModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
                     <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
@@ -37,15 +37,16 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Status}"/>
-                        <ObjectStatus text="{approvalStatus}" state="Success"/>
+                        <!-- <ObjectStatus text="{headerModel>/status}" state="Success"/> -->
+                        <ObjectStatus text="{path:'headerModel>/status',formatter:'.formatter.ticketStatusText'}" state="{path:'headerModel>/status',formatter:'.formatter.ticketStatus'}" />
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>
-                        <ObjectAttribute text="{userId}"/>
+                        <ObjectAttribute text="{headerModel>/employeeId}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DueBy Date}"/>
-                        <ObjectAttribute text="{path:'endDate',
+                        <ObjectAttribute text="{path:'headerModel>/modifiedAt',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
@@ -65,9 +66,9 @@
                         <IconTabFilter id="idLeaveEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
                             <core:Fragment fragmentName="com.sal.salhr.Fragments.DisciplinaryModule.EditDisciplinaryRequest" type="XML"/>
                         </IconTabFilter>
-                        <IconTabFilter text="{i18n>Resolution}">
+                        <!-- <IconTabFilter text="{i18n>Resolution}">
                             <Text text="" />
-                        </IconTabFilter>
+                        </IconTabFilter> -->
                         <IconTabFilter text="{i18n>History}">
                             <Text text="" />
                         </IconTabFilter>
