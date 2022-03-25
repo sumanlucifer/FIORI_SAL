@@ -190,16 +190,13 @@
                 {
                     "pattern": "BusinessCardRequest/{parentMaterial}/{layout}",
                     "name": "BusinessCardRequest",
-
                     "layout": "EndColumnFullScreen",
                     "titleTarget": "",
                     "greedy": false,
                     "target": [
                         "BusinessCardRequest"
-
                     ]
                 },
-
                 {
                     "pattern": "BusinessTripRequest/{parentMaterial}/{layout}",
                     "name": "BusinessTripRequest",
@@ -257,23 +254,30 @@
                     ]
                 },
                 {
-                    "pattern": "BusinessRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",      
-                    "name": "BusinessRequestDetail",     
-                    "target": [   
-                    "master",    
-                    "detail",
-                    "BusinessRequestDetail"   
-                    ]
-                    
-                    },
-                
-                {
-                    "pattern": "detail/{parentMaterial}/{childModule}/{layout}",
+                    "pattern": "detail/{parentMaterial}/AirportPassRequestDetail/{childModule}/{layout}",
                     "name": "AirportPassRequestDetail",
                     "target": [
                         "master",
                         "detail",
                         "AirportPassRequestDetail"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/BusinessTripRequestDetailPage/{childModule}/{layout}",
+                    "name": "BusinessTripRequestDetailPage",
+                    "target": [
+                        "master",
+                        "detail",
+                        "BusinessTripRequestDetailPage"
+                    ]
+                },
+                {
+                    "pattern": "BusinessRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
+                    "name": "BusinessRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "BusinessRequestDetail"
                     ]
                 }
             ],
@@ -306,6 +310,10 @@
                     "viewName": "CreateIDCardRequest",
                     "controlAggregation": "endColumnPages"
                 },
+                "BusinessCardRequest": {
+                    "viewName": "CreateBusinessCardRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "BankAccChangeRequest": {
                     "viewName": "CreateBankAccChangeRequest",
                     "controlAggregation": "endColumnPages"
@@ -313,10 +321,6 @@
                 "DisciplinaryRequest": {
                     "viewName": "CreateDisciplinaryRequest",
                     "controlAggregation": "endColumnPages"
-                },
-                "BusinessCardRequest": {
-                    "viewName": "CreateBusinessCardRequest",      
-                    "controlAggregation": "endColumnPages"      
                 },
                 "AirportPassRequest": {
                     "viewName": "CreateAirportPassRequest",
@@ -342,10 +346,14 @@
                     "viewName": "AirportPassRequestDetailpage",
                     "controlAggregation": "endColumnPages"
                 },
+                "BusinessTripRequestDetailPage": {
+                    "viewName": "BusinessTripRequestDetailPage",
+                    "controlAggregation": "endColumnPages"
+                },
                 "BusinessRequestDetail": {
                     "viewName": "BusinessCardRequestDetailpage",
                     "controlAggregation": "endColumnPages"
-                    }
+                }
             }
         }
     },

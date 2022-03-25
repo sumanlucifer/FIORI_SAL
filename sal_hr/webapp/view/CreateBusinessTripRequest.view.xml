@@ -69,6 +69,26 @@
                 <core:Item key="No" text="No" />
             </Select>
 
+             <Label text="Expense Type: Business Travel" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" />
+             <Select id="idBusinessExpense" change="onBusinessExpenseChange" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelExpTypeTravel'} ]
+                                       }">
+                 <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
+            </Select>
+
+            <Label text="Expense Type: Training Travel" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }"/>
+             <Select id="idTrainingExpense" change="onTrainingExpenseChange" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }" items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelExpTypeTraining'} ]
+                                       }">
+                 <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
+            </Select>
+
 
          </form:SimpleForm>   
            <form:SimpleForm title="Travel Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
@@ -85,7 +105,7 @@
                                                              path : 'externalName_defaultValue' 
                                                         } }" change="onDestCountryChange">
                
-              <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
+              <core:Item key="{code}" text="{externalName_defaultValue}" />
             </Select>
 
              <Label text="City(Saudi)"/>
@@ -124,7 +144,7 @@
          </form:SimpleForm>   
           <form:SimpleForm title="Flight Deatils" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="Travel Date" required="true"/>
-           <DatePicker id="idFlightTravelDate" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelSDate1', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"></DatePicker>
+           <DatePicker id="idFlightTravelDate" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"></DatePicker>
 
             <Label text="Travel To"/>
             <Input id="idTravelTo" value=""/>
@@ -151,7 +171,7 @@
          </form:SimpleForm>   
          <VBox >
          <Label text="Attach Boarding Pass" />
-            <upload:UploadSet id="idBoardingUploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+            <upload:UploadSet id="UploadBoardingPass" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
               <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="Attachments" required="true"/>
@@ -186,7 +206,7 @@
          </form:SimpleForm>   
           <VBox>
          <Label text="Attach Visa Copy" />
-            <upload:UploadSet  id="idAttachVisa" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" >
+            <upload:UploadSet  id="UploadVisaCopy" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" >
              <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="Attachments" required="true"/>
@@ -199,7 +219,7 @@
          </VBox>
           <VBox>
          <Label text="Attach Embassy Receipt" />
-            <upload:UploadSet id="idAttachEmbassyRec" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+            <upload:UploadSet id="UploadEmbassy" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
              <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="Attachments" required="true"/>

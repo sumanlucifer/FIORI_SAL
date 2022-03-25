@@ -28,7 +28,7 @@ sap.ui.define([
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this.fnGetEmpInfo("12002429",this.sParentID);
+                this.fnGetEmpInfo("12002024", this.sParentID);
             },
 
             fnSetCreateAirpassLocalModel: function (oEmpInfoObj) {
@@ -106,8 +106,10 @@ sap.ui.define([
 
                 if (sValidationErrorMsg === "") {
                     this.getView().setBusy(true);
-                    oPayload.cust_toAirportPassItem.cust_acknowledge1 = oPayload.cust_toAirportPassItem.cust_acknowledge1 === "true" ? true : false;
-                    oPayload.cust_toAirportPassItem.cust_acknowledge2 = oPayload.cust_toAirportPassItem.cust_acknowledge2 === "true" ? true : false;
+                    oPayload.cust_toAirportPassItem.cust_typeOfPass = this.getView().byId("idTypeOfPassSLT").getSelectedKey();
+                    oPayload.cust_toAirportPassItem.cust_airportLoc = this.getView().byId("idAirPortLocatonSLT").getSelectedKey();
+                    oPayload.cust_toAirportPassItem.cust_acknowledge1 = this.getView().byId("idAcknowledgeTextFirstSLT").getSelectedKey() === "true" ? true : false;
+                    oPayload.cust_toAirportPassItem.cust_acknowledge2 = this.getView().byId("idAcknowledgeTextSecondSLT").getSelectedKey() === "true" ? true : false;
                     oPayload.cust_toAirportPassItem.cust_domStationName = oPayload.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayload.cust_toAirportPassItem.cust_domStationName : null;
 
                     this.mainModel.create(sPath, oPayload, {
@@ -382,7 +384,7 @@ sap.ui.define([
             },
 
             onResetPress: function () {
-                this.fnSetCreateAirpassLocalModel();
+                this.fnSetCreateAirpassLocalModel(this.EmpInfoObj);
             },
 
             onBreadCrumbNavPress: function () {
