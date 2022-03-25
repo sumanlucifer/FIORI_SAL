@@ -75,32 +75,38 @@ sap.ui.define([], function () {
         ticketStatusText: function (sValue) {
 
             switch (sValue) {
-                case 'CANCELLED':
-                    sValue = "Cancelled";
-                    break;
-                case 'APPROVED':
-                    sValue = "Approved";
-                    break;
-                case 'PENDING':
-                    sValue = "Pending";
-                    break;
+            case 'CANCELLED':
+            sValue = "CANCELLED";
+            break;
+            case 'APPROVED':
+            sValue = "APPROVED";
+            break;
+            case 'PENDING':
+            sValue = "PENDING";
+            break;
+            case 'REJECTED':
+            sValue = "REJECTED";
+            break;
             }
             return sValue;
         },
         ticketStatus: function (sValue) {
             var returnStatus = "None";
             switch (sValue) {
-                case 'CANCELLED':
-                    returnStatus = "Error";
-                    break;
-                case 'APPROVED':
-                    returnStatus = "Success";
-                    break;
-                case 'PENDING':
-                    returnStatus = "Warning";
-                    break;
-                default:
-                    returnStatus = "None";
+            case 'CANCELLED':
+            returnStatus = "Error";
+            break;
+            case 'REJECTED':
+            returnStatus = "Error";
+            break;
+            case 'APPROVED':
+            returnStatus = "Success";
+            break;
+            case 'PENDING':
+            returnStatus = "Warning";
+            break;
+            default:
+            returnStatus = "None";
             }
             return returnStatus;
         },

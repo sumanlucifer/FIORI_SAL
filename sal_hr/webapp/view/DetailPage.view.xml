@@ -34,17 +34,21 @@
 					        <Label text="Total Requests" class="tblHeaderText"/>
 					        <Text text="{totalRequests}" class="sapUiTinyMarginTop dataPointsColor "/>
 				        </VBox>
+                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Pending" class="tblHeaderText"/>
+					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					        <Label text="Approved" class="tblHeaderText"/>
 					        <Text text="{totalApproved}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
-				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Pending" class="tblHeaderText"/>
-					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
-				        </VBox>
                          <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
 					        <Label text="Cancelled" class="tblHeaderText"/>
 					        <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataPointsColor"/>
+				        </VBox>
+                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+					        <Label text="Rejected" class="tblHeaderText"/>
+					        <Text text="{totalRejected}" class="sapUiTinyMarginTop dataPointsColor"/>
 				        </VBox>
 			        </FlexBox>
             </f:DynamicPageHeader>
@@ -93,7 +97,7 @@
                         <Label text="Targeted SLA" class="tblHeaderText" />
                     </Column>
                     
-                    <Column  hAlign="End" width="auto" importance="High">
+                    <Column  hAlign="End" width="10rem" importance="High">
                         <Label text="Status" class="tblHeaderText" />
                     </Column>
                 </columns>

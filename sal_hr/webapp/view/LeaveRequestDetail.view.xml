@@ -37,7 +37,8 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Status}"/>
-                        <ObjectStatus text="{headerModel>/status}" state="Success"/>
+                        <!-- <ObjectStatus text="{headerModel>/status}" state="Success"/> -->
+                         <ObjectStatus text="{path:'headerModel>/status',formatter:'.formatter.ticketStatusText'}" state="{path:'headerModel>/status',formatter:'.formatter.ticketStatus'}" />
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>
@@ -65,9 +66,9 @@
                         <IconTabFilter id="idLeaveEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
                             <core:Fragment fragmentName="com.sal.salhr.Fragments.LeaveModule.EditLeaveDetails" type="XML"/>
                         </IconTabFilter>
-                        <IconTabFilter text="{i18n>Resolution}">
+                        <!-- <IconTabFilter text="{i18n>Resolution}">
                             <Text text="" />
-                        </IconTabFilter>
+                        </IconTabFilter> -->
                         <IconTabFilter text="{i18n>History}">
                             <Text text="" />
                         </IconTabFilter>

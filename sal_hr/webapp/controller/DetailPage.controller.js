@@ -100,8 +100,9 @@ sap.ui.define([
                         this.oRouter.navTo("AirportPassRequest", {
                             parentMaterial: this.sParentID,
                             layout: "EndColumnFullScreen"
-                        })
+                        });
                         break;
+
                     // ID Card Request Module
                     case "7":
                         this.oRouter.navTo("IDCardRequest", {
@@ -176,6 +177,24 @@ sap.ui.define([
 
                         break;
 
+                     // Business Trip Request Module
+                     case "2":
+                        this.oRouter.navTo("BusinessTripRequestDetailPage", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+
+                    // Business Card Module    
+                    case "5":
+                        this.oRouter.navTo("BusinessRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+
                     // Airport Travel Pass Request Module
                     case "6":
                         this.oRouter.navTo("AirportPassRequestDetail", {
@@ -192,6 +211,7 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
+                        
                     // Disciplinary Request Module
                     case "12":
                         this.oRouter.navTo("DisciplinaryRequestDetail", {
@@ -200,6 +220,7 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         });
                         break;
+
                     //  Bank Account Change Request Module 
                     case "13":
                         this.oRouter.navTo("BankAccChangeDetail", {

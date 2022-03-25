@@ -56,7 +56,7 @@
                         <DatePicker id="idStartDate" value="{path:'LocalViewModel>/startDate', type:'sap.ui.model.type.Date'}" change="onLeaveStartDatChange"/>
 
                         <Label text="{i18n>EndDate}" required="true" />
-                        <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date'}" visible="{= ${LocalViewModel>/recurringAbs} === false ? true : false }" change="onLeaveEndDateChange"/>
+                        <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date'}" editable="{= ${LocalViewModel>/halfDayType} === true ? false : true }" change="onLeaveEndDateChange"/>
 
 
 
@@ -66,74 +66,17 @@
                <Label id="idReq" text="Requesting" required="true"/>
                 <TimePicker id="TP1" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On" change="handleTimeChange"  />
             </fm:SimpleForm> 
+             <fm:SimpleForm id="idReqHalfDay" visible="{= ${LocalViewModel>/halfDayType} === true ? true : false }" layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+               <Label id="idHalfDayReq" text="Requesting" />
+                <Input id="idHafDay" value="0.5 days" editable="false"  />
+            </fm:SimpleForm> 
 
 
-                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight"> -->
+         
 
-                    <!-- <Label /> -->
-                    <!-- <Input id="idRequestDay" value="{LocalViewModel>/requestDay} day " enabled="false">
-                <layoutData>
-                    <l:GridData span="XL2 L3 M4 S4" />
-                </layoutData>
-            </Input> -->
+                    <HBox>
 
-                    <!-- <Label /> -->
-                    <!-- <DatePicker id="idReturning" value="{path:'LocalViewModel>/returnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" enabled= "false"/> -->
-
-                    <!-- </fm:SimpleForm> -->
-
-
-                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight"> -->
-                        <!-- <CheckBox id="idRecCheckbox" text="Recurring Absence" select="onSelectRecurringAbsc"></CheckBox> -->
-                    <!-- </fm:SimpleForm> -->
-
-
-                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight"> -->
-                        <!-- <Label text="Recurs" required="true" visible="{LocalViewModel>/recurringAbs}"/> -->
-                        <!-- <Select id="idRecAbsc" visible="{LocalViewModel>/recurringAbs}"> -->
-                            <!-- <core:Item key="Daily" text="Daily" /> -->
-                            <!-- <core:Item key="Weekly" text="Weekly" /> -->
-                            <!-- <core:Item key="BiWeekly" text="BiWeekly" /> -->
-                        <!-- </Select> -->
-
-                        <!-- <Label visible="{LocalViewModel>/recurringAbs}" text="Ends On" required="true"/> -->
-                        <!-- <DatePicker visible="{LocalViewModel>/recurringAbs}" id="idEndonDate" value="{path:'LocalViewModel>/endsOnDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" /> -->
-
-
-                        <!-- <Label visible="{LocalViewModel>/recurringAbs}" text="Total Requesting" />
-            <Input visible="{LocalViewModel>/recurringAbs}" value=" " enabled="false">
-                <layoutData>
-                    <l:GridData span="XL2 L3 M4 S4" />
-                </layoutData>
-            </Input> -->
-                    <!-- </fm:SimpleForm> -->
-                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">      
-                                    <Label text="Comment" />
-                                    <TextArea ></TextArea>
-                             </fm:SimpleForm>        -->
-
-
-
-
-
-<VBox>
-
-
-	<MessageStrip
-				text="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"
-				showIcon="true"
-                type="Information"
-				showCloseButton="false"
-				class="sapUiTinyMarginBottom">
-			</MessageStrip>
- 
-
-
-
-	
-                      <HBox>
-                      
-                        <Text text="Attachments:" class="sapUiSmallMarginTop" visible="{LocalViewModel>/uploadAttachment}"/>
+                        <Text text="Attachments" class="sapUiSmallMarginTop" visible="{LocalViewModel>/uploadAttachment}"/>
 
                         <Text text="*" class="sapUiMediumMarginBottom redColor" visible="{LocalViewModel>/uploadAttachment}" />
 <!-- <Button  class="sapUiTinyMarginBegin buttonInfo" icon="sap-icon://hint"  type="Ghost" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"/>
@@ -141,15 +84,17 @@
  <!-- <core:Icon id="CoreTo" height="3rem"  press="onInfoIconPress" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB" class="sapUiTinyMarginBegin"   useIconTooltip="true"  src="sap-icon://hint" /> -->
   
 
-   
-                    </HBox>
-                    
-                   </VBox>
+                         <core:Icon id="idInfoIcon" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin"  tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB" ></core:Icon>
 
-                    
-                    
+                    </HBox> -->
                     <upload:UploadSet id="UploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
-
+                     <upload:toolbar>
+                            <OverflowToolbar>
+                                <Label text="Attachments" required="true"/>
+                                <core:Icon id="idInfoIconLeave" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin"  tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB" ></core:Icon>
+                                <ToolbarSpacer/>
+                            </OverflowToolbar>
+                        </upload:toolbar>
 
                     </upload:UploadSet>
                 </l:content>

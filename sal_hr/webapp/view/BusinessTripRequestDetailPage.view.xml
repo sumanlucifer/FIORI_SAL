@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.sal.salhr.controller.DisciplinaryRequestDetailpage"
+<mvc:View controllerName="com.sal.salhr.controller.BusinessTripRequestDetailPage"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
@@ -14,19 +14,19 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
-                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="handleClose"/>
+                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="onBreadCrumbNavPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="Request {headerModel>/ticketCode}"/>
+                    <Label text="{i18n>RequestID}: {headerModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
+                    <Button text="{i18n>Modify}" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
+                    <Button text="{i18n>Withdraw}" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
                 </f:actions>
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
-                    <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
+                    <Button id="idBusinessTripetailsFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
                     <Button icon="sap-icon://decline" type="Transparent" press="handleClose" />
                 </f:navigationActions>
             </f:DynamicPageTitle>
@@ -37,23 +37,19 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Status}"/>
-                        <!-- <ObjectStatus text="{headerModel>/status}" state="Success"/> -->
-                        <ObjectStatus text="{path:'headerModel>/status',formatter:'.formatter.ticketStatusText'}" state="{path:'headerModel>/status',formatter:'.formatter.ticketStatus'}" />
+                        <ObjectStatus text="{headerModel>/status}" state="Success"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute title="{i18n>Requested by}"/>
-                        <ObjectAttribute text="{headerModel>/employeeId}"/>
+                        <ObjectAttribute title="{i18n>Requestedby}"/>
+                        <ObjectAttribute text="{headerModel>/externalCreatedBy}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
-                        <ObjectAttribute title="{i18n>DueBy Date}"/>
+                        <ObjectAttribute title="{i18n>DueByDate}"/>
                         <ObjectAttribute text="{path:'headerModel>/modifiedAt',
                                                 type: 'sap.ui.model.type.Date',
-                                                
-                                                    formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
-                                                     }
-                                                
-                                                }"/>
+                                                formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -61,26 +57,16 @@
         <!-- DynamicPage Content -->
         <f:content>
             <VBox id="idContentVBox" width="100%">
-                <IconTabBar id="idLeaveiconTabBar" >
+                <IconTabBar id="idBusinessTripiconTabBar" >
                     <items>
-                        <IconTabFilter id="idLeaveDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.DisciplinaryModule.DisplayDisciplinaryRequest" type="XML"/>
+                        <IconTabFilter id="idDisplayBusinessTripRequestITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.BusinessTripModule.DisplayBusinessTripRequest" type="XML"/>
                         </IconTabFilter>
-                        <IconTabFilter id="idLeaveEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.DisciplinaryModule.EditDisciplinaryRequest" type="XML"/>
-                        </IconTabFilter>
-                        <!-- <IconTabFilter text="{i18n>Resolution}">
-                            <Text text="" />
-                        </IconTabFilter> -->
-                        <IconTabFilter text="{i18n>History}">
-                            <Text text="" />
+                        <IconTabFilter id="idEditBusinessTripRequestITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.BusinessTripModule.EditBusinessTripRequest" type="XML"/>
                         </IconTabFilter>
                     </items>
                 </IconTabBar>
-
-             
-
-              
             </VBox>
         </f:content>
         <f:footer>
