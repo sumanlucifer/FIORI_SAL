@@ -1,19 +1,19 @@
 sap.ui.define([
     "./BaseController",
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "com/sal/salhr/model/formatter"
 
 ],
 
-    function (BaseController, Controller, JSONModel) {
+    function (BaseController, Controller, JSONModel,formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.AdditionalPaymentRequestDetailPage", {
+            formatter: formatter,
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
                     LeaveModule: false,
-                    BusineesTripModule: false,
-                    HealthModule: false,
                     PageTitle: null,
                     Modify: true,
                     IDCardModule: false
@@ -63,9 +63,9 @@ sap.ui.define([
                         });
                         this.getView().bindElement({
                             path: sKey,
-                            // parameters: {
-                            //     expand: "cust_IncidentStatusNav,cust_ReasonNav,cust_SeverityNav,cust_warningTypeNav",
-                            // },
+                            parameters: {
+                                expand: "payComponentCodeNav,alternativeCostCenterNav",
+                            },
                             events: {
                                 change: function (oEvent) {
                                     var oContextBinding = oEvent.getSource();
@@ -103,12 +103,8 @@ sap.ui.define([
 
                         // });
 
-                        this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
-                        this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
+                      
+                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Additional Payment Request");
                         this.getView().getModel("LocalViewModel").refresh();
 
             },
@@ -163,25 +159,7 @@ sap.ui.define([
                     return;
                 }
                 this.getView().setBusy(true);
-                switch (this.sParentID) {
-                    // Leave Module
-                    case "1":
-                        this.fnDeleteLeaveRequest();
-
-                        break;
-                    // Business Trip Module
-                    case "2":
-
-                        break;
-                    // Health Module
-                    case "13":
-                        this.fnDeleteBankAccount();
-                        break;
-                    //  Bank Request Module 
-                    case "7":
-                        this.fnDeleteIDReplacement();
-                        break;
-                }
+                this.fnDeleteAdditionalPymnt();
 
 
             },
@@ -200,7 +178,7 @@ sap.ui.define([
                 //     parentMaterial: this.sParentID,
                 //     layout: sLayout
                 // });
-                this.oRouter.navTo("BankAccChangeDetail", {
+                this.oRouter.navTo("AdditionalPaymentRequestDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,
                     layout: sLayout
@@ -226,39 +204,16 @@ sap.ui.define([
             onSavePress: function () {
                 var oPayloadObj = {},
                     sEntityPath = null;
-
-                switch (this.sParentID) {
-                    // Leave Module
-                    case "1":
-                        sEntityPath = "/SF_Leave('" + this.object.externalCode + "')";
-                        oPayloadObj = this.fnGetLeaveRequestPayload();
-                        break;
-
-                    // Business Trip Module
-                    case "2":
-                        // sEntityPath="/Business_Trip";
-                        // oPayloadObj = this.fnGetBusinessTripPayload();
-                        break;
-
-                    // Health Module
-                    case "3":
-                        // sEntityPath="/Health_Insurance";
-                        // oPayloadObj = this.fnGetHealthInsurancePayload();
-                        break;
-                    // Bankrequest change Module
-                    case "13":
-
-                        var oComponentModel = this.getComponentModel(),
-                            sKey = oComponentModel.createKey("/SF_BankDetails", {
-                                effectiveStartDate: this.object.effectiveStartDate,
-                                externalCode: this.object.externalCode
+                    var oComponentModel = this.getComponentModel(),
+                    sKey = oComponentModel.createKey("/SF_Pay", {
+                           payComponentCode: this.object.externalCode,
+                            payDate: this.object.effectiveStartDate,
+                            userId: this.object.employeeId
 
 
-                            });
-                        sEntityPath = sKey;
-                        oPayloadObj = this.fnBankRequestChangePayload();
-                        break;
-                }
+                    });
+                sEntityPath = sKey;
+                oPayloadObj = this.fnAddPaymentRequestChangePayload();
                 this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
                     success: function (oResponse) {
@@ -274,77 +229,24 @@ sap.ui.define([
                 });
             },
 
-            fnGetLeaveRequestPayload: function () {
-                // return {
-                //     "endDate": this.getView().byId("idEditLeaveEndDatePicker").getValue(),
-                //     "timeType": this.getView().byId("idEditTimeTypeINP").getValue(),
-                //     "startDate": this.getView().byId("idStartLDatePicker").getValue(),
-                //     "undeterminedEndDate": false,
-                //     "userId": "12002024",
-                //     "fractionQuantity": "1"
-                // };
-                if (this.isAttachmentNew === true) {
-                    var sattachmentFileName = this.fileName;
-                    var sattachmentFileContent = this.fileContent;
-                    var sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
-                    var isAttachmentNew = true;
-
-                } else {
-                    sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
-                    sattachmentFileContent = this.getView().getModel("attachmentModel").getData().fileContent;
-                    sattachmentFileID = sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
-                    sattachmentFileContent = this.getView().getModel("attachmentModel").getData().fileContent;
-                    sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
-                }
+           
+            fnAddPaymentRequestChangePayload: function () {
 
 
-                var sEndDate = this.getView().byId("idEditLeaveEndDatePicker").getValue();
-                sEndDate = Date.parse(sEndDate);
-                var sStartDate = this.getView().byId("idStartLDatePicker").getValue();
-                sStartDate = Date.parse(sStartDate);
-                isAttachmentNew = false;
-
+                var sPayDate = this.byId("idEditIssueDate").getDateValue();
+                var sPayDate = this.byId("idEditIssueDate").getDateValue();
+                var sValue = this.byId("idEditValueINP").getValue();
+                var sCurrency = this.byId("idInpCurrencyCode").getSelectedKey();
+                var sAltCostCenter = this.byId("idInpAltCostCenter").getSelectedKey();
+                var sPayDate = this.byId("idEditIssueDate").getDateValue();
                 return {
-                    "endDate": "/Date(" + sEndDate + ")/",
-                    "loaActualReturnDate": null,
-                    "timeType": "S110",
-                    "loaExpectedReturnDate": null,
-                    "loaStartJobInfoId": null,
-                    "startDate": "/Date(" + sStartDate + ")/",
-                    "cust_KronosPayCodeEditID": null,
-                    "startTime": null,
-                    "loaEndJobInfoId": null,
-                    "approvalStatus": null,
-                    "undeterminedEndDate": false,
-                    "userId": "12002024",
-                    "recurrenceGroup": null,
-                    "fractionQuantity": "1",
-                    "endTime": null,
-                    "isAttachmentNew": isAttachmentNew,
-                    "attachmentId": sattachmentFileID,
-                    "attachmentFileContent": sattachmentFileContent,
-                    "attachmentFileName": sattachmentFileName,
-                    "attachmentUserId": "Extentia"
-
-                }
-
-            },
-
-            fnGetBusinessTripPayload: function () {
-                return {
-                };
-            },
-
-            fnGetHealthInsurancePayload: function () {
-                return {
-                };
-            },
-            fnBankRequestChangePayload: function () {
-                return {
-                    "externalCode": "12002425",
-                    "effectiveStartDate": this.getView().byId("idEditFromDatePicker").getDateValue(),
-                    "cust_bankName": this.getView().byId("idEditBankNameINP").getValue(),
-                    "cust_iban": this.getView().byId("idEditIBANINP").getValue()
+                    "payComponentCode": "9244",
+                    "userId": "12002425",
+                    "payDate": "/Date(1646697600000)/",
+                    "notes": null,
+                    "alternativeCostCenter": sAltCostCenter,
+                    "currencyCode": sCurrency,
+                    "value": sValue
                 };
             },
             onDownLoadPress: function () {
@@ -482,7 +384,7 @@ sap.ui.define([
 
             },
 
-            fnDeleteIDReplacement: function () {
+            fnDeleteAdditionalPymnt: function () {
                 this.getView().setBusy(true);
                 var sUserID = this.object.externalCode,
                     sEffectiveStartDate = new Date(this.object.effectiveStartDate),

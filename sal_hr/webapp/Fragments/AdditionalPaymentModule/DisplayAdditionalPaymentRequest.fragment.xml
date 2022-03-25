@@ -8,19 +8,24 @@
 
                         <Label id="idDisplayDateLBL" text="{i18n>payDate}" />
 
-                        <Text text="{path:'effectiveStartDate',
+                        <Text text="{path:'payDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                    pattern: 'MM/dd/yyyy'
                                                 }}"/>
+
 
                         
                         <Label id="idDisplayIBANLBL" text="{i18n>currencyCode}" />
                         <Text id="idDisplayIBANINP" text="{currencyCode}"  />
+                         <Label id="idDisplayIBAN" text="Type" />
+                        <Text id="idDisplay" text="{payComponentCodeText}"  />
                         <Label id="idDisplayBankNameLBL" text="{i18n>value}"/>
                         <Text id="idDisplayBankNameINP" text="{value}"  />
                         <Label id="idDisplayBankNameLdBL" text="{i18n>alternativeCostCenter}"/>
-                        <Text id="idDisplayBankNamedINP" text="{alternativeCostCenter}"  />
+                        <Text id="idDisplayBankNamedINP" text="{alternativeCostCenterText}"  />
+
+                        
 
                     </form:content>
                    </form:SimpleForm>

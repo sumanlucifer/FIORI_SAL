@@ -10,19 +10,19 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="Bank Account Change Request"/>
+                    <Title id="idPageTitle" text="Additional Payment Change Request"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
-                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}"/>
+                        <Link id="idHumanResourceLink" press="handleClose" text="{LocalViewModel>/PageTitle}"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{i18n>RequestID} :{headerModel>/ticketCode}"/>
+                    <Label text="{i18n>RequestID} {headerModel>/ticketCode}"/>
                 </f:expandedContent>
                 <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? true : false }"/>
+                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? true : true }"/>
+                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? false : false }"/>
                 </f:actions>
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
@@ -48,7 +48,7 @@
                         <ObjectAttribute text="{path:'headerModel>/modifiedAt',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                    pattern: 'MM/dd/yyyy'
                                                 }}"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>

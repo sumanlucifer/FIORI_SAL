@@ -47,6 +47,7 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
+                // this.byId("CoreToolTip").setToolTip("dded");
 
             },
 

@@ -61,11 +61,7 @@ sap.ui.define([
 
             },
 
-            onReset: function (oEvent) {
-
-                oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
-
-            },
+           
 
             onPressRaiseRequest: function () {
 
@@ -331,6 +327,15 @@ sap.ui.define([
                 this._oFilterDialog.open();
             },
 
+            onPressClearFilter: function()
+            {
+                
+                this.byId("idClearFilter").setVisible(false);
+                this.byId("idSelectFilter").setVisible(true);
+                var oFilterSearch = [];
+                this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
+            },
+
             handleFilterDialogConfirm: function (oEvent) {
                 var oFilterSearch = [];
 
@@ -360,12 +365,19 @@ sap.ui.define([
                     oFilterSearch.push(new Filter("requestDate", FilterOperator.EQ, sDateFilter));
                 }
                 if (oFilterSearch.length > 0) {
+                    this.byId("idClearFilter").setVisible(true);
+                    this.byId("idSelectFilter").setVisible(false);
+
+                    
+                    
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     oFilterSearch = [];
 
 
                 }
                 else {
+                    this.byId("idClearFilter").setVisible(false);
+                    this.byId("idSelectFilter").setVisible(true);
 
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     //this.byId("idTicketTable").getBinding("items").filter(oFilterSearch, "Application");

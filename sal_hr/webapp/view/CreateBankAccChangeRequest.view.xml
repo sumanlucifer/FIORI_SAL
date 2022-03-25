@@ -15,7 +15,7 @@
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Bank Account Change Request" class="sapUiSmallMarginBegin">
-                        <Link id="idHumanResourceLink" text="{i18n>HumanResource}"/>
+                        <Link id="idHumanResourceLink" press="onCreateCancelPress" text="{i18n>HumanResource}"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
             </f:DynamicPageTitle>

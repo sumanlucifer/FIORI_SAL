@@ -4,7 +4,7 @@
     xmlns:f="sap.f"
     xmlns:l="sap.ui.layout"
     xmlns:core="sap.ui.core"
-    xmlns:form="sap.ui.layout.form"
+    xmlns:fm="sap.ui.layout.form"
     height="100%">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
         <!-- DynamicPage Title -->
@@ -23,10 +23,8 @@
         <f:content>
             <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
                 <l:content>
-                       <form:SimpleForm id="idCreatebankRequestSimpleForm" layout="ResponsiveGridLayout" 
-                 columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-                   <form:content>
-                        <Title id="idSpecifyDetailsTTL" text="{i18n>AdditionalPaymentDetails}" titleStyle="H6" level="H6"/>
+                      <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                        
 
                         <Label id="idDateLBL"  required="true" text="{i18n>IssueDate}" />
                         <DatePicker id="idIssueDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}"  change="handleChange"/>
@@ -39,10 +37,13 @@
                                                  path : 'name' 
                                              }
                                                    }" change="onTimeTyeChange">
-                        <core:Item key="{name}" text="{name}" />
+                        <core:Item key="{externalCode}" text="{name}" />
                         </Select>
+                        </fm:SimpleForm>
+
+                          <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label required="true" id="idBValueLBL" text="{i18n>Value}"/>
-                        <Input  type="Number" id="idValueINP"  />
+                        <Input  type="Number" liveChange="OnLiveChangeValue" id="idValueINP"  />
 
                         <Label required="true" id="idCurrencyCodeLBL" text="{i18n>CurrencyCode}"/>
                         <Select id="idInpCurrencyCode" items="{ path: '/SF_Currency',
@@ -52,17 +53,18 @@
                                                    }" change="onTimeTyeChange">
                         <core:Item key="{code}" text="{code}" />
                         </Select>
+                         </fm:SimpleForm>
+                            <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label id="idALTCostCenterLBL" text="{i18n>AlternativeCostCenter}"/>
                        <Select id="idInpAltCostCenter" items="{ path: '/SF_FOCostCenter',
                                                 sorter : {
                                                  path : 'name' 
                                              }
                                                    }" change="onTimeTyeChange">
-                        <core:Item key="{name}" text="{name} ({externalCode})" />
+                        <core:Item key="{externalCode}" text="{name} ({externalCode})" />
                         </Select>
 
-                    </form:content>
-                   </form:SimpleForm>
+                     </fm:SimpleForm>
                 </l:content>
             </l:VerticalLayout>
         </f:content>

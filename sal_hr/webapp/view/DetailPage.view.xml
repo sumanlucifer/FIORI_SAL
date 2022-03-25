@@ -63,7 +63,10 @@
                             <ToolbarSpacer />
                             <SearchField placeholder="Search for Job ID" width="30%" search=".onSearch"></SearchField>
                             <Button icon="sap-icon://sort"  press="onSort"/>
-                            <Button icon="sap-icon://filter" text="1" press="onPressFilter"/>
+                            <Button id="idSelectFilter" icon="sap-icon://filter"  press="onPressFilter"/>
+                             <Button id="idClearFilter" icon="sap-icon://clear-filter" visible="false"  press="onPressClearFilter"/>
+
+
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>

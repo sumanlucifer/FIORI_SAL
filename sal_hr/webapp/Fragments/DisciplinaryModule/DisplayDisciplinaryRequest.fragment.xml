@@ -28,13 +28,6 @@
              <Label text="Incident Category"  />               
             <Text text="{cust_ReasonNav/label_defaultValue}"/>
 
-
-
-
-
-
-            <core:Title id="idEmptyTitle" text=" "/>
-
             <Label text="Incident Description Details"  />
             <Text text="{cust_IncidentDetails}"/>
             <Label text="When would you like your changes to take effect"  />

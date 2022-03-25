@@ -50,7 +50,7 @@ sap.ui.define([
             },
          
             _onObjectMatched: function (oEvent) {
-                debugger;
+                this.onResetPress();
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
               
@@ -91,6 +91,10 @@ sap.ui.define([
          
 
             onRaiseRequestPress: function () {
+                if (!this._validateMandatoryFields()) {
+
+                    return;
+                }
                 var oPayloadObj = this.fnGetAdditionalPaymentPayload(),
                 sEntityPath = "/SF_Pay";
                    
@@ -124,13 +128,14 @@ sap.ui.define([
 
                 var sEffectiveStartDate =  this.getView().byId("idIssueDate").getDateValue();
                 var sCurrency =  this.getView().byId("idInpCurrencyCode").getSelectedKey();
+                var sType =  this.getView().byId("idInpType").getSelectedKey();
                 var saltCostCenter =  this.getView().byId("idInpAltCostCenter").getSelectedKey();
                 var sValue =  this.getView().byId("idValueINP").getValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                     oDate = dateFormat.format(new Date(sEffectiveStartDate));
                 oDate = oDate + "T00:00:00";
                 return {
-                    "payComponentCode": "9244",
+                    "payComponentCode": sType,
                     "userId": "12002425",
                     "payDate": sEffectiveStartDate,
                     "notes": null,
@@ -140,41 +145,47 @@ sap.ui.define([
                 };
             },
 
-            onChangeInpIBAN: function (oEve) {
-                var sValue = oEve.getSource().getValue();
-
-                if (!sValue.match(/^[0-9A-Za-z]+$/)) {
-
-
-                    this.getView().byId("idIBANINP").setValueState("Error");
-                    this.getView().byId("idIBANINP").setValueStateText("Please enter only alpha-numeric characters");
+            _validateMandatoryFields: function () {
+                var bValid = true;
+                if (this.byId("idValueINP").getValue() === "") {
+                    this.byId("idValueINP").setValueState("Error");
+                    this.byId("idValueINP").setValueStateText(
+                        "Please enter Value"
+                    );
+                    bValid = false;
+                } else {
+                    this.byId("idValueINP").setValueState("None");
+                    this.byId("idValueINP").setValueStateText(null);
                 }
 
-                else {
-                    this.getView().byId("idIBANINP").setValueState("None");
 
+
+              
+
+
+
+
+
+                return bValid;
+            },
+            OnLiveChangeValue : function(oEve)
+            {
+                var sValue = oEve.getSource().getValue();
+                var bValid = true;
+                if (sValue === "") {
+                    this.byId("idValueINP").setValueState("Error");
+                    this.byId("idValueINP").setValueStateText(
+                        "Please enter Value"
+                    );
+                    bValid = false;
+                } else {
+                    this.byId("idValueINP").setValueState("None");
+                    this.byId("idValueINP").setValueStateText(null);
                 }
 
             },
 
-
-            onChangeInpBankName: function (oEve) {
-                var sValue = oEve.getSource().getValue();
-
-                if (!sValue.match(/^[a-zA-Z0-9\s]*$/)) {
-
-
-                    this.getView().byId("idBankNameINP").setValueState("Error");
-                    this.getView().byId("idBankNameINP").setValueStateText("Please enter only alpha-numeric characters");
-                }
-
-                else {
-                    this.getView().byId("idBankNameINP").setValueState("None");
-
-                }
-
-            },
-
+        
             onCreateCancelPress: function () {
                 this.oRouter.navTo("detail", {
                     parentMaterial: this.sParentID,
@@ -185,17 +196,16 @@ sap.ui.define([
             },
             onResetPress: function () {
               
-            this.onBankRequestResetPress();
+            this.onAdditionalPymntResetPress();
                    
                 
 
 
             },
-            onBankRequestResetPress: function () {
-
+            onAdditionalPymntResetPress: function () {
                 
-                this.getView().byId("idIBANINP").setValue();
-                this.getView().byId("idBankNameINP").setValue();
+                
+                this.getView().byId("idValueINP").setValue("");
                 this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
                 this.getView().getModel("LocalViewModel").refresh();
 

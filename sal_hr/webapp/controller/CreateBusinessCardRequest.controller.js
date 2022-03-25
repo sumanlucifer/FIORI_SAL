@@ -50,25 +50,71 @@ sap.ui.define([
 
             // },
             _onObjectMatched: function (oEvent) {
-                this.onResetPress();
+            
 
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this._bindView("/MasterSubModules" + this.sParentID);
-                this.onResetPress();
+               // this._bindView("/EmpInfo", "12002429");
+                this.fnGetEmployeeInfo("12002429");
+                 this.onResetPress();
 
 
             },
-            _bindView: function (sObjectPath) {
+            fnGetEmployeeInfo: function (sExternalCode) {
+                this.getView().setBusy(true);
+                this.mainModel = this.getOwnerComponent().getModel();
+                var sKey = this.getView().getModel().createKey("/EmpInfo", {
+                    userId: sExternalCode
+                });
+                this.mainModel.read(sKey, {
+                    success: function (oData) {
+                        this.getView().setBusy(false);
+                        this.fnSetCreateBusinessCardLocalModel(oData);
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getView().setBusy(false);
+                     
+
+                    }.bind(this)
+                })
+            },
+            fnSetCreateBusinessCardLocalModel: function (oEmpInfoObj) {
+                this.EmpInfoObj = oEmpInfoObj;
+
+                var sExternalCode = this.EmpInfoObj.userId,
+                    sNationalID = this.EmpInfoObj.nationalId,
+                    sNationality = this.EmpInfoObj.nationality,
+                    sMobileNumber = this.EmpInfoObj.mobile,
+                    sDateOfBirth = this.EmpInfoObj.dateOfBirth,
+
+                    oCreateBusinessCardObj = {
+                        "externalCode": sExternalCode,
+                        "externalName": null,
+                        "sJobTitle": oEmpInfoObj.jobTitle,
+                        "sLocation": "",
+                        "sEmail":oEmpInfoObj.email,
+                        "sMobile":oEmpInfoObj.mobile,
+                        "sOfficeNo":oEmpInfoObj.officeNumber,
+                        "effectiveStartDate": new Date()
+                      
+                        
+                    },
+                    oCreateBusinessCardModel = new JSONModel(oCreateBusinessCardObj);
+
+                this.getView().setModel(oCreateBusinessCardModel, "CreateBusinessCardModel");
+
+              
+            },
+            _bindView: function (sObjectPath, sExternalCode) {
                 var objectViewModel = this.getViewModel("objectViewModel");
                 var that = this;
                 var oComponentModel = this.getComponentModel();
                 //    var sTickets = sObjectPath + "/tickets";
-                var sKey = oComponentModel.createKey("/MasterSubModules", {
-                    ID: this.sParentID
+                var sKey = oComponentModel.createKey(sObjectPath, {
+                    userId: sExternalCode
                 });
 
                 this.getView().bindElement({
@@ -133,6 +179,41 @@ sap.ui.define([
 
 
                 return bValid;
+            },
+
+
+            onLiveChangeJobTitle : function(oEve)
+            {
+                var sValue = oEve.getSource().getValue();
+
+               
+                if (sValue === "") {
+                    this.byId("idCreateJobTitle").setValueState("Error");
+                    this.byId("idCreateJobTitle").setValueStateText(
+                        "Please enter job title"
+                    );
+                
+                } else {
+                    this.byId("idCreateJobTitle").setValueState("None");
+                    this.byId("idCreateJobTitle").setValueStateText(null);
+                }
+            },
+
+            onChangeMobile : function(oEve)
+            {
+                var sValue = oEve.getSource().getValue();
+
+               
+                if (sValue === "") {
+                    this.byId("idCreateMobile").setValueState("Error");
+                    this.byId("idCreateMobile").setValueStateText(
+                        "Please enter Mobile Number"
+                    );
+                
+                } else {
+                    this.byId("idCreateMobile").setValueState("None");
+                    this.byId("idCreateMobile").setValueStateText(null);
+                }
             },
             onEmailChange: function (oEve) {
 
