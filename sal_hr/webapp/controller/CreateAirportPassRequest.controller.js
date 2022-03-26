@@ -28,11 +28,13 @@ sap.ui.define([
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this.fnGetEmpInfo("12002024", this.sParentID);
+                // this.fnGetEmpInfo("12002024", this.sParentID);
+
+                this.fnSetCreateAirpassLocalModel();
             },
 
-            fnSetCreateAirpassLocalModel: function (oEmpInfoObj) {
-                this.EmpInfoObj = oEmpInfoObj;
+            fnSetCreateAirpassLocalModel: function () {
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
                 var sExternalCode = this.EmpInfoObj.userId,
                     sNationalID = this.EmpInfoObj.nationalId,
