@@ -65,9 +65,12 @@
                         <content>
                             <Title text="{name}" level="H2"/>
                             <ToolbarSpacer />
-                            <SearchField placeholder="Search for ID" width="30%" search=".onSearch"></SearchField>
-                            <Button icon="sap-icon://sort" press="onSort"/>
-                            <Button icon="sap-icon://filter" press="onPressFilter"/>
+                            <SearchField placeholder="Search for Job ID" width="30%" search=".onSearch"></SearchField>
+                            <Button icon="sap-icon://sort"  press="onSort"/>
+                            <Button id="idSelectFilter" icon="sap-icon://filter"  press="onPressFilter"/>
+                             <Button id="idClearFilter" icon="sap-icon://clear-filter" visible="false"  press="onPressClearFilter"/>
+
+
                         </content>
                     </OverflowToolbar>
                 </headerToolbar>
@@ -94,7 +97,7 @@
                         <Label text="Targeted SLA" class="tblHeaderText" />
                     </Column>
                     
-                    <Column  hAlign="End" width="auto" importance="High">
+                    <Column  hAlign="End" width="10rem" importance="High">
                         <Label text="Status" class="tblHeaderText" />
                     </Column>
                 </columns>

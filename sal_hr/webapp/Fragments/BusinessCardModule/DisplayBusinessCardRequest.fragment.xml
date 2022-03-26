@@ -6,7 +6,7 @@
         <form:content>
             <Title id="idLeaveDisplayRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
             <Label text="Job Title"  />               
-            <Text text="{cust_jobTitle}"/>
+            <Text text="{CreateBusinessCardModel>/sJobTitle}"/>
             <Label text="Division" />
             <Text text="{cust_location}"/>
            <Label text="Email"  />
@@ -14,7 +14,7 @@
             <Label text="Mobile"  />
             <Text text="{cust_mobile}"/>
              <Label text="Office Number"  />
-            <Text text="{cust_officeNumber}"/>
+            <Text text="{CreateBusinessCardModel>/sOfficeNo}"/>
             <Label text="P.O BOX"  />               
             <Text text="{cust_poBox}"/>
             <!-- <core:Title id="idEmptyTitle" text=" "/> -->
@@ -22,7 +22,7 @@
             <Text text="{path:'effectiveStartDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
         </form:content>
     </form:SimpleForm>

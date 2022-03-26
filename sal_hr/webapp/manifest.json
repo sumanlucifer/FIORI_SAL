@@ -189,17 +189,15 @@
                 },
                 {
                     "pattern": "BusinessCardRequest/{parentMaterial}/{layout}",
+                    
                     "name": "BusinessCardRequest",
-
                     "layout": "EndColumnFullScreen",
                     "titleTarget": "",
                     "greedy": false,
                     "target": [
                         "BusinessCardRequest"
-
                     ]
                 },
-
                 {
                     "pattern": "BusinessTripRequest/{parentMaterial}/{layout}",
                     "name": "BusinessTripRequest",
@@ -208,6 +206,16 @@
                     "greedy": false,
                     "target": [
                         "BusinessTripRequest"
+                    ]
+                },
+                {
+                    "pattern": "AdditionalPaymentRequest/{parentMaterial}/{layout}",
+                    "name": "AdditionalPaymentRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "AdditionalPaymentRequest"
                     ]
                 },
                 {
@@ -266,6 +274,15 @@
                     ]
                 },
                 {
+
+                    "pattern": "AdditionalPaymentRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
+                    "name": "AdditionalPaymentRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "AdditionalPaymentRequestDetail"]
+                    },
+{
                     "pattern": "detail/{parentMaterial}/BusinessTripRequestDetailPage/{childModule}/{layout}",
                     "name": "BusinessTripRequestDetailPage",
                     "target": [
@@ -273,7 +290,18 @@
                         "detail",
                         "BusinessTripRequestDetailPage"
                     ]
+                },
+                {
+                    "pattern": "BusinessRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
+                    "name": "BusinessRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "BusinessRequestDetail"
+
+                    ]
                 }
+
             ],
             "targets": {
                 "master": {
@@ -304,6 +332,10 @@
                     "viewName": "CreateIDCardRequest",
                     "controlAggregation": "endColumnPages"
                 },
+                "BusinessCardRequest": {
+                    "viewName": "CreateBusinessCardRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "BankAccChangeRequest": {
                     "viewName": "CreateBankAccChangeRequest",
                     "controlAggregation": "endColumnPages"
@@ -314,6 +346,10 @@
                 },
                 "AirportPassRequest": {
                     "viewName": "CreateAirportPassRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "AdditionalPaymentRequest": {
+                    "viewName": "CreateAdditionalPaymentRequest",
                     "controlAggregation": "endColumnPages"
                 },
                 "LeaveRequestDetail": {
@@ -338,6 +374,14 @@
                 },
                 "BusinessTripRequestDetailPage": {
                     "viewName": "BusinessTripRequestDetailPage",
+                    "controlAggregation": "endColumnPages"
+                },
+                "BusinessRequestDetail": {
+                    "viewName": "BusinessCardRequestDetailpage",
+                    "controlAggregation": "endColumnPages"
+                },
+                "AdditionalPaymentRequestDetail": {
+                    "viewName": "AdditionalPaymentRequestDetailPage",
                     "controlAggregation": "endColumnPages"
                 }
             }

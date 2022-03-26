@@ -4,7 +4,7 @@
     xmlns:core="sap.ui.core">
       <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label text="Job Title" required="true" />
-                        <Input id="idEditJobTitle" value="{cust_jobTitle}">
+                        <Input id="idEditJobTitle" value="{CreateBusinessCardModel>/sJobTitle}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>

@@ -11,10 +11,10 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New {name}" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="New Business Card Request" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New {name}" class="sapUiSmallMarginBegin">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Business Card Request" class="sapUiSmallMarginBegin">
                         <Link id="idHumanResourceLink" text="{i18n>HumanResource}" press="onCreateCancelPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -25,7 +25,14 @@
                 <l:content>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label text="Job Title" required="true" />
-                        <Input id="idCreateJobTitle" value="">
+                        <Input editable="false" liveChange="onLiveChangeJobTitle" id="idCreateJobTitle" value="{CreateBusinessCardModel>/sJobTitle}">
+                            <layoutData>
+                                <l:GridData span="XL2 L3 M4 S4" />
+                            </layoutData>
+                        </Input>
+
+                        <Label text="Location" required="true" />
+                        <Input editable="false" id="idCreateLocation" value="{CreateBusinessCardModel>/sLocation}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -50,13 +57,13 @@
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label text="Email" required="true" />
-                         <Input type="Email" liveChange="onEmailChange" id="idCreateEmail" value="">
+                         <Input type="Email" editable="false" liveChange="onEmailChange" id="idCreateEmail" value="{CreateBusinessCardModel>/sEmail}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
                         </Input>
                         <Label text="Mobile" required="true" />
-                         <Input type="Number" id="idCreateMobile" value="">
+                         <Input type="Number" editable="false" liveChange="onChangeMobile" id="idCreateMobile" value="{CreateBusinessCardModel>/sMobile}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -64,7 +71,7 @@
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label required="false" text="Office Number" />
-                        <Input type="Number" id="idCreateOfficeNo" value="">
+                        <Input  id="idCreateOfficeNo" editable="false" value="{CreateBusinessCardModel>/sOfficeNo}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>

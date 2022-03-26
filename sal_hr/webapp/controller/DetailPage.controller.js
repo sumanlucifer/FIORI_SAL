@@ -61,11 +61,7 @@ sap.ui.define([
 
             },
 
-            onReset: function (oEvent) {
-
-                oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
-
-            },
+           
 
             onPressRaiseRequest: function () {
 
@@ -73,6 +69,14 @@ sap.ui.define([
                     // Leave Request Module
                     case "1":
                         this.oRouter.navTo("LeaveRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
+
+                    // Additional Payment Request Module
+                    case "10":
+                        this.oRouter.navTo("AdditionalPaymentRequest", {
                             parentMaterial: this.sParentID,
                             layout: "EndColumnFullScreen"
                         })
@@ -153,6 +157,16 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
+
+                           // Additional Payment Request Module
+                    case "10":
+                        this.oRouter.navTo("AdditionalPaymentRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+                    // Business Card Module    
                     // Business Card Module
                     case "5":
                         this.oRouter.navTo("BusinessRequestDetail", {
@@ -271,6 +285,10 @@ sap.ui.define([
 
                 oBinding.sort(oSorter);
             },
+            onReset : function(oEvent)
+            {
+                oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
+            },
             onPersonalizationDialogPress: function () {
                 var oView = this.getView();
                 this.oJSONModel = new JSONModel();
@@ -330,6 +348,15 @@ sap.ui.define([
                 this._oFilterDialog.open();
             },
 
+            onPressClearFilter: function()
+            {
+                
+                this.byId("idClearFilter").setVisible(false);
+                this.byId("idSelectFilter").setVisible(true);
+                var oFilterSearch = [];
+                this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
+            },
+
             handleFilterDialogConfirm: function (oEvent) {
                 var oFilterSearch = [];
 
@@ -359,12 +386,19 @@ sap.ui.define([
                     oFilterSearch.push(new Filter("requestDate", FilterOperator.EQ, sDateFilter));
                 }
                 if (oFilterSearch.length > 0) {
+                    this.byId("idClearFilter").setVisible(true);
+                    this.byId("idSelectFilter").setVisible(false);
+
+                    
+                    
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     oFilterSearch = [];
 
 
                 }
                 else {
+                    this.byId("idClearFilter").setVisible(false);
+                    this.byId("idSelectFilter").setVisible(true);
 
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     //this.byId("idTicketTable").getBinding("items").filter(oFilterSearch, "Application");

@@ -3,13 +3,12 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter"
-
 ],
 
-    function (BaseController, Controller, JSONModel,formatter) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.IDCardRequestDetail", {
-            formatter: formatter,
+            formatter : formatter,
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,

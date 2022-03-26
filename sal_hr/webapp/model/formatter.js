@@ -1,18 +1,18 @@
-sap.ui.define([], function() {
-	"use strict";
+sap.ui.define([], function () {
+    "use strict";
 
 
-	return {
-			changeIcon: function(sValue) {
-			// if (sValue === "Leaves") {
-			 
+    return {
+        changeIcon: function (sValue) {
+            // if (sValue === "Leaves") {
+
             //     return 'sap-icon://create-leave-request';
-			
-			// } else if (sValue === "Business Trip") {
+
+            // } else if (sValue === "Business Trip") {
             //     return 'sap-icon://stethoscope';
-			// } else if (sValue === "Health Insurance") {
+            // } else if (sValue === "Health Insurance") {
             //     return 'sap-icon://flight';
-			// } 
+            // } 
             switch (sValue) {
                 case 1:
                     return 'sap-icon://create-leave-request';
@@ -70,13 +70,13 @@ sap.ui.define([], function() {
                     break;
 
 
-            }    
-		},
+            }
+        },
         ticketStatusText: function (sValue) {
 
             switch (sValue) {
             case 'CANCELLED':
-            sValue = "CANCELED";
+            sValue = "CANCELLED";
             break;
             case 'APPROVED':
             sValue = "APPROVED";
@@ -89,7 +89,7 @@ sap.ui.define([], function() {
             break;
             }
             return sValue;
-            },
+        },
         ticketStatus: function (sValue) {
             var returnStatus = "None";
             switch (sValue) {
@@ -109,10 +109,19 @@ sap.ui.define([], function() {
             returnStatus = "None";
             }
             return returnStatus;
-            }
+        },
+
+        formatCostCenter: function (oValue) {
+
+            debugger;
+
+            console.log(oValue);
+            return oValue.results[0].name_defaultValue;
+
+        }
 
 
-	};
+    };
 
 
 });

@@ -4,7 +4,7 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter"
 ],
-    function (BaseController, Controller, JSONModel) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.BusinessCardRequestDetailpage", {
             formatter: formatter,
@@ -67,10 +67,42 @@ sap.ui.define([
                         }.bind(this),
                         dataReceived: function () {
                             this.getView().setBusy(false);
+                            this.fnGetEmpInfo("12002429", this.sParentID);
                         }.bind(this)
                     }
                 });
             },
+
+
+            fnSetCreateBusinessCardLocalModel: function (oEmpInfoObj) {
+                this.EmpInfoObj = oEmpInfoObj;
+
+                var sExternalCode = this.EmpInfoObj.userId,
+                    sNationalID = this.EmpInfoObj.nationalId,
+                    sNationality = this.EmpInfoObj.nationality,
+                    sMobileNumber = this.EmpInfoObj.mobile,
+                    sDateOfBirth = this.EmpInfoObj.dateOfBirth,
+
+                    oCreateBusinessCardObj = {
+                        "externalCode": sExternalCode,
+                        "externalName": null,
+                        "sJobTitle": oEmpInfoObj.jobTitle,
+                        "sLocation": "",
+                        "sEmail":oEmpInfoObj.email,
+                        "sMobile":oEmpInfoObj.mobile,
+                        "sOfficeNo":oEmpInfoObj.officeNumber,
+                        "effectiveStartDate": new Date()
+                      
+                        
+                    },
+                    oCreateBusinessCardModel = new JSONModel(oCreateBusinessCardObj);
+
+                this.getView().setModel(oCreateBusinessCardModel, "CreateBusinessCardModel");
+
+              
+            },
+
+            
             onEditPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
             },

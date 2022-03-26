@@ -122,32 +122,77 @@ sap.ui.define([
         }),
 
         fnGetEmpInfo: function (sExternalCode, sParentID) {
+            this.mainModel = this.getOwnerComponent().getModel();
             var sKey = this.getView().getModel().createKey("/EmpInfo", {
                 userId: sExternalCode
             });
             this.sParentID = sParentID;
-            this.getView().bindElement({
-                path: sKey,
-                events: {
-                    dataRequested: function (oData) {
-                        this.getView().setBusy(true);
-                    }.bind(this),
-                    dataReceived: function (oData) {
-                        this.getView().setBusy(false);
-                        switch (this.sParentID) {
-                            case "2":
-                                this.fnSetCreateBusinessTripModel(oData.getParameter("data"));
-                                break;
-                            // Airport Travel Pass Request Module
-                            case "6":
-                                this.fnSetCreateAirpassLocalModel(oData.getParameter("data"));
-                                break;
-                        }
+            this.getView().setBusy(true);
+            this.mainModel.read(sKey, {
+                success: function (oData) {
+                    this.getView().setBusy(false);
+                    switch (this.sParentID) {
+                        case "2":
+                            this.fnSetCreateBusinessTripModel(oData);
+                            break;
+                        // Airport Travel Pass Request Module
+                        case "6":
+                            this.fnSetCreateAirpassLocalModel(oData);
+                            break;
 
-                    }.bind(this)
-                }
-            });
+                      // Business Card Request Module
+                      case "5":
+                        this.fnSetCreateBusinessCardLocalModel(oData);
+                        break;
+                     
+                    }
+                  
+                  
+                  
+                }.bind(this),
+                error: function (oError) {
+                    
+                    this.getView().setBusy(false);
+
+                }.bind(this)
+            })
         },
+
+    
+
+        // fnGetEmpInfo: function (sExternalCode, sParentID) {
+        //     var sKey = this.getView().getModel().createKey("/EmpInfo", {
+        //         userId: sExternalCode
+        //     });
+        //     this.sParentID = sParentID;
+        //     this.getView().bindElement({
+        //         path: sKey,
+        //         events: {
+        //             dataRequested: function (oData) {
+        //                 this.getView().setBusy(true);
+        //             }.bind(this),
+        //             dataReceived: function (oData) {
+        //                 this.getView().setBusy(false);
+        //                 switch (this.sParentID) {
+        //                     case "2":
+        //                         this.fnSetCreateBusinessTripModel(oData.getParameter("data"));
+        //                         break;
+        //                     // Airport Travel Pass Request Module
+        //                     case "6":
+        //                         this.fnSetCreateAirpassLocalModel(oData.getParameter("data"));
+        //                         break;
+
+        //                   // Business Card Request Module
+
+        //                   case "5":
+        //                     this.fnSetCreateBusinessCardLocalModel(oData.getParameter("data"));
+        //                      break;
+        //                 }
+
+        //             }.bind(this)
+        //         }
+        //     });
+        // },
 
         fnValidateDateValue: function (oEvent) {
             if (oEvent.getParameter("valid")) {
@@ -177,5 +222,6 @@ sap.ui.define([
 
             return iAge;
         }
+       
     });
 });

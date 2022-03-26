@@ -11,7 +11,7 @@
             <Text text="{path:'startDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                    pattern: 'MM/dd/yyyy'
                                                 }}"/>
             <Label id="idDisplayLeaveTypeLBL" text="{i18n>Leave Type}"/>
             <Text text="{timeTypeModel>/externalName_defaultValue}"/>
@@ -28,7 +28,7 @@
             <Text text="{path:'endDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                    pattern: 'MM/dd/yyyy'
                                                 }}"/>
             <Label id="idDisplayLeaveTotalLeaveDaysLBL" text="{i18n>Total Days}" visible="{= ${LocalViewModel>/meetingType} === false ? true : false}"/>
             <Text id="idRequestDays" text="{displayQuantity}" visible="{= ${LocalViewModel>/meetingType} === false ? true : false}"/>

@@ -8,9 +8,10 @@
 
                     <ViewSettingsItem text="Appproved" key="APPROVED"/>
 
-                    <ViewSettingsItem text="Rejected" key="CANCELLED"/>
+                    <ViewSettingsItem text="Rejected" key="REJECTED"/>
 
                     <ViewSettingsItem text="Pending" key="PENDING"/>
+                    <ViewSettingsItem text="Cancelled" key="CANCELLED"/>
 
                 </items>
 
