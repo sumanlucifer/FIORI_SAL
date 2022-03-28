@@ -16,6 +16,8 @@ sap.ui.define([
                 this.oRouter.getRoute("EmployeeTerminateRequest").attachPatternMatched(this._onObjectMatched, this);
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
+                this.mainModel.setSizeLimit(1000);
+              
                 var that = this;
 
                 this.sReturnDate = new Date();
@@ -132,7 +134,7 @@ sap.ui.define([
                 var sEOSBenefit =  this.getView().byId("idEOSBenefit").getSelectedIndex();
                 sOKToRetire =  sOKToRetire === 0 ? true : false;
                 sEOSBenefit =  sEOSBenefit === 0 ? true : false;
-                var sTerminationReason =  this.getView().byId("idTerminationReasonINP").getValue();
+                var sTerminationReason =  this.getView().byId("idTerminationReasonINP").getSelectedKey();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                 scustomDate6 = dateFormat.format(new Date(scustomDate6));
                 scustomDate6 = scustomDate6 + "T00:00:00";
@@ -140,7 +142,7 @@ sap.ui.define([
                 sEndDate = sEndDate + "T00:00:00";
                 return {
                     "userId": sUserID,
-                    "personIdExternal": "22003078",
+                    "personIdExternal": sUserID,
                     "customDate6": scustomDate6,
                     "endDate": sEndDate,
                     "eventReason":sTerminationReason,
@@ -212,7 +214,7 @@ sap.ui.define([
             onAdditionalPymntResetPress: function () {
                 
                 
-                this.getView().byId("idTerminationReasonINP").setValue("");
+                this.getView().byId("idTerminationReasonINP").setSelectedKey("");
                 this.getView().byId("idEOSBenefit").setSelectedIndex(null);
                 this.getView().byId("idOKToRetire").setSelectedIndex(null);
                 this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
