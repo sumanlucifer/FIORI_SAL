@@ -32,7 +32,7 @@
                         </Input>
 
                         <Label text="Location" required="true" />
-                        <Input editable="false" id="idCreateLocation" value="{CreateBusinessCardModel>/sLocation}">
+                        <Input editable="true" id="idCreateLocation" value="{CreateBusinessCardModel>/sLocation}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -49,7 +49,7 @@
                             </layoutData>
                         </Input>
                         <Label text="Division" required="false" />
-                        <Input id="idCreateDivision" value="">
+                        <Input editable="false" id="idCreateDivision" value="">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
