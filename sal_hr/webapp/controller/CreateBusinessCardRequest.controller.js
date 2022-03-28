@@ -71,10 +71,10 @@ sap.ui.define([
               
 
                 var sExternalCode = this.EmpInfoObj.userId,
-                    sNationalID = this.EmpInfoObj.nationalId,
-                    sNationality = this.EmpInfoObj.nationality,
+                    sJobTitle = this.EmpInfoObj.jobTitle,
+                    sEmail = this.EmpInfoObj.email,
                     sMobileNumber = this.EmpInfoObj.mobile,
-                    sDateOfBirth = this.EmpInfoObj.dateOfBirth,
+                    sOfficeNum = this.EmpInfoObj.officeNumber,
 
                     oCreateBusinessCardObj = {
                         "externalCode": this.EmpInfoObj.sExternalCode,

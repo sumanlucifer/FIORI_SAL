@@ -290,22 +290,22 @@ sap.ui.define([
                             
                             "businessTravelattachmentFileContent": "businessTravelattachment create",
                             "businessTravelattachmentFileName": "businessTravelAttachment.txt",
-                            "isbusinessTravelAttachNew": true,
+                            "isbusinessTravelAttachNew": false,
                             "businessTravelattachmentUserId": "Extentia",
                            
                             "trainingTravelattachmentFileContent": "trainingTravelattachment create",
                             "trainingTravelattachmentFileName": "trainingTravelattachment.txt",
-                            "istrainingTravelAttachNew": true,
+                            "istrainingTravelAttachNew": false,
                             "trainingTravelattachmentUserId": "Extentia",
                            
                             "receiptEmbassyattachmentFileContent": "receiptEmbassy 3create",
                             "receiptEmbassyattachmentFileName": "receiptEmbassy.txt",
-                            "isreceiptEmbassyAttachNew": true,
+                            "isreceiptEmbassyAttachNew": false,
                             "receiptEmbassyattachmentUserId": "Extentia",
                          
                             "visaCopyattachmentFileContent": "visaCopy 6 create",
                             "visaCopyattachmentFileName": "visaCopy.txt",
-                            "isvisaCopyAttachNew": true,
+                            "isvisaCopyAttachNew": false,
                             "visaCopyattachmentUserId": "Extentia"
                             
                             
