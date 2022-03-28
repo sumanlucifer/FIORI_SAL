@@ -2,11 +2,10 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox",
-    "sap/m/upload/Uploader"
+    "sap/m/MessageBox"
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Uploader) {
+    function (BaseController, Controller, JSONModel, MessageBox) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateBusinessCardRequest", {
             onInit: function () {
@@ -50,7 +49,7 @@ sap.ui.define([
 
             // },
             _onObjectMatched: function (oEvent) {
-            
+                this.onResetPress();
 
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -60,31 +59,16 @@ sap.ui.define([
                // this._bindView("/EmpInfo", "12002429");
                 // this.fnGetEmployeeInfo("12002429");
                 this.fnSetCreateBusinessCardLocalModel();
-                 this.onResetPress();
+                
 
 
             },
-            fnGetEmployeeInfo: function (sExternalCode) {
-                this.getView().setBusy(true);
-                this.mainModel = this.getOwnerComponent().getModel();
-                var sKey = this.getView().getModel().createKey("/EmpInfo", {
-                    userId: sExternalCode
-                });
-                this.mainModel.read(sKey, {
-                    success: function (oData) {
-                        this.getView().setBusy(false);
-                        this.fnSetCreateBusinessCardLocalModel(oData);
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getView().setBusy(false);
-                     
-
-                    }.bind(this)
-                })
-            },
+           
             fnSetCreateBusinessCardLocalModel: function () {
                 // this.EmpInfoObj = oEmpInfoObj;
+               
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+              
 
                 var sExternalCode = this.EmpInfoObj.userId,
                     sNationalID = this.EmpInfoObj.nationalId,
@@ -93,13 +77,14 @@ sap.ui.define([
                     sDateOfBirth = this.EmpInfoObj.dateOfBirth,
 
                     oCreateBusinessCardObj = {
-                        "externalCode": sExternalCode,
+                        "externalCode": this.EmpInfoObj.sExternalCode,
                         "externalName": null,
-                        "sJobTitle": oEmpInfoObj.jobTitle,
+                        "sJobTitle": this.EmpInfoObj.jobTitle,
                         "sLocation": "",
-                        "sEmail":oEmpInfoObj.email,
-                        "sMobile":oEmpInfoObj.mobile,
-                        "sOfficeNo":oEmpInfoObj.officeNumber,
+                        "sEmail":this.EmpInfoObj.email,
+                        "sMobile":this.EmpInfoObj.mobile,
+                        "sOfficeNo":this.EmpInfoObj.officeNumber,
+                        "sDivison":this.EmpInfoObj.division,
                         "effectiveStartDate": new Date()
                       
                         
@@ -151,6 +136,21 @@ sap.ui.define([
                     this.byId("idCreateJobTitle").setValueState("None");
                     this.byId("idCreateJobTitle").setValueStateText(null);
                 }
+
+                if (this.byId("idCreateLocation").getValue() === "") {
+                    this.byId("idCreateLocation").setValueState("Error");
+                    this.byId("idCreateLocation").setValueStateText(
+                        "Please enter location"
+                    );
+                    bValid = false;
+                } else {
+                    this.byId("idCreateLocation").setValueState("None");
+                    this.byId("idCreateLocation").setValueStateText(null);
+                }
+
+
+
+                
 
 
 
@@ -215,6 +215,23 @@ sap.ui.define([
                 } else {
                     this.byId("idCreateMobile").setValueState("None");
                     this.byId("idCreateMobile").setValueStateText(null);
+                }
+            },
+
+            onLocationChange : function(oEve)
+            {
+                var sValue = oEve.getSource().getValue();
+
+               
+                if (sValue === "") {
+                    this.byId("idCreateLocation").setValueState("Error");
+                    this.byId("idCreateLocation").setValueStateText(
+                        "Please enter Location"
+                    );
+                
+                } else {
+                    this.byId("idCreateLocation").setValueState("None");
+                    this.byId("idCreateLocation").setValueStateText(null);
                 }
             },
             onEmailChange: function (oEve) {

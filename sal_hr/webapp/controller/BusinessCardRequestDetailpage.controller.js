@@ -67,15 +67,17 @@ sap.ui.define([
                         }.bind(this),
                         dataReceived: function () {
                             this.getView().setBusy(false);
-                            this.fnGetEmpInfo("12002429", this.sParentID);
+                            this.fnSetCreateBusinessCardLocalModel();
                         }.bind(this)
                     }
                 });
             },
 
 
-            fnSetCreateBusinessCardLocalModel: function (oEmpInfoObj) {
-                this.EmpInfoObj = oEmpInfoObj;
+            fnSetCreateBusinessCardLocalModel: function () {
+
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+             
 
                 var sExternalCode = this.EmpInfoObj.userId,
                     sNationalID = this.EmpInfoObj.nationalId,
@@ -86,11 +88,12 @@ sap.ui.define([
                     oCreateBusinessCardObj = {
                         "externalCode": sExternalCode,
                         "externalName": null,
-                        "sJobTitle": oEmpInfoObj.jobTitle,
+                        "sJobTitle": this.EmpInfoObj.jobTitle,
+                        "sdivision": this.EmpInfoObj.division,
                         "sLocation": "",
-                        "sEmail":oEmpInfoObj.email,
-                        "sMobile":oEmpInfoObj.mobile,
-                        "sOfficeNo":oEmpInfoObj.officeNumber,
+                        "sEmail":this.EmpInfoObj.email,
+                        "sMobile":this.EmpInfoObj.mobile,
+                        "sOfficeNo":this.EmpInfoObj.officeNumber,
                         "effectiveStartDate": new Date()
                       
                         
