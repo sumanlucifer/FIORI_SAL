@@ -6,12 +6,12 @@
         <m:tileContent>
             <m:TileContent id="idHRReq_SummaryTileContent" frameType="TwoByOne">
                 <m:content>
-                 <ComparisonMicroChart id="idProcurementReq_Chart" view="Wide" size="M" scale="M" shrinkable="true" width="100%">
+                 <ComparisonMicroChart id="idProcurementReq_Chart" view="Wide" size="M" shrinkable="true" width="100%">
                         <data>
                             <ComparisonMicroChartData id="idProcurementReq_Pending" title="Pending" value="{totalPending}" color="Critical"/>
                             <ComparisonMicroChartData id="idProcurementReq_Approved" title="Approved" value="{totalApproved}" color="Good"/>
                             <ComparisonMicroChartData id="idProcurementReq_Rejected" title="Rejected" value="{totalRejected}" color="Error"/>
-                            <ComparisonMicroChartData id="idProcurementReq_Cancelled" title="Cancelled" value="{totalCancelled}" color="" />
+                            <ComparisonMicroChartData id="idProcurementReq_Cancelled" title="Cancelled" value="{totalCancelled}"/>
                         </data>
                     </ComparisonMicroChart>
                 </m:content>

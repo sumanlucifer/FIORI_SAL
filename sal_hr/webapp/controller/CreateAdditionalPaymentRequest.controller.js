@@ -125,7 +125,7 @@ sap.ui.define([
           
             fnGetAdditionalPaymentPayload: function () {
              
-
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sEffectiveStartDate =  this.getView().byId("idIssueDate").getDateValue();
                 var sCurrency =  this.getView().byId("idInpCurrencyCode").getSelectedKey();
                 var sType =  this.getView().byId("idInpType").getSelectedKey();
@@ -136,7 +136,7 @@ sap.ui.define([
                 oDate = oDate + "T00:00:00";
                 return {
                     "payComponentCode": sType,
-                    "userId": "12002425",
+                    "userId": sUserID,
                     "payDate": sEffectiveStartDate,
                     "notes": null,
                     "alternativeCostCenter": saltCostCenter,

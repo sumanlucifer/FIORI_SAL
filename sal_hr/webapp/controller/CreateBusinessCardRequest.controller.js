@@ -321,6 +321,7 @@ sap.ui.define([
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
             },
             getBusinessCardCreatePayload: function () {
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
 
                 var sIncidentStartDate = this.byId("idIncidentStartDate").getDateValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
@@ -334,7 +335,7 @@ sap.ui.define([
                 var sCustJobTitle = this.byId("idCreateJobTitle").getValue();
 
                 return {
-                    "User": "12002425",
+                    "User": sUserID,
                     "cust_email": sCustEmail,
                     "cust_mobile": sCustMobile,
                     "cust_poBox": sCustPOBOX,

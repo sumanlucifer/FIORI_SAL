@@ -41,7 +41,9 @@ sap.ui.define([
                     uploadAttachment: true,
                     currentDate: new Date(),
                     businessTravel: false,
-                    trainingTravel: false
+                    trainingTravel: false,
+                    businessCategory:true,
+                    trianingCategory:false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -58,22 +60,121 @@ sap.ui.define([
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this.fnGetEmpInfo("12002429", this.sParentID);
-
+                // this.fnGetEmpInfo("12002429", this.sParentID);
+                this.fnSetCreateBusinessTripModel();
 
             },
-            fnSetCreateBusinessTripModel: function (oEmpInfoObj) {
-                this.EmpInfoObj = oEmpInfoObj;
-
-                //    var oCreateBusinessObj = {
-
+            fnSetCreateBusinessTripModel: function () {
+                // this.EmpInfoObj = oEmpInfoObj;
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+               
+// ++++++++++++++++++++++++++++++++++++++++++++++= old code ++++++++++++++++++++++++++++++++++++++==
                 var sExternalCode = this.EmpInfoObj.userId,
                     sFirstName = this.EmpInfoObj.firstName + " " + this.EmpInfoObj.middleName + " " + this.EmpInfoObj.lastName,
                     sPayGrade = this.EmpInfoObj.payGrade,
                     sCostCenter = this.EmpInfoObj.costCentre,
                     sPhnNum = this.EmpInfoObj.emergencyNumber;
-                //    }
-                var oCreateBusinessObj = {
+            
+                // var oCreateBusinessObj = {
+                //     "externalCode": sExternalCode,
+                //     "effectiveStartDate": new Date(),
+                //     "cust_toDutyTravelItem": [
+                //         {
+                //             "cust_userId": sExternalCode,
+                //             "cust_dutyTravelMain_externalCode": sExternalCode,
+                //             "cust_dutyTravelMain_effectiveStartDate": new Date(),
+
+                //             "externalCode": "96056",
+                //             "externalName": null,
+                //             "cust_requestType": "1",
+                //             "cust_perDiemPayComp": null,
+                //             "cust_totalAmount": null,
+                //             "cust_tripCategory": "B",
+                //             "cust_isCompany": true,
+                //             "cust_hotelBooking": false,
+                //             "cust_assignJustification": "4444444444444",
+                //             "cust_expenseTypeBusinessTravel": null,
+                //             "cust_expenseTypeTrainingTravel": null,
+                //             "cust_businessTicketAmount": null,
+                //             "cust_trainingExpenseAmount": null,
+
+                //             "cust_empName": sFirstName,
+                //             "cust_payGrade": sPayGrade,
+                //             "cust_costCenter": sCostCenter,
+                //             "cust_emerPhoneNum": sPhnNum,
+
+                //             "cust_assignStartDate": new Date(),
+                //             "cust_assignEndDate": new Date(),
+                //             "cust_travelTime": null,
+                //             "cust_destination": null,
+                //             "cust_city": null,
+                //             "cust_SAUotherCity": null,
+                //             "cust_cityAll": null,
+                //             "cust_inOutKingdom": "OUT",
+                //             "cust_perDiem": "1000",
+                //             "cust_totalPerDiem": "1000",
+                //             "cust_businessTravelDate": new Date(),
+                //             "cust_businessTravelFrom": null,
+                //             "cust_businessTravelTo": null,
+                //             "cust_businessTravelFlightNum": null,
+                //             "cust_businessTravelDepTime": null,
+                //             "cust_businessTravelArrTime": null,
+                //             "cust_businessTravelPayComp": null,
+                //             "cust_trainingTravelDate": null,
+                //             "cust_trainingTravelFrom": null,
+                //             "cust_trainingTravelTo": null,
+                //             "cust_trainingTravelFlightNum": null,
+                //             "cust_trainingTravelDepTime": null,
+                //             "cust_trainingTravelArrTime": null,
+                //             "cust_trainingTravelPayComp": null,
+                //             "cust_ticketAmount": null,
+                //             "cust_expenseTypeVisaFee": null,
+                //             "cust_visaFeePayComp": null,
+                //             "cust_visaFeeExpenseAmount": null,
+
+
+
+
+
+                //             "cust_status": null,
+                //             "cust_returnDate": null,
+                //             "cust_paymentType": null,
+                //             "mdfSystemRecordStatus": "N",
+
+
+                //             "travelattachment1FileContent": "create travel attache",
+                //             "travelattachment1FileName": "tr1.txt",
+                //             "isTravelAttach1New": true,
+                //             "travelattachment1UserId": "Extentia",
+
+
+                //             "businessTravelattachmentFileContent": "btravle create",
+                //             "businessTravelattachmentFileName": "btravel.txt",
+                //             "isbusinessTravelAttachNew": false,
+                //             "businessTravelattachmentUserId": "Extentia",
+
+                //             "trainingTravelattachmentFileContent": "btravle2create",
+                //             "trainingTravelattachmentFileName": "btrave2.txt",
+                //             "istrainingTravelAttachNew": false,
+                //             "trainingTravelattachmentUserId": "Extentia",
+
+                //             "receiptEmbassyattachmentFileContent": "btravle 3create",
+                //             "receiptEmbassyattachmentFileName": "btrave3.txt",
+                //             "isreceiptEmbassyAttachNew": false,
+                //             "receiptEmbassyattachmentUserId": "Extentia",
+
+                //             "visaCopyattachmentFileContent": "btravle 6 create",
+                //             "visaCopyattachmentFileName": "btrave6.txt",
+                //             "isvisaCopyAttachNew": false,
+                //             "visaCopyattachmentUserId": "Extentia"
+
+                //         }
+                //     ]
+
+                // },
+// *********************************** old code ***************************************************************
+
+                  var oCreateBusinessObj = {
                     "externalCode": sExternalCode,
                     "effectiveStartDate": new Date(),
                     "cust_toDutyTravelItem": [
@@ -81,11 +182,11 @@ sap.ui.define([
                             "cust_userId": sExternalCode,
                             "cust_dutyTravelMain_externalCode": sExternalCode,
                             "cust_dutyTravelMain_effectiveStartDate": new Date(),
-
-                            "externalCode": "96056",
+                
+                            "externalCode": sExternalCode,
                             "externalName": null,
                             "cust_requestType": "1",
-                            "cust_perDiemPayComp": null,
+                            "cust_perDiemPayComp": "9256",
                             "cust_totalAmount": null,
                             "cust_tripCategory": "B",
                             "cust_isCompany": true,
@@ -95,22 +196,23 @@ sap.ui.define([
                             "cust_expenseTypeTrainingTravel": null,
                             "cust_businessTicketAmount": null,
                             "cust_trainingExpenseAmount": null,
-
+                
                             "cust_empName": sFirstName,
                             "cust_payGrade": sPayGrade,
                             "cust_costCenter": sCostCenter,
                             "cust_emerPhoneNum": sPhnNum,
-
+                
                             "cust_assignStartDate": new Date(),
                             "cust_assignEndDate": new Date(),
                             "cust_travelTime": null,
-                            "cust_destination": null,
+                            "cust_destination": "IND",
                             "cust_city": null,
                             "cust_SAUotherCity": null,
-                            "cust_cityAll": null,
+                            "cust_cityAll": "Mumbai",
                             "cust_inOutKingdom": "OUT",
-                            "cust_perDiem": "1000",
-                            "cust_totalPerDiem": "1000",
+                            "cust_perDiem": null,
+                            "cust_totalPerDiem": null,
+
                             "cust_businessTravelDate": new Date(),
                             "cust_businessTravelFrom": null,
                             "cust_businessTravelTo": null,
@@ -118,58 +220,99 @@ sap.ui.define([
                             "cust_businessTravelDepTime": null,
                             "cust_businessTravelArrTime": null,
                             "cust_businessTravelPayComp": null,
-                            "cust_trainingTravelDate": null,
+
+                            "cust_trainingTravelDate": new Date(),
                             "cust_trainingTravelFrom": null,
                             "cust_trainingTravelTo": null,
                             "cust_trainingTravelFlightNum": null,
                             "cust_trainingTravelDepTime": null,
                             "cust_trainingTravelArrTime": null,
                             "cust_trainingTravelPayComp": null,
+
                             "cust_ticketAmount": null,
                             "cust_expenseTypeVisaFee": null,
                             "cust_visaFeePayComp": null,
                             "cust_visaFeeExpenseAmount": null,
-
-
-
-
-
+                
+                            "cust_travelSDate1": new Date(),
+                            "cust_travelEDate1": new Date(),
+                            "cust_travelTime1": null,
+                            "cust_desti1": null,
+                            "cust_citySau1": null,
+                            "cust_SAUotherCity2": null,
+                            "cust_city1": null,
+                            "cust_inOutKingdom1": null,
+                            "cust_perDiem1": null,
+                            "cust_totalPerDiem1": null,
+                            "cust_TravelDate1": null,
+                            "cust_TravelFrom1": null,
+                            "cust_TravelTo1": null,
+                            "cust_TravelFlightNum1": null,
+                            "cust_TravelDepTime1": null,
+                            "cust_TravelArrTime1": null,
+                            "cust_TravelPayComp1": null,
+                            "cust_ticketAmount1": null,
+                            "cust_expenseTypeVisaFee1": null,
+                            "cust_visaFeePayComp1": null,
+                            "cust_visaFeeExpenseAmount1": null,
+                
+                            "cust_travelSDate2": new Date(),
+                            "cust_travelEDate2": new Date(),
+                            "cust_travelTime2": null,
+                            "cust_desti2": null,
+                            "cust_citySau2": null,
+                            "cust_SAUotherCity3": null,
+                            "cust_city2": null,
+                            "cust_inOutKingdom2": null,
+                            "cust_perDiem2": null,
+                            "cust_totalPerDiem2": null,
+                            "cust_TravelDate2": null,
+                            "cust_TravelFrom2": null,
+                            "cust_TravelTo2": null,
+                            "cust_TravelFlightNum2": null,
+                            "cust_TravelDepTime2": null,
+                            "cust_TravelArrTime2": null,
+                            "cust_TravelPayComp2": null,
+                            "cust_ticketAmount2": null,
+                            "cust_expenseTypeVisaFee2": null,
+                            "cust_visaFeePayComp2": null,
+                            "cust_visaFeeExpenseAmount2": null,
+                
                             "cust_status": null,
                             "cust_returnDate": null,
                             "cust_paymentType": null,
                             "mdfSystemRecordStatus": "N",
-
-
-                            "travelattachment1FileContent": "create travel attache",
-                            "travelattachment1FileName": "tr1.txt",
+                            "travelattachment1FileContent": "create travelattachment1 attache",
+                            "travelattachment1FileName": "travelattachment1.txt",
                             "isTravelAttach1New": true,
                             "travelattachment1UserId": "Extentia",
-
-
-                            "businessTravelattachmentFileContent": "btravle create",
-                            "businessTravelattachmentFileName": "btravel.txt",
-                            "isbusinessTravelAttachNew": false,
+                        
+                            
+                            "businessTravelattachmentFileContent": "businessTravelattachment create",
+                            "businessTravelattachmentFileName": "businessTravelAttachment.txt",
+                            "isbusinessTravelAttachNew": true,
                             "businessTravelattachmentUserId": "Extentia",
-
-                            "trainingTravelattachmentFileContent": "btravle2create",
-                            "trainingTravelattachmentFileName": "btrave2.txt",
-                            "istrainingTravelAttachNew": false,
+                           
+                            "trainingTravelattachmentFileContent": "trainingTravelattachment create",
+                            "trainingTravelattachmentFileName": "trainingTravelattachment.txt",
+                            "istrainingTravelAttachNew": true,
                             "trainingTravelattachmentUserId": "Extentia",
-
-                            "receiptEmbassyattachmentFileContent": "btravle 3create",
-                            "receiptEmbassyattachmentFileName": "btrave3.txt",
-                            "isreceiptEmbassyAttachNew": false,
+                           
+                            "receiptEmbassyattachmentFileContent": "receiptEmbassy 3create",
+                            "receiptEmbassyattachmentFileName": "receiptEmbassy.txt",
+                            "isreceiptEmbassyAttachNew": true,
                             "receiptEmbassyattachmentUserId": "Extentia",
-
-                            "visaCopyattachmentFileContent": "btravle 6 create",
-                            "visaCopyattachmentFileName": "btrave6.txt",
-                            "isvisaCopyAttachNew": false,
+                         
+                            "visaCopyattachmentFileContent": "visaCopy 6 create",
+                            "visaCopyattachmentFileName": "visaCopy.txt",
+                            "isvisaCopyAttachNew": true,
                             "visaCopyattachmentUserId": "Extentia"
-
+                            
+                            
                         }
                     ]
-
                 },
+
 
                     oCreateBusinessTripModel = new JSONModel(oCreateBusinessObj);
 
@@ -474,11 +617,49 @@ sap.ui.define([
                 if (sValue === "B") {
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
+                    this.getView().getModel("LocalViewModel").setProperty("/businessCategory", true);
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingCategory", false);
+                    this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_perDiemPayComp", "9256");
+                    this.byId("idPayComp").setValue("Business Trip Per-Diem Off Cycle");
 
                 } else {
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", true);
+                    this.getView().getModel("LocalViewModel").setProperty("/businessCategory", false);
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingCategory", true);
+                    this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_perDiemPayComp", "9257");
+                    this.byId("idPayComp").setValue("Training Trip Per-Diem Off-Cycle");
+
                 }
+
+
+            },
+            onDestCountryChange:function(oEvent){
+                  var sDestCountry = oEvent.getSource().getSelectedKey(),
+                  sPayGrade = this.EmpInfoObj.payGrade;
+
+                  this.getView().getModel().read("/SF_DutyTravel_PerDiem", 
+                  {
+                    urlParameters: {
+                        "$filter": "(cust_country eq '" + sDestCountry  + "' and cust_salaryGrade eq '" + sPayGrade + "')"
+                    },  
+                    success: function (oData) {
+                        this.getView().byId("idPerDiem").setValue(oData.results[0].cust_amount);
+                        this.fnCalculateTotalPerDiem();
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }.bind(this),
+                });
+               
+
+            },
+            fnCalculateTotalPerDiem:function(){
+               
+               var sTotalPerDiem = Number(this.byId("idPerDiem").getValue()) + Number(this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_ticketAmount")) + Number(this.byId("idVisaAmt").getValue());
+            //    sTotalPerDiem = String(sTotalPerDiem);
+               this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalPerDiem" ,sTotalPerDiem );
+               this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalAmount" ,sTotalPerDiem );
 
 
             }

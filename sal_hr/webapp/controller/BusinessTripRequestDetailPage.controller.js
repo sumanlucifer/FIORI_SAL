@@ -62,7 +62,7 @@ sap.ui.define([
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        $expand: "cust_toDutyTravelItem"
+                        $expand: "cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav"
                     },
                     success: function (oData) {
                         this._fnSetDisplayEditBusinessTripModel(oData);
@@ -70,7 +70,6 @@ sap.ui.define([
                     error: function () {
                         this.getView().setBusy(false);
                     }.bind(this)
-
                 });
 
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Business Trip Request");
@@ -183,61 +182,49 @@ sap.ui.define([
                                 "cust_paymentType": oTravelItemDetailsObj.cust_paymentType,
                                 "mdfSystemRecordStatus": oTravelItemDetailsObj.mdfSystemRecordStatus,
 
+                                // Attachment Sections fields
                                 "travelattachment1FileContent": "create travel attache",
                                 "travelattachment1FileName": "tr1.txt",
                                 "isTravelAttach1New": true,
                                 "travelattachment1UserId": "Extentia",
-                                "travelattachment2FileContent": "create travel2 attache",
-                                "travelattachment2FileName": "tr2.txt",
-                                "isTravelAttach2New": true,
-                                "travelattachment2UserId": "Extentia",
+
                                 "businessTravelattachmentFileContent": "btravle create",
                                 "businessTravelattachmentFileName": "btravel.txt",
                                 "isbusinessTravelAttachNew": true,
                                 "businessTravelattachmentUserId": "Extentia",
+
                                 "trainingTravelattachmentFileContent": "btravle2create",
                                 "trainingTravelattachmentFileName": "btrave2.txt",
                                 "istrainingTravelAttachNew": true,
                                 "trainingTravelattachmentUserId": "Extentia",
+
                                 "receiptEmbassyattachmentFileContent": "btravle 3create",
                                 "receiptEmbassyattachmentFileName": "btrave3.txt",
                                 "isreceiptEmbassyAttachNew": true,
                                 "receiptEmbassyattachmentUserId": "Extentia",
-                                "receiptEmbassyattachment1FileContent": "btravle4 create",
-                                "receiptEmbassyattachment1FileName": "btrave4.txt",
-                                "isreceiptEmbassyAttach1New": true,
-                                "receiptEmbassyattachment1UserId": "Extentia",
-                                "receiptEmbassyattachment2FileContent": "emb22 create",
-                                "receiptEmbassyattachment2FileName": "emb22.txt",
-                                "isreceiptEmbassyAttach2New": true,
-                                "receiptEmbassyattachment2UserId": "Extentia",
+
                                 "visaCopyattachmentFileContent": "btravle 6 create",
                                 "visaCopyattachmentFileName": "btrave6.txt",
                                 "isvisaCopyAttachNew": true,
                                 "visaCopyattachmentUserId": "Extentia",
-                                "visaCopyattachment1FileContent": "btravle 7 create",
-                                "visaCopyattachment1FileName": "btrave7.txt",
-                                "isvisaCopyAttach1New": true,
-                                "visaCopyattachment1UserId": "Extentia",
-                                "visaCopyattachment2FileContent": "btravle 8 create",
-                                "visaCopyattachment2FileName": "btrave8.txt",
-                                "isvisaCopyAttach2New": true,
-                                "visaCopyattachment2UserId": "Extentia",
+
                                 "travelAttachment1Id": "34908",
-                                "travelAttachment2Id": "34909",
                                 "businessTravelAttachmentId": "34910",
                                 "trainingTravelAttachmentId": "34911",
                                 "receiptEmbassyAttachmentId": "34912",
-                                "receiptEmbassyAttachment1Id": "34913",
-                                "receiptEmbassyAttachment2Id": "34914",
-                                "visaCopyAttachmentId": "34915",
-                                "visaCopyAttachment1Id": "34916",
-                                "visaCopyAttachment2Id": "34917"
+                                "visaCopyAttachmentId": "34915"
                             }
                         ]
                     },
-                    oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj);
+                    oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
+                    oBusinessTripAttachmentModel = new JSONModel({
+                        businessTravelAttachment: oTravelItemDetailsObj.cust_businessTravelAttachNav,
+                        receiptEmbassyAttachment: oTravelItemDetailsObj.cust_receiptEmbassyNav,
+                        visaCopyAttachment: oTravelItemDetailsObj.cust_visaCopyNav
+                    });
+
                 this.getView().setModel(oDisplayEditBusinessTripModel, "DisplayEditBusinessTripModel");
+                this.getView().setModel(oBusinessTripAttachmentModel, "BusinessTripAttachmentModel");
             },
 
             onEditPress: function () {
@@ -252,8 +239,6 @@ sap.ui.define([
                 this.getView().setBusy(true);
                 var oComponentModel = this.getComponentModel(),
                     sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
-                        // effectiveStartDate: new Date("2022-04-13"),
-                        // externalCode: "12002427"
                         effectiveStartDate: this.object.effectiveStartDate,
                         externalCode: this.object.externalCode
                     });
@@ -279,9 +264,7 @@ sap.ui.define([
             },
 
             onSavePress: function () {
-                var
-                    // sValidationErrorMsg = this.fnValidateAirPassPayload(),
-
+                var sValidationErrorMsg = this.fnValidateBusinessTripPayload(),
                     sKey = this.getView().getModel().createKey("/SF_DutyTravelMain", {
                         // effectiveStartDate: object.effectiveStartDate,
                         // externalCode: object.externalCode
@@ -289,197 +272,33 @@ sap.ui.define([
                         externalCode: "12002428"
                     });
 
-                // if (sValidationErrorMsg === "") {
-                this.getView().setBusy(true);
+                if (sValidationErrorMsg === "") {
+                    this.getView().setBusy(true);
 
-                // this._fnUpdateAttachmentData();
+                    // this._fnUpdateAttachmentData();
 
-                var oPayloadObj = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
-                oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany = (oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany === "Yes" ? true : false);
+                    var oPayloadObj = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
+                    oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany = (oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany === "Yes" ? true : false);
 
-                // oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
+                    // oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
 
-                this.getView().getModel().update(sKey, oPayloadObj, {
-                    success: function (oResponse) {
-                        this.getView().setBusy(false);
-                        MessageBox.success("Requested changes updated successfully.");
-                        this.oRouter.navTo("detail", {
-                            parentMaterial: this.sParentID,
-                            layout: "TwoColumnsMidExpanded"
-                        });
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getView().setBusy(false);
-                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
-                    }.bind(this)
-                });
-                // } else {
-                //     MessageBox.error(sValidationErrorMsg);
-                // }
-            },
-
-            _fnUpdateAttachmentData: function () {
-                var oData = this.getView().getModel("DisplayEditAirpassModel").getProperty("/");
-
-                if (oData.isPersonalIdAttachmentNew === false) {
-                    var oPersonalIdAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/PersonalIdAttachment");
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPersonalIdAttachmentNew", true);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/personalIdAttachmentFileContent", oPersonalIdAttachmentObj.fileContent);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/personalIdAttachmentFileName", oPersonalIdAttachmentObj.fileName);
-                    this.getView().getModel("DisplayEditAirpassModel").refresh();
-                }
-
-                if (oData.isPersonalPhotoAttachmentNew === false) {
-                    var oPersonalPhotoAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/PersonalPhotoAttachment");
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPersonalPhotoAttachmentNew", true);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/personalPhotoAttachmentFileContent", oPersonalPhotoAttachmentObj.fileContent);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/personalPhotoAttachmentFileName", oPersonalPhotoAttachmentObj.fileName);
-                    this.getView().getModel("DisplayEditAirpassModel").refresh();
-                }
-
-                if (oData.isPassportAttachmentNew === false) {
-                    var oPassportAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment");
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPassportAttachmentNew", true);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileContent", oPassportAttachmentObj.fileContent);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileName", oPassportAttachmentObj.fileName);
-                    this.getView().getModel("DisplayEditAirpassModel").refresh();
-                }
-
-                if (oData.isCompanyIdAttachmentNew === false) {
-                    var oCompanyIdAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/CompanyIdAttachment");
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/isCompanyIdAttachmentNew", true);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/companyIdAttachmentFileContent", oCompanyIdAttachmentObj.fileContent);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/companyIdAttachmentFileName", oCompanyIdAttachmentObj.fileName);
-                    this.getView().getModel("DisplayEditAirpassModel").refresh();
-                }
-            },
-
-            fnValidateAirPassPayload: function () {
-                this.getView().setBusy(true);
-
-                var sValidationErrorMsg = "",
-                    oEffectStartDatePicker = this.getView().byId("idEditAirportPassEffectDatePicker");
-
-                // Validate AirportPass Effective Start Date
-                if (!oEffectStartDatePicker.getValue()) {
-                    oEffectStartDatePicker.setValueState("Error");
-                    oEffectStartDatePicker.setValueStateText("Please select airport pass effective start date");
-                    sValidationErrorMsg = "Please fill the all required fields.";
+                    this.getView().getModel().update(sKey, oPayloadObj, {
+                        success: function (oResponse) {
+                            this.getView().setBusy(false);
+                            MessageBox.success("Requested changes updated successfully.");
+                            this.oRouter.navTo("detail", {
+                                parentMaterial: this.sParentID,
+                                layout: "TwoColumnsMidExpanded"
+                            });
+                        }.bind(this),
+                        error: function (oError) {
+                            this.getView().setBusy(false);
+                            MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        }.bind(this)
+                    });
                 } else {
-                    oEffectStartDatePicker.setValueState("None");
+                    MessageBox.error(sValidationErrorMsg);
                 }
-
-                // validate Type of Pass Field
-                var oTypeofPass = this.getView().byId("idEditTypeOfPassSLT");
-                if (!oTypeofPass.getSelectedKey()) {
-                    oTypeofPass.setValueState("Error");
-                    oTypeofPass.setValueStateText("Please select atleast one value for type of pass field.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oTypeofPass.setValueState("None");
-                }
-
-                // validate Age according to given user's Date of Birth
-                var oDateofbirthatePicker = this.getView().byId("idEditDateofBithInp"),
-                    oDateofbirth = new Date(oDateofbirthatePicker.getValue()),
-                    iAge = this.fnCalculateUserAge(oDateofbirth);
-
-                if (iAge < 18) {
-                    oDateofbirthatePicker.setValueState("Error");
-                    oDateofbirthatePicker.setValueStateText("Your age must be more than 18 years.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oDateofbirthatePicker.setValueState("None");
-                }
-
-                // validate Nationality Field
-                var oNationality = this.getView().byId("idEditNationalityInp");
-                if (!oNationality.getValue() || oNationality.getValue().length < 2) {
-                    oNationality.setValueState("Error");
-                    oNationality.setValueStateText("Please enter valid Nationality.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oNationality.setValueState("None");
-                }
-
-                // validate Airport Location Field
-                var oAirPortLocaton = this.getView().byId("idEditAirPortLocatonSLT");
-                if (!oAirPortLocaton.getSelectedKey()) {
-                    oAirPortLocaton.setValueState("Error");
-                    oAirPortLocaton.setValueStateText("Please select atleast one value for airport location field.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oAirPortLocaton.setValueState("None");
-                }
-
-                // validate Domestic staion field if Airport location is selected as "Loc05" i.e Domestic
-                if (oAirPortLocaton.getSelectedKey() === "Loc05") {
-                    var oDomasticStation = this.getView().byId("idEditDomasticStationInp");
-                    if (!oDomasticStation.getValue()) {
-                        oDomasticStation.setValueState("Error");
-                        oDomasticStation.setValueStateText("Please enter domestic station name.");
-                        sValidationErrorMsg = "Please fill the all required fields.";
-                    } else {
-                        oDomasticStation.setValueState("None");
-                    }
-                }
-
-                // validate Permit Date Field
-                var oPermitDate = this.getView().byId("idEditPermitDate");
-                if (!oPermitDate.getValue()) {
-                    oPermitDate.setValueState("Error");
-                    oPermitDate.setValueStateText("Please enter Permit Date.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oPermitDate.setValueState("None");
-                }
-
-                // validate Purpose of Permit Field
-                var oPurposeofPermit = this.getView().byId("idEditPurposeofPermitInp");
-                if (!oPurposeofPermit.getValue() || oPurposeofPermit.getValue().length < 3) {
-                    oPurposeofPermit.setValueState("Error");
-                    oPurposeofPermit.setValueStateText("Please enter Purpose of Permit.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oPurposeofPermit.setValueState("None");
-                }
-
-                // validate Acknowledge First Field
-                var oAcknowledgeTextFirst = this.getView().byId("idEditAcknowledgeTextFirstSLT");
-                if (oAcknowledgeTextFirst.getSelectedKey() === "Select") {
-                    oAcknowledgeTextFirst.setValueState("Error");
-                    oAcknowledgeTextFirst.setValueStateText("Please select value for Acknowledgement 1.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oAcknowledgeTextFirst.setValueState("None");
-                }
-
-                // validate Acknowledge second Field
-                var oAcknowledgeTextSecond = this.getView().byId("idEditAcknowledgeTextSecondSLT");
-                if (oAcknowledgeTextSecond.getSelectedKey() === "Select") {
-                    oAcknowledgeTextSecond.setValueState("Error");
-                    oAcknowledgeTextSecond.setValueStateText("Please select value for Acknowledgement 2.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oAcknowledgeTextSecond.setValueState("None");
-                }
-
-                // Validate attachment sections
-                if (this.getView().byId("idEditUploadSetPersonalID").getItems().length <= 0) {
-                    sValidationErrorMsg = "Please upload files for Personal ID Copy.";
-                    return sValidationErrorMsg;
-                }
-                if (this.getView().byId("idEditUploadSetPersonalPhoto").getItems().length <= 0) {
-                    sValidationErrorMsg = "Please upload files for Personal Photo.";
-                    return sValidationErrorMsg;
-                }
-                if (this.getView().byId("idEditUploadSetCompanyIDCopy").getItems().length <= 0) {
-                    sValidationErrorMsg = "Please upload files for Company ID Copy.";
-                    return sValidationErrorMsg;
-                }
-
-                this.getView().setBusy(false);
-                return sValidationErrorMsg;
             },
 
             onFileAdded: function (oEvent) {
@@ -510,36 +329,44 @@ sap.ui.define([
             },
 
             _addData: function (Filecontent, Filename, oUploadPropertyObj) {
-                this.getView().getModel("DisplayEditAirpassModel").setProperty("/" + oUploadPropertyObj.AttachmentNew, true);
-                this.getView().getModel("DisplayEditAirpassModel").setProperty("/" + oUploadPropertyObj.AttachmentFileContent, Filecontent);
-                this.getView().getModel("DisplayEditAirpassModel").setProperty("/" + oUploadPropertyObj.AttachmentFileName, Filename);
-                this.getView().getModel("DisplayEditAirpassModel").refresh();
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/" + oUploadPropertyObj.AttachmentNew, true);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/" + oUploadPropertyObj.AttachmentFileContent, Filecontent);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/" + oUploadPropertyObj.AttachmentFileName, Filename);
+                this.getView().getModel("DisplayEditBusinessTripModel").refresh();
             },
 
             onFileDeleted: function (oEvent) {
                 var sUploaderName = oEvent.getSource().getId().split("--")[1],
                     oUploadPropertyObj = this._fnGetSelectedUploadSetPropoerties(sUploaderName);
 
-                this.getView().getModel("DisplayEditAirpassModel").setProperty("/" + oUploadPropertyObj.AttachmentNew, false);
-                this.getView().getModel("DisplayEditAirpassModel").refresh();
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/" + oUploadPropertyObj.AttachmentNew, false);
+                this.getView().getModel("DisplayEditBusinessTripModel").refresh();
             },
 
             _fnGetSelectedUploadSetPropoerties: function (sUploaderName) {
                 var oUploadPropertyObj = {};
                 switch (sUploaderName) {
-                    case "idEditUploadSetPersonalID":
+                    case "idEditAttachBoardingPassUS":
                         oUploadPropertyObj = {
-                            AttachmentNew: "isPersonalIdAttachmentNew",
-                            AttachmentFileContent: "personalIdAttachmentFileContent",
-                            AttachmentFileName: "personalIdAttachmentFileName"
+                            AttachmentNew: "isbusinessTravelAttachNew",
+                            AttachmentFileContent: "businessTravelattachmentFileContent",
+                            AttachmentFileName: "businessTravelattachmentFileName"
                         };
                         break;
 
-                    case "idEditUploadSetPersonalPhoto":
+                    case "idEditAttachVisaCopy":
                         oUploadPropertyObj = {
-                            AttachmentNew: "isPersonalPhotoAttachmentNew",
-                            AttachmentFileContent: "personalPhotoAttachmentFileContent",
-                            AttachmentFileName: "personalPhotoAttachmentFileName"
+                            AttachmentNew: "isvisaCopyAttachNew",
+                            AttachmentFileContent: "visaCopyattachmentFileContent",
+                            AttachmentFileName: "visaCopyattachmentFileName"
+                        };
+                        break;
+
+                    case "idEditAttachEmbassyReceipt":
+                        oUploadPropertyObj = {
+                            AttachmentNew: "isreceiptEmbassyAttachNew",
+                            AttachmentFileContent: "receiptEmbassyattachmentFileContent",
+                            AttachmentFileName: "receiptEmbassyattachmentFileName"
                         };
                         break;
                 }
@@ -550,22 +377,29 @@ sap.ui.define([
 
             onDownLoadPress: function (oEvent) {
                 var sUploaderName = oEvent.getSource().getParent().getParent().getParent().getId().split("--")[1],
-                    oAttachmentData = this.getView().getModel("AttachmentModel").getProperty("/"),
+                    oAttachmentData = this.getView().getModel("BusinessTripAttachmentModel").getProperty("/"),
                     sFileContent = null, sFileName = null, sFileext = null, sMimeType = null;
 
                 switch (sUploaderName) {
-                    case "idDisplayUploadSetPersonalIDCopy":
-                        sFileContent = oAttachmentData.PersonalIdAttachment.fileContent;
-                        sFileName = oAttachmentData.PersonalIdAttachment.fileName.split(".")[0];
-                        sFileext = oAttachmentData.PersonalIdAttachment.fileExtension;
-                        sMimeType = oAttachmentData.PersonalIdAttachment.mimeType;
+                    case "idDisplayAttachBoardingPass":
+                        sFileContent = oAttachmentData.businessTravelAttachment.fileContent;
+                        sFileName = oAttachmentData.businessTravelAttachment.fileName.split(".")[0];
+                        sFileext = oAttachmentData.businessTravelAttachment.fileExtension;
+                        sMimeType = oAttachmentData.businessTravelAttachment.mimeType;
                         break;
 
-                    case "idDisplayUploadSetPersonalPhoto":
-                        sFileContent = oAttachmentData.PersonalPhotoAttachment.fileContent;
-                        sFileName = oAttachmentData.PersonalPhotoAttachment.fileName.split(".")[0];
-                        sFileext = oAttachmentData.PersonalPhotoAttachment.fileExtension;
-                        sMimeType = oAttachmentData.PersonalPhotoAttachment.mimeType;
+                    case "idDisplayAttachVisaCopy":
+                        sFileContent = oAttachmentData.visaCopyAttachment.fileContent;
+                        sFileName = oAttachmentData.visaCopyAttachment.fileName.split(".")[0];
+                        sFileext = oAttachmentData.visaCopyAttachment.fileExtension;
+                        sMimeType = oAttachmentData.visaCopyAttachment.mimeType;
+                        break;
+
+                    case "idDisplayAttachEmbassyReceipt":
+                        sFileContent = oAttachmentData.receiptEmbassyAttachment.fileContent;
+                        sFileName = oAttachmentData.receiptEmbassyAttachment.fileName.split(".")[0];
+                        sFileext = oAttachmentData.receiptEmbassyAttachment.fileExtension;
+                        sMimeType = oAttachmentData.receiptEmbassyAttachment.mimeType;
                         break;
                 }
 
@@ -625,9 +459,218 @@ sap.ui.define([
                 });
             },
 
-            onReqTypeChange: function () {
+            _fnUpdateAttachmentData: function () {
+                var oData = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
 
-            }
+                if (oData.isPersonalIdAttachmentNew === false) {
+                    var oPersonalIdAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/PersonalIdAttachment");
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/isPersonalIdAttachmentNew", true);
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/personalIdAttachmentFileContent", oPersonalIdAttachmentObj.fileContent);
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/personalIdAttachmentFileName", oPersonalIdAttachmentObj.fileName);
+                    this.getView().getModel("DisplayEditBusinessTripModel").refresh();
+                }
+
+                if (oData.isPersonalPhotoAttachmentNew === false) {
+                    var oPersonalPhotoAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/PersonalPhotoAttachment");
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/isPersonalPhotoAttachmentNew", true);
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/personalPhotoAttachmentFileContent", oPersonalPhotoAttachmentObj.fileContent);
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/personalPhotoAttachmentFileName", oPersonalPhotoAttachmentObj.fileName);
+                    this.getView().getModel("DisplayEditBusinessTripModel").refresh();
+                }
+
+                if (oData.isPassportAttachmentNew === false) {
+                    var oPassportAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment");
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/isPassportAttachmentNew", true);
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/passportAttachmentFileContent", oPassportAttachmentObj.fileContent);
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/passportAttachmentFileName", oPassportAttachmentObj.fileName);
+                    this.getView().getModel("DisplayEditBusinessTripModel").refresh();
+                }
+
+                if (oData.isCompanyIdAttachmentNew === false) {
+                    var oCompanyIdAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/CompanyIdAttachment");
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/isCompanyIdAttachmentNew", true);
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/companyIdAttachmentFileContent", oCompanyIdAttachmentObj.fileContent);
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/companyIdAttachmentFileName", oCompanyIdAttachmentObj.fileName);
+                    this.getView().getModel("DisplayEditBusinessTripModel").refresh();
+                }
+            },
+
+            fnValidateBusinessTripPayload: function () {
+                this.getView().setBusy(true);
+
+                var sValidationErrorMsg = "",
+                    oEffectStartDatePicker = this.getView().byId("idEditEffectDatePicker");
+
+                // validate effective start date Field
+                if (!oEffectStartDatePicker.getValue()) {
+                    oEffectStartDatePicker.setValueState("Error");
+                    oEffectStartDatePicker.setValueStateText("Please enter Effective start date.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oEffectStartDatePicker.setValueState("None");
+                }
+
+                // validate Request Type Field
+                var oRequestType = this.getView().byId("idEditReqType");
+                if (!oRequestType.getSelectedKey()) {
+                    oRequestType.setValueState("Error");
+                    oRequestType.setValueStateText("Please select atleast one value for Request Type.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oRequestType.setValueState("None");
+                }
+
+                // validate Per Diem Pay Component Field
+                var oPerDiemPayComponent = this.getView().byId("idEditPayComp");
+                if (!oPerDiemPayComponent.getValue()) {
+                    oPerDiemPayComponent.setValueState("Error");
+                    oPerDiemPayComponent.setValueStateText("Please enter valid Per Diem Pay Component.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oPerDiemPayComponent.setValueState("None");
+                }
+
+                // validate Total Travel Amount Field
+                var oTotalTravelAmount = this.getView().byId("idEditTravelAmt");
+                if (!oTotalTravelAmount.getValue()) {
+                    oTotalTravelAmount.setValueState("Error");
+                    oTotalTravelAmount.setValueStateText("Please enter valid Total Travel Amount.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oTotalTravelAmount.setValueState("None");
+                }
+
+                // validate Trip Category Field
+                var oTripCategory = this.getView().byId("idEditTripCategory");
+                if (!oTripCategory.getSelectedKey()) {
+                    oTripCategory.setValueState("Error");
+                    oTripCategory.setValueStateText("Please select atleast one value for Trip Category field.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oTripCategory.setValueState("None");
+                }
+
+                // validate Airline Ticket to be booked By HR Field
+                var oAirlineTicketByHR = this.getView().byId("idEditHRBook");
+                if (!oAirlineTicketByHR.getSelectedKey()) {
+                    oAirlineTicketByHR.setValueState("Error");
+                    oAirlineTicketByHR.setValueStateText("Please select atleast one value for Airline ticket to be booked by HR field.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oAirlineTicketByHR.setValueState("None");
+                }
+
+                // validate Travel Justification Field
+                var oTravelJustification = this.getView().byId("idEditTravelJustification");
+                if (!oTravelJustification.getValue()) {
+                    oTravelJustification.setValueState("Error");
+                    oTravelJustification.setValueStateText("Please enter value for Travel Justification Field.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oTravelJustification.setValueState("None");
+                }
+
+                // validate Travel Date Field
+                var oTravelDate = this.getView().byId("idEditTravelDate");
+                if (!oTravelDate.getValue()) {
+                    oTravelDate.setValueState("Error");
+                    oTravelDate.setValueStateText("Please enter Travel Date.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oTravelDate.setValueState("None");
+                }
+
+                // validate Purpose of Permit Field
+                var oReturnDate = this.getView().byId("idEditReturnDate");
+                if (!oReturnDate.getValue()) {
+                    oReturnDate.setValueState("Error");
+                    oReturnDate.setValueStateText("Please enter Return Date.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oReturnDate.setValueState("None");
+                }
+
+                // validate Inside or Out Kingdom Field
+                var oInsOutKingdom = this.getView().byId("idEditInsOutKingdom");
+                if (!oInsOutKingdom.getValue()) {
+                    oInsOutKingdom.setValueState("Error");
+                    oInsOutKingdom.setValueStateText("Please enter Inside or Out Kingdom.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oInsOutKingdom.setValueState("None");
+                }
+
+                // // validate Flight Travel Date Field
+                // var oFlightTravelDate = this.getView().byId("idEditFlightTravelDate");
+                // if (!oFlightTravelDate.getValue()) {
+                //     oFlightTravelDate.setValueState("Error");
+                //     oFlightTravelDate.setValueStateText("Please enter Flight Travel Date.");
+                //     sValidationErrorMsg = "Please fill the all required fields.";
+                // } else {
+                //     oFlightTravelDate.setValueState("None");
+                // }
+
+                // validate Visa Type Field
+                var oVisaType = this.getView().byId("idEditVisaType");
+                if (oVisaType.getSelectedKey() === "Select") {
+                    oVisaType.setValueState("Error");
+                    oVisaType.setValueStateText("Please select value for Visa Type.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oVisaType.setValueState("None");
+                }
+
+                // validate Pay Component Visa Field
+                var oPayCompVisa = this.getView().byId("idEditPayCompVisa");
+                if (!oPayCompVisa.getValue()) {
+                    oPayCompVisa.setValueState("Error");
+                    oPayCompVisa.setValueStateText("Please enter Pay Component Visa.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oPayCompVisa.setValueState("None");
+                }
+
+                // validate Visa Amount Field
+                var oVisaAmt = this.getView().byId("idEditVisaAmt");
+                if (!oVisaAmt.getValue()) {
+                    oVisaAmt.setValueState("Error");
+                    oVisaAmt.setValueStateText("Please enter Visa Amount Field.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oVisaAmt.setValueState("None");
+                }
+
+                // validate Flight Travel Date Field
+                var oEmergencyPhn = this.getView().byId("idEditEmergencyPhn");
+                if (!oEmergencyPhn.getValue()) {
+                    oEmergencyPhn.setValueState("Error");
+                    oEmergencyPhn.setValueStateText("Please enter Emergency Phone.");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oEmergencyPhn.setValueState("None");
+                }
+
+                // Validate attachment sections
+                if (this.getView().byId("idEditAttachBoardingPassUS").getItems().length <= 0) {
+                    sValidationErrorMsg = "Please upload files for Boarding Pass.";
+                    this.getView().setBusy(false);
+                    return sValidationErrorMsg;
+                }
+
+                if (this.getView().byId("idEditAttachVisaCopy").getItems().length <= 0) {
+                    sValidationErrorMsg = "Please upload files for Visa Copy.";
+                    this.getView().setBusy(false);
+                    return sValidationErrorMsg;
+                }
+                if (this.getView().byId("idEditAttachEmbassyReceipt").getItems().length <= 0) {
+                    sValidationErrorMsg = "Please upload files for Embassy Receipt.";
+                    this.getView().setBusy(false);
+                    return sValidationErrorMsg;
+                }
+
+                this.getView().setBusy(false);
+                return sValidationErrorMsg;
+            },
         });
     });
 

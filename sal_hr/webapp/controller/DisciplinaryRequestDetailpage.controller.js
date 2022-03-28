@@ -246,6 +246,7 @@ sap.ui.define([
                 });
             },
             fnGetDisciplinaryRequestPayload: function () {
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sattachmentFileName = this.fileName;
                 var sattachmentFileContent= this.fileContent;
                 var sattachmentFileID= this.getView().getModel("attachmentModel").getData().attachmentId;
@@ -274,7 +275,7 @@ sap.ui.define([
                     "attachmentFileContent": sattachmentFileContent,
                     "attachmentFileName": sattachmentFileName,
                     "isAttachmentNew": true,
-                    "attachmentUserId": "Extentia",
+                    "attachmentUserId": sUserID,
                     "cust_letterIssued": "Y",
                     "attachmentId": sattachmentFileID 
                 }

@@ -1,10 +1,10 @@
 sap.ui.define([
-        "sap/ui/core/UIComponent",
-        "sap/ui/Device",
-        "com/sal/salhr/model/models",
-        'sap/ui/model/json/JSONModel',
-        'sap/f/library'
-    ],
+    "sap/ui/core/UIComponent",
+    "sap/ui/Device",
+    "com/sal/salhr/model/models",
+    'sap/ui/model/json/JSONModel',
+    'sap/f/library'
+],
     function (UIComponent, Device, models, JSONModel, fioriLibrary) {
         "use strict";
 
@@ -28,12 +28,22 @@ sap.ui.define([
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
                 this.setModel(models.createLayoutModel(), "layoutModel");
-               
 
-                
-               
-                
+                // Set the user model
+                this.fnGetLoggedInEmpInfo();
             },
+
+            fnGetLoggedInEmpInfo: function () {
+                this.getModel().read("/EmpInfo", {
+                    success: function (oData) {
+                        this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }.bind(this),
+                });
+            },
+
             getContentDensityClass: function () {
                 if (this._sContentDensityClass === undefined) {
                     // check whether FLP has already set the content density class; do nothing in this case
@@ -49,7 +59,7 @@ sap.ui.define([
                 }
                 return this._sContentDensityClass;
             }
-            
+
         });
     }
 );

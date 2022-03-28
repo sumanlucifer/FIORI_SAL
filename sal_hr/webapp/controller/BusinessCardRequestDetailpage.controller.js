@@ -218,7 +218,7 @@ sap.ui.define([
                 });
             },
             fnGetBusinessCardRequestPayload: function () {
-
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
 
                var scust_email = this.getView().byId("idEditEmail").getValue(),
                     scust_mobile = this.getView().byId("idEditMobile").getValue(),
@@ -232,7 +232,7 @@ sap.ui.define([
                     seffectiveStartDate = seffectiveStartDate + "T00:00:00";
                 return {
 
-                    "User": "12002425",
+                    "User": sUserID,
                     "cust_email": scust_email,
                     "cust_mobile": scust_mobile,
                     "cust_poBox": scust_poBox,

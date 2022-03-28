@@ -39,7 +39,7 @@
             </Select>
 
             <Label text="Per Diem - Pay Component" required="true"/>
-            <Input id="idPayComp" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiemPayComp}" type="Number" enabled="false"/>
+            <Input id="idPayComp" value="Business Trip Per-Diem Off Cycle"  enabled="false"/>
            
             <Label text="Total Travel Amount" required="true" />
             <Input id="idTravelAmt" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalAmount}" type="Number" enabled="false"/>
@@ -125,7 +125,7 @@
             </Select>
              
              <Label text="Other City" />
-            <Input id="idOtherCity" value="" />
+            <Input id="idOtherCity" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_city.}" />
 
               <Label text="City (Other Country)" />
             <Input id="idCityCountry" value="" />
@@ -142,12 +142,16 @@
 
 
          </form:SimpleForm>   
-          <form:SimpleForm title="Flight Deatils" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="Travel Date" required="true"/>
+         <!-- # Trip Category Business form  -->
+          <form:SimpleForm title="Flight Deatils" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" visible="{= ${LocalViewModel>/businessCategory} === true ? true : false }">
+            <Label text="Business Travel Date" required="true"/>
            <DatePicker id="idFlightTravelDate" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"></DatePicker>
 
+           <Label text="Travel From"/>
+            <Input id="idTravelFrom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelFrom}"/>
+
             <Label text="Travel To"/>
-            <Input id="idTravelTo" value=""/>
+            <Input id="idTravelTo" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelTo}"/>
            
             <Label text="Flight Number" />
             <Input  id="idFlightNum" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelFlightNum}" />
@@ -162,13 +166,40 @@
             <Input id="idPayCom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelPayComp}" enabled="false"/>
            
             <Label text="Ticket Amount" />
-            <Input  id="idTicketAmt"  value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}" />
-
-            
-            
-
+            <Input  id="idTicketAmt"  value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}" type="Number" change="fnCalculateTotalPerDiem"/>
 
          </form:SimpleForm>   
+
+         <!-- # Trip Category Training form  -->
+          <form:SimpleForm title="Flight Deatils" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" visible="{= ${LocalViewModel>/trainingCategory} === true ? true : false }">
+            <Label text="Training Travel Date" required="true"/>
+           <DatePicker id="idTrainingFlightTravelDate" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"></DatePicker>
+
+            <Label text="Travel From"/>
+            <Input id="idTrainingTravelFrom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelFrom}"/>
+
+            <Label text="Travel To"/>
+            <Input id="idTrainingTravelTo" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelTo}"/>
+           
+            <Label text="Flight Number" />
+            <Input  id="idTrainingFlightNum" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelFlightNum}" />
+
+             <Label text="Departure Time"/>
+            <Input id="idTrainingDepTime" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelDepTime}"/>
+           
+            <Label text="Arrival Time" />
+            <Input id="idTrainingArrivalTime" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelArrTime}" />
+
+              <Label text="Pay Component"/>
+            <Input id="idTrainingPayCom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelPayComp}" enabled="false"/>
+           
+            <Label text="Ticket Amount" />
+            <Input  id="idTrainingTicketAmt"  value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}" type="Number" change="fnCalculateTotalPerDiem"/>
+
+         </form:SimpleForm>   
+
+
+
          <VBox >
          <Label text="Attach Boarding Pass" />
             <upload:UploadSet id="UploadBoardingPass" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
@@ -196,11 +227,11 @@
               <core:ListItem key="{externalCode}" text="{label_defaultValue}" />
             </Select>
 
-            <Label text="Pay Component Visa" required="true"/>
+            <Label text="Pay Component Visa"/>
             <Input id="idPayCompVisa"  value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp}" enabled="false"/>
            
             <Label text="Visa Amount" required="true" />
-            <Input id="idVisaAmt"  value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeeExpenseAmount}" />
+            <Input id="idVisaAmt"  value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeeExpenseAmount}" type="Number" change="fnCalculateTotalPerDiem"/>
 
 
          </form:SimpleForm>   

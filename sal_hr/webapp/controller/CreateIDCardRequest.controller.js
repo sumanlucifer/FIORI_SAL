@@ -44,20 +44,21 @@ sap.ui.define([
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
             },
-           
+
             _onObjectMatched: function (oEvent) {
                 debugger;
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
-              
+
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
                 this._bindView();
-             
+
             },
             _bindView: function () {
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sKey = this.getComponentModel().createKey("/EmpInfo", {
-                    userId: "12002425"
+                    userId: sUserID
                 });
                 this.getView().bindElement({
                     path: sKey,
@@ -76,12 +77,12 @@ sap.ui.define([
                 });
 
             },
-        
+
 
             onRaiseRequestPress: function () {
                 var sEntityPath = "/SF_IDReplacement",
-                        oPayloadObj = this.fnGetIDReplacementRequestPayload();
-                      
+                    oPayloadObj = this.fnGetIDReplacementRequestPayload();
+
 
                 this.getView().setBusy(true);
 
@@ -105,7 +106,7 @@ sap.ui.define([
                     }.bind(this)
                 })
             },
-        
+
             fnGetIDReplacementRequestPayload: function () {
                 var oDataObj = this.getView().getBindingContext().getObject(),
                     sEffectiveStartDate = this.getView().byId("idEffectDatePicker").getText();

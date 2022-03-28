@@ -4,52 +4,58 @@
     xmlns:upload="sap.m.upload">
 
     <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <Label text="When would you like your changes to take effect? " required="true"/>
+        <Label text="{i18n>whenWouldYouLiketoText}?" required="true"/>
         <DatePicker id="idEditEffectDatePicker" value="{path:'DisplayEditBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}" minDate="{LocalViewModel>/currentDate}"/>
     </form:SimpleForm>
 
-    <form:SimpleForm title="Business Travel Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <Label text="Request Type" required="true"/>
+    <form:SimpleForm title="{i18n>BusinessTravelDetails}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="{i18n>RequestType}" required="true"/>
         <Select id="idEditReqType" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType}" change="onReqTypeChange">
             <core:Item key="1" text="Raise Initial Request"/>
             <core:Item key="2" text="Return and Closure"/>
         </Select>
 
-        <Label text="Per Diem - Pay Component" required="true"/>
-        <Input id="idEditPayComp" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiemPayComp}" type="Number"/>
+        <Label text="{i18n>PerDiemPayComponent}" required="true"/>
+        <Input id="idEditPayComp" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiemPayComp}" type="Number" enabled="false"/>
 
-        <Label text="Total Travel Amount" required="true"/>
-        <Input id="idEditTravelAmt" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalAmount}" type="Number"/>
+        <Label text="{i18n>TotalTravelAmount}" required="true"/>
+        <Input id="idEditTravelAmt" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalAmount}" type="Number" enabled="false"/>
     </form:SimpleForm>
 
-    <form:SimpleForm title="Travel Request" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <Label text="Trip Category" required="true"/>
+    <form:SimpleForm title="{i18n>TravelRequest}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="{i18n>TripCategory}" required="true"/>
         <Select id="idEditTripCategory" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory}" change="onTripCategoryChange">
             <core:Item key="B" text="Business"/>
             <core:Item key="T" text="Training"/>
         </Select>
 
-        <Label text="Airline ticket to be booked by HR?" required="true"/>
+        <Label text="{i18n>AirlinetickettobebookedbyHR}?" required="true"/>
         <Select id="idEditHRBook" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_isCompany}" change="onTimeTyeChange">
             <core:Item key="Yes" text="Yes"/>
             <core:Item key="No" text="No"/>
         </Select>
 
-        <Label text="Hotel Booking Required?"/>
+        <Label text="{i18n>HotelBookingRequired}?"/>
         <Select id="idEditHotlBook" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_hotelBooking}" change="onHotelBookChange">
             <core:Item key="true" text="Yes"/>
             <core:Item key="false" text="No"/>
         </Select>
+
+        <Label text="{i18n>TravelBusinessJustification}" />
+        <TextArea id="idEditTravelJustification" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignJustification}"/>
     </form:SimpleForm>
 
-    <form:SimpleForm title="Travel Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <Label text="Travel Date" required="true"/>
+    <form:SimpleForm title="{i18n>TravelInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="{i18n>TravelDate}" required="true"/>
         <DatePicker id="idEditTravelDate" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"></DatePicker>
 
-        <Label text="Return Date" required="true"/>
+        <Label text="{i18n>ReturnDate}" required="true"/>
         <DatePicker id="idEditReturnDate" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_returnDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"></DatePicker>
 
-        <Label text="Destination Country"/>
+        <Label text="{i18n>DesiredAirlineTicketTravelTime}"/>
+        <Input id="idEditTravelTime" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}" enabled="false"/>
+
+        <Label text="{i18n>DestinationCountry}"/>
         <Select id="idEditDestCountry" showSecondaryValues="true" items="{path: '/SF_Country',                                                            
                                                          sorter : {
                                                              path : 'externalName_defaultValue' 
@@ -58,7 +64,7 @@
             <core:ListItem key="{code}" text="{code}" additionalText="{externalName_defaultValue}"/>
         </Select>
 
-        <Label text="City(Saudi)"/>
+        <Label text="{i18n>CitySaudi}"/>
         <Select id="idEditCity" items="{ path: '/SF_PickListValueV2',
                                                             filters: [
                                                                         {
@@ -74,91 +80,108 @@
             <core:Item key="{externalCode}" text="{label_defaultValue}"/>
         </Select>
 
-        <Label text="Other City"/>
+        <Label text="{i18n>OtherCity}"/>
         <Input id="idEditOtherCity" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}"/>
 
-        <Label text="City (Other Country)"/>
+        <Label text="{i18n>CityOtherCountry}"/>
         <Input id="idEditCityCountry" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}"/>
 
-        <Label text="Inside/Otside Kingdom" required="true"/>
-        <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}"/>
+        <Label text="{i18n>InsideOtsideKingdom}" required="true"/>
+        <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}"  enabled="false"/>
 
-        <Label text="Per Diem"/>
-        <Input id="idEditPerDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}"/>
+        <Label text="{i18n>PerDiem}"/>
+        <Input id="idEditPerDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}"  enabled="false"/>
 
-        <Label text="Total Per Diem"/>
-        <Input id="idEditTotalPErDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalPerDiem}"/>
+        <Label text="{i18n>TotalPerDiem}"/>
+        <Input id="idEditTotalPErDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalPerDiem}"  enabled="false"/>
     </form:SimpleForm>
 
-    <form:SimpleForm title="Flight Deatils" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <Label text="Travel Date" required="true"/>
+    <form:SimpleForm title="{i18n>FlightDeatils}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="{i18n>TravelDate}"/>
         <DatePicker id="idEditFlightTravelDate" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"></DatePicker>
 
-        <Label text="Travel To"/>
+        <Label text="{i18n>TravelTo}"/>
         <Input id="idEditTravelTo" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelTo}"/>
 
-        <Label text="Flight Number"/>
+        <Label text="{i18n>FlightNumber}"/>
         <Input id="idEditFlightNum" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelFlightNum}"/>
 
-        <Label text="Departure Time"/>
+        <Label text="{i18n>DepartureTime}"/>
         <Input id="idEditDepTime" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDepTime}"/>
 
-        <Label text="Arrival Time"/>
+        <Label text="{i18n>ArrivalTime}"/>
         <Input id="idEditArrivalTime" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelArrTime}"/>
 
-        <Label text="Pay Component"/>
-        <Input id="idEditPayCom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelPayComp}"/>
+        <Label text="{i18n>PayComponent}"/>
+        <Input id="idEditPayCom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelPayComp}" enabled="false"/>
 
-        <Label text="Ticket Amount"/>
+        <Label text="{i18n>TicketAmount}"/>
         <Input id="idEditTicketAmt" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}"/>
     </form:SimpleForm>
 
-    <VBox >
-        <Label text="Attach Boarding Pass"/>
-        <upload:UploadSet id="idEditUploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+    <upload:UploadSet id="idEditAttachBoardingPassUS" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
+        <upload:toolbar>
+            <OverflowToolbar>
+                <Label text="{i18n>AttachBoardingPass}" required="true"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+        </upload:toolbar>
+        <upload:items>
+            <upload:UploadSetItem fileName="{BusinessTripAttachmentModel>/businessTravelAttachment/fileName}" mediaType="{BusinessTripAttachmentModel>/businessTravelAttachment/mimeType}"/>
+        </upload:items>
+    </upload:UploadSet>
 
-        </upload:UploadSet>
-    </VBox>
 
-    <form:SimpleForm title="Visa Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <Label text="Visa Type" required="true"/>
+    <form:SimpleForm title="{i18n>VisaInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="{i18n>VisaType}" required="true"/>
         <Select id="idEditVisaType" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee}" change="onVisaTypeChange">
             <core:Item key="No Visa" text="No Visa"/>
             <core:Item key="Visa Fee" text="Visa Fee"/>
         </Select>
 
-        <Label text="Pay Component Visa" required="true"/>
-        <Input id="idEditPayCompVisa" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp}"/>
+        <Label text="{i18n>PayComponentVisa}" required="true"/>
+        <Input id="idEditPayCompVisa" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp}" enabled="false"/>
 
-        <Label text="Visa Amount" required="true"/>
+        <Label text="{i18n>VisaAmount}" required="true"/>
         <Input id="idEditVisaAmt" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeeExpenseAmount}"/>
     </form:SimpleForm>
 
-    <VBox>
-        <Label text="Attach Visa Copy"/>
-        <upload:UploadSet id="idEditAttachVisa" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+    <upload:UploadSet id="idEditAttachVisaCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
+        <upload:toolbar>
+            <OverflowToolbar>
+                <Label text="{i18n>AttachVisaCopy}" required="true"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+        </upload:toolbar>
+        <upload:items>
+            <upload:UploadSetItem fileName="{BusinessTripAttachmentModel>/visaCopyAttachment/fileName}" mediaType="{BusinessTripAttachmentModel>/visaCopyAttachment/mimeType}"/>
+        </upload:items>
+    </upload:UploadSet>
 
-        </upload:UploadSet>
-    </VBox>
+    <upload:UploadSet id="idEditAttachEmbassyReceipt" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
+        <upload:toolbar>
+            <OverflowToolbar>
+                <Label text="{i18n>AttachEmbassyReceipt}" required="true"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+        </upload:toolbar>
+        <upload:items>
+            <upload:UploadSetItem fileName="{BusinessTripAttachmentModel>/receiptEmbassyAttachment/fileName}" mediaType="{BusinessTripAttachmentModel>/receiptEmbassyAttachment/mimeType}"/>
+        </upload:items>
+    </upload:UploadSet>
 
-    <VBox>
-        <Label text="Attach Embassy Receipt"/>
-        <upload:UploadSet id="idEditAttachEmbassyRec" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
 
-        </upload:UploadSet>
-    </VBox>
-
-    <form:SimpleForm title="Employee Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <Label text="Employee Name" required="true"/>
+    <form:SimpleForm title="{i18n>EmployeeInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <Label text="{i18n>EmployeeName}" required="true"/>
         <Input id="idEditCustEmpName" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_empName}" enabled="false"></Input>
 
-        <Label text="Pay Grade" required="true"/>
+        <Label text="{i18n>PayGrade}" required="true"/>
         <Input id="idEditPayGrade" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_payGrade}" enabled="false"/>
 
-        <Label text="Cost Center" required="true"/>
+        <Label text="{i18n>CostCenter}" required="true"/>
         <Input id="idEditCostCenter" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_costCenter}" enabled="false"/>
 
-        <Label text="Emergency Phone Number"/>
+        <Label text="{i18n>EmergencyPhoneNumber}"/>
         <Input id="idEditEmergencyPhn" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_emerPhoneNum}"/>
     </form:SimpleForm>
 </core:FragmentDefinition> 
