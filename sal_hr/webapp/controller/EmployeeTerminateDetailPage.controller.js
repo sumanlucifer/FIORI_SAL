@@ -57,9 +57,9 @@ sap.ui.define([
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                         sKey = oComponentModel.createKey("/SF_EmpEmploymentTermination", {
-                            endDate: "",
+                            endDate: object.endDate,
                             personIdExternal: object.externalCode,
-                            userId:""
+                            userId: object.employeeId
                            
                         });
                         this.getView().bindElement({
