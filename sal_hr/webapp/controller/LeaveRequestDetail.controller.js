@@ -295,6 +295,7 @@ sap.ui.define([
             },
 
             fnGetLeaveRequestPayload: function () {
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
               
                 if (this.isAttachmentNew === true) {
                     var sattachmentFileName = this.fileName;
@@ -329,7 +330,7 @@ sap.ui.define([
                     "loaEndJobInfoId": null,
                     "approvalStatus": null,
                     "undeterminedEndDate": false,
-                    "userId": "12002024",
+                    "userId": sUserID,
                     "recurrenceGroup": null,
                     "fractionQuantity": "1",
                     "endTime": null,

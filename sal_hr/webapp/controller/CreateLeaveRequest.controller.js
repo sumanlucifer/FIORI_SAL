@@ -125,6 +125,7 @@ sap.ui.define([
             },
             fnGetLeaveRequestPayload: function () {
                 var sQtyHrs;
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 if(this.attachReq === true && this.isAttachment === false){
                     sap.m.MessageBox.error("Please upload the attachments.");
                     this.bValid = false;
@@ -193,7 +194,7 @@ sap.ui.define([
                     "loaEndJobInfoId": null,
                     "approvalStatus": null,
                     "undeterminedEndDate": false,
-                    "userId": "12002024",
+                    "userId": sUserID,
                     "recurrenceGroup": null,
 
                     "endTime": null,
