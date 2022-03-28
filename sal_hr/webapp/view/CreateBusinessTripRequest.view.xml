@@ -100,7 +100,7 @@
 
             <Label text="Desired Airline Ticket Travel Time" required="true"/>
             <!-- <TimePicker id="idAirlineTicket"  value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}" ></TimePicker> -->
-            <TimePicker id="idAirlineTicket" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime'}" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On"  />
+            <TimePicker id="idAirlineTicket"  valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On"  />
 
             <Label text="Destination Country"/>
             <Select id="idDestCountry"  selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_destination}" items="{path: '/SF_Country',
