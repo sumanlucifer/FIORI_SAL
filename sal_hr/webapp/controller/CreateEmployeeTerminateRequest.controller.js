@@ -125,7 +125,7 @@ sap.ui.define([
           
             fnGetEmployeeTerminatePayload: function () {
              
-
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var scustomDate6 =  this.getView().byId("idResignationDate").getDateValue();
                 var sEndDate =  this.getView().byId("idTerminationDate").getDateValue();
                 var sOKToRetire =  this.getView().byId("idOKToRetire").getSelectedIndex();
@@ -139,7 +139,7 @@ sap.ui.define([
                 sEndDate = dateFormat.format(new Date(sEndDate));
                 sEndDate = sEndDate + "T00:00:00";
                 return {
-                    "userId": "22003078",
+                    "userId": sUserID,
                     "personIdExternal": "22003078",
                     "customDate6": scustomDate6,
                     "endDate": sEndDate,
