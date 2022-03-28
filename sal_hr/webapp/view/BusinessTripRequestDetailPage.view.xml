@@ -47,9 +47,7 @@
                         <ObjectAttribute title="{i18n>DueByDate}"/>
                         <ObjectAttribute text="{path:'headerModel>/modifiedAt',
                                                 type: 'sap.ui.model.type.Date',
-                                                formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
-                                                }}"/>
+                                                formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -57,7 +55,7 @@
         <!-- DynamicPage Content -->
         <f:content>
             <VBox id="idContentVBox" width="100%">
-                <IconTabBar id="idBusinessTripiconTabBar" >
+                <IconTabBar id="idBusinessTripiconTabBar">
                     <items>
                         <IconTabFilter id="idDisplayBusinessTripRequestITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
                             <core:Fragment fragmentName="com.sal.salhr.Fragments.BusinessTripModule.DisplayBusinessTripRequest" type="XML"/>

@@ -110,6 +110,10 @@ modules:
       - chat.zip
       name: chat
       target-path: resources/
+    - artifacts:
+      - comsalreportsticketssummaryreport.zip
+      name: comsalreportsticketssummaryreport
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -273,6 +277,16 @@ modules:
 - name: chat
   type: html5
   path: chat
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalreportsticketssummaryreport
+  type: html5
+  path: tickets_summary_report
   build-parameters:
     build-result: dist
     builder: custom

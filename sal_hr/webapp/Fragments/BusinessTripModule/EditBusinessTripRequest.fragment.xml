@@ -10,9 +10,13 @@
 
     <form:SimpleForm title="{i18n>BusinessTravelDetails}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>RequestType}" required="true"/>
-        <Select id="idEditReqType" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType}" change="onReqTypeChange">
-            <core:Item key="1" text="Raise Initial Request"/>
-            <core:Item key="2" text="Return and Closure"/>
+        <Select id="idEditReqType" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType}" change="onReqTypeChange" items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelReqType'} ]
+                                       }">
+            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
         </Select>
 
         <Label text="{i18n>PerDiemPayComponent}" required="true"/>
@@ -24,21 +28,45 @@
 
     <form:SimpleForm title="{i18n>TravelRequest}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>TripCategory}" required="true"/>
-        <Select id="idEditTripCategory" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory}" change="onTripCategoryChange">
-            <core:Item key="B" text="Business"/>
-            <core:Item key="T" text="Training"/>
+        <Select id="idEditTripCategory" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory}" change="onTripCategoryChange" items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelTripCat'} ]
+                                       }">
+            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
         </Select>
 
         <Label text="{i18n>AirlinetickettobebookedbyHR}?" required="true"/>
         <Select id="idEditHRBook" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_isCompany}" change="onTimeTyeChange">
-            <core:Item key="Yes" text="Yes"/>
-            <core:Item key="No" text="No"/>
+            <core:Item key="true" text="Yes"/>
+            <core:Item key="false" text="No"/>
         </Select>
 
         <Label text="{i18n>HotelBookingRequired}?"/>
         <Select id="idEditHotlBook" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_hotelBooking}" change="onHotelBookChange">
-            <core:Item key="true" text="Yes"/>
-            <core:Item key="false" text="No"/>
+            <core:Item key="Yes" text="Yes"/>
+            <core:Item key="No" text="No"/>
+        </Select>
+
+        <!-- <Label text="Expense Type: Business Travel" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" />
+        <Select id="idEditBusinessExpense" change="onBusinessExpenseChange" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelExpTypeTravel'} ]
+                                       }">
+            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
+        </Select> -->
+
+        <Label text="Expense Type: Training Travel" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }"/>
+        <Select id="idEditTrainingExpense" change="onTrainingExpenseChange" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }" items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelExpTypeTraining'} ]
+                                       }">
+            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
         </Select>
 
         <Label text="{i18n>TravelBusinessJustification}" />
@@ -54,9 +82,11 @@
 
         <Label text="{i18n>DesiredAirlineTicketTravelTime}"/>
         <Input id="idEditTravelTime" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}" enabled="false"/>
+        <!-- <TimePicker id="idEditTravelTime" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime}" valueFormat="HH:mm:ss" support2400="true" placeholder="Enter Time"/> -->
 
         <Label text="{i18n>DestinationCountry}"/>
-        <Select id="idEditDestCountry" showSecondaryValues="true" items="{path: '/SF_Country',                                                            
+        <Select id="idEditDestCountry" showSecondaryValues="true" items="{path: '/SF_Country',
+                                                            
                                                          sorter : {
                                                              path : 'externalName_defaultValue' 
                                                         } }" change="onDestCountryChange" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_destination}">
@@ -65,7 +95,7 @@
         </Select>
 
         <Label text="{i18n>CitySaudi}"/>
-        <Select id="idEditCity" items="{ path: '/SF_PickListValueV2',
+        <Select id="idEditCity" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" items="{ path: '/SF_PickListValueV2',
                                                             filters: [
                                                                         {
                                                                              path: 'PickListV2_id',
@@ -75,9 +105,9 @@
                                                                      ],
                                                          sorter : {
                                                              path : 'label_defaultValue' 
-                                                        } }" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}">
+                                                        } }">
 
-            <core:Item key="{externalCode}" text="{label_defaultValue}"/>
+            <core:Item key="{externalCode}" text="{label_defaultValue}" />
         </Select>
 
         <Label text="{i18n>OtherCity}"/>
@@ -87,13 +117,13 @@
         <Input id="idEditCityCountry" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}"/>
 
         <Label text="{i18n>InsideOtsideKingdom}" required="true"/>
-        <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}"  enabled="false"/>
+        <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false"/>
 
         <Label text="{i18n>PerDiem}"/>
-        <Input id="idEditPerDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}"  enabled="false"/>
+        <Input id="idEditPerDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}" enabled="false"/>
 
         <Label text="{i18n>TotalPerDiem}"/>
-        <Input id="idEditTotalPErDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalPerDiem}"  enabled="false"/>
+        <Input id="idEditTotalPErDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalPerDiem}" enabled="false"/>
     </form:SimpleForm>
 
     <form:SimpleForm title="{i18n>FlightDeatils}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
@@ -119,7 +149,8 @@
         <Input id="idEditTicketAmt" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}"/>
     </form:SimpleForm>
 
-    <upload:UploadSet id="idEditAttachBoardingPassUS" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
+    <!-- File Uploader for Business Category -->
+    <upload:UploadSet id="idEditAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? true : false}" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>AttachBoardingPass}" required="true"/>
@@ -131,16 +162,33 @@
         </upload:items>
     </upload:UploadSet>
 
+    <!-- File Uploader for Training Category -->
+    <upload:UploadSet id="idEditAttachBoardingPassTraining" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? false : true}" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
+        <upload:toolbar>
+            <OverflowToolbar>
+                <Label text="{i18n>AttachBoardingPass}" required="true"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+        </upload:toolbar>
+        <upload:items>
+            <upload:UploadSetItem fileName="{BusinessTripAttachmentModel>/trainingTravelAttachment/fileName}" mediaType="{BusinessTripAttachmentModel>/trainingTravelAttachment/mimeType}"/>
+        </upload:items>
+    </upload:UploadSet>
 
     <form:SimpleForm title="{i18n>VisaInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>VisaType}" required="true"/>
-        <Select id="idEditVisaType" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee}" change="onVisaTypeChange">
-            <core:Item key="No Visa" text="No Visa"/>
-            <core:Item key="Visa Fee" text="Visa Fee"/>
+        <Select id="idEditVisaType" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee}" change="onVisaTypeChange" items="{ path: '/SF_PickListValueV2',
+                                                            filters: [
+                                                                        {
+                                                                             path: 'PickListV2_id',
+                                                                             operator: 'EQ',
+                                                                             value1: 'dutyTravelExpTypeVisa'
+                                                                         }
+                                                                     ] }">
+            <core:ListItem key="{externalCode}" text="{label_defaultValue}" />
         </Select>
-
         <Label text="{i18n>PayComponentVisa}" required="true"/>
-        <Input id="idEditPayCompVisa" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp}" enabled="false"/>
+        <Input id="idEditPayCompVisa" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp}" enabled="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType} === '1' ? true : false}"/>
 
         <Label text="{i18n>VisaAmount}" required="true"/>
         <Input id="idEditVisaAmt" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeeExpenseAmount}"/>
