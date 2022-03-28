@@ -175,21 +175,21 @@ sap.ui.define([
 // *********************************** old code ***************************************************************
 
                   var oCreateBusinessObj = {
-                    // "externalCode": sExternalCode,
-                     "externalCode": "12002440",
+                    "externalCode": sExternalCode,
+                    //  "externalCode": "12002440",
                     "effectiveStartDate": new Date(),
                     "cust_toDutyTravelItem": [
                         {
-                            // "cust_userId": sExternalCode,
-                            "cust_userId": "12002440",
+                            "cust_userId": sExternalCode,
+                            // "cust_userId": "12002440",
 
-                            // "cust_dutyTravelMain_externalCode": sExternalCode,
-                            "cust_dutyTravelMain_externalCode": "12002440",
+                            "cust_dutyTravelMain_externalCode": sExternalCode,
+                            // "cust_dutyTravelMain_externalCode": "12002440",
                             "cust_dutyTravelMain_effectiveStartDate": new Date(),
                 
-                            // "externalCode": sExternalCode,
+                            "externalCode": sExternalCode,
                             
-                            "externalCode": "12002440",
+                            // "externalCode": "12002440",
                             "externalName": null,
                             "cust_requestType": "1",
                             "cust_perDiemPayComp": "9256",
