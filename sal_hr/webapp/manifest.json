@@ -265,6 +265,16 @@
                     ]
                 },
                 {
+                    "pattern": "EmployeeTerminateRequest/{parentMaterial}/{layout}",
+                    "name": "EmployeeTerminateRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "EmployeeTerminateRequest"
+                    ]
+                },
+                {
                     "pattern": "detail/{parentMaterial}/AirportPassRequestDetail/{childModule}/{layout}",
                     "name": "AirportPassRequestDetail",
                     "target": [
@@ -275,7 +285,7 @@
                 },
                 {
 
-                    "pattern": "AdditionalPaymentRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
+                    "pattern": "AdditionalPaymentRequestDetail/{parentMaterial}/{childModule}/{layout}",
                     "name": "AdditionalPaymentRequestDetail",
                     "target": [
                         "master",
@@ -292,12 +302,22 @@
                     ]
                 },
                 {
-                    "pattern": "BusinessRequestDetail/{parentMaterial}/DisciplinaryRequestDetail/{childModule}/{layout}",
+                    "pattern": "BusinessRequestDetail/{parentMaterial}/{childModule}/{layout}",
                     "name": "BusinessRequestDetail",
                     "target": [
                         "master",
                         "detail",
                         "BusinessRequestDetail"
+
+                    ]
+                },
+                {
+                    "pattern": "EmployeeTerminateDetail/{parentMaterial}/{childModule}/{layout}",
+                    "name": "EmployeeTerminateDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "EmployeeTerminateDetail"
 
                     ]
                 }
@@ -352,6 +372,10 @@
                     "viewName": "CreateAdditionalPaymentRequest",
                     "controlAggregation": "endColumnPages"
                 },
+                "EmployeeTerminateRequest": {
+                    "viewName": "CreateEmployeeTerminateRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "LeaveRequestDetail": {
                     "viewName": "LeaveRequestDetail",
                     "controlAggregation": "endColumnPages"
@@ -382,6 +406,10 @@
                 },
                 "AdditionalPaymentRequestDetail": {
                     "viewName": "AdditionalPaymentRequestDetailPage",
+                    "controlAggregation": "endColumnPages"
+                },
+                "EmployeeTerminateDetail": {
+                    "viewName": "EmployeeTerminateDetailPage",
                     "controlAggregation": "endColumnPages"
                 }
             }

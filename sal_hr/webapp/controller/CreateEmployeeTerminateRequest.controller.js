@@ -9,11 +9,11 @@ sap.ui.define([
 
     function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter) {
         "use strict";
-        return BaseController.extend("com.sal.salhr.controller.CreateAdditionalPaymentRequest", {
+        return BaseController.extend("com.sal.salhr.controller.CreateEmployeeTerminateRequest", {
             onInit: function () {
                 debugger;
                 this.oRouter = this.getRouter();
-                this.oRouter.getRoute("AdditionalPaymentRequest").attachPatternMatched(this._onObjectMatched, this);
+                this.oRouter.getRoute("EmployeeTerminateRequest").attachPatternMatched(this._onObjectMatched, this);
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
@@ -91,12 +91,12 @@ sap.ui.define([
          
 
             onRaiseRequestPress: function () {
-                if (!this._validateMandatoryFields()) {
+                // if (!this._validateMandatoryFields()) {
 
-                    return;
-                }
-                var oPayloadObj = this.fnGetAdditionalPaymentPayload(),
-                sEntityPath = "/SF_Pay";
+                //     return;
+                // }
+                var oPayloadObj = this.fnGetEmployeeTerminatePayload(),
+                sEntityPath = "/SF_EmpEmploymentTermination";
                    
 
 
@@ -123,25 +123,32 @@ sap.ui.define([
                 })
             },
           
-            fnGetAdditionalPaymentPayload: function () {
+            fnGetEmployeeTerminatePayload: function () {
              
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-                var sEffectiveStartDate =  this.getView().byId("idIssueDate").getDateValue();
-                var sCurrency =  this.getView().byId("idInpCurrencyCode").getSelectedKey();
-                var sType =  this.getView().byId("idInpType").getSelectedKey();
-                var saltCostCenter =  this.getView().byId("idInpAltCostCenter").getSelectedKey();
-                var sValue =  this.getView().byId("idValueINP").getValue();
+                var scustomDate6 =  this.getView().byId("idResignationDate").getDateValue();
+                var sEndDate =  this.getView().byId("idTerminationDate").getDateValue();
+                var sOKToRetire =  this.getView().byId("idOKToRetire").getSelectedIndex();
+                var sEOSBenefit =  this.getView().byId("idEOSBenefit").getSelectedIndex();
+                sOKToRetire =  sOKToRetire === 0 ? true : false;
+                sEOSBenefit =  sEOSBenefit === 0 ? true : false;
+                var sTerminationReason =  this.getView().byId("idTerminationReasonINP").getValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                    oDate = dateFormat.format(new Date(sEffectiveStartDate));
-                oDate = oDate + "T00:00:00";
+                scustomDate6 = dateFormat.format(new Date(scustomDate6));
+                scustomDate6 = scustomDate6 + "T00:00:00";
+                sEndDate = dateFormat.format(new Date(sEndDate));
+                sEndDate = sEndDate + "T00:00:00";
                 return {
-                    "payComponentCode": sType,
                     "userId": sUserID,
-                    "payDate": sEffectiveStartDate,
-                    "notes": null,
-                    "alternativeCostCenter": saltCostCenter,
-                    "currencyCode": sCurrency,
-                    "value": sValue
+                    "personIdExternal": "22003078",
+                    "customDate6": scustomDate6,
+                    "endDate": sEndDate,
+                    "eventReason":sTerminationReason,
+                    "okToRehire": sOKToRetire,
+                    "eligibleForSalContinuation": sEOSBenefit,
+                    "bonusPayExpirationDate": "/Date(1672358400000)/",
+                    "notes": "testing",
+                    "customString19" : "TERSR04"
                 };
             },
 
@@ -205,7 +212,9 @@ sap.ui.define([
             onAdditionalPymntResetPress: function () {
                 
                 
-                this.getView().byId("idValueINP").setValue("");
+                this.getView().byId("idTerminationReasonINP").setValue("");
+                this.getView().byId("idEOSBenefit").setSelectedIndex(null);
+                this.getView().byId("idOKToRetire").setSelectedIndex(null);
                 this.getView().getModel("LocalViewModel").setProperty("/currentDate", new Date());
                 this.getView().getModel("LocalViewModel").refresh();
 

@@ -4,13 +4,19 @@
     xmlns:core="sap.ui.core">
       <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label text="Job Title" required="true" />
-                        <Input id="idEditJobTitle" value="{CreateBusinessCardModel>/sJobTitle}">
+                        <Input editable="false" id="idEditJobTitle" value="{CreateBusinessCardModel>/sJobTitle}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
                         </Input>
 
 
+              <Label text="Division" required="false" />
+                        <Input editable="false" id="idEditDivision" value="{CreateBusinessCardModel>/sdivision}">
+                            <layoutData>
+                                <l:GridData span="XL2 L3 M4 S4" />
+                            </layoutData>
+                        </Input>
 
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
@@ -20,8 +26,8 @@
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
                         </Input>
-                        <Label text="Division" required="false" />
-                        <Input id="idEditDivision" value="{cust_location}">
+                        <Label text="Location" required="false" />
+                        <Input id="idEditLocation" value="{cust_location}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -29,13 +35,13 @@
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label text="Email" required="true" />
-                         <Input type="Email" id="idEditEmail" value="{cust_email}">
+                         <Input editable="false" type="Email" id="idEditEmail" value="{cust_email}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
                         </Input>
                         <Label text="Mobile" required="true" />
-                         <Input type="Number" id="idEditMobile" value="{cust_mobile}">
+                         <Input type="Number" id="idEditMobile" editable="false" value="{cust_mobile}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -43,7 +49,7 @@
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label required="false" text="Office Number" />
-                        <Input type="Number" id="idEditOfficeNo" value="{cust_officeNumber}">
+                        <Input type="Number" editable="false" id="idEditOfficeNo" value="{CreateBusinessCardModel>/sOfficeNo}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>

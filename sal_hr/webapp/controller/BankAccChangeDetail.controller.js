@@ -433,8 +433,9 @@ sap.ui.define([
                 };
             },
             fnBankRequestChangePayload: function () {
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 return {
-                    "externalCode": "12002425",
+                    "externalCode": sUserID,
                     "effectiveStartDate": this.getView().byId("idEditFromDatePicker").getDateValue(),
                     "cust_bankName": this.getView().byId("idEditBankNameINP").getValue(),
                     "cust_iban": this.getView().byId("idEditIBANINP").getValue()

@@ -124,6 +124,13 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
+                         //  Employee Terminate Change Request Module 
+                    case "17":
+                        this.oRouter.navTo("EmployeeTerminateRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
                 }
 
                 // ***********  old code ***********************
@@ -166,7 +173,7 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
-                    // Business Card Module    
+                    
                     // Business Card Module
                     case "5":
                         this.oRouter.navTo("BusinessRequestDetail", {
@@ -186,14 +193,7 @@ sap.ui.define([
                         })
                         break;
 
-                    // Business Card Module    
-                    case "5":
-                        this.oRouter.navTo("BusinessRequestDetail", {
-                            parentMaterial: this.sParentID,
-                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                            layout: "ThreeColumnsMidExpanded"
-                        })
-                        break;
+                   
 
                     // Airport Travel Pass Request Module
                     case "6":
@@ -224,6 +224,15 @@ sap.ui.define([
                     //  Bank Account Change Request Module 
                     case "13":
                         this.oRouter.navTo("BankAccChangeDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+
+                         //  Employee Terminate Request Module 
+                    case "17":
+                        this.oRouter.navTo("EmployeeTerminateDetail", {
                             parentMaterial: this.sParentID,
                             childModule: oEvent.getSource().getBindingContext().getObject().ID,
                             layout: "ThreeColumnsMidExpanded"

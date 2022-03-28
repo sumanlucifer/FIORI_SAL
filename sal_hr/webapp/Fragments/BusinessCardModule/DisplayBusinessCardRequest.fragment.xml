@@ -8,6 +8,8 @@
             <Label text="Job Title"  />               
             <Text text="{CreateBusinessCardModel>/sJobTitle}"/>
             <Label text="Division" />
+            <Text text="{CreateBusinessCardModel>/sdivision}"/>
+            <Label text="Location"  />
             <Text text="{cust_location}"/>
            <Label text="Email"  />
             <Text text="{cust_email}"/>

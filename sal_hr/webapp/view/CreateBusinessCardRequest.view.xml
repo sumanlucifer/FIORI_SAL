@@ -31,8 +31,10 @@
                             </layoutData>
                         </Input>
 
-                        <Label text="Location" required="true" />
-                        <Input editable="false" id="idCreateLocation" value="{CreateBusinessCardModel>/sLocation}">
+                        
+
+                        <Label text="Division" required="false" />
+                        <Input editable="false" id="idCreateDivision" value="{CreateBusinessCardModel>/sDivison}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -42,14 +44,14 @@
 
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <Label id="idDateLBL" text="P.O BOX" />
-                        <Input  id="idCreatePOBOX" value="">
+                        <Label text="Mobile" required="true" />
+                         <Input type="Number" editable="false" liveChange="onChangeMobile" id="idCreateMobile" value="{CreateBusinessCardModel>/sMobile}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
                         </Input>
-                        <Label text="Division" required="false" />
-                        <Input id="idCreateDivision" value="">
+                         <Label required="false" text="Office Number" />
+                        <Input  id="idCreateOfficeNo" editable="false" value="{CreateBusinessCardModel>/sOfficeNo}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
@@ -62,16 +64,21 @@
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
                         </Input>
-                        <Label text="Mobile" required="true" />
-                         <Input type="Number" editable="false" liveChange="onChangeMobile" id="idCreateMobile" value="{CreateBusinessCardModel>/sMobile}">
+
+                        <Label id="idDateLBL" text="P.O BOX" />
+                        <Input  id="idCreatePOBOX" value="">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>
                         </Input>
+                        
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <Label required="false" text="Office Number" />
-                        <Input  id="idCreateOfficeNo" editable="false" value="{CreateBusinessCardModel>/sOfficeNo}">
+                       
+
+
+                        <Label text="Location" required="true" />
+                        <Input editable="true" id="idCreateLocation" liveChange="onLocationChange" value="{CreateBusinessCardModel>/sLocation}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>

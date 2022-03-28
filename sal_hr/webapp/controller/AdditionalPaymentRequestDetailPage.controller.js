@@ -232,7 +232,7 @@ sap.ui.define([
            
             fnAddPaymentRequestChangePayload: function () {
 
-
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sPayDate = this.byId("idEditIssueDate").getDateValue();
                 var sPayDate = this.byId("idEditIssueDate").getDateValue();
                 var sValue = this.byId("idEditValueINP").getValue();
@@ -241,7 +241,7 @@ sap.ui.define([
                 var sPayDate = this.byId("idEditIssueDate").getDateValue();
                 return {
                     "payComponentCode": "9244",
-                    "userId": "12002425",
+                    "userId": sUserID,
                     "payDate": "/Date(1646697600000)/",
                     "notes": null,
                     "alternativeCostCenter": sAltCostCenter,

@@ -121,7 +121,7 @@ sap.ui.define([
           
             fnGetBankRequestPayload: function () {
              
-
+                var sExternalCode = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId; 
                 var sEffectiveStartDate =  this.getView().byId("idFromDatePicker").getDateValue();
                 var sCust_bankName =  this.getView().byId("idBankNameINP").getValue();
                 var scust_iban =  this.getView().byId("idIBANINP").getValue();
@@ -129,7 +129,7 @@ sap.ui.define([
                     oDate = dateFormat.format(new Date(sEffectiveStartDate));
                 oDate = oDate + "T00:00:00";
                 return {
-                    "externalCode": "12002425",
+                    "externalCode": sExternalCode,
                     "effectiveStartDate": oDate,
                     "cust_bankName": sCust_bankName,
                     "cust_iban": scust_iban

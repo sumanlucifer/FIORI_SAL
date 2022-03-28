@@ -201,6 +201,7 @@ sap.ui.define([
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
             },
             getDisciplinaryCreatePayload:function(){
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sAttachmentFileContent, sAttahmentFileName;
                 var sIncidentStartDate = this.byId("idIncidentStartDate").getDateValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
@@ -238,7 +239,7 @@ sap.ui.define([
                     "attachmentFileContent":sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
                     "isAttachmentNew": false,
-                    "attachmentUserId": "Extentia",
+                    "attachmentUserId": sUserID,
                     "cust_letterIssued": "Y"
                      
                     
