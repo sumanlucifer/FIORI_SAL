@@ -4,10 +4,11 @@ sap.ui.define([
     "com/sal/salhr/model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/Device"
+    "sap/ui/Device",
+    "sap/m/MessageBox"
 ],
 
-    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device) {
+    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device,MessageBox) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.AirportPassRequestDetailpage", {
@@ -160,7 +161,7 @@ sap.ui.define([
                 oComponentModel.remove(sKey, {
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
-                            sap.m.MessageBox.success("Record Deleted successfully.");
+                            MessageBox.success("Record Deleted successfully.");
                             oComponentModel.refresh();
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
@@ -197,7 +198,7 @@ sap.ui.define([
                     this.getView().getModel().update(sKey, oPayloadObj, {
                         success: function (oResponse) {
                             this.getView().setBusy(false);
-                            sap.m.MessageBox.success("Requested changes updated successfully.");
+                            MessageBox.success("Requested changes updated successfully.");
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
@@ -205,11 +206,11 @@ sap.ui.define([
                         }.bind(this),
                         error: function (oError) {
                             this.getView().setBusy(false);
-                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                            MessageBox.error(JSON.parse(oError.responseText).error.message.value);
                         }.bind(this)
                     });
                 } else {
-                    sap.m.MessageBox.error(sValidationErrorMsg);
+                    MessageBox.error(sValidationErrorMsg);
                 }
             },
 
@@ -234,7 +235,7 @@ sap.ui.define([
 
                 if (oData.isPassportAttachmentNew === false) {
                     var oPassportAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment");
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPassportAttachmentNew", true);
+                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPassportAttachmentNew", false);
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileContent", oPassportAttachmentObj.fileContent);
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileName", oPassportAttachmentObj.fileName);
                     this.getView().getModel("DisplayEditAirpassModel").refresh();
