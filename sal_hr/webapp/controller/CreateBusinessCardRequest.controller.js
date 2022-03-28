@@ -58,7 +58,8 @@ sap.ui.define([
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
                // this._bindView("/EmpInfo", "12002429");
-                this.fnGetEmployeeInfo("12002429");
+                // this.fnGetEmployeeInfo("12002429");
+                this.fnSetCreateBusinessCardLocalModel();
                  this.onResetPress();
 
 
@@ -81,8 +82,9 @@ sap.ui.define([
                     }.bind(this)
                 })
             },
-            fnSetCreateBusinessCardLocalModel: function (oEmpInfoObj) {
-                this.EmpInfoObj = oEmpInfoObj;
+            fnSetCreateBusinessCardLocalModel: function () {
+                // this.EmpInfoObj = oEmpInfoObj;
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
                 var sExternalCode = this.EmpInfoObj.userId,
                     sNationalID = this.EmpInfoObj.nationalId,
