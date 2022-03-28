@@ -17,12 +17,35 @@ sap.ui.define([
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("BusinessTripRequestDetailPage").attachPatternMatched(this._onObjectMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
+                this.sReturnDate = new Date();
+                this.sRequesting = 1;
+                this.sReturnDate.setDate(new Date().getDate() + 1);
+                if (this.sReturnDate.getDay() === 5) {
+                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
+
+                } else if (this.sReturnDate.getDay() === 6) {
+                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
+
+                } else {
+                    this.sRequesting = 1;
+                }
                 var oLocalViewModel = new JSONModel({
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    returnDate: this.sReturnDate,
+                    requestDay: this.sRequesting,
+                    availBal: false,
+                    recurringAbs: false,
+                    busy: false,
+                    uploadAttachment: true,
+                    currentDate: new Date(),
                     EditMode: false,
                     PageTitle: null,
                     Modify: true,
-                    currentDate: new Date(),
+                    businessTravel: false,
+                    trainingTravel: false
                 });
+
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
             },
 
@@ -38,9 +61,16 @@ sap.ui.define([
                     this.byId("idBusinessTripetailsFullScreenBTN").setIcon("sap-icon://full-screen");
                     this._getTicketData(this.sChildID);
                 }
+                if (sLayout === "EndColumnFullScreen" && this.byId("idBusinessTripetailsFullScreenBTN").getIcon() == "sap-icon://full-screen") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idBusinessTripetailsFullScreenBTN").setIcon("sap-icon://exit-full-screen");
+                    this._getTicketData(this.sChildID);
+                }
             },
 
             _bindView: function (data) {
+                this.getView().setBusy(true);
+
                 var object = data.results[0];
                 this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
@@ -54,17 +84,18 @@ sap.ui.define([
 
                 var oComponentModel = this.getComponentModel();
                 var sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
-                    // effectiveStartDate: object.effectiveStartDate,
-                    // externalCode: object.externalCode
-                    effectiveStartDate: "2022-03-14",
-                    externalCode: "12002428"
+                    effectiveStartDate: object.effectiveStartDate,
+                    externalCode: object.externalCode
+                    // effectiveStartDate: "2022-03-14",
+                    // externalCode: "12002428"
                 });
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        $expand: "cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav"
+                        $expand: "cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_trainingTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav"
                     },
                     success: function (oData) {
+                        this.getView().setBusy(false);
                         this._fnSetDisplayEditBusinessTripModel(oData);
                     }.bind(this),
                     error: function () {
@@ -76,6 +107,8 @@ sap.ui.define([
             },
 
             _fnSetDisplayEditBusinessTripModel: function (oData) {
+                this.getView().setBusy(true);
+
                 var oTravelItemDetailsObj = oData.cust_toDutyTravelItem.results[0],
                     oDisplayEditBusinessTripObj = {
                         "externalCode": oData.externalCode,
@@ -218,6 +251,7 @@ sap.ui.define([
                     },
                     oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
                     oBusinessTripAttachmentModel = new JSONModel({
+                        trainingTravelAttachment: oTravelItemDetailsObj.cust_trainingTravelAttachNav,
                         businessTravelAttachment: oTravelItemDetailsObj.cust_businessTravelAttachNav,
                         receiptEmbassyAttachment: oTravelItemDetailsObj.cust_receiptEmbassyNav,
                         visaCopyAttachment: oTravelItemDetailsObj.cust_visaCopyNav
@@ -225,6 +259,7 @@ sap.ui.define([
 
                 this.getView().setModel(oDisplayEditBusinessTripModel, "DisplayEditBusinessTripModel");
                 this.getView().setModel(oBusinessTripAttachmentModel, "BusinessTripAttachmentModel");
+                this.getView().setBusy(false);
             },
 
             onEditPress: function () {
@@ -279,8 +314,8 @@ sap.ui.define([
 
                     var oPayloadObj = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
                     oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany = (oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany === "Yes" ? true : false);
-
-                    // oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
+                    oPayloadObj.cust_toDutyTravelItem[0].cust_hotelBooking = oPayloadObj.cust_toDutyTravelItem[0].cust_hotelBooking === "Yes" ? true : false;
+                    oPayloadObj.cust_toDutyTravelItem[0].cust_expenseTypeVisaFee = this.getView().byId("idEditVisaType").getSelectedKey();
 
                     this.getView().getModel().update(sKey, oPayloadObj, {
                         success: function (oResponse) {
@@ -346,11 +381,19 @@ sap.ui.define([
             _fnGetSelectedUploadSetPropoerties: function (sUploaderName) {
                 var oUploadPropertyObj = {};
                 switch (sUploaderName) {
-                    case "idEditAttachBoardingPassUS":
+                    case "idEditAttachBoardingPassBusiness":
                         oUploadPropertyObj = {
                             AttachmentNew: "isbusinessTravelAttachNew",
                             AttachmentFileContent: "businessTravelattachmentFileContent",
                             AttachmentFileName: "businessTravelattachmentFileName"
+                        };
+                        break;
+
+                    case "idEditAttachBoardingPassTraining":
+                        oUploadPropertyObj = {
+                            AttachmentNew: "istrainingTravelAttachNew",
+                            AttachmentFileContent: "trainingTravelattachmentFileContent",
+                            AttachmentFileName: "trainingTravelattachmentFileName"
                         };
                         break;
 
@@ -381,11 +424,18 @@ sap.ui.define([
                     sFileContent = null, sFileName = null, sFileext = null, sMimeType = null;
 
                 switch (sUploaderName) {
-                    case "idDisplayAttachBoardingPass":
+                    case "idDisplayAttachBoardingPassBusiness":
                         sFileContent = oAttachmentData.businessTravelAttachment.fileContent;
                         sFileName = oAttachmentData.businessTravelAttachment.fileName.split(".")[0];
                         sFileext = oAttachmentData.businessTravelAttachment.fileExtension;
                         sMimeType = oAttachmentData.businessTravelAttachment.mimeType;
+                        break;
+
+                    case "idDisplayAttachBoardingPassTraining":
+                        sFileContent = oAttachmentData.trainingTravelAttachment.fileContent;
+                        sFileName = oAttachmentData.trainingTravelAttachment.fileName.split(".")[0];
+                        sFileext = oAttachmentData.trainingTravelAttachment.fileExtension;
+                        sMimeType = oAttachmentData.trainingTravelAttachment.mimeType;
                         break;
 
                     case "idDisplayAttachVisaCopy":
@@ -459,6 +509,25 @@ sap.ui.define([
                 });
             },
 
+            onVisaTypeChange: function (oEvent) {
+                if (oEvent.getSource().getSelectedKey() === "N") {
+                    this.byId("idEditAttachVisaCopy").getDefaultFileUploader().setEnabled(false);
+                } else {
+                    this.byId("idEditAttachVisaCopy").getDefaultFileUploader().setEnabled(true);
+                }
+            },
+
+            onTripCategoryChange: function (oEvent) {
+                if (oEvent.getSource().getSelectedKey() === "B") {
+                    this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
+                } else {
+                    this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", true);
+                }
+            },
+
+
             _fnUpdateAttachmentData: function () {
                 var oData = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
 
@@ -504,7 +573,7 @@ sap.ui.define([
                 // validate effective start date Field
                 if (!oEffectStartDatePicker.getValue()) {
                     oEffectStartDatePicker.setValueState("Error");
-                    oEffectStartDatePicker.setValueStateText("Please enter Effective start date.");
+                    oEffectStartDatePicker.setValueStateText("Please select Efective Start date.");
                     sValidationErrorMsg = "Please fill the all required fields.";
                 } else {
                     oEffectStartDatePicker.setValueState("None");
@@ -574,17 +643,17 @@ sap.ui.define([
                 var oTravelDate = this.getView().byId("idEditTravelDate");
                 if (!oTravelDate.getValue()) {
                     oTravelDate.setValueState("Error");
-                    oTravelDate.setValueStateText("Please enter Travel Date.");
+                    oTravelDate.setValueStateText("Please select Travel Date.");
                     sValidationErrorMsg = "Please fill the all required fields.";
                 } else {
                     oTravelDate.setValueState("None");
                 }
 
-                // validate Purpose of Permit Field
+                // validate Return Date Field
                 var oReturnDate = this.getView().byId("idEditReturnDate");
                 if (!oReturnDate.getValue()) {
                     oReturnDate.setValueState("Error");
-                    oReturnDate.setValueStateText("Please enter Return Date.");
+                    oReturnDate.setValueStateText("Please select Return Date.");
                     sValidationErrorMsg = "Please fill the all required fields.";
                 } else {
                     oReturnDate.setValueState("None");
@@ -650,27 +719,63 @@ sap.ui.define([
                     oEmergencyPhn.setValueState("None");
                 }
 
-                // Validate attachment sections
-                if (this.getView().byId("idEditAttachBoardingPassUS").getItems().length <= 0) {
-                    sValidationErrorMsg = "Please upload files for Boarding Pass.";
-                    this.getView().setBusy(false);
-                    return sValidationErrorMsg;
+                // Validate Boarding Pass attachment sections
+                if (this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_tripCategory") === "B") {
+                    if (this.getView().byId("idEditAttachBoardingPassBusiness").getItems().length <= 0) {
+                        sValidationErrorMsg = "Please upload Boarding Pass.";
+                        this.getView().setBusy(false);
+                        return sValidationErrorMsg;
+                    }
+                } else {
+                    if (this.getView().byId("idEditAttachBoardingPassTraining").getItems().length <= 0) {
+                        sValidationErrorMsg = "Please upload Boarding Pass.";
+                        this.getView().setBusy(false);
+                        return sValidationErrorMsg;
+                    }
                 }
 
-                if (this.getView().byId("idEditAttachVisaCopy").getItems().length <= 0) {
-                    sValidationErrorMsg = "Please upload files for Visa Copy.";
-                    this.getView().setBusy(false);
-                    return sValidationErrorMsg;
-                }
-                if (this.getView().byId("idEditAttachEmbassyReceipt").getItems().length <= 0) {
-                    sValidationErrorMsg = "Please upload files for Embassy Receipt.";
-                    this.getView().setBusy(false);
-                    return sValidationErrorMsg;
+                // Validate embasy attachment sections
+                if (this.byId("idEditVisaType").getSelectedKey() === "V") {
+                    if (this.getView().byId("idEditAttachVisaCopy").getItems().length <= 0) {
+                        sValidationErrorMsg = "Please upload files for Visa Copy.";
+                        this.getView().setBusy(false);
+                        return sValidationErrorMsg;
+                    }
+                    if (this.getView().byId("idEditAttachEmbassyReceipt").getItems().length <= 0) {
+                        sValidationErrorMsg = "Please upload files for Embassy Receipt.";
+                        this.getView().setBusy(false);
+                        return sValidationErrorMsg;
+                    }
                 }
 
                 this.getView().setBusy(false);
                 return sValidationErrorMsg;
             },
+
+            onReqTypeChange: function () {
+                if (this.getView().byId("idEditReqType").getSelectedKey() === "1") {
+                    this.byId("idEditHRBook").setEnabled(true);
+                    this.byId("idEditHRBook").setValue("Yes");
+                    this.byId("idEditTravelDate").setEnabled(true);
+                    this.byId("idEditTripCategory").setEnabled(true);
+                    this.byId("idEditDestCountry").setEnabled(true);
+                    this.byId("idEditCityCountry").setEnabled(true);
+                    this.byId("idEditCity").setEnabled(true);
+                    this.byId("idEditPayCompVisa").setEnabled(true);
+                    this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
+                } else {
+                    this.byId("idEditHRBook").setEnabled(false);
+                    this.byId("idEditTravelDate").setEnabled(false);
+                    this.byId("idEditTripCategory").setEnabled(false);
+                    this.byId("idEditDestCountry").setEnabled(false);
+                    this.byId("idEditCityCountry").setEnabled(false);
+                    this.byId("idEditCity").setEnabled(false);
+                    this.byId("idEditPayCompVisa").setEnabled(false);
+                    this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
+                }
+            }
         });
     });
 

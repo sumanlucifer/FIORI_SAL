@@ -10,7 +10,7 @@
 
     <form:SimpleForm title="{i18n>BusinessTravelDetails}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>RequestType}"/>
-        <Text id="idDisplayReqType" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType}"/>
+        <Text id="idDisplayReqType" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType} === '1' ? 'Raise Initial Request (1)' : 'Retrun and Closure (2)'}"/>
 
         <Label text="{i18n>PerDiemPayComponent}"/>
         <Text id="idDisplayPayComp" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiemPayComp}"/>
@@ -21,13 +21,16 @@
 
     <form:SimpleForm title="{i18n>TravelRequest}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>TripCategory}"/>
-        <Text id="idDisplayTripCategory" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory}"/>
+        <Text id="idDisplayTripCategory" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? 'Business (B)' : 'Training (T)'}"/>
 
         <Label text="{i18n>AirlinetickettobebookedbyHR}?"/>
-        <Text id="idDisplayHRBook" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_isCompany}"/>
+        <Text id="idDisplayHRBook" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_isCompany} === true ? 'Yes' : 'No'}"/>
 
         <Label text="{i18n>HotelBookingRequired}?" />
-        <Text id="idDisplayHotlBook" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_hotelBooking}"/>
+        <Text id="idDisplayHotlBook" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_hotelBooking} === true ? 'Yes' : 'No'}"/>
+
+        <!-- <Label text="Expense Type: Business Travel" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" />
+        <Text id="idisplayBusinessExpense" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory}" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }"/> -->
 
         <Label text="{i18n>TravelBusinessJustification}" />
         <Text id="idDisplayTravelJustification" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignJustification}"/>
@@ -93,7 +96,7 @@
 
 
 
-    <upload:UploadSet id="idDisplayAttachBoardingPass" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+    <upload:UploadSet id="idDisplayAttachBoardingPassBusiness" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>AttachBoardingPass}"/>
@@ -106,6 +109,19 @@
         </upload:items>
     </upload:UploadSet>
 
+
+    <upload:UploadSet id="idDisplayAttachBoardingPassTraining" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+        <upload:toolbar>
+            <OverflowToolbar>
+                <Label text="{i18n>AttachBoardingPass}"/>
+                <ToolbarSpacer/>
+                <Button text="Download Attachment" press="onDownLoadPress"/>
+            </OverflowToolbar>
+        </upload:toolbar>
+        <upload:items>
+            <upload:UploadSetItem visibleEdit="false" visibleRemove="false" fileName="{BusinessTripAttachmentModel>/businessTravelAttachment/fileName}" mediaType="{BusinessTripAttachmentModel>/businessTravelAttachment/mimeType}"/>
+        </upload:items>
+    </upload:UploadSet>
 
     <form:SimpleForm title="{i18n>VisaInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>VisaType}"/>
