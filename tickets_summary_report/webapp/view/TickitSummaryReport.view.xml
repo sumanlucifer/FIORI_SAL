@@ -10,7 +10,7 @@
         <App id="app">
             <pages>
                 <Page id="page" title="{i18n>title}" showHeader="false">
-                    <commons:ChartContainer showFullScreen="true" autoAdjustHeight="true" title="Ticket Summery">
+                    <commons:ChartContainer showFullScreen="true" autoAdjustHeight="true" title="Ticket Summary">
                         <commons:content>
                             <commons:ChartContainerContent>
                                 <commons:content>
@@ -43,56 +43,64 @@
                             </commons:ChartContainerContent>
                         </commons:content>
                     </commons:ChartContainer>
-                    <Table items="{path: 'TicketsSummaryDataModel>/'}">
-                        <headerToolbar>
-                            <OverflowToolbar>
-                                <content>
-                                    <Title text="Ticket Summary" level="H2"/>
-                                    <ToolbarSpacer />
-                                </content>
-                            </OverflowToolbar>
-                        </headerToolbar>
-                        <columns>
-                            <Column width="12em">
-                                <Text text="Module Name"/>
-                            </Column>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
-                                <Text text="Completed"/>
-                            </Column>
-                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                <Text text="Under process"/>
-                            </Column>
-                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                <Text text="Pending "/>
-                            </Column>
-                            <Column hAlign="Center">
-                                <Text text="Cancelled by End User"/>
-                            </Column>
-                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                <Text text="Cancelled by Admin"/>
-                            </Column>
-                            <Column hAlign="Center">
-                                <Text text="Re-assigned "/>
-                            </Column>
-                            <Column hAlign="Center">
-                                <Text text="Re-opened"/>
-                            </Column>
-                        </columns>
-                        <items>
-                            <ColumnListItem vAlign="Middle">
-                                <cells>
-                                    <Text text="{TicketsSummaryDataModel>name}"/>
-                                    <Text text="{TicketsSummaryDataModel>completed}"/>
-                                    <Text text="{TicketsSummaryDataModel>underProcess}"/>
-                                    <Text text="{TicketsSummaryDataModel>pending}"/>
-                                    <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                    <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                    <Text text="{TicketsSummaryDataModel>reassigned}"/>
-                                    <Text text="{TicketsSummaryDataModel>reopened}"/>
-                                </cells>
-                            </ColumnListItem>
-                        </items>
-                    </Table>
+                    <commons:ChartContainer showFullScreen="true" autoAdjustHeight="false" title="Ticket Summary">
+                        <commons:content>
+                            <commons:ChartContainerContent>
+                                <commons:content>
+                                    <Table items="{path: 'TicketsSummaryDataModel>/'}">
+                                        <!-- <headerToolbar>
+                                            <OverflowToolbar>
+                                                <content>
+                                                    <Title text="Ticket Summary" level="H2"/>
+                                                    <ToolbarSpacer />
+                                                </content>
+                                            </OverflowToolbar>
+                                        </headerToolbar> -->
+                                        <columns>
+                                            <Column width="12em">
+                                                <Text text="Module Name"/>
+                                            </Column>
+                                            <Column minScreenWidth="Tablet" demandPopin="true">
+                                                <Text text="Completed"/>
+                                            </Column>
+                                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                                <Text text="Under process"/>
+                                            </Column>
+                                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                                <Text text="Pending "/>
+                                            </Column>
+                                            <Column hAlign="Center">
+                                                <Text text="Cancelled by End User"/>
+                                            </Column>
+                                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                                <Text text="Cancelled by Admin"/>
+                                            </Column>
+                                            <Column hAlign="Center">
+                                                <Text text="Re-assigned "/>
+                                            </Column>
+                                            <Column hAlign="Center">
+                                                <Text text="Re-opened"/>
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem vAlign="Middle">
+                                                <cells>
+                                                    <Text text="{TicketsSummaryDataModel>name}"/>
+                                                    <Text text="{TicketsSummaryDataModel>completed}"/>
+                                                    <Text text="{TicketsSummaryDataModel>underProcess}"/>
+                                                    <Text text="{TicketsSummaryDataModel>pending}"/>
+                                                    <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
+                                                    <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
+                                                    <Text text="{TicketsSummaryDataModel>reassigned}"/>
+                                                    <Text text="{TicketsSummaryDataModel>reopened}"/>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </commons:content>
+                            </commons:ChartContainerContent>
+                        </commons:content>
+                    </commons:ChartContainer>
                 </Page>
             </pages>
         </App>
