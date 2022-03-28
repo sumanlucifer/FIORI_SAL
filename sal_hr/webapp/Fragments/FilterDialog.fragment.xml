@@ -16,7 +16,7 @@
                 </items>
 
             </ViewSettingsFilterItem>
-            <ViewSettingsCustomItem id="idCustomFilterItem" text="Request Date" key="requestDate">
+            <ViewSettingsCustomItem id="idCustomFilterItem" text="Date of Creation" key="requestDate">
                 <customControl>
                     <DatePicker value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}" />
                 </customControl>
