@@ -77,8 +77,8 @@
                        
 
 
-                        <Label text="Location" required="true" />
-                        <Input editable="true" id="idCreateLocation" liveChange="onLocationChange" value="{CreateBusinessCardModel>/sLocation}">
+                        <Label text="Location" required="false" />
+                        <Input editable="true" id="idCreateLocation"  value="{CreateBusinessCardModel>/sLocation}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>

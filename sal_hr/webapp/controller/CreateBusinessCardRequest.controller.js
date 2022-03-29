@@ -137,16 +137,7 @@ sap.ui.define([
                     this.byId("idCreateJobTitle").setValueStateText(null);
                 }
 
-                if (this.byId("idCreateLocation").getValue() === "") {
-                    this.byId("idCreateLocation").setValueState("Error");
-                    this.byId("idCreateLocation").setValueStateText(
-                        "Please enter location"
-                    );
-                    bValid = false;
-                } else {
-                    this.byId("idCreateLocation").setValueState("None");
-                    this.byId("idCreateLocation").setValueStateText(null);
-                }
+               
 
 
 
@@ -218,22 +209,7 @@ sap.ui.define([
                 }
             },
 
-            onLocationChange : function(oEve)
-            {
-                var sValue = oEve.getSource().getValue();
-
-               
-                if (sValue === "") {
-                    this.byId("idCreateLocation").setValueState("Error");
-                    this.byId("idCreateLocation").setValueStateText(
-                        "Please enter Location"
-                    );
-                
-                } else {
-                    this.byId("idCreateLocation").setValueState("None");
-                    this.byId("idCreateLocation").setValueStateText(null);
-                }
-            },
+     
             onEmailChange: function (oEve) {
 
                 var sValue = oEve.getSource().getValue();
@@ -414,12 +390,13 @@ sap.ui.define([
                 };
                 this.getView().getModel("LocalViewModel").setData(dataReset);
                 this.getView().getModel("LocalViewModel").refresh();
-                this.byId("idCreateOfficeNo").setValue("");
-                this.byId("idCreateEmail").setValue("");
-                this.byId("idCreateMobile").setValue("");
-                this.byId("idCreateDivision").setValue("");
+                
+           
                 this.byId("idCreatePOBOX").setValue("");
-                this.byId("idCreateJobTitle").setValue("");
+                this.byId("idCreateLocation").setValue("");
+
+                
+             
             }
 
 
