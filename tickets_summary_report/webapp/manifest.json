@@ -65,11 +65,17 @@
                 }
             },
             "": {
-                "dataSource": "mainService",
-                "preload": true,
+                "type": "sap.ui.model.odata.v2.ODataModel",
                 "settings": {
-                    "useBatch": false
-                }
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": true,
+                    "useBatch": false,
+                    "defaultUpdateMethod": "PUT"
+                },
+                "dataSource": "mainService",
+                "preload": true
             }
         },
         "resources": {
