@@ -2,7 +2,7 @@
     xmlns="sap.suite.ui.microchart"
     xmlns:m="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
-    <m:GenericTile id="idProcReq_SummaryTile" header="Requests" subheader="Sent by me" frameType="TwoByOne">
+    <m:GenericTile id="idProcReq_SummaryTile" header="Requests ({totalRequests})" subheader="Sent by me" frameType="TwoByOne">
         <m:tileContent>
             <m:TileContent id="idHRReq_SummaryTileContent" frameType="TwoByOne">
                 <m:content>
