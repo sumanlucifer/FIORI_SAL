@@ -15,7 +15,7 @@
                             <commons:ChartContainerContent>
                                 <commons:content>
                                     <viz:Popover id="idPopOver"/>
-                                    <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='column'>
+                                    <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height="320px" width="100%" vizType='column'>
                                         <viz:dataset>
                                             <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
                                                 <viz.data:dimensions>
