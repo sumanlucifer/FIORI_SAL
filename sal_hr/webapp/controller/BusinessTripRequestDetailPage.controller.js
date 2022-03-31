@@ -138,7 +138,7 @@ sap.ui.define([
                                 // "cust_costCenter": oTravelItemDetailsObj.cust_costCenter,
                                 // "cust_emerPhoneNum": oTravelItemDetailsObj.cust_emerPhoneNum,
 
-                                "cust_empName": this.EmpInfoObj.cust_fname + this.EmpInfoObj.cust_sname + this.EmpInfoObj.cust_lname,
+                                "cust_empName": this.EmpInfoObj.cust_fname + " " + this.EmpInfoObj.cust_sname + " " + this.EmpInfoObj.cust_lname,
                                 "cust_payGrade": this.EmpInfoObj.cust_payGrade,
                                 "cust_costCenter": this.EmpInfoObj.cust_costCentre,
                                 "cust_emerPhoneNum": this.EmpInfoObj.cust_emerPhoneNum,
@@ -324,6 +324,11 @@ sap.ui.define([
                     oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany = (oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany === "Yes" ? true : false);
                     oPayloadObj.cust_toDutyTravelItem[0].cust_hotelBooking = oPayloadObj.cust_toDutyTravelItem[0].cust_hotelBooking === "Yes" ? true : false;
                     oPayloadObj.cust_toDutyTravelItem[0].cust_expenseTypeVisaFee = this.getView().byId("idEditVisaType").getSelectedKey();
+
+                    // Convert selcted time to specific time format as "PT0H31M30S"
+                    if (oPayloadObj.cust_toDutyTravelItem[0].cust_travelTime) {
+                        oPayloadObj.cust_toDutyTravelItem[0].cust_travelTime = "PT" + oPayloadObj.cust_toDutyTravelItem[0].cust_travelTime.split(":")[0] + "H" + oPayloadObj.cust_toDutyTravelItem[0].cust_travelTime.split(":")[1] + "M00S";
+                    }
 
                     this.getView().getModel().update(sKey, oPayloadObj, {
                         success: function (oResponse) {
