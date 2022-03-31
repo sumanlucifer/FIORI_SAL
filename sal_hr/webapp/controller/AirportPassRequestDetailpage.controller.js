@@ -85,6 +85,7 @@ sap.ui.define([
             },
 
             _fnSetDisplayEditAirpassModel: function (oData) {
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var oDisplayEditAirpassObj = {
                     "externalCode": oData.externalCode,
                     "externalName": oData.externalName,
@@ -109,19 +110,19 @@ sap.ui.define([
                     "isPersonalIdAttachmentNew": false,
                     "personalIdAttachmentFileContent": "Personal ID",
                     "personalIdAttachmentFileName": "Personal ID.txt",
-                    "personalIdAttachmentUserId": "Extentia",
+                    "personalIdAttachmentUserId": sUserID,
                     "isPersonalPhotoAttachmentNew": false,
                     "personalPhotoAttachmentFileContent": "Personal photo",
                     "personalPhotoAttachmentFileName": "Personal Photo.txt",
-                    "personalPhotoAttachmentUserId": "Extentia",
+                    "personalPhotoAttachmentUserId": sUserID,
                     "isPassportAttachmentNew": false,
                     "passportAttachmentFileContent": "Passport",
                     "passportAttachmentFileName": "Passport.txt",
-                    "passportAttachmentUserId": "Extentia",
+                    "passportAttachmentUserId": sUserID,
                     "isCompanyIdAttachmentNew": false,
                     "companyIdAttachmentFileContent": "Company Id",
                     "companyIdAttachmentFileName": "Company Id.txt",
-                    "companyIdAttachmentUserId": "Extentia"
+                    "companyIdAttachmentUserId": sUserID
                 },
                     oAttachmentModel = new JSONModel({
                         PersonalIdAttachment: oData.cust_toAirportPassItem.cust_personalIdNav,

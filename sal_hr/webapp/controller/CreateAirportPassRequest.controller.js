@@ -66,19 +66,19 @@ sap.ui.define([
                         "isPersonalIdAttachmentNew": false,
                         "personalIdAttachmentFileContent": "Personal ID",
                         "personalIdAttachmentFileName": "Personal ID.txt",
-                        "personalIdAttachmentUserId": "Extentia",
+                        "personalIdAttachmentUserId": sExternalCode,
                         "isPersonalPhotoAttachmentNew": false,
                         "personalPhotoAttachmentFileContent": "Personal photo",
                         "personalPhotoAttachmentFileName": "Personal Photo.txt",
-                        "personalPhotoAttachmentUserId": "Extentia",
+                        "personalPhotoAttachmentUserId": sExternalCode,
                         "isPassportAttachmentNew": false,
                         "passportAttachmentFileContent": "Passport",
                         "passportAttachmentFileName": "Passport.txt",
-                        "passportAttachmentUserId": "Extentia",
+                        "passportAttachmentUserId": sExternalCode,
                         "isCompanyIdAttachmentNew": false,
                         "companyIdAttachmentFileContent": "Company Id",
                         "companyIdAttachmentFileName": "Company Id.txt",
-                        "companyIdAttachmentUserId": "Extentia"
+                        "companyIdAttachmentUserId": sExternalCode
                     },
                     oCreateAirpoPassModel = new JSONModel(oCreateAirpassObj);
 

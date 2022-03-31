@@ -9,7 +9,7 @@ sap.ui.define([
 
     function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter) {
         "use strict";
-        return BaseController.extend("com.sal.salhr.controller.CreateLeaveRequest", {
+        return BaseController.extend("com.sal.salhr.controller.CreateSalaryIncrementRequest", {
             onInit: function () {
                 debugger;
                 this.oRouter = this.getRouter();
@@ -201,7 +201,7 @@ sap.ui.define([
                     "isAttachmentNew": true,
                     "attachmentFileContent": sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
-                    "attachmentUserId": sUserID,
+                    "attachmentUserId": "Extentia",
                     "fractionQuantity":sQtyHrs
                   
                 };
@@ -451,10 +451,9 @@ sap.ui.define([
             fnGetLeaveBalance: function () {
                 debugger;
                 var that = this;
-                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 this.getView().getModel().read("/SF_Leave_AccountBalance", {
                     urlParameters: {
-                        "$filter": "(userId eq '" + sUserID + "' and timeAccountType eq 'Annual_vacation')"
+                        "$filter": "(userId eq '12002024' and timeAccountType eq 'Annual_vacation')"
                     },
                     success: function (oData) {
                         var oLeaveBalModel = new JSONModel(oData.results[0]);

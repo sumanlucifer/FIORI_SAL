@@ -20,7 +20,7 @@
                         <Text id="idDisplayIBANINP" text="{currencyCode}"  />
                          <Label id="idDisplayIBAN" text="Type" />
                         <Text id="idDisplay" text="{payComponentCodeText}"  />
-                        <Label id="idDisplayBankNameLBL" text="{i18n>value}"/>
+                        <Label id="idDisplayBankNameLBL" text="{i18n>Value}"/>
                         <Text id="idDisplayBankNameINP" text="{value}"  />
                         <Label id="idDisplayBankNameLdBL" text="{i18n>alternativeCostCenter}"/>
                         <Text id="idDisplayBankNamedINP" text="{alternativeCostCenterText}"  />

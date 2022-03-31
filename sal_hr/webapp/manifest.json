@@ -219,6 +219,26 @@
                     ]
                 },
                 {
+                    "pattern": "SalaryPromIncRequest/{parentMaterial}/{layout}",
+                    "name": "SalaryPromIncRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "SalaryPromIncRequest"
+                    ]
+                },
+                {
+                    "pattern": "SalaryIncrementRequest/{parentMaterial}/{layout}",
+                    "name": "SalaryIncrementRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "SalaryIncrementRequest"
+                    ]
+                },
+                {
                     "pattern": "detail/{parentMaterial}/LeaveRequestDetail/{childModule}/{layout}",
                     "name": "LeaveRequestDetail",
                     "target": [
@@ -374,6 +394,14 @@
                 },
                 "EmployeeTerminateRequest": {
                     "viewName": "CreateEmployeeTerminateRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "SalaryPromIncRequest": {
+                    "viewName": "CreateSalaryPromIncRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "SalaryIncrementRequest": {
+                    "viewName": "CreateSalaryIncrementRequest",
                     "controlAggregation": "endColumnPages"
                 },
                 "LeaveRequestDetail": {

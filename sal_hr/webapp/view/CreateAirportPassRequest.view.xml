@@ -11,10 +11,10 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New {name} Request" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="New Airport Pass Request" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New {name} Request" class="sapUiSmallMarginBegin">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Airport Pass Request" class="sapUiSmallMarginBegin">
                         <Link id="idHumanResourceLink" text="{i18n>HumanResource}" press="onBreadCrumbNavPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
