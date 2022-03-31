@@ -78,11 +78,12 @@
         <DatePicker id="idEditTravelDate" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"></DatePicker>
 
         <Label text="{i18n>ReturnDate}" required="true"/>
-        <DatePicker id="idEditReturnDate" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_returnDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"></DatePicker>
+        <DatePicker id="idEditReturnDate" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignEndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"></DatePicker>
 
         <Label text="{i18n>DesiredAirlineTicketTravelTime}"/>
-        <Input id="idEditTravelTime" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}" enabled="false"/>
+        <!-- <Input id="idEditTravelTime" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}" /> -->
         <!-- <TimePicker id="idEditTravelTime" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime}" valueFormat="HH:mm:ss" support2400="true" placeholder="Enter Time"/> -->
+        <TimePicker id="idEditTravelTime" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime}" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On" />
 
         <Label text="{i18n>DestinationCountry}"/>
         <Select id="idEditDestCountry" showSecondaryValues="true" items="{path: '/SF_Country',
@@ -187,17 +188,17 @@
                                                                      ] }">
             <core:ListItem key="{externalCode}" text="{label_defaultValue}" />
         </Select>
-        <Label text="{i18n>PayComponentVisa}" required="true"/>
+        <Label text="{i18n>PayComponentVisa}" required="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} === 'N' ? false: true}"/>
         <Input id="idEditPayCompVisa" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp}" enabled="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType} === '1' ? true : false}"/>
 
-        <Label text="{i18n>VisaAmount}" required="true"/>
+        <Label text="{i18n>VisaAmount}" required="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} === 'N' ? false: true}"/>
         <Input id="idEditVisaAmt" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeeExpenseAmount}"/>
     </form:SimpleForm>
 
-    <upload:UploadSet id="idEditAttachVisaCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
+    <upload:UploadSet id="idEditAttachVisaCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} === 'N' ? false: true}" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
         <upload:toolbar>
             <OverflowToolbar>
-                <Label text="{i18n>AttachVisaCopy}" required="true"/>
+                <Label text="{i18n>AttachVisaCopy}" required="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} === 'N' ? false: true}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
         </upload:toolbar>
@@ -206,10 +207,10 @@
         </upload:items>
     </upload:UploadSet>
 
-    <upload:UploadSet id="idEditAttachEmbassyReceipt" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
+    <upload:UploadSet id="idEditAttachEmbassyReceipt" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} === 'N' ? false: true}" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
         <upload:toolbar>
             <OverflowToolbar>
-                <Label text="{i18n>AttachEmbassyReceipt}" required="true"/>
+                <Label text="{i18n>AttachEmbassyReceipt}" required="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} === 'N' ? false: true}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
         </upload:toolbar>
@@ -232,4 +233,4 @@
         <Label text="{i18n>EmergencyPhoneNumber}"/>
         <Input id="idEditEmergencyPhn" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_emerPhoneNum}"/>
     </form:SimpleForm>
-</core:FragmentDefinition> 
+</core:FragmentDefinition>

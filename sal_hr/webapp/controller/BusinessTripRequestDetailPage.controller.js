@@ -108,6 +108,7 @@ sap.ui.define([
 
             _fnSetDisplayEditBusinessTripModel: function (oData) {
                 this.getView().setBusy(true);
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
                 var oTravelItemDetailsObj = oData.cust_toDutyTravelItem.results[0],
                     oDisplayEditBusinessTripObj = {
@@ -132,10 +133,15 @@ sap.ui.define([
                                 "cust_businessTicketAmount": oTravelItemDetailsObj.cust_businessTicketAmount,
                                 "cust_trainingExpenseAmount": oTravelItemDetailsObj.cust_trainingExpenseAmount,
 
-                                "cust_empName": oTravelItemDetailsObj.cust_empName,
-                                "cust_payGrade": oTravelItemDetailsObj.cust_payGrade,
-                                "cust_costCenter": oTravelItemDetailsObj.cust_costCenter,
-                                "cust_emerPhoneNum": oTravelItemDetailsObj.cust_emerPhoneNum,
+                                // "cust_empName": oTravelItemDetailsObj.cust_empName,
+                                // "cust_payGrade": oTravelItemDetailsObj.cust_payGrade,
+                                // "cust_costCenter": oTravelItemDetailsObj.cust_costCenter,
+                                // "cust_emerPhoneNum": oTravelItemDetailsObj.cust_emerPhoneNum,
+
+                                "cust_empName": this.EmpInfoObj.cust_fname + this.EmpInfoObj.cust_sname + this.EmpInfoObj.cust_lname,
+                                "cust_payGrade": this.EmpInfoObj.cust_payGrade,
+                                "cust_costCenter": this.EmpInfoObj.cust_costCentre,
+                                "cust_emerPhoneNum": this.EmpInfoObj.cust_emerPhoneNum,
 
                                 "cust_assignStartDate": oTravelItemDetailsObj.cust_assignStartDate,
                                 "cust_assignEndDate": oTravelItemDetailsObj.cust_assignEndDate,
@@ -263,6 +269,8 @@ sap.ui.define([
             },
 
             onEditPress: function () {
+                var sVisaType = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee");
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee", (sVisaType ? sVisaType : "N"));
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
             },
 
@@ -510,11 +518,14 @@ sap.ui.define([
             },
 
             onVisaTypeChange: function (oEvent) {
-                if (oEvent.getSource().getSelectedKey() === "N") {
-                    this.byId("idEditAttachVisaCopy").getDefaultFileUploader().setEnabled(false);
-                } else {
-                    this.byId("idEditAttachVisaCopy").getDefaultFileUploader().setEnabled(true);
-                }
+                // var bEnabledandRequired = oEvent.getSource().getSelectedKey() === "N" ? false : true;
+
+                // this.byId("idEditPayCompVisaLabel").setRequired(bEnabledandRequired);
+                // this.byId("idEditAttachVisaCopyLabel").setRequired(bEnabledandRequired);
+                // this.byId("idEditAttachEmbassyReceiptLabel").setRequired(bEnabledandRequired);
+
+                // this.byId("idEditAttachVisaCopy").getDefaultFileUploader().setEnabled(bEnabledandRequired);
+                // this.byId("idEditAttachEmbassyReceipt").getDefaultFileUploader().setEnabled(bEnabledandRequired);
             },
 
             onTripCategoryChange: function (oEvent) {
@@ -689,35 +700,15 @@ sap.ui.define([
                     oVisaType.setValueState("None");
                 }
 
-                // validate Pay Component Visa Field
-                var oPayCompVisa = this.getView().byId("idEditPayCompVisa");
-                if (!oPayCompVisa.getValue()) {
-                    oPayCompVisa.setValueState("Error");
-                    oPayCompVisa.setValueStateText("Please enter Pay Component Visa.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oPayCompVisa.setValueState("None");
-                }
-
-                // validate Visa Amount Field
-                var oVisaAmt = this.getView().byId("idEditVisaAmt");
-                if (!oVisaAmt.getValue()) {
-                    oVisaAmt.setValueState("Error");
-                    oVisaAmt.setValueStateText("Please enter Visa Amount Field.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oVisaAmt.setValueState("None");
-                }
-
-                // validate Flight Travel Date Field
-                var oEmergencyPhn = this.getView().byId("idEditEmergencyPhn");
-                if (!oEmergencyPhn.getValue()) {
-                    oEmergencyPhn.setValueState("Error");
-                    oEmergencyPhn.setValueStateText("Please enter Emergency Phone.");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    oEmergencyPhn.setValueState("None");
-                }
+                // // validate Flight Travel Date Field
+                // var oEmergencyPhn = this.getView().byId("idEditEmergencyPhn");
+                // if (!oEmergencyPhn.getValue()) {
+                //     oEmergencyPhn.setValueState("Error");
+                //     oEmergencyPhn.setValueStateText("Please enter Emergency Phone.");
+                //     sValidationErrorMsg = "Please fill the all required fields.";
+                // } else {
+                //     oEmergencyPhn.setValueState("None");
+                // }
 
                 // Validate Boarding Pass attachment sections
                 if (this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_tripCategory") === "B") {
@@ -736,6 +727,26 @@ sap.ui.define([
 
                 // Validate embasy attachment sections
                 if (this.byId("idEditVisaType").getSelectedKey() === "V") {
+                    // validate Pay Component Visa Field
+                    var oPayCompVisa = this.getView().byId("idEditPayCompVisa");
+                    if (!oPayCompVisa.getValue()) {
+                        oPayCompVisa.setValueState("Error");
+                        oPayCompVisa.setValueStateText("Please enter Pay Component Visa.");
+                        sValidationErrorMsg = "Please fill the all required fields.";
+                    } else {
+                        oPayCompVisa.setValueState("None");
+                    }
+
+                    // validate Visa Amount Field
+                    var oVisaAmt = this.getView().byId("idEditVisaAmt");
+                    if (!oVisaAmt.getValue()) {
+                        oVisaAmt.setValueState("Error");
+                        oVisaAmt.setValueStateText("Please enter Visa Amount Field.");
+                        sValidationErrorMsg = "Please fill the all required fields.";
+                    } else {
+                        oVisaAmt.setValueState("None");
+                    }
+
                     if (this.getView().byId("idEditAttachVisaCopy").getItems().length <= 0) {
                         sValidationErrorMsg = "Please upload files for Visa Copy.";
                         this.getView().setBusy(false);

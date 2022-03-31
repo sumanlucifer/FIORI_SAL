@@ -1,0 +1,213 @@
+<!-- <mvc:View controllerName="com.sal.reports.requestsummaryreport.controller.RequestSummaryReport" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable"> -->
+<!-- <smartTable:SmartTable tableBindingPath="/MasterModules" entitySet="MasterModules" smartFilterId="smartFilterBar" tableType="ResponsiveTable" placeToolbarInTable="true" useExportToExcel="true" beforeExport="onBeforeExport" useVariantManagement="false" useTablePersonalisation="true" header="Line Items" showRowCount="true" persistencyKey="SmartTableAnalytical_Explored" enableAutoBinding="true" demandPopin="true" class="sapUiResponsiveContentPadding" enableAutoColumnWidth="true" showTablePersonalisation="true">
+
+        <Table sticky="ColumnHeaders,HeaderToolbar">
+        <columns>
+            <Column width="10rem" importance="High">
+                <Label text="Ticket ID" class="tblHeaderText"/>
+            </Column>
+            <Column width="18rem" importance="Low" popinDisplay="Inline">
+                <Label text="SAP ID" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="Assigned Business Unit" class="tblHeaderText" />
+            </Column>
+            <Column width="28rem" importance="Low" popinDisplay="Inline">
+                <Label text="Assigned Person" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="Tickets Category" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="Ticket Description" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="Creation Date" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="SLA Period" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="Target Date of Closure" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="Violated SLA" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="Breached Days" class="tblHeaderText" />
+            </Column>
+            <Column importance="Low" popinDisplay="Inline">
+                <Label text="Status" class="tblHeaderText" />
+            </Column>
+            <Column hAlign="End" width="10rem" importance="High">
+                <Label text="Source of Ticket" class="tblHeaderText" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem press="onPressTicketItem" vAlign="Middle" type="Navigation">
+                <cells>
+                    <Text text="{ticketCode}" />
+                    <Text text="{externalCode}" />
+                    <Text text="" />
+                    <Text text="{summary}" />
+
+                    <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'}}" />
+                    <Text text="" />
+                    <Text text="" />
+                    <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'}}" />
+                    <Text text="" />
+                    <Text text="" /><Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'}}" />
+                    <Text text="" />
+
+                    <ObjectStatus text="{path:'status',formatter:'.formatter.ticketStatusText'}" state="{path:'status',formatter:'.formatter.ticketStatus'}" />
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</smartTable:SmartTable>
+</mvc:View> -->
+
+
+
+
+
+<mvc:View controllerName="com.sal.reports.requestsummaryreport.controller.RequestSummaryReport"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:t="sap.ui.table"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:sv="sap.ui.comp.smartvariants"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:p="sap.f"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <p:DynamicPage id="dynamicPageId" headerExpanded="true">
+        <p:title>
+            <p:DynamicPageTitle>
+                <p:heading>
+                    <!-- <vm:VariantManagement id="VariantManagement" variantItems="{fieldHandleingDataModel>/Variants}" select="onSelect" save="onSave" enabled="true" manage="onManage" showExecuteOnSelection="false" showShare="false" standardItemText="{i18n>HEADING_VARIENT_ITEM_TEXT}">
+                        <vm:variantItems>
+                            <vm:VariantItem text="{fieldHandleingDataModel>Name}" key="{fieldHandleingDataModel>Key}"/>
+                        </vm:variantItems>
+                    </vm:VariantManagement> -->
+                </p:heading>
+                <p:snappedContent>
+                    <Text id="statusText"/>
+                </p:snappedContent>
+            </p:DynamicPageTitle>
+        </p:title>
+        <p:header>
+			<p:DynamicPageHeader pinnable="true">
+				<p:content>
+					<fb:FilterBar id="FilterBar" reset="onReset" search="onFilterSearch" useToolbar="false" showGoOnFB="true" showRestoreButton="false">
+						<fb:filterItems>
+							<fb:FilterItem name="A" label="{i18n>completed}">
+								<fb:control>
+									<Input id="Customer" value="{completed}" enabled="true" visible="true" tooltip="{i18n>TOOLTIP_FETCH_F4HELP_VALUES}" editable="true" type="Text" showValueHelp="true" valueHelpOnly="false" filterSuggests="true" width="87%" change="onChangeCustomer" valueHelpRequest="F4SoldtoCustomer" maxLength="0"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="B" label="{i18n>underProcess}">
+								<fb:control>
+									<Input id="underProcess" value="{fieldHandleingDataModel>/CompanyCode}" enabled="true" visible="true" tooltip="{i18n>TOOLTIP_FETCH_F4HELP_VALUES}" editable="true" type="Text" showValueStateMessage="true" showValueHelp="true" valueHelpOnly="false" filterSuggests="true" startSuggestion="0" width="87%" showTableSuggestionValueHelp="false" change="onChangeCustomer" valueHelpRequest="F4ComponyCode"/>
+								</fb:control>
+							</fb:FilterItem>
+						</fb:filterItems>
+					</fb:FilterBar>
+				</p:content>
+			</p:DynamicPageHeader>
+		</p:header>
+        <p:content>
+            <smartTable:SmartTable id="ID" entitySet="MasterModules" tableType="ResponsiveTable" useExportToExcel="true" tableBindingPath="/MasterModules" beforeExport="onBeforeExport" useVariantManagement="false" useTablePersonalisation="true" header="Request Summary" showRowCount="true" enableAutoBinding="true" demandPopin="true" class="sapUiResponsiveContentPadding" customData:p13nDialogSettings="{filter:{visible:false},group:{visible:false}}">
+
+                <Table sticky="ColumnHeaders" id="idProjectsTable" growing="true" growingThreshold="20" enableBusyIndicator="false" growingScrollToLoad="true">
+                    <columns>
+                        <Column id="_IDEGen_column1" hAlign="Begin" width="20%">
+                            <customData>
+                                <core:CustomData id="_IDEGen_customdata1" key="p13nData" value='\{"leadingProperty":"completed","columnKey": "completed","sortProperty": "completed","filterProperty":"completed"}'/>
+                            </customData>
+                            <Label design="Bold" id="_IDEGen_text1" text="{i18n>completed}"/>
+                        </Column>
+                        <Column id="_IDEGen_column2" hAlign="Begin">
+                            <customData>
+                                <core:CustomData id="_IDEGen_customdata2" key="p13nData" value='\{"leadingProperty":"underProcess","columnKey": "underProcess","sortProperty": "underProcess","filterProperty":"underProcess"}'/>
+                            </customData>
+                            <Label design="Bold" id="_IDEGen_text2" text="{i18n>underProcess}"/>
+                        </Column>
+                        <Column id="_IDEGen_column3" hAlign="Begin">
+                            <customData>
+                                <core:CustomData id="_IDEGen_customdata3" key="p13nData" value='\{"leadingProperty":"pending","columnKey": "pending","sortProperty": "pending","filterProperty":"pending"}'/>
+                            </customData>
+                            <Label design="Bold" id="_IDEGen_text3" text="{i18n>pending}"/>
+                        </Column>
+                        <Column id="_IDEGen_column4" hAlign="Begin">
+                            <customData>
+                                <core:CustomData id="_IDEGen_customdata4" key="p13nData" value='\{"leadingProperty":"cancelledByEndUser","columnKey": "cancelledByEndUser","sortProperty": "cancelledByEndUser","filterProperty":"cancelledByEndUser"}'/>
+                            </customData>
+                            <Label design="Bold" id="_IDEGen_text4" text="{i18n>cancelledByEndUser}"/>
+                        </Column>
+                        <Column id="_IDEGen_column5" hAlign="Begin">
+                            <customData>
+                                <core:CustomData id="_IDEGen_customdata5" key="p13nData" value='\{"leadingProperty":"cancelledByAdmin","columnKey": "cancelledByAdmin","sortProperty": "cancelledByAdmin","filterProperty":"cancelledByAdmin"}'/>
+                            </customData>
+                            <Label design="Bold" id="_IDEGen_text5" text="{i18n>cancelledByAdmin}"/>
+                        </Column>
+                        <Column id="_IDEGen_column6" hAlign="Begin">
+                            <customData>
+                                <core:CustomData id="_IDEGen_customdata6" key="p13nData" value='\{"leadingProperty":"reassigned","columnKey": "reassigned","sortProperty": "reassigned","filterProperty":"reassigned"}'/>
+                            </customData>
+                            <Label design="Bold" id="_IDEGen_text6" text="{i18n>reassigned}"/>
+                        </Column>
+                        <Column id="_IDEGen_column7" hAlign="Begin">
+                            <customData>
+                                <core:CustomData id="_IDEGen_customdata7" key="p13nData" value='\{"leadingProperty":"reopened","columnKey": "reopened","sortProperty": "reopened","filterProperty":"reopened"}'/>
+                            </customData>
+                            <Label design="Bold" id="_IDEGen_text7" text="{i18n>reopened}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem id="_IDEGen_columnlistitem0" type="Navigation" press=".Navto">
+                            <cells>
+                                <ObjectIdentifier title="{completed}"  titleActive="true" titlePress="titleClicked"/>
+                                <Text id="_IDEGen_item2" text="{underProcess}">
+                                    <customData>
+                                        <core:CustomData key="Read" value="{=${Read} === 'Y' ? 'Y' : 'N' }" writeToDom="true"/>
+                                    </customData>
+                                </Text>
+                                <Text id="_IDEGen_item3" text="{pending}">
+                                    <customData>
+                                        <core:CustomData key="Read" value="{=${Read} === 'Y' ? 'Y' : 'N' }" writeToDom="true"/>
+                                    </customData>
+                                </Text>
+                                <Text id="_IDEGen_item4" text="{cancelledByEndUser}">
+                                    <customData>
+                                        <core:CustomData key="Read" value="{=${Read} === 'Y' ? 'Y' : 'N' }" writeToDom="true"/>
+                                    </customData>
+                                </Text>
+                                <Text id="_IDEGen_item5" text="{cancelledByAdmin}">
+                                    <customData>
+                                        <core:CustomData key="Read" value="{=${Read} === 'Y' ? 'Y' : 'N' }" writeToDom="true"/>
+                                    </customData>
+                                </Text>
+                                <Text id="_IDEGen_item6" text="{reassigned}">
+                                    <customData>
+                                        <core:CustomData key="Read" value="{=${Read} === 'Y' ? 'Y' : 'N' }" writeToDom="true"/>
+                                    </customData>
+                                </Text>
+                                <Text id="_IDEGen_item7" text="{reopened}">
+                                    <customData>
+                                        <core:CustomData key="Read" value="{=${Read} === 'Y' ? 'Y' : 'N' }" writeToDom="true"/>
+                                    </customData>
+                                </Text>
+
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </smartTable:SmartTable>
+        </p:content>
+    </p:DynamicPage>
+</mvc:View>
