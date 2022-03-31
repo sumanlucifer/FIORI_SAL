@@ -37,7 +37,17 @@
 
                           <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label required="false" id="idBValueLBL" text="{i18n>TerminationReason}"/>
-                        <Input  type="Text" liveChange="OnLiveChangeValue" id="idTerminationReasonINP"  />
+                        <!-- <Input  type="Text" liveChange="OnLiveChangeValue"   /> -->
+
+                         <!-- <Select id="idTerminationReasonINP" items="{ path: '/SF_FOEventReason'}" >
+                        <core:Item key="{externalCode}" text="{name}" />
+                        </Select> -->
+
+
+                        <ComboBox id="idTerminationReasonINP"  
+					 items="{ path: '/SF_FOEventReason'}">
+						<core:Item key="{externalCode}" text="{name}"/>
+					</ComboBox>
 
                         <Label required="false" id="idCurrencyCodeLBL" text="{i18n>OKTORetire}"/>
                          <RadioButtonGroup id="idOKToRetire"  columns="2" select="onRbChnageMain" selectedIndex="">

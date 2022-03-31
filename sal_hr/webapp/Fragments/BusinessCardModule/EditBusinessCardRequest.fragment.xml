@@ -49,7 +49,7 @@
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label required="false" text="Office Number" />
-                        <Input type="Number" editable="false" id="idEditOfficeNo" value="{CreateBusinessCardModel>/sOfficeNo}">
+                        <Input editable="false" id="idEditOfficeNo" value="{CreateBusinessCardModel>/sOfficeNo}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>

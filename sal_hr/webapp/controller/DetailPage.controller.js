@@ -124,6 +124,13 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
+                          //  Salary Increment Request Module 
+                    case "14":
+                        this.oRouter.navTo("SalaryIncrementRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
                          //  Employee Terminate Change Request Module 
                     case "17":
                         this.oRouter.navTo("EmployeeTerminateRequest", {

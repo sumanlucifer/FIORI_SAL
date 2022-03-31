@@ -1,0 +1,183 @@
+<mvc:View controllerName="com.sal.salhr.controller.CreateSalaryPromIncRequest"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:fm="sap.ui.layout.form"
+    xmlns:upload="sap.m.upload" height="100%">
+    <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle id="idDynamicPageTitle">
+                <f:heading>
+                    <Title id="idPageTitle" text="New Request" class="sapUiSmallMarginBegin"/>
+                </f:heading>
+                <f:breadcrumbs>
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Request" class="sapUiSmallMarginBegin">
+                        <Link id="idSalaryLink" text="{i18n>HumanResource}" press="onCreateCancelPress"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+         		<IconTabBar
+		id="idIconTabBarInlineMode"
+		headerMode="Inline"
+		expanded="{device>/isNoPhone}"
+		class="sapUiResponsiveContentPadding">
+		<items>
+			<IconTabFilter
+				text="Employee Promotion"
+				key="promotion"
+				>
+                <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="When would you like your changes to take effect? " required="true" />
+            <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+        </fm:SimpleForm>
+			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Choose what you want to change"/>
+            <CheckBox text="Job Information"></CheckBox>
+            <CheckBox text="Compensation Information"></CheckBox>
+             </fm:SimpleForm>
+             <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Incumbent of ParentPosition" />
+            <Input/>
+
+            <Label text="Position" />
+            <Input id="idPayComp" value=""  />
+           
+            <Label text="Time in Position" />
+            <Input id="idTravelAmt" value="" />
+
+
+         </fm:SimpleForm>   
+        <fm:SimpleForm title="Organization Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Company" required="true" />
+            <Input/>
+
+            <Label text="Business Unit" />
+            <Input value=""  />
+           
+            <Label text="Division" />
+            <Input value="" />
+
+            <Label text="Department" required="true" />
+            <Input/>
+
+            <Label text="Section" />
+            <Input value=""  />
+           
+            <Label text="Locaiton Group" />
+            <Input value="" />
+            
+              <Label text="Location" required="true" />
+            <Input/>
+
+            <Label text="Time Zone" />
+            <Input value=""  />
+           
+            <Label text="Cost Center" />
+            <Input value="" />
+
+
+         </fm:SimpleForm>  
+			</IconTabFilter>
+			<IconTabFilter
+				text="Employee Transfer"
+				key="transfer"
+				>
+				   <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="When would you like your changes to take effect? " required="true" />
+            <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+        </fm:SimpleForm>
+			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Choose what you want to change"/>
+            <CheckBox text="Job Information"></CheckBox>
+            <CheckBox text="Compensation Information"></CheckBox>
+             </fm:SimpleForm>
+             <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Incumbent of Parent Position" />
+            <Input/>
+
+            <Label text="Position" />
+            <Input value=""  />
+           
+            <Label text="Time in Position" />
+            <Input value="" />
+            
+
+         </fm:SimpleForm>   
+          <fm:SimpleForm title="Organization Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Company" required="true" />
+            <Input/>
+
+            <Label text="Business Unit" />
+            <Input value=""  />
+           
+            <Label text="Division" />
+            <Input value="" />
+
+            <Label text="Department" required="true" />
+            <Input/>
+
+            <Label text="Section" />
+            <Input value=""  />
+           
+            <Label text="Locaiton Group" />
+            <Input value="" />
+            
+              <Label text="Location" required="true" />
+            <Input/>
+
+            <Label text="Time Zone" />
+            <Input value=""  />
+           
+            <Label text="Cost Center" />
+            <Input value="" />
+
+
+         </fm:SimpleForm>  
+			</IconTabFilter>
+			<IconTabFilter
+				text="Employee Salary Increment"
+				key="increment"
+				>
+				   <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="When would you like your changes to take effect? " required="true" />
+            <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+        </fm:SimpleForm>
+			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Choose what you want to change"/>
+           
+            <CheckBox text="Compensation Information"></CheckBox>
+             </fm:SimpleForm>
+             <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Incumbent of ParentPosition" />
+            <Input/>
+
+            <Label text="Position" />
+            <Input value=""  />
+           
+            <Label text="Time in Position" />
+            <Input value="" />
+
+
+         </fm:SimpleForm>   
+			</IconTabFilter>
+			
+		</items>
+	</IconTabBar>
+          
+        </f:content>
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar id="idOverflowToolbar" visible="true">
+                <ToolbarSpacer id="idToolbarSpacer"/>
+                <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
+                <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
+                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

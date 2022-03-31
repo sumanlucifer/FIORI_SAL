@@ -104,11 +104,11 @@ sap.ui.define([
                     this.byId("idIncidentDescription").setValueStateText(null);
                 }
 
-                if(this.isAttachment !== true)
-                {
-                    sap.m.MessageBox.error("Please upload the attachments.");
-                    bValid = false;
-                }
+                // if(this.isAttachment !== true)
+                // {
+                //     sap.m.MessageBox.error("Please upload the attachments.");
+                //     bValid = false;
+                // }
 
 
 

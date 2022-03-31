@@ -24,7 +24,7 @@
 
                         
                         <Label id="idDisplayTerminationRsnLBL" text="{i18n>TerminationReason}" />
-                        <Text id="idDisplayTerminationRsnINP" text="{eventReason}"  />
+                        <Text id="idDisplayTerminationRsnINP" text="{EventReasonNameText}"  />
                          <Label id="idDisplayIBAN" text="{i18n>OKTORetire}" />
                         <Text id="idDisplay" text="{= ${okToRehire} === true ? 'Yes' : 'No' }"  />
                         <Label id="idDisplayElligibleEOSLBL" text="{i18n>EligibleforEOSBenefit}"/>

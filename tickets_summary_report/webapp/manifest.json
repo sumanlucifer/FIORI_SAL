@@ -22,12 +22,12 @@
         },
         "crossNavigation": {
             "inbounds": {
-                "com-sal-salhr-inbound": {
+                "com-sal-reports-ticketssummaryreport-inbound": {
                     "signature": {
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "TicketSummaryReport",
+                    "semanticObject": "Reports_semantic",
                     "action": "display",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",

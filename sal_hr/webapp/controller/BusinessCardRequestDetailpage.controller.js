@@ -93,7 +93,7 @@ sap.ui.define([
                         "sLocation": "",
                         "sEmail":this.EmpInfoObj.email,
                         "sMobile":this.EmpInfoObj.mobile,
-                        "sOfficeNo":this.EmpInfoObj.officeNumber,
+                        "sOfficeNo": this.EmpInfoObj.officeNumber,
                         "effectiveStartDate": new Date()
                       
                         
@@ -209,7 +209,8 @@ sap.ui.define([
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
                     success: function (oResponse) {
                         this.getView().setBusy(false);
-                        sap.m.MessageBox.success("Request Submitted successfully.");
+                   
+                        sap.m.MessageBox.success("Request Modified successfully.");
                         this.getView().getModel().refresh();
                         this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     }.bind(this),

@@ -59,9 +59,10 @@ sap.ui.define([
                         });
                         this.getView().bindElement({
                             path: sKey,
-                            // parameters: {
-                            //     expand: "payComponentCodeNav,alternativeCostCenterNav",
-                            // },
+                            parameters: {
+                               
+                                expand: "jobInfoNav/eventReasonNav",
+                            },
                             events: {
                                 change: function (oEvent) {
                                     var oContextBinding = oEvent.getSource();
