@@ -14,8 +14,9 @@ sap.ui.define([
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("AdditionalPaymentRequest").attachPatternMatched(this._onObjectMatched, this);          
                 this.mainModel = this.getOwnerComponent().getModel();
+                this.mainModel.setSizeLimit(1000);
             
-               
+
                 var oLocalViewModel = new JSONModel({
                     busy: false,
                     currentDate: new Date()

@@ -46,7 +46,7 @@
                         <Input  type="Number" liveChange="OnLiveChangeValue" id="idValueINP"  />
 
                         <Label required="true" id="idCurrencyCodeLBL" text="{i18n>CurrencyCode}"/>
-                        <Select id="idInpCurrencyCode" items="{ path: '/SF_Currency',
+                        <Select id="idInpCurrencyCode" selectedKey="SAR" items="{ path: '/SF_Currency',
                                                 sorter : {
                                                  path : 'code' 
                                              }
