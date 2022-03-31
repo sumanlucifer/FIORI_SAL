@@ -10,97 +10,106 @@
         <App id="app">
             <pages>
                 <Page id="page" title="{i18n>title}" showHeader="false">
-                    <commons:ChartContainer showFullScreen="true" autoAdjustHeight="true" title="Ticket Summary">
-                        <commons:content>
-                            <commons:ChartContainerContent>
-                                <commons:content>
-                                    <viz:Popover id="idPopOver"/>
-                                    <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height="320px" width="100%" vizType='column'>
-                                        <viz:dataset>
-                                            <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
-                                                <viz.data:dimensions>
-                                                    <viz.data:DimensionDefinition name="name" value="{TicketsSummaryDataModel>name}"/>
-                                                </viz.data:dimensions>
-                                                <viz.data:measures>
-                                                    <viz.data:MeasureDefinition name="completed" value="{TicketsSummaryDataModel>completed}"/>
-                                                    <viz.data:MeasureDefinition name="underProcess" value="{TicketsSummaryDataModel>underProcess}"/>
-                                                    <viz.data:MeasureDefinition name="pending" value="{TicketsSummaryDataModel>pending}"/>
-                                                    <viz.data:MeasureDefinition name="cancelledByEndUser" value="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                                </viz.data:measures>
-                                            </viz.data:FlattenedDataset>
-                                        </viz:dataset>
-
-                                        <viz:feeds>
-                                            <viz.feeds:FeedItem id='valueAxisFeed1' uid="valueAxis" type="Measure" values="completed"/>
-                                            <viz.feeds:FeedItem id='valueAxisFeed2' uid="valueAxis" type="Measure" values="underProcess"/>
-                                            <viz.feeds:FeedItem id='valueAxisFeed3' uid="valueAxis" type="Measure" values="pending"/>
-                                            <viz.feeds:FeedItem id='valueAxisFeed4' uid="valueAxis" type="Measure" values="cancelledByEndUser"/>
-                                            <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="name"/>
-                                        </viz:feeds>
-                                    </viz:VizFrame>
-
-                                </commons:content>
-                            </commons:ChartContainerContent>
-                        </commons:content>
-                    </commons:ChartContainer>
-                    <commons:ChartContainer showFullScreen="true" autoAdjustHeight="false" title="Ticket Summary">
-                        <commons:content>
-                            <commons:ChartContainerContent>
-                                <commons:content>
-                                    <Table items="{path: 'TicketsSummaryDataModel>/'}">
-                                        <!-- <headerToolbar>
-                                            <OverflowToolbar>
-                                                <content>
-                                                    <Title text="Ticket Summary" level="H2"/>
-                                                    <ToolbarSpacer />
-                                                </content>
-                                            </OverflowToolbar>
-                                        </headerToolbar> -->
-                                        <columns>
-                                            <Column width="12em">
-                                                <Text text="Module Name"/>
-                                            </Column>
-                                            <Column minScreenWidth="Tablet" demandPopin="true">
-                                                <Text text="Completed"/>
-                                            </Column>
-                                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                                <Text text="Under process"/>
-                                            </Column>
-                                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                                <Text text="Pending "/>
-                                            </Column>
-                                            <Column hAlign="Center">
-                                                <Text text="Cancelled by End User"/>
-                                            </Column>
-                                            <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
-                                                <Text text="Cancelled by Admin"/>
-                                            </Column>
-                                            <Column hAlign="Center">
-                                                <Text text="Re-assigned "/>
-                                            </Column>
-                                            <Column hAlign="Center">
-                                                <Text text="Re-opened"/>
-                                            </Column>
-                                        </columns>
-                                        <items>
-                                            <ColumnListItem vAlign="Middle">
-                                                <cells>
-                                                    <Text text="{TicketsSummaryDataModel>name}"/>
-                                                    <Text text="{TicketsSummaryDataModel>completed}"/>
-                                                    <Text text="{TicketsSummaryDataModel>underProcess}"/>
-                                                    <Text text="{TicketsSummaryDataModel>pending}"/>
-                                                    <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                                    <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                                    <Text text="{TicketsSummaryDataModel>reassigned}"/>
-                                                    <Text text="{TicketsSummaryDataModel>reopened}"/>
-                                                </cells>
-                                            </ColumnListItem>
-                                        </items>
-                                    </Table>
-                                </commons:content>
-                            </commons:ChartContainerContent>
-                        </commons:content>
-                    </commons:ChartContainer>
+                    <VBox>
+                        <commons:ChartContainer showFullScreen="true" title="Ticket Summary">
+                            <commons:content>
+                                <commons:ChartContainerContent id="idChartContainerContent">
+                                    <commons:content>
+                                        <viz:Popover id="idPopOver"/>
+                                        <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height="300px" width="100%" vizType='combination'>
+                                            <viz:dataset>
+                                                <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
+                                                    <viz.data:dimensions>
+                                                        <viz.data:DimensionDefinition name="name" value="{TicketsSummaryDataModel>name}"/>
+                                                    </viz.data:dimensions>
+                                                    <viz.data:measures>
+                                                        <!-- Column chart Items -->
+                                                        <viz.data:MeasureDefinition group="1" name="Completed" value="{TicketsSummaryDataModel>completed}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Under Process" value="{TicketsSummaryDataModel>underProcess}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TicketsSummaryDataModel>pending}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Cancelled by End User" value="{TicketsSummaryDataModel>cancelledByEndUser}"/>
+                                                        <!-- Line chart Items -->
+                                                        <viz.data:MeasureDefinition group="2" name="Cancelled by Admin" value="{TicketsSummaryDataModel>cancelledByAdmin}"/>
+                                                        <viz.data:MeasureDefinition group="2" name="Re-assigned " value="{TicketsSummaryDataModel>reassigned}"/>
+                                                        <viz.data:MeasureDefinition group="2" name="Re-opened" value="{TicketsSummaryDataModel>reopened}"/>
+                                                    </viz.data:measures>
+                                                </viz.data:FlattenedDataset>
+                                            </viz:dataset>
+                                            <viz:feeds>
+                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Under Process,Pending,Cancelled by End User"/>
+                                                <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin,Re-assigned ,Re-opened"/>
+                                                <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="name"/>
+                                            </viz:feeds>
+                                        </viz:VizFrame>
+                                    </commons:content>
+                                </commons:ChartContainerContent>
+                            </commons:content>
+                        </commons:ChartContainer>
+                        <commons:ChartContainer showFullScreen="true" autoAdjustHeight="false" title="Ticket Summary">
+                            <commons:content>
+                                <commons:ChartContainerContent>
+                                    <commons:content>
+                                        <Table items="{path: 'TicketsSummaryDataModel>/'}">
+                                            <!-- <headerToolbar>
+                                                <OverflowToolbar>
+                                                    <content>
+                                                        <Title text="Ticket Summary" level="H2"/>
+                                                        <ToolbarSpacer />
+                                                        <Button icon="sap-icon://sort"/>
+                                                    </content>
+                                                </OverflowToolbar>
+                                            </headerToolbar> -->
+                                            <columns>
+                                                <Column minScreenWidth="Desktop" width="15%">
+                                                    <Label design="Bold" text="Module Name"/>
+                                                </Column>
+                                                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" width="10%">
+                                                    <Label design="Bold" text="Completed"/>
+                                                </Column>
+                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="10%">
+                                                    <Label design="Bold" text="Under Process"/>
+                                                </Column>
+                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="7%">
+                                                    <Label design="Bold" text="Pending "/>
+                                                </Column>
+                                                <Column hAlign="Center" width="15%">
+                                                    <Label design="Bold" text="Cancelled by End User"/>
+                                                </Column>
+                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="15%">
+                                                    <Label design="Bold" text="Cancelled by Admin"/>
+                                                </Column>
+                                                <Column hAlign="Center" width="10%">
+                                                    <Label design="Bold" text="Re-assigned "/>
+                                                </Column>
+                                                <Column hAlign="Center" width="8%">
+                                                    <Label design="Bold" text="Re-opened"/>
+                                                </Column>
+                                                <Column hAlign="End" width="10%">
+                                                    <Label design="Bold" text="Total Requests"/>
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem vAlign="Middle">
+                                                    <cells>
+                                                        <Text text="{TicketsSummaryDataModel>name}"/>
+                                                        <!-- <Label design="Bold" text="{TicketsSummaryDataModel>name}"/> -->
+                                                        <Text text="{TicketsSummaryDataModel>completed}"/>
+                                                        <Text text="{TicketsSummaryDataModel>underProcess}"/>
+                                                        <Text text="{TicketsSummaryDataModel>pending}"/>
+                                                        <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
+                                                        <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
+                                                        <Text text="{TicketsSummaryDataModel>reassigned}"/>
+                                                        <Text text="{TicketsSummaryDataModel>reopened}"/>
+                                                        <Label design="Bold" text="{TicketsSummaryDataModel>totalRequests}"/>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </commons:content>
+                                </commons:ChartContainerContent>
+                            </commons:content>
+                        </commons:ChartContainer>
+                    </VBox>
                 </Page>
             </pages>
         </App>
