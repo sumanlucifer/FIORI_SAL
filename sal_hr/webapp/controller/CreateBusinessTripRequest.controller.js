@@ -16,29 +16,9 @@ sap.ui.define([
                 this.oRouter.getRoute("BusinessTripRequest").attachPatternMatched(this._onObjectMatched, this);
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
-                var that = this;
-
-                this.sReturnDate = new Date();
-                this.sRequesting = 1;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
-                if (this.sReturnDate.getDay() === 5) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-
-                } else if (this.sReturnDate.getDay() === 6) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-
-                } else {
-                    this.sRequesting = 1;
-                }
+              
                 var oLocalViewModel = new JSONModel({
-                    startDate: new Date(),
-                    endDate: new Date(),
-                    returnDate: this.sReturnDate,
-                    requestDay: this.sRequesting,
-                    availBal: false,
-                    recurringAbs: false,
                     busy: false,
-                    uploadAttachment: true,
                     currentDate: new Date(),
                     businessTravel: false,
                     trainingTravel: false,
@@ -47,8 +27,6 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
-
-
 
 
             },
