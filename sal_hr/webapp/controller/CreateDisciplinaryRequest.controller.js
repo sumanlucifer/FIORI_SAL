@@ -234,7 +234,7 @@ sap.ui.define([
                     "cust_Severity": sSeverity,
                     "cust_warningType": sWarningType,
                     "effectiveStartDate": sEffectiveStartDate,
-                    "externalCode": "12002291",
+                    "externalCode": sUserID,
                     "externalName": null,
                     "attachmentFileContent":sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
