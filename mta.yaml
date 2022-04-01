@@ -115,8 +115,8 @@ modules:
       name: comsalreportsticketssummaryreport
       target-path: resources/
     - artifacts:
-      - comsalreportsrequestsummaryreport.zip
-      name: comsalreportsrequestsummaryreport
+      - comsalvacancy.zip
+      name: comsalvacancy
       target-path: resources/
     - artifacts:
       - comsalreportsrequestsrequestsummaryreports.zip
@@ -302,9 +302,9 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comsalreportsrequestsummaryreport
+- name: comsalvacancy
   type: html5
-  path: request_summary_report
+  path: vacancy
   build-parameters:
     build-result: dist
     builder: custom
