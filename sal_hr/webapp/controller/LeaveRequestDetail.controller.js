@@ -338,7 +338,7 @@ sap.ui.define([
                     "attachmentId": sattachmentFileID,
                     "attachmentFileContent": sattachmentFileContent,
                     "attachmentFileName": sattachmentFileName,
-                    "attachmentUserId": "Extentia"
+                    "attachmentUserId": sUserID
 
                 }
 

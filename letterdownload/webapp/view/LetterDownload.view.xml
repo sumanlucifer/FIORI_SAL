@@ -1,0 +1,49 @@
+<mvc:View
+    controllerName="com.sal.letterdownload.controller.LetterDownload"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:layout="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:commons="sap.suite.ui.commons">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="Generate a Document" showHeader="false">
+
+                 <form:SimpleForm title="Business Travel Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+            <Label text="Language" required="true"/>
+            <Select id="idReqType" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType}" change="onReqTypeChange"  items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelReqType'} ]
+                                       }">
+               <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
+              
+            </Select>
+
+            <Label text="Templates" required="true"/>
+            <Select id="idReqType" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_requestType}" change="onReqTypeChange"  items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelReqType'} ]
+                                       }">
+               <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
+              
+            </Select>
+
+           
+            <Label text="Total Travel Amount" required="true" />
+            <TextArea id="idTravelJustification" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignJustification}" ></TextArea>
+
+
+         </form:SimpleForm>    
+                   
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

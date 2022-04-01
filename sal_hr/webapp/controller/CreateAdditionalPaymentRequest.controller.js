@@ -2,51 +2,27 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox",
-    "sap/m/upload/Uploader",
-    "sap/m/UploadCollectionParameter"
+    "sap/m/MessageBox"
+
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter) {
+    function (BaseController, Controller, JSONModel, MessageBox) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateAdditionalPaymentRequest", {
             onInit: function () {
-                debugger;
+              
                 this.oRouter = this.getRouter();
-                this.oRouter.getRoute("AdditionalPaymentRequest").attachPatternMatched(this._onObjectMatched, this);
-                // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
+                this.oRouter.getRoute("AdditionalPaymentRequest").attachPatternMatched(this._onObjectMatched, this);          
                 this.mainModel = this.getOwnerComponent().getModel();
                 this.mainModel.setSizeLimit(1000);
-                var that = this;
+            
 
-                this.sReturnDate = new Date();
-                this.sRequesting = 1;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
-                if (this.sReturnDate.getDay() === 5) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-
-                } else if (this.sReturnDate.getDay() === 6) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-
-                } else {
-                    this.sRequesting = 1;
-                }
                 var oLocalViewModel = new JSONModel({
-                    startDate: new Date(),
-                    endDate: new Date(),
-                    returnDate: this.sReturnDate,
-                    requestDay: this.sRequesting,
-                    availBal: false,
-                    recurringAbs: false,
                     busy: false,
-                    uploadAttachment: true,
                     currentDate: new Date()
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
-
-
-
 
             },
          
@@ -57,39 +33,8 @@ sap.ui.define([
               
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this._bindView("/MasterSubModules" + this.sParentID);
-              
-
             },
-            _bindView: function () {
-             
-                var oComponentModel = this.getComponentModel();
-                //    var sTickets = sObjectPath + "/tickets";
-                var sKey = oComponentModel.createKey("/MasterSubModules", {
-                    ID: this.sParentID
-                });
-
-                this.getView().bindElement({
-                    path: sKey,
-                    events: {
-                        change: function (oEvent) {
-                            var oContextBinding = oEvent.getSource();
-                            oContextBinding.refresh(false);
-                        }.bind(this),
-                        dataRequested: function () {
-                            this.getView().setBusy(true);
-                        }.bind(this),
-                        dataReceived: function () {
-                            this.getView().setBusy(false);
-                        }.bind(this)
-                    }
-                });
-
-
-
-
-            },
-         
+               
 
             onRaiseRequestPress: function () {
                 if (!this._validateMandatoryFields()) {
@@ -159,14 +104,6 @@ sap.ui.define([
                     this.byId("idValueINP").setValueStateText(null);
                 }
 
-
-
-              
-
-
-
-
-
                 return bValid;
             },
             OnLiveChangeValue : function(oEve)
@@ -185,8 +122,7 @@ sap.ui.define([
                 }
 
             },
-
-        
+    
             onCreateCancelPress: function () {
                 this.oRouter.navTo("detail", {
                     parentMaterial: this.sParentID,

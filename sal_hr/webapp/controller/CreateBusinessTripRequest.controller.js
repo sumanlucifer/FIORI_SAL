@@ -16,29 +16,9 @@ sap.ui.define([
                 this.oRouter.getRoute("BusinessTripRequest").attachPatternMatched(this._onObjectMatched, this);
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
-                var that = this;
-
-                this.sReturnDate = new Date();
-                this.sRequesting = 1;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
-                if (this.sReturnDate.getDay() === 5) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-
-                } else if (this.sReturnDate.getDay() === 6) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-
-                } else {
-                    this.sRequesting = 1;
-                }
+              
                 var oLocalViewModel = new JSONModel({
-                    startDate: new Date(),
-                    endDate: new Date(),
-                    returnDate: this.sReturnDate,
-                    requestDay: this.sRequesting,
-                    availBal: false,
-                    recurringAbs: false,
                     busy: false,
-                    uploadAttachment: true,
                     currentDate: new Date(),
                     businessTravel: false,
                     trainingTravel: false,
@@ -47,8 +27,6 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
-
-
 
 
             },
@@ -68,111 +46,14 @@ sap.ui.define([
                 // this.EmpInfoObj = oEmpInfoObj;
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
                
-// ++++++++++++++++++++++++++++++++++++++++++++++= old code ++++++++++++++++++++++++++++++++++++++==
+
                 var sExternalCode = this.EmpInfoObj.userId,
                     sFirstName = this.EmpInfoObj.firstName + " " + this.EmpInfoObj.middleName + " " + this.EmpInfoObj.lastName,
                     sPayGrade = this.EmpInfoObj.payGrade,
                     sCostCenter = this.EmpInfoObj.costCentre,
                     sPhnNum = this.EmpInfoObj.emergencyNumber;
             
-                // var oCreateBusinessObj = {
-                //     "externalCode": sExternalCode,
-                //     "effectiveStartDate": new Date(),
-                //     "cust_toDutyTravelItem": [
-                //         {
-                //             "cust_userId": sExternalCode,
-                //             "cust_dutyTravelMain_externalCode": sExternalCode,
-                //             "cust_dutyTravelMain_effectiveStartDate": new Date(),
-
-                //             "externalCode": "96056",
-                //             "externalName": null,
-                //             "cust_requestType": "1",
-                //             "cust_perDiemPayComp": null,
-                //             "cust_totalAmount": null,
-                //             "cust_tripCategory": "B",
-                //             "cust_isCompany": true,
-                //             "cust_hotelBooking": false,
-                //             "cust_assignJustification": "4444444444444",
-                //             "cust_expenseTypeBusinessTravel": null,
-                //             "cust_expenseTypeTrainingTravel": null,
-                //             "cust_businessTicketAmount": null,
-                //             "cust_trainingExpenseAmount": null,
-
-                //             "cust_empName": sFirstName,
-                //             "cust_payGrade": sPayGrade,
-                //             "cust_costCenter": sCostCenter,
-                //             "cust_emerPhoneNum": sPhnNum,
-
-                //             "cust_assignStartDate": new Date(),
-                //             "cust_assignEndDate": new Date(),
-                //             "cust_travelTime": null,
-                //             "cust_destination": null,
-                //             "cust_city": null,
-                //             "cust_SAUotherCity": null,
-                //             "cust_cityAll": null,
-                //             "cust_inOutKingdom": "OUT",
-                //             "cust_perDiem": "1000",
-                //             "cust_totalPerDiem": "1000",
-                //             "cust_businessTravelDate": new Date(),
-                //             "cust_businessTravelFrom": null,
-                //             "cust_businessTravelTo": null,
-                //             "cust_businessTravelFlightNum": null,
-                //             "cust_businessTravelDepTime": null,
-                //             "cust_businessTravelArrTime": null,
-                //             "cust_businessTravelPayComp": null,
-                //             "cust_trainingTravelDate": null,
-                //             "cust_trainingTravelFrom": null,
-                //             "cust_trainingTravelTo": null,
-                //             "cust_trainingTravelFlightNum": null,
-                //             "cust_trainingTravelDepTime": null,
-                //             "cust_trainingTravelArrTime": null,
-                //             "cust_trainingTravelPayComp": null,
-                //             "cust_ticketAmount": null,
-                //             "cust_expenseTypeVisaFee": null,
-                //             "cust_visaFeePayComp": null,
-                //             "cust_visaFeeExpenseAmount": null,
-
-
-
-
-
-                //             "cust_status": null,
-                //             "cust_returnDate": null,
-                //             "cust_paymentType": null,
-                //             "mdfSystemRecordStatus": "N",
-
-
-                //             "travelattachment1FileContent": "create travel attache",
-                //             "travelattachment1FileName": "tr1.txt",
-                //             "isTravelAttach1New": true,
-                //             "travelattachment1UserId": "Extentia",
-
-
-                //             "businessTravelattachmentFileContent": "btravle create",
-                //             "businessTravelattachmentFileName": "btravel.txt",
-                //             "isbusinessTravelAttachNew": false,
-                //             "businessTravelattachmentUserId": "Extentia",
-
-                //             "trainingTravelattachmentFileContent": "btravle2create",
-                //             "trainingTravelattachmentFileName": "btrave2.txt",
-                //             "istrainingTravelAttachNew": false,
-                //             "trainingTravelattachmentUserId": "Extentia",
-
-                //             "receiptEmbassyattachmentFileContent": "btravle 3create",
-                //             "receiptEmbassyattachmentFileName": "btrave3.txt",
-                //             "isreceiptEmbassyAttachNew": false,
-                //             "receiptEmbassyattachmentUserId": "Extentia",
-
-                //             "visaCopyattachmentFileContent": "btravle 6 create",
-                //             "visaCopyattachmentFileName": "btrave6.txt",
-                //             "isvisaCopyAttachNew": false,
-                //             "visaCopyattachmentUserId": "Extentia"
-
-                //         }
-                //     ]
-
-                // },
-// *********************************** old code ***************************************************************
+              
 
                   var oCreateBusinessObj = {
                     "externalCode": sExternalCode,
@@ -197,7 +78,7 @@ sap.ui.define([
                             "cust_tripCategory": "B",
                             "cust_isCompany": true,
                             "cust_hotelBooking": false,
-                            "cust_assignJustification": "4444444444444",
+                            "cust_assignJustification": "",
                             "cust_expenseTypeBusinessTravel": null,
                             "cust_expenseTypeTrainingTravel": null,
                             "cust_businessTicketAmount": null,
@@ -214,7 +95,7 @@ sap.ui.define([
                             "cust_destination": "IND",
                             "cust_city": null,
                             "cust_SAUotherCity": null,
-                            "cust_cityAll": "Mumbai",
+                            "cust_cityAll": null,
                             "cust_inOutKingdom": "OUT",
                             "cust_perDiem": null,
                             "cust_totalPerDiem": null,
@@ -291,28 +172,28 @@ sap.ui.define([
                             "travelattachment1FileContent": "create travelattachment1 attache",
                             "travelattachment1FileName": "travelattachment1.txt",
                             "isTravelAttach1New": true,
-                            "travelattachment1UserId": "Extentia",
+                            "travelattachment1UserId": sExternalCode,
                         
                             
                             "businessTravelattachmentFileContent": "businessTravelattachment create",
                             "businessTravelattachmentFileName": "businessTravelAttachment.txt",
                             "isbusinessTravelAttachNew": false,
-                            "businessTravelattachmentUserId": "Extentia",
+                            "businessTravelattachmentUserId": sExternalCode,
                            
                             "trainingTravelattachmentFileContent": "trainingTravelattachment create",
                             "trainingTravelattachmentFileName": "trainingTravelattachment.txt",
                             "istrainingTravelAttachNew": false,
-                            "trainingTravelattachmentUserId": "Extentia",
+                            "trainingTravelattachmentUserId": sExternalCode,
                            
                             "receiptEmbassyattachmentFileContent": "receiptEmbassy 3create",
                             "receiptEmbassyattachmentFileName": "receiptEmbassy.txt",
                             "isreceiptEmbassyAttachNew": false,
-                            "receiptEmbassyattachmentUserId": "Extentia",
+                            "receiptEmbassyattachmentUserId": sExternalCode,
                          
                             "visaCopyattachmentFileContent": "visaCopy 6 create",
                             "visaCopyattachmentFileName": "visaCopy.txt",
                             "isvisaCopyAttachNew": false,
-                            "visaCopyattachmentUserId": "Extentia"
+                            "visaCopyattachmentUserId": sExternalCode
                             
                             
                         }
@@ -368,7 +249,9 @@ sap.ui.define([
                     oTravelDatePicker = this.byId("idTravelDate"),
                     oReturnDatePicker = this.byId("idReturnDate"),
                     sDestinationCountry = this.getView().byId("idDestCountry"),
-                    oFlightTravelDatePicker = this.byId("idFlightTravelDate");
+                    // oFlightTravelDatePicker = this.byId("idFlightTravelDate"),
+                    sTravelJustification = this.byId("idTravelJustification"),
+                    sOtherCity = this.byId("idCityCountry");
 
                 // Validate Business Trip Effective Start Date
                 if (!oEffectStartDatePicker.getValue()) {
@@ -407,47 +290,67 @@ sap.ui.define([
                     sDestinationCountry.setValueState("None");
                 }
 
-                // Validate Flight Deatils Travel Date
-                if (!oFlightTravelDatePicker.getValue()) {
-                    oFlightTravelDatePicker.setValueState("Error");
-                    oFlightTravelDatePicker.setValueStateText("Please select Travel Date");
+                // // Validate Flight Deatils Travel Date
+                // if (!oFlightTravelDatePicker.getValue()) {
+                //     oFlightTravelDatePicker.setValueState("Error");
+                //     oFlightTravelDatePicker.setValueStateText("Please select Travel Date");
+                //     sValidationErrorMsg = "Please fill the all required fields.";
+                // } else {
+                //     oFlightTravelDatePicker.setValueState("None");
+                // }
+                
+
+                 // Validate Travel Justification
+                 if (!sTravelJustification.getValue()) {
+                    sTravelJustification.setValueState("Error");
+                    sTravelJustification.setValueStateText("Travel Business Justification is required");
                     sValidationErrorMsg = "Please fill the all required fields.";
                 } else {
-                    oFlightTravelDatePicker.setValueState("None");
+                    sTravelJustification.setValueState("None");
                 }
 
+                 // Validate Other City
+                 if (!sOtherCity.getValue()) {
+                    sOtherCity.setValueState("Error");
+                    sOtherCity.setValueStateText("City(Other Country) is required");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    sOtherCity.setValueState("None");
+                }
 
 
                 // Validate attachment sections
 
-                if (this.byId("idTripCategory").getSelectedKey() === "B") {
-                    if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isbusinessTravelAttachNew")) {
-                        sValidationErrorMsg = "Please upload Boarding Pass.";
-                        this.getView().setBusy(false);
-                        return sValidationErrorMsg;
-                    }
-                } else {
-                    if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/istrainingTravelAttachNew")) {
-                        sValidationErrorMsg = "Please upload Boarding Pass.";
-                        this.getView().setBusy(false);
-                        return sValidationErrorMsg;
-                    }
-                }
+                // if (this.byId("idTripCategory").getSelectedKey() === "B") {
+                //     if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isbusinessTravelAttachNew")) {
+                //         sValidationErrorMsg = "Please upload Boarding Pass.";
+                //         this.getView().setBusy(false);
+                //         return sValidationErrorMsg;
+                //     }
+                // } else {
+                //     if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/istrainingTravelAttachNew")) {
+                //         sValidationErrorMsg = "Please upload Boarding Pass.";
+                //         this.getView().setBusy(false);
+                //         return sValidationErrorMsg;
+                //     }
+                // }
+                //   # Visa Copy Mandatory check
+                // if (this.byId("idVisaType").getSelectedKey() === "V") {
+                //     if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isvisaCopyAttachNew")) {
+                //         sValidationErrorMsg = "Please upload Visa Copy.";
+                //         this.getView().setBusy(false);
+                //         return sValidationErrorMsg;
+                //     }
+                // }
+                   
+                  //   # Embassy Receipt Mandatory check
+                // if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isreceiptEmbassyAttachNew")) {
+                //     sValidationErrorMsg = "Please upload Embassy Receipt.";
+                //     this.getView().setBusy(false);
+                //     return sValidationErrorMsg;
+                // }
 
-                if (this.byId("idVisaType").getSelectedKey() === "V") {
-                    if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isvisaCopyAttachNew")) {
-                        sValidationErrorMsg = "Please upload Visa Copy.";
-                        this.getView().setBusy(false);
-                        return sValidationErrorMsg;
-                    }
-                }
-
-                if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isreceiptEmbassyAttachNew")) {
-                    sValidationErrorMsg = "Please upload Embassy Receipt.";
-                    this.getView().setBusy(false);
-                    return sValidationErrorMsg;
-                }
-
+               
 
 
                 this.getView().setBusy(false);
@@ -465,11 +368,32 @@ sap.ui.define([
                     layout: "TwoColumnsMidExpanded"
 
                 });
-                this.mainModel.refresh();
+                // this.mainModel.refresh();
+                  this.onResetPress();
+                
             },
             onResetPress: function () {
+                this.getView().setBusy(true);
 
-                this.onBankRequestResetPress();
+                this.fnSetCreateBusinessTripModel();
+
+                this.getView().byId("UploadBoardingPass").removeAllItems();
+                this.getView().byId("UploadBoardingPass").getDefaultFileUploader().setEnabled(true);
+
+                this.getView().byId("UploadVisaCopy").removeAllItems();
+                if(this.byId("idVisaType").getSelectedKey() === "N"){
+                    this.getView().byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(false);
+                }else{
+                    this.getView().byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(true);
+                }
+
+                
+
+                this.getView().byId("UploadEmbassy").removeAllItems();
+                this.getView().byId("UploadEmbassy").getDefaultFileUploader().setEnabled(true);
+              
+                this.getView().setBusy(false);
+ 
 
 
 
@@ -492,8 +416,10 @@ sap.ui.define([
                     this.byId("idTotalPErDiem").setEnabled(false);
                     this.byId("idPayCompVisa").setEnabled(true);
                     this.byId("idPayCom").setEnabled(false);
+
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
+                    
                 } else {
                     this.byId("idHRBook").setEnabled(false);
                     this.byId("idPayComp").setEnabled(false);
@@ -508,8 +434,15 @@ sap.ui.define([
                     this.byId("idTotalPErDiem").setEnabled(false);
                     this.byId("idPayCompVisa").setEnabled(false);
                     this.byId("idPayCom").setEnabled(false);
-                    this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
-                    this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
+                    
+
+                    if(this.byId("idTripCategory").getSelectedKey() === "B"){
+                        this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
+                        this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
+                    }else{
+                        this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
+                        this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", true);
+                    }
 
                 }
             },
@@ -636,6 +569,11 @@ sap.ui.define([
                     this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_perDiemPayComp", "9257");
                     this.byId("idPayComp").setValue("Training Trip Per-Diem Off-Cycle");
 
+                }
+
+                if(this.byId("idReqType").getSelectedKey() === "1"){
+                    this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
                 }
 
 
