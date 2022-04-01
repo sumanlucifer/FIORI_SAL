@@ -69,7 +69,7 @@
             <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
         </Select>
 
-        <Label text="{i18n>TravelBusinessJustification}" />
+        <Label text="{i18n>TravelBusinessJustification}" required="true"/>
         <TextArea id="idEditTravelJustification" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignJustification}"/>
     </form:SimpleForm>
 

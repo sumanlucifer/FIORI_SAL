@@ -101,10 +101,10 @@
         </upload:items>
     </upload:UploadSet>
 
-    <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+    <form:SimpleForm layout="ColumnLayout" columnsM="1" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>AcknowledgeText1}"/>
         <Text id="idDisplayAcknowledgeText1" text="{= ${DisplayEditAirpassModel>/cust_toAirportPassItem/cust_acknowledge1} === true ? 'Yes' : 'No'}"/>
-        <Label text="{i18n>AcknowledgeText2}" />
+        <Label text="{i18n>AcknowledgeText2}" class="sapUiSmallMarginBottom"/>
         <Text id="idDisplayAcknowledgeText2" text="{= ${DisplayEditAirpassModel>/cust_toAirportPassItem/cust_acknowledge2} === true ? 'Yes' : 'No'}"/>
     </form:SimpleForm>
 </core:FragmentDefinition>

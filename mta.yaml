@@ -118,6 +118,10 @@ modules:
       - comsalreportsrequestsummaryreport.zip
       name: comsalreportsrequestsummaryreport
       target-path: resources/
+    - artifacts:
+      - comsalreportsrequestsrequestsummaryreports.zip
+      name: comsalreportsrequestsrequestsummaryreports
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -301,6 +305,16 @@ modules:
 - name: comsalreportsrequestsummaryreport
   type: html5
   path: request_summary_report
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalreportsrequestsrequestsummaryreports
+  type: html5
+  path: request_summary_reports
   build-parameters:
     build-result: dist
     builder: custom
