@@ -16,33 +16,35 @@
     </edmx:Reference>
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.sal.reports.requests">
-            <Annotations Target="HumanResourceService.SF_Country">
-                <Annotation Term="Common.Label" String="{@i18n>Country Code}"/>
-                <Annotation Term="Common.ValueList">
-                    <Record Type="Common.ValueListType">
-                        <PropertyValue Property="CollectionPath" String="SF_Country"/>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterInOut">
-                                    <PropertyValue Property="LocalDataProperty" PropertyPath="code"/>
-                                    <PropertyValue Property="ValueListProperty" String="externalName_defaultValue"/>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Common.ValueListWithFixedValues"/>
+
+            <!-- To Change the labels of the filter bar fields -->
+            <Annotations Target="HumanResourceService.Tickets/ID">
+                <Annotation Term="Common.Label" String="{@i18n>TicketID}"/>
             </Annotations>
+            <Annotations Target="HumanResourceService.Tickets/externalCreatedAt">
+                <Annotation Term="Common.Label" String="{@i18n>CreationDate}"/>
+            </Annotations>
+
+            <!-- To hide any field -->
+            <!-- <Annotations Target="HumanResourceService.Tickets/subModuleId">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations> -->
+
             <Annotations Target="HumanResourceService.Tickets">
                 <!-- For Restrictions -->
+                <Annotation Term="Capabilities.SearchRestrictions">
+                    <Record Type="Capabilities.SearchRestrictionsType">
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
                 <Annotation Term="Capabilities.InsertRestrictions">
                     <Record Type="Capabilities.InsertRestrictionsType">
-                        <PropertyValue Property="Insertable" Bool="true"/>
+                        <PropertyValue Property="Insertable" Bool="false"/>
                     </Record>
                 </Annotation>
                 <Annotation Term="Capabilities.DeleteRestrictions">
                     <Record Type="Capabilities.DeleteRestrictionsType">
-                        <PropertyValue Property="Deletable" Bool="true"/>
+                        <PropertyValue Property="Deletable" Bool="false"/>
                     </Record>
                 </Annotation>
                 <Annotation Term="Capabilities.UpdateRestrictions">
@@ -53,17 +55,15 @@
                 <!-- For List Page Filters -->
                 <Annotation Term="UI.SelectionFields">
                     <Collection>
-                        <PropertyPath>moduleId</PropertyPath>
-                        <PropertyPath>ticketCode</PropertyPath>
-                        <PropertyPath>effectiveStartDate</PropertyPath>
-                        <PropertyPath>externalCode</PropertyPath>
+                        <PropertyPath>ID</PropertyPath>
+                        <PropertyPath>externalCreatedAt</PropertyPath>
                         <PropertyPath>status</PropertyPath>
                     </Collection>
                 </Annotation>
                 <!-- For List Items Object Attribute -->
                 <Annotation Term="Common.SemanticKey">
                     <Collection>
-                        <PropertyPath>ticketCode</PropertyPath>
+                        <PropertyPath>moduleId</PropertyPath>
                     </Collection>
                 </Annotation>
                 <!-- For List Header Toolbar tiltle -->
@@ -76,63 +76,132 @@
                 <!-- For Displaying the List -->
                 <Annotation Term="UI.LineItem">
                     <!-- For Setting Criticality of item, i.e Highlight color  -->
-                    <Annotation Term="UI.Criticality" Path="subModuleId"/>
+                    <Annotation Term="UI.Criticality" Path="statusValue"/>
 
                     <!-- For columns to be visible on table -->
                     <Collection>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="ticketCode"/>
-                            <PropertyValue Property="Label" String="{@i18n>Ticket Code}"/>
+                            <PropertyValue Property="Value" Path="ID"/>
+                            <PropertyValue Property="Label" String="{@i18n>TicketID}"/>
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="6rem"/>
+                                    <PropertyValue Property="width" String="10rem"/>
                                 </Record>
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="ID"/>
-                            <PropertyValue Property="Label" String="{@i18n>ID}"/>
-                        </Record>
-                        <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="moduleId"/>
-                            <PropertyValue Property="Label" String="{@i18n>Module ID}"/>
+                            <PropertyValue Property="Label" String="{@i18n>AssignedBusinessUnit}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="5rem"/>
+                                    <PropertyValue Property="width" String="10rem"/>
                                 </Record>
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="subModuleId"/>
-                            <PropertyValue Property="Label" String="{@i18n>Sub Module ID}"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="effectiveStartDate"/>
-                            <PropertyValue Property="Label" String="{@i18n>Effective Start Date}"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="requestDate"/>
-                            <PropertyValue Property="Label" String="{@i18n>Request Date}"/>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="status"/>
-                            <PropertyValue Property="Label" String="{@i18n>Status}"/>
-                            <Annotation Term="UI.DataPoint">
-                                <Record Type="HTML5.DataPointType">
-                                    <PropertyValue Property="CriticalityRepresentation" EnumType="WithoutIcon">
-                                    </PropertyValue>
-                                </Record>
-                            </Annotation>
+                            <PropertyValue Property="Label" String="{@i18n>subModuleId}"/>
+                            <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="9rem"/>
+                                    <PropertyValue Property="width" String="10rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="assignedTo"/>
+                            <PropertyValue Property="Label" String="{@i18n>AssignedPerson}"/>
+                            <!-- For Adding CSS property width to set width to table column -->
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="10rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ticketCategory"/>
+                            <PropertyValue Property="Label" String="{@i18n>TicketsCategory}"/>
+                            <!-- For Adding CSS property width to set width to table column -->
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="10rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="slaPeriod"/>
+                            <PropertyValue Property="Label" String="{@i18n>SLAPeriod}"/>
+                            <!-- For Adding CSS property width to set width to table column -->
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="10rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="targetDateOfClosure"/>
+                            <PropertyValue Property="Label" String="{@i18n>TargetDateofClosure}"/>
+                            <!-- For Adding CSS property width to set width to table column -->
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="15rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="violatedSla"/>
+                            <PropertyValue Property="Label" String="{@i18n>ViolatedSLA}"/>
+                            <!-- For Adding CSS property width to set width to table column -->
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="10rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="breachedDays"/>
+                            <PropertyValue Property="Label" String="{@i18n>BreachedDays}"/>
+                            <!-- For Adding CSS property width to set width to table column -->
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="10rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="externalCreatedAt"/>
+                            <PropertyValue Property="Label" String="{@i18n>CreationDate}"/>
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="15rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="{@i18n>Status}"/>
+                            <PropertyValue Property="Value" Path="status"/>
+                            <PropertyValue Property="Criticality" Path="statusValue"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon"/>
+                            <!-- For Adding CSS property width to set width to table column -->
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="10rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="source"/>
+                            <PropertyValue Property="Label" String="{@i18n>source}"/>
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="10rem"/>
                                 </Record>
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="summary"/>
-                            <PropertyValue Property="Label" String="{@i18n>Summary}"/>
+                            <PropertyValue Property="Label" String="{@i18n>TicketDescription}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
                                     <PropertyValue Property="width" String="30rem"/>
