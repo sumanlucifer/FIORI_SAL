@@ -309,16 +309,14 @@ sap.ui.define([
             onSavePress: function () {
                 var sValidationErrorMsg = this.fnValidateBusinessTripPayload(),
                     sKey = this.getView().getModel().createKey("/SF_DutyTravelMain", {
-                        // effectiveStartDate: object.effectiveStartDate,
-                        // externalCode: object.externalCode
-                        effectiveStartDate: "2022-03-14",
-                        externalCode: "12002428"
+                        effectiveStartDate: object.effectiveStartDate,
+                        externalCode: object.externalCode
+                        // effectiveStartDate: "2022-03-14",
+                        // externalCode: "12002428"
                     });
 
                 if (sValidationErrorMsg === "") {
                     this.getView().setBusy(true);
-
-                    // this._fnUpdateAttachmentData();
 
                     var oPayloadObj = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
                     oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany = (oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany === "Yes" ? true : false);

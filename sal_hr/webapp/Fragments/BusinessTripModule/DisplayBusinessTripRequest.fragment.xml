@@ -91,7 +91,7 @@
         <Text id="idDisplayTicketAmt" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount} ? ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount} : '-'}"/>
     </form:SimpleForm>
 
-    <upload:UploadSet id="idDisplayAttachBoardingPassBusiness" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+    <upload:UploadSet id="idDisplayAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? true : false}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>AttachBoardingPass}"/>
@@ -104,7 +104,7 @@
         </upload:items>
     </upload:UploadSet>
 
-    <upload:UploadSet id="idDisplayAttachBoardingPassTraining" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+    <upload:UploadSet id="idDisplayAttachBoardingPassTraining" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? false : true}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>AttachBoardingPass}"/>
@@ -113,7 +113,7 @@
             </OverflowToolbar>
         </upload:toolbar>
         <upload:items>
-            <upload:UploadSetItem visibleEdit="false" visibleRemove="false" fileName="{BusinessTripAttachmentModel>/businessTravelAttachment/fileName}" mediaType="{BusinessTripAttachmentModel>/businessTravelAttachment/mimeType}"/>
+            <upload:UploadSetItem visibleEdit="false" visibleRemove="false" fileName="{BusinessTripAttachmentModel>/trainingTravelAttachment/fileName}" mediaType="{BusinessTripAttachmentModel>/trainingTravelAttachment/mimeType}"/>
         </upload:items>
     </upload:UploadSet>
 

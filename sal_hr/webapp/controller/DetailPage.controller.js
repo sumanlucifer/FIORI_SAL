@@ -118,6 +118,13 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
+                    // Letter Request Module
+                    case "11":
+                        this.oRouter.navTo("LetterRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
                     // Disciplinary Request Module
                     case "12":
                         this.oRouter.navTo("DisciplinaryRequest", {

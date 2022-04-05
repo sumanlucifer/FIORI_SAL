@@ -11,7 +11,7 @@
             <pages>
                 <Page id="page" title="{i18n>title}" showHeader="false">
                     <VBox>
-                        <commons:ChartContainer showFullScreen="true" title="Ticket Summary">
+                        <commons:ChartContainer showFullScreen="true" title="{i18n>TicketSummary}">
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
@@ -45,7 +45,7 @@
                                 </commons:ChartContainerContent>
                             </commons:content>
                         </commons:ChartContainer>
-                        <commons:ChartContainer showFullScreen="true" autoAdjustHeight="false" title="Ticket Summary">
+                        <commons:ChartContainer showFullScreen="true" autoAdjustHeight="false" title="{i18n>TicketSummary}">
                             <commons:content>
                                 <commons:ChartContainerContent>
                                     <commons:content>
@@ -61,31 +61,31 @@
                                             </headerToolbar> -->
                                             <columns>
                                                 <Column minScreenWidth="Desktop" width="15%">
-                                                    <Label design="Bold" text="Module Name"/>
+                                                    <Label design="Bold" text="{i18n>ModuleName}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" width="10%">
-                                                    <Label design="Bold" text="Completed"/>
+                                                    <Label design="Bold" text="{i18n>Completed}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="10%">
-                                                    <Label design="Bold" text="Under Process"/>
+                                                    <Label design="Bold" text="{i18n>UnderProcess}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="7%">
-                                                    <Label design="Bold" text="Pending "/>
+                                                    <Label design="Bold" text="{i18n>Pending}"/>
                                                 </Column>
                                                 <Column hAlign="Center" width="15%">
-                                                    <Label design="Bold" text="Cancelled by End User"/>
+                                                    <Label design="Bold" text="{i18n>CancelledbyEndUser}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="15%">
-                                                    <Label design="Bold" text="Cancelled by Admin"/>
+                                                    <Label design="Bold" text="{i18n>CancelledbyAdmin}"/>
                                                 </Column>
                                                 <Column hAlign="Center" width="10%">
-                                                    <Label design="Bold" text="Re-assigned "/>
+                                                    <Label design="Bold" text="{i18n>Reassigned} "/>
                                                 </Column>
                                                 <Column hAlign="Center" width="8%">
-                                                    <Label design="Bold" text="Re-opened"/>
+                                                    <Label design="Bold" text="{i18n>Reopened}"/>
                                                 </Column>
                                                 <Column hAlign="End" width="10%">
-                                                    <Label design="Bold" text="Total Requests"/>
+                                                    <Label design="Bold" text="{i18n>TotalRequests}"/>
                                                 </Column>
                                             </columns>
                                             <items>

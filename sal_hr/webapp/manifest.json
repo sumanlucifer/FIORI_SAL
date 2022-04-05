@@ -239,6 +239,7 @@
                     ]
                 },
                 {
+
                     "pattern": "HealthInsuranceRequest/{parentMaterial}/{layout}",
                     "name": "HealthInsuranceRequest",
                     "layout": "EndColumnFullScreen",
@@ -246,6 +247,16 @@
                     "greedy": false,
                     "target": [
                         "HealthInsuranceRequest"
+                    ]
+                },
+                {
+                    "pattern": "LetterRequest/{parentMaterial}/{layout}",
+                    "name": "LetterRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "LetterRequest"
                     ]
                 },
                 {
@@ -414,8 +425,13 @@
                     "viewName": "CreateSalaryIncrementRequest",
                     "controlAggregation": "endColumnPages"
                 },
+
                 "HealthInsuranceRequest": {
                     "viewName": "CreateHealthInsuranceRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "LetterRequest": {
+                    "viewName": "CreateLetterRequest",
                     "controlAggregation": "endColumnPages"
                 },
                 "LeaveRequestDetail": {
