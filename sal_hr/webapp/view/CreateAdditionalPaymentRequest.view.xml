@@ -37,7 +37,7 @@
                                                  path : 'name' 
                                              }
                                                    }" change="onTimeTyeChange">
-                        <core:Item key="{externalCode}" text="{name}" />
+                        <core:Item key="{externalCode}" text="{name} ({externalCode})" />
                         </Select>
                         </fm:SimpleForm>
 

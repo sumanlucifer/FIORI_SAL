@@ -113,9 +113,23 @@
             "routes": [
                 {
                     "name": "RouteApp",
-                    "pattern": "RouteApp",
+                    "pattern": "",
                     "target": [
                         "TargetApp"
+                    ]
+                },
+                {
+                    "name": "VacancyJobDetail",
+                    "pattern": "VacancyJobDetail/{jobId}",
+                    "target": [
+                        "VacancyJobDetail"
+                    ]
+                },
+                {
+                    "name": "ApplyJob",
+                    "pattern": "ApplyJob",
+                    "target": [
+                        "ApplyJob"
                     ]
                 }
             ],
@@ -124,8 +138,18 @@
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewId": "App",
-                    "viewName": "App"
+                    "viewName": "VacancyList"
+                },
+               
+                "VacancyJobDetail": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewName": "VacancyJobDetails"
+                },
+                "ApplyJob": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "viewName": "ApplyJob"
                 }
             }
         },

@@ -74,6 +74,14 @@ sap.ui.define([
                         })
                         break;
 
+                            // Health Insurance Module
+                    case "3":
+                        this.oRouter.navTo("HealthInsuranceRequest", {
+                            parentMaterial: this.sParentID,
+                            layout: "EndColumnFullScreen"
+                        })
+                        break;
+
                     // Additional Payment Request Module
                     case "10":
                         this.oRouter.navTo("AdditionalPaymentRequest", {
