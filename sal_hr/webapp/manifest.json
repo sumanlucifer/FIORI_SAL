@@ -239,6 +239,16 @@
                     ]
                 },
                 {
+                    "pattern": "LetterRequest/{parentMaterial}/{layout}",
+                    "name": "LetterRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "LetterRequest"
+                    ]
+                },
+                {
                     "pattern": "detail/{parentMaterial}/LeaveRequestDetail/{childModule}/{layout}",
                     "name": "LeaveRequestDetail",
                     "target": [
@@ -402,6 +412,10 @@
                 },
                 "SalaryIncrementRequest": {
                     "viewName": "CreateSalaryIncrementRequest",
+                    "controlAggregation": "endColumnPages"
+                },
+                "LetterRequest": {
+                    "viewName": "CreateLetterRequest",
                     "controlAggregation": "endColumnPages"
                 },
                 "LeaveRequestDetail": {
