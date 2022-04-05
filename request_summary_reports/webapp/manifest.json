@@ -104,16 +104,17 @@
                 "uri": "i18n/i18n.properties"
             },
             "": {
-                "dataSource": "mainService",
-                "preload": true,
+                "type": "sap.ui.model.odata.v2.ODataModel",
                 "settings": {
+                    "defaultOperationMode": "Server",
                     "defaultBindingMode": "TwoWay",
                     "defaultCountMode": "Inline",
-                    "refreshAfterChange": false,
-                    "metadataUrlParams": {
-                        "sap-value-list": "none"
-                    }
-                }
+                    "refreshAfterChange": true,
+                    "useBatch": false,
+                    "defaultUpdateMethod": "PUT"
+                },
+                "dataSource": "mainService",
+                "preload": true
             }
         },
         "extends": {
@@ -157,7 +158,7 @@
                             "smartVariantManagement": false
                         }
                     }
-                }                
+                }
             }
         }
     },
@@ -170,5 +171,9 @@
     },
     "sap.platform.hcp": {
         "uri": ""
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "employee_portal_service"
     }
 }

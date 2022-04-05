@@ -97,7 +97,7 @@
                                                         <Text text="{TicketsSummaryDataModel>underProcess}"/>
                                                         <Text text="{TicketsSummaryDataModel>pending}"/>
                                                         <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                                        <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
+                                                        <Text text="{TicketsSummaryDataModel>cancelledByAdmin}"/>
                                                         <Text text="{TicketsSummaryDataModel>reassigned}"/>
                                                         <Text text="{TicketsSummaryDataModel>reopened}"/>
                                                         <Label design="Bold" text="{TicketsSummaryDataModel>totalRequests}"/>
