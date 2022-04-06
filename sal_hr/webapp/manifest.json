@@ -322,13 +322,22 @@
                         "detail",
                         "AdditionalPaymentRequestDetail"]
                     },
-{
+                {
                     "pattern": "detail/{parentMaterial}/BusinessTripRequestDetailPage/{childModule}/{layout}",
                     "name": "BusinessTripRequestDetailPage",
                     "target": [
                         "master",
                         "detail",
                         "BusinessTripRequestDetailPage"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/LetterRequestDetail/{childModule}/{layout}",
+                    "name": "LetterRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "LetterRequestDetail"
                     ]
                 },
                 {
@@ -452,6 +461,10 @@
                 },
                 "EmployeeTerminateDetail": {
                     "viewName": "EmployeeTerminateDetailPage",
+                    "controlAggregation": "endColumnPages"
+                },
+                "LetterRequestDetail": {
+                    "viewName": "LetterRequestDetailPage",
                     "controlAggregation": "endColumnPages"
                 }
             }
