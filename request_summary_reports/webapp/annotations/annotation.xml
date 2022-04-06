@@ -29,12 +29,12 @@
             <!-- <Annotations Target="HumanResourceService.Tickets/subModuleId">
                 <Annotation Term="UI.Hidden" Bool="true"/>
             </Annotations> -->
+            <Annotations Target="HumanResourceService.EntityContainer/Tickets">
 
-            <Annotations Target="HumanResourceService.Tickets">
                 <!-- For Restrictions -->
                 <Annotation Term="Capabilities.SearchRestrictions">
                     <Record Type="Capabilities.SearchRestrictionsType">
-                        <PropertyValue Property="Searchable" Bool="false"/>
+                        <PropertyValue Property="Searchable" Bool="true"/>
                     </Record>
                 </Annotation>
                 <Annotation Term="Capabilities.InsertRestrictions">
@@ -52,6 +52,8 @@
                         <PropertyValue Property="Updatable" Bool="false"/>
                     </Record>
                 </Annotation>
+            </Annotations>
+            <Annotations Target="HumanResourceService.Tickets">
                 <!-- For List Page Filters -->
                 <Annotation Term="UI.SelectionFields">
                     <Collection>
@@ -63,7 +65,7 @@
                 <!-- For List Items Object Attribute -->
                 <Annotation Term="Common.SemanticKey">
                     <Collection>
-                        <PropertyPath>moduleId</PropertyPath>
+                        <PropertyPath>ID</PropertyPath>
                     </Collection>
                 </Annotation>
                 <!-- For List Header Toolbar tiltle -->
@@ -82,11 +84,15 @@
                     <Collection>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="ID"/>
+                            <PropertyValue Property="Criticality" Int="5"/>
                             <PropertyValue Property="Label" String="{@i18n>TicketID}"/>
+                            <!-- <PropertyValue Property="Criticality" EnumMember="UI.CriticalityType/Critical"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon"/> -->
+                            
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="10rem"/>
+                                    <PropertyValue Property="width" String="20rem"/>
                                 </Record>
                             </Annotation>
                         </Record>
@@ -140,6 +146,18 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
+                            <PropertyValue Property="Label" String="{@i18n>Status}"/>
+                            <PropertyValue Property="Value" Path="status"/>
+                            <PropertyValue Property="Criticality" Path="statusValue"/>
+                            <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon"/>
+                            <!-- For Adding CSS property width to set width to table column -->
+                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="10rem"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="targetDateOfClosure"/>
                             <PropertyValue Property="Label" String="{@i18n>TargetDateofClosure}"/>
                             <!-- For Adding CSS property width to set width to table column -->
@@ -175,18 +193,6 @@
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
                                     <PropertyValue Property="width" String="15rem"/>
-                                </Record>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Label" String="{@i18n>Status}"/>
-                            <PropertyValue Property="Value" Path="status"/>
-                            <PropertyValue Property="Criticality" Path="statusValue"/>
-                            <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon"/>
-                            <!-- For Adding CSS property width to set width to table column -->
-                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
-                                <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="10rem"/>
                                 </Record>
                             </Annotation>
                         </Record>
