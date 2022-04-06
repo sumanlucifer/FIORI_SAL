@@ -17,6 +17,9 @@ sap.ui.define([
             fnInitializeChart: function () {
                 var oVizFrame = this.getView().byId("idVizFrame");
                 oVizFrame.setVizProperties({
+                    uiConfig: {
+                        applicationSet: 'fiori'
+                    },
                     title: {
                         visible: false
                     },
