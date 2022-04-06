@@ -13,7 +13,7 @@ sap.ui.define([
             onInit: function () {
                 debugger;
                 this.oRouter = this.getRouter();
-                this.oRouter.getRoute("LeaveRequest").attachPatternMatched(this._onObjectMatched, this);
+                this.oRouter.getRoute("LetterRequest").attachPatternMatched(this._onObjectMatched, this);
 
                 this.mainModel = this.getOwnerComponent().getModel();
            
