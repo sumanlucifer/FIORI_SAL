@@ -8,7 +8,7 @@ sap.ui.define([
     "sap/m/MessageBox"
 ],
 
-    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device,MessageBox) {
+    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device, MessageBox) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.AirportPassRequestDetailpage", {
@@ -141,6 +141,16 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/TypeOfPassDesc", oData.cust_toAirportPassItem.cust_typeOfPassNav.results[0].label_defaultValue);
 
                 this.getView().setBusy(false);
+
+                this._fnSetAttachmentItemsUploadButtonVisibility();
+            },
+
+            _fnSetAttachmentItemsUploadButtonVisibility: function () {
+                // To remove items from the Passport uploadset If no records available from backend
+                if (this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment/fileContent").length < 2) {
+                    this.byId("idDisplayUploadSetPassportcopy").destroyItems();
+                    this.byId("idEditUploadSetnonnationals").destroyItems();
+                }
             },
 
             onEditPress: function () {
@@ -235,10 +245,9 @@ sap.ui.define([
                 }
 
                 if (oData.isPassportAttachmentNew === false) {
-                    var oPassportAttachmentObj = this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment");
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPassportAttachmentNew", false);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileContent", oPassportAttachmentObj.fileContent);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileName", oPassportAttachmentObj.fileName);
+                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileContent", "PS");
+                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileName", "PS.txt");
                     this.getView().getModel("DisplayEditAirpassModel").refresh();
                 }
 

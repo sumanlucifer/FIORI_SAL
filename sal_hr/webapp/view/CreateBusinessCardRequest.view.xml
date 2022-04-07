@@ -78,7 +78,7 @@
 
 
                         <Label text="Location" required="false" />
-                        <Input editable="true" id="idCreateLocation"  value="{CreateBusinessCardModel>/sLocation}">
+                        <Input editable="true" id="idCreateLocation"  value="">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
                             </layoutData>

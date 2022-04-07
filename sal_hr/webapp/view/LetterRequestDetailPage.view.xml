@@ -1,31 +1,26 @@
-<mvc:View controllerName="com.sal.salhr.controller.HealthInsuranceRequestDetailPage"
+<mvc:View controllerName="com.sal.salhr.controller.LetterRequestDetailPage"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
-     xmlns:unified="sap.ui.unified"
-    xmlns:l="sap.ui.layout"
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core"
-     xmlns:fm="sap.ui.layout.form" height="100%">
+    xmlns:form="sap.ui.layout.form" height="100%">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding">
         <!-- DynamicPage Title -->
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="Health Insurance Dependent Request"/>
+                    <Title id="idPageTitle" text="Letter Request"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
-                        <Link id="idHumanResourceLink" press="handleClose" text="{LocalViewModel>/PageTitle}"/>
+                        <Link id="idHumanResourceLink" text="{LocalViewModel>/PageTitle}" press="handleClose"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
                 <f:expandedContent>
-                    <Label text="{i18n>RequestID} {headerModel>/ticketCode}"/>
+                    <Label text="Request {headerModel>/ticketCode}"/>
                 </f:expandedContent>
-                <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? false : false }"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? false : false }"/>
-                </f:actions>
+              
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
                     <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
@@ -39,19 +34,19 @@
                 <layout:HorizontalLayout allowWrapping="true">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Status}"/>
-                        <ObjectStatus text="{headerModel>/status}" state="Success"/>
+                        <!-- <ObjectStatus text="{headerModel>/status}" state="Success"/> -->
+                         <ObjectStatus text="{path:'headerModel>/status',formatter:'.formatter.ticketStatusText'}" state="{path:'headerModel>/status',formatter:'.formatter.ticketStatus'}" />
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>
-                        <!-- <ObjectAttribute text="{headerModel>/employeeId}"/> -->
-                          <ObjectAttribute text="{DisplayHealthInsuranceModel>/UserNav/firstName} {DisplayHealthInsuranceModel>/UserNav/middleName} {DisplayHealthInsuranceModel>/UserNav/lastName}({headerModel>/employeeId})"/>
+                        <ObjectAttribute text="{headerModel>/employeeId}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DueBy Date}"/>
                         <ObjectAttribute text="{path:'headerModel>/modifiedAt',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
+                                                    pattern: 'MMMM dd, yyyy'
                                                 }}"/>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
@@ -59,13 +54,7 @@
         </f:header>
         <!-- DynamicPage Content -->
      <f:content>
-          <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
-                <l:content>
- <VBox id="idContentVBox" width="100%">
-                 <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.DisplayHealthInsuranceRequest" type="XML"/>
-            </VBox>
-                </l:content>
-            </l:VerticalLayout>
+          
         </f:content>
         <f:footer>
             <OverflowToolbar id="idOverflowToolbar" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">

@@ -54,9 +54,9 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").refresh();
                 this.getView().bindElement({
                     path: sKey,
-                    // parameters: {
-                    //     expand: "cust_IncidentStatusNav,cust_ReasonNav,cust_SeverityNav,cust_warningTypeNav",
-                    // },
+                    parameters: {
+                        expand: "UserNav",
+                    },
                     events: {
                         change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();
@@ -228,7 +228,7 @@ sap.ui.define([
                     scust_mobile = this.getView().byId("idEditMobile").getValue(),
                     scust_poBox = this.getView().byId("idEditPOBOX").getValue(),
                     scust_jobTitle = this.getView().byId("idEditJobTitle").getValue(),
-                    scust_location = this.getView().byId("idEditDivision").getValue(),
+                    scust_location = this.getView().byId("idEditLocation").getValue(),
                     scust_officeNumber = this.getView().byId("idEditOfficeNo").getValue(),
                     seffectiveStartDate = this.getView().byId("idEditIncidentStartDate").getDateValue(),
                     dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });

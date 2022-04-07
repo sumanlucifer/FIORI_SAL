@@ -186,7 +186,15 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
-
+                // Health Insurance Request Module
+                       case "3":
+                       this.oRouter.navTo("HealthInsuranceRequestDetail", {
+                       parentMaterial: this.sParentID,
+                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                         layout: "ThreeColumnsMidExpanded"
+                           })
+                             break;
+    
                            // Additional Payment Request Module
                     case "10":
                         this.oRouter.navTo("AdditionalPaymentRequestDetail", {
@@ -232,6 +240,14 @@ sap.ui.define([
                             childModule: oEvent.getSource().getBindingContext().getObject().ID,
                             layout: "ThreeColumnsMidExpanded"
                         })
+                        break;
+                    // Letter Request Module
+                    case "11":
+                        this.oRouter.navTo("LetterRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        });
                         break;
                         
                     // Disciplinary Request Module

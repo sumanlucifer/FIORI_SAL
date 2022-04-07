@@ -44,7 +44,7 @@
         <Text id="idDisplayReturnDate" text="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignEndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
 
         <Label text="{i18n>DesiredAirlineTicketTravelTime}"/>
-        <Text id="idDisplayTravelTime" text="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+        <Text id="idDisplayTravelTime" text="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime'}"/>
 
         <Label text="{i18n>DestinationCountry}"/>
         <Text id="idDisplayDestCountry" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_destination}"/>
@@ -119,7 +119,7 @@
 
     <form:SimpleForm title="{i18n>VisaInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>VisaType}"/>
-        <Text id="idDisplayVisaType" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} ? ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} : '-'}"/>
+        <Text id="idDisplayVisaType" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} === 'V' ? 'Visa Fee' : 'No Visa'}" />
 
         <Label text="{i18n>PayComponentVisa}"/>
         <Text id="idDisplayPayCompVisa" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp} ? ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeePayComp} : '-'}"/>
