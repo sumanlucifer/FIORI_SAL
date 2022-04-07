@@ -152,25 +152,37 @@ sap.ui.define([
 
             onValueHelpSearch: function (oEvent) {
                 var sValue = oEvent.getParameter("value");
-                var oFilter = new Filter(
-                    [
-                        new Filter({
-                            path: "userId",
-                            operator: "EQ",
-                            value1: sValue.trim()
-                        }),
-                        new Filter({
-                            path: "firstName",
-                            operator: "EQ",
-                            value1: sValue.trim()
-                        }),
+                // var oFilter = new Filter(
+                //     [
+                //         new Filter({
+                //             path: "userId",
+                //             operator: "EQ",
+                //             value1: sValue.trim()
+                //         }),
+                //         new Filter({
+                //             path: "firstName",
+                //             operator: "EQ",
+                //             value1: sValue.trim()
+                //         }),
 
 
-                    ],
-                    false
-                );
+                //     ],
+                //     false
+                // );
     
-                oEvent.getSource().getBinding("items").filter([oFilter]);
+                var suserIdFilter = new sap.ui.model.Filter({
+                    path: "userId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: sValue.trim()
+                });
+                var sfirstNameFilter = new sap.ui.model.Filter({
+                    path: "firstName",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: sValue.trim()
+                });
+                var aFilter = [];
+                aFilter.push(suserIdFilter, sfirstNameFilter);
+                oEvent.getSource().getBinding("items").filter(aFilter);
             },
 
             onValueHelpClose: function (oEvent) {

@@ -68,7 +68,7 @@ sap.ui.define([
                         var sTicketCode = this.object.ticketCode;
                         this.getView().getModel().read("/SF_Leave('" + object.externalCode + "')", {
                             urlParameters: {
-                                "$expand": "cust_attachmentNav, timeTypeNav"
+                                "$expand": "cust_attachmentNav, timeTypeNav,UserNav"
                             },
                             success: function (oData) {
                                 oAttachModel = new JSONModel(oData.cust_attachmentNav);
