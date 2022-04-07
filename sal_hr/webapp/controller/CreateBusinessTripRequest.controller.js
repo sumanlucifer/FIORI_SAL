@@ -16,14 +16,14 @@ sap.ui.define([
                 this.oRouter.getRoute("BusinessTripRequest").attachPatternMatched(this._onObjectMatched, this);
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
-              
+
                 var oLocalViewModel = new JSONModel({
                     busy: false,
                     currentDate: new Date(),
                     businessTravel: false,
                     trainingTravel: false,
-                    businessCategory:true,
-                    trianingCategory:false
+                    businessCategory: true,
+                    trianingCategory: false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -45,17 +45,17 @@ sap.ui.define([
             fnSetCreateBusinessTripModel: function () {
                 // this.EmpInfoObj = oEmpInfoObj;
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
-               
+
 
                 var sExternalCode = this.EmpInfoObj.userId,
                     sFirstName = this.EmpInfoObj.firstName + " " + this.EmpInfoObj.middleName + " " + this.EmpInfoObj.lastName,
                     sPayGrade = this.EmpInfoObj.payGrade,
                     sCostCenter = this.EmpInfoObj.costCentre,
                     sPhnNum = this.EmpInfoObj.emergencyNumber;
-            
-              
 
-                  var oCreateBusinessObj = {
+
+
+                var oCreateBusinessObj = {
                     "externalCode": sExternalCode,
                     //  "externalCode": "12002440",
                     "effectiveStartDate": new Date(),
@@ -67,9 +67,9 @@ sap.ui.define([
                             "cust_dutyTravelMain_externalCode": sExternalCode,
                             // "cust_dutyTravelMain_externalCode": "12002440",
                             "cust_dutyTravelMain_effectiveStartDate": new Date(),
-                
+
                             "externalCode": sExternalCode,
-                            
+
                             // "externalCode": "12002440",
                             "externalName": null,
                             "cust_requestType": "1",
@@ -83,12 +83,12 @@ sap.ui.define([
                             "cust_expenseTypeTrainingTravel": null,
                             "cust_businessTicketAmount": null,
                             "cust_trainingExpenseAmount": null,
-                
+
                             "cust_empName": sFirstName,
                             "cust_payGrade": sPayGrade,
                             "cust_costCenter": sCostCenter,
                             "cust_emerPhoneNum": sPhnNum,
-                
+
                             "cust_assignStartDate": new Date(),
                             "cust_assignEndDate": new Date(),
                             "cust_travelTime": null,
@@ -120,7 +120,7 @@ sap.ui.define([
                             "cust_expenseTypeVisaFee": null,
                             "cust_visaFeePayComp": null,
                             "cust_visaFeeExpenseAmount": null,
-                
+
                             "cust_travelSDate1": new Date(),
                             "cust_travelEDate1": new Date(),
                             "cust_travelTime1": null,
@@ -142,7 +142,7 @@ sap.ui.define([
                             "cust_expenseTypeVisaFee1": null,
                             "cust_visaFeePayComp1": null,
                             "cust_visaFeeExpenseAmount1": null,
-                
+
                             "cust_travelSDate2": new Date(),
                             "cust_travelEDate2": new Date(),
                             "cust_travelTime2": null,
@@ -164,7 +164,7 @@ sap.ui.define([
                             "cust_expenseTypeVisaFee2": null,
                             "cust_visaFeePayComp2": null,
                             "cust_visaFeeExpenseAmount2": null,
-                
+
                             "cust_status": null,
                             "cust_returnDate": null,
                             "cust_paymentType": null,
@@ -173,29 +173,29 @@ sap.ui.define([
                             "travelattachment1FileName": "travelattachment1.txt",
                             "isTravelAttach1New": true,
                             "travelattachment1UserId": sExternalCode,
-                        
-                            
+
+
                             "businessTravelattachmentFileContent": "businessTravelattachment create",
                             "businessTravelattachmentFileName": "businessTravelAttachment.txt",
                             "isbusinessTravelAttachNew": false,
                             "businessTravelattachmentUserId": sExternalCode,
-                           
+
                             "trainingTravelattachmentFileContent": "trainingTravelattachment create",
                             "trainingTravelattachmentFileName": "trainingTravelattachment.txt",
                             "istrainingTravelAttachNew": false,
                             "trainingTravelattachmentUserId": sExternalCode,
-                           
+
                             "receiptEmbassyattachmentFileContent": "receiptEmbassy 3create",
                             "receiptEmbassyattachmentFileName": "receiptEmbassy.txt",
                             "isreceiptEmbassyAttachNew": false,
                             "receiptEmbassyattachmentUserId": sExternalCode,
-                         
+
                             "visaCopyattachmentFileContent": "visaCopy 6 create",
                             "visaCopyattachmentFileName": "visaCopy.txt",
                             "isvisaCopyAttachNew": false,
                             "visaCopyattachmentUserId": sExternalCode
-                            
-                            
+
+
                         }
                     ]
                 },
@@ -213,6 +213,11 @@ sap.ui.define([
                 var sPath = "/SF_DutyTravelMain",
                     sValidationErrorMsg = this.fnValidateBusinessTripPayload(),
                     oPayload = this.getView().getModel("CreateBusinessTripModel").getData();
+
+                // Convert selcted time to specific time format as "PT0H31M30S"
+                if (oPayload.cust_toDutyTravelItem[0].cust_travelTime) {
+                    oPayload.cust_toDutyTravelItem[0].cust_travelTime = "PT" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[0] + "H" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[1] + "M00S";
+                }
 
                 if (sValidationErrorMsg === "") {
                     this.getView().setBusy(true);
@@ -298,10 +303,10 @@ sap.ui.define([
                 // } else {
                 //     oFlightTravelDatePicker.setValueState("None");
                 // }
-                
 
-                 // Validate Travel Justification
-                 if (!sTravelJustification.getValue()) {
+
+                // Validate Travel Justification
+                if (!sTravelJustification.getValue()) {
                     sTravelJustification.setValueState("Error");
                     sTravelJustification.setValueStateText("Travel Business Justification is required");
                     sValidationErrorMsg = "Please fill the all required fields.";
@@ -309,8 +314,8 @@ sap.ui.define([
                     sTravelJustification.setValueState("None");
                 }
 
-                 // Validate Other City
-                 if (!sOtherCity.getValue()) {
+                // Validate Other City
+                if (!sOtherCity.getValue()) {
                     sOtherCity.setValueState("Error");
                     sOtherCity.setValueStateText("City(Other Country) is required");
                     sValidationErrorMsg = "Please fill the all required fields.";
@@ -342,15 +347,15 @@ sap.ui.define([
                 //         return sValidationErrorMsg;
                 //     }
                 // }
-                   
-                  //   # Embassy Receipt Mandatory check
+
+                //   # Embassy Receipt Mandatory check
                 // if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isreceiptEmbassyAttachNew")) {
                 //     sValidationErrorMsg = "Please upload Embassy Receipt.";
                 //     this.getView().setBusy(false);
                 //     return sValidationErrorMsg;
                 // }
 
-               
+
 
 
                 this.getView().setBusy(false);
@@ -369,8 +374,8 @@ sap.ui.define([
 
                 });
                 // this.mainModel.refresh();
-                  this.onResetPress();
-                
+                this.onResetPress();
+
             },
             onResetPress: function () {
                 this.getView().setBusy(true);
@@ -381,19 +386,19 @@ sap.ui.define([
                 this.getView().byId("UploadBoardingPass").getDefaultFileUploader().setEnabled(true);
 
                 this.getView().byId("UploadVisaCopy").removeAllItems();
-                if(this.byId("idVisaType").getSelectedKey() === "N"){
+                if (this.byId("idVisaType").getSelectedKey() === "N") {
                     this.getView().byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(false);
-                }else{
+                } else {
                     this.getView().byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(true);
                 }
 
-                
+
 
                 this.getView().byId("UploadEmbassy").removeAllItems();
                 this.getView().byId("UploadEmbassy").getDefaultFileUploader().setEnabled(true);
-              
+
                 this.getView().setBusy(false);
- 
+
 
 
 
@@ -419,7 +424,7 @@ sap.ui.define([
 
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
-                    
+
                 } else {
                     this.byId("idHRBook").setEnabled(false);
                     this.byId("idPayComp").setEnabled(false);
@@ -434,12 +439,12 @@ sap.ui.define([
                     this.byId("idTotalPErDiem").setEnabled(false);
                     this.byId("idPayCompVisa").setEnabled(false);
                     this.byId("idPayCom").setEnabled(false);
-                    
 
-                    if(this.byId("idTripCategory").getSelectedKey() === "B"){
+
+                    if (this.byId("idTripCategory").getSelectedKey() === "B") {
                         this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
                         this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
-                    }else{
+                    } else {
                         this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
                         this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", true);
                     }
@@ -571,39 +576,39 @@ sap.ui.define([
 
                 }
 
-                if(this.byId("idReqType").getSelectedKey() === "1"){
+                if (this.byId("idReqType").getSelectedKey() === "1") {
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
                 }
 
 
             },
-            onDestCountryChange:function(oEvent){
-                  var sDestCountry = oEvent.getSource().getSelectedKey(),
-                  sPayGrade = this.EmpInfoObj.payGrade;
+            onDestCountryChange: function (oEvent) {
+                var sDestCountry = oEvent.getSource().getSelectedKey(),
+                    sPayGrade = this.EmpInfoObj.payGrade;
 
-                  this.getView().getModel().read("/SF_DutyTravel_PerDiem", 
-                  {
-                    urlParameters: {
-                        "$filter": "(cust_country eq '" + sDestCountry  + "' and cust_salaryGrade eq '" + sPayGrade + "')"
-                    },  
-                    success: function (oData) {
-                        this.getView().byId("idPerDiem").setValue(oData.results[0].cust_amount);
-                        this.fnCalculateTotalPerDiem();
-                    }.bind(this),
-                    error: function (oError) {
-                        sap.m.MessageBox.error(JSON.stringify(oError));
-                    }.bind(this),
-                });
-               
+                this.getView().getModel().read("/SF_DutyTravel_PerDiem",
+                    {
+                        urlParameters: {
+                            "$filter": "(cust_country eq '" + sDestCountry + "' and cust_salaryGrade eq '" + sPayGrade + "')"
+                        },
+                        success: function (oData) {
+                            this.getView().byId("idPerDiem").setValue(oData.results[0].cust_amount);
+                            this.fnCalculateTotalPerDiem();
+                        }.bind(this),
+                        error: function (oError) {
+                            sap.m.MessageBox.error(JSON.stringify(oError));
+                        }.bind(this),
+                    });
+
 
             },
-            fnCalculateTotalPerDiem:function(){
-               
-               var sTotalPerDiem = Number(this.byId("idPerDiem").getValue()) + Number(this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_ticketAmount")) + Number(this.byId("idVisaAmt").getValue());
-            //    sTotalPerDiem = String(sTotalPerDiem);
-               this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalPerDiem" ,sTotalPerDiem );
-               this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalAmount" ,sTotalPerDiem );
+            fnCalculateTotalPerDiem: function () {
+
+                var sTotalPerDiem = Number(this.byId("idPerDiem").getValue()) + Number(this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_ticketAmount")) + Number(this.byId("idVisaAmt").getValue());
+                //    sTotalPerDiem = String(sTotalPerDiem);
+                this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalPerDiem", sTotalPerDiem);
+                this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalAmount", sTotalPerDiem);
 
 
             }

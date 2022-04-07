@@ -133,15 +133,10 @@ sap.ui.define([
                                 "cust_businessTicketAmount": oTravelItemDetailsObj.cust_businessTicketAmount,
                                 "cust_trainingExpenseAmount": oTravelItemDetailsObj.cust_trainingExpenseAmount,
 
-                                // "cust_empName": oTravelItemDetailsObj.cust_empName,
-                                // "cust_payGrade": oTravelItemDetailsObj.cust_payGrade,
-                                // "cust_costCenter": oTravelItemDetailsObj.cust_costCenter,
-                                // "cust_emerPhoneNum": oTravelItemDetailsObj.cust_emerPhoneNum,
-
-                                "cust_empName": this.EmpInfoObj.cust_fname + " " + this.EmpInfoObj.cust_sname + " " + this.EmpInfoObj.cust_lname,
-                                "cust_payGrade": this.EmpInfoObj.cust_payGrade,
-                                "cust_costCenter": this.EmpInfoObj.cust_costCentre,
-                                "cust_emerPhoneNum": this.EmpInfoObj.cust_emerPhoneNum,
+                                "cust_empName": this.EmpInfoObj.firstName + " " + this.EmpInfoObj.middleName + " " + this.EmpInfoObj.lastName,
+                                "cust_payGrade": this.EmpInfoObj.payGrade,
+                                "cust_costCenter": this.EmpInfoObj.costCentre,
+                                "cust_emerPhoneNum": this.EmpInfoObj.emergencyNumber,
 
                                 "cust_assignStartDate": oTravelItemDetailsObj.cust_assignStartDate,
                                 "cust_assignEndDate": oTravelItemDetailsObj.cust_assignEndDate,
@@ -266,6 +261,21 @@ sap.ui.define([
                 this.getView().setModel(oDisplayEditBusinessTripModel, "DisplayEditBusinessTripModel");
                 this.getView().setModel(oBusinessTripAttachmentModel, "BusinessTripAttachmentModel");
                 this.getView().setBusy(false);
+
+                this._fnSetDesiredAirlineTicketTravelTimeValues();
+            },
+
+            _fnSetDesiredAirlineTicketTravelTimeValues: function () {
+                var duration = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_travelTime").ms;
+                if (duration > 0) {
+                    var minutes = Math.floor((duration / (1000 * 60)) % 60),
+                        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+                    hours = (hours < 10) ? "0" + hours : hours;
+                    minutes = (minutes < 10) ? "0" + minutes : minutes;
+
+                    this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_travelTime", (hours + ":" + minutes));
+                }
             },
 
             onEditPress: function () {
@@ -309,8 +319,8 @@ sap.ui.define([
             onSavePress: function () {
                 var sValidationErrorMsg = this.fnValidateBusinessTripPayload(),
                     sKey = this.getView().getModel().createKey("/SF_DutyTravelMain", {
-                        effectiveStartDate: object.effectiveStartDate,
-                        externalCode: object.externalCode
+                        effectiveStartDate: this.object.effectiveStartDate,
+                        externalCode: this.object.externalCode
                         // effectiveStartDate: "2022-03-14",
                         // externalCode: "12002428"
                     });
