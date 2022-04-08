@@ -17,9 +17,6 @@ sap.ui.define([
             fnInitializeChart: function () {
                 var oVizFrame = this.getView().byId("idVizFrame");
                 oVizFrame.setVizProperties({
-                    uiConfig: {
-                        applicationSet: 'fiori'
-                    },
                     title: {
                         visible: false
                     },
@@ -37,15 +34,16 @@ sap.ui.define([
                         colorPalette: ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47", "#264478"],
                         gap: {
                             innerGroupSpacing: 0,
-                            groupSpacing: 1
+                            groupSpacing: 1.5
                         },
                         dataShape: {
                             primaryAxis: ['bar', 'bar', 'bar', 'bar', 'line']
                         },
-                        dataPointSize: {
-                            min: 30,
-                            max: 30
-                        }
+                        // Enabling this setting sets zoom buttons as disable
+                        // dataPointSize: {
+                        //     min: 30,
+                        //     max: 30
+                        // }
                     },
                     legendGroup: {
                         layout: {

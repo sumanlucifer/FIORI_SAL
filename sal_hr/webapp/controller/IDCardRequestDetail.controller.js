@@ -8,7 +8,7 @@ sap.ui.define([
     function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.IDCardRequestDetail", {
-            formatter : formatter,
+            formatter: formatter,
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
@@ -33,20 +33,14 @@ sap.ui.define([
             },
 
             _bindView: function (data) {
-                var object = data.results[0];
                 this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
 
-                if (object.status === "APPROVED") {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                }
                 var oComponentModel = this.getComponentModel(),
-                    sKey = null;
-                var sTicketCode = this.object.ticketCode;
-                var oAttachModel = new JSONModel();
+                    sKey = null,
+                    sTicketCode = this.object.ticketCode,
+                    oAttachModel = new JSONModel();
                 this.getView().setModel(oAttachModel, "attachmentModel");
 
                 var sUserID = this.object.externalCode,
@@ -65,7 +59,8 @@ sap.ui.define([
                         dataRequested: function () {
                             this.getView().setBusy(true);
                         }.bind(this),
-                        dataReceived: function () {
+                        dataReceived: function (oData) {
+                            this._fnSetUserName(oData.getParameter("data"));
                             this.getView().setBusy(false);
                         }.bind(this)
                     }
@@ -73,6 +68,22 @@ sap.ui.define([
                 this.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
                 this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", true);
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "ID Replacement Changes");
+            },
+
+            _fnSetUserName: function (oData) {
+                var sUserName = "";
+                if (oData.UserNav.defaultFullName) {
+                    sUserName = oData.UserNav.defaultFullName;
+                }
+                else {
+                    if (oData.UserNav.firstName)
+                        sUserName += oData.UserNav.firstName + " ";
+                    if (oData.UserNav.middleName)
+                        sUserName += oData.UserNav.middleName + " ";
+                    if (oData.UserNav.lastName)
+                        sUserName += oData.UserNav.lastName;
+                }
+                this.getView().getModel("headerModel").setProperty("/UserName", sUserName);
             },
 
             onCancelPress: function () {

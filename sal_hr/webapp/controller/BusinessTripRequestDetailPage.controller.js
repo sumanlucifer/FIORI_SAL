@@ -86,16 +86,15 @@ sap.ui.define([
                 var sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
                     effectiveStartDate: object.effectiveStartDate,
                     externalCode: object.externalCode
-                    // effectiveStartDate: "2022-03-14",
-                    // externalCode: "12002428"
                 });
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        $expand: "cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_trainingTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav"
+                        $expand: "createdByNav,cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_trainingTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav"
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);
+                        this._fnSetUserName(oData);
                         this._fnSetDisplayEditBusinessTripModel(oData);
                     }.bind(this),
                     error: function () {
@@ -104,6 +103,22 @@ sap.ui.define([
                 });
 
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Business Trip Request");
+            },
+
+            _fnSetUserName: function (oData) {
+                var sUserName = "";
+                if (oData.createdByNav.defaultFullName) {
+                    sUserName = oData.createdByNav.defaultFullName;
+                }
+                else {
+                    if (oData.createdByNav.firstName)
+                        sUserName += oData.createdByNav.firstName + " ";
+                    if (oData.createdByNav.middleName)
+                        sUserName += oData.createdByNav.middleName + " ";
+                    if (oData.createdByNav.lastName)
+                        sUserName += oData.createdByNav.lastName;
+                }
+                this.getView().getModel("headerModel").setProperty("/UserName", sUserName);
             },
 
             _fnSetDisplayEditBusinessTripModel: function (oData) {
