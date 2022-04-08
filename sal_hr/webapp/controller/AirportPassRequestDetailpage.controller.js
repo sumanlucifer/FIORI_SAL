@@ -55,12 +55,6 @@ sap.ui.define([
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                // }
-
                 var oComponentModel = this.getComponentModel();
                 var sKey = oComponentModel.createKey("/SF_AirportPassMain", {
                     effectiveStartDate: object.effectiveStartDate,
@@ -71,9 +65,12 @@ sap.ui.define([
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        $expand: "cust_toAirportPassItem,cust_toAirportPassItem/cust_typeOfPassNav,cust_toAirportPassItem/cust_airportLocNav,cust_toAirportPassItem/cust_companyIdNav,cust_toAirportPassItem/cust_passportCopyNav,cust_toAirportPassItem/cust_personalIdNav,cust_toAirportPassItem/cust_personalPhotoNav"
+                        $expand: "createdByNav,cust_toAirportPassItem,cust_toAirportPassItem/cust_typeOfPassNav,cust_toAirportPassItem/cust_airportLocNav,cust_toAirportPassItem/cust_companyIdNav,cust_toAirportPassItem/cust_passportCopyNav,cust_toAirportPassItem/cust_personalIdNav,cust_toAirportPassItem/cust_personalPhotoNav"
                     },
+
                     success: function (oData) {
+                        this.getView().setBusy(false);
+                        this.fnSetUserName(oData);
                         this._fnSetDisplayEditAirpassModel(oData);
                     }.bind(this),
                     error: function () {
@@ -82,6 +79,22 @@ sap.ui.define([
 
                 });
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Airport Travel Pass Request");
+            },
+
+            fnSetUserName: function (oData) {
+                var sUserName = "";
+                if (oData.createdByNav.defaultFullName) {
+                    sUserName = oData.createdByNav.defaultFullName;
+                }
+                else {
+                    if (oData.createdByNav.firstName)
+                        sUserName += oData.createdByNav.firstName + " ";
+                    if (oData.createdByNav.middleName)
+                        sUserName += oData.createdByNav.middleName + " ";
+                    if (oData.createdByNav.lastName)
+                        sUserName += oData.createdByNav.lastName;
+                }
+                this.getView().getModel("headerModel").setProperty("/UserName", sUserName);
             },
 
             _fnSetDisplayEditAirpassModel: function (oData) {
@@ -147,7 +160,7 @@ sap.ui.define([
 
             _fnSetAttachmentItemsUploadButtonVisibility: function () {
                 // To remove items from the Passport uploadset If no records available from backend
-                if (this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment/fileContent").length < 2) {
+                if (this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment") === null) {
                     this.byId("idDisplayUploadSetPassportcopy").destroyItems();
                     this.byId("idEditUploadSetnonnationals").destroyItems();
                 }
@@ -241,13 +254,6 @@ sap.ui.define([
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPersonalPhotoAttachmentNew", true);
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/personalPhotoAttachmentFileContent", oPersonalPhotoAttachmentObj.fileContent);
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/personalPhotoAttachmentFileName", oPersonalPhotoAttachmentObj.fileName);
-                    this.getView().getModel("DisplayEditAirpassModel").refresh();
-                }
-
-                if (oData.isPassportAttachmentNew === false) {
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPassportAttachmentNew", false);
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileContent", "PS");
-                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileName", "PS.txt");
                     this.getView().getModel("DisplayEditAirpassModel").refresh();
                 }
 
@@ -431,6 +437,18 @@ sap.ui.define([
 
                 this.getView().getModel("DisplayEditAirpassModel").setProperty("/" + oUploadPropertyObj.AttachmentNew, false);
                 this.getView().getModel("DisplayEditAirpassModel").refresh();
+
+                if (sUploaderName === "idEditUploadSetnonnationals") {
+                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPassportAttachmentNew", false);
+                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileContent", "PS");
+                    this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileName", "PS.txt");
+
+                    if (this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment").hasOwnProperty("attachmentId")) {
+                        this.getView().getModel("DisplayEditAirpassModel").setProperty("/deletePassportAttachment", true);
+                        this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentId", this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment/attachmentId"));
+                    }
+                    this.getView().getModel("DisplayEditAirpassModel").refresh();
+                }
             },
 
             _fnGetSelectedUploadSetPropoerties: function (sUploaderName) {

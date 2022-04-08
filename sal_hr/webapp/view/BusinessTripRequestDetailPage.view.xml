@@ -41,7 +41,7 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requestedby}"/>
-                        <ObjectAttribute text="{headerModel>/externalCreatedBy}"/>
+                        <ObjectAttribute text="{headerModel>/UserName}({headerModel>/employeeId})"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DueByDate}"/>

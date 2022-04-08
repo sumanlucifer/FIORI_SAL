@@ -122,6 +122,10 @@ modules:
       - comsalreportsrequestsrequestsummaryreports.zip
       name: comsalreportsrequestsrequestsummaryreports
       target-path: resources/
+    - artifacts:
+      - comsalreportsslacompliancereport.zip
+      name: comsalreportsslacompliancereport
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -315,6 +319,16 @@ modules:
 - name: comsalreportsrequestsrequestsummaryreports
   type: html5
   path: request_summary_reports
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalreportsslacompliancereport
+  type: html5
+  path: sla_compliance_report
   build-parameters:
     build-result: dist
     builder: custom

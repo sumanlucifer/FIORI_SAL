@@ -11,7 +11,7 @@
             <pages>
                 <Page id="page" title="{i18n>title}" showHeader="false">
                     <VBox>
-                        <commons:ChartContainer showFullScreen="true" title="{i18n>TicketSummary}">
+                        <commons:ChartContainer showFullScreen="true" showZoom="true" title="{i18n>TicketSummary}">
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
@@ -20,7 +20,7 @@
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
                                                     <viz.data:dimensions>
-                                                        <viz.data:DimensionDefinition name="name" value="{TicketsSummaryDataModel>name}"/>
+                                                        <viz.data:DimensionDefinition name="Name" value="{TicketsSummaryDataModel>name}"/>
                                                     </viz.data:dimensions>
                                                     <viz.data:measures>
                                                         <!-- Column chart Items -->
@@ -38,7 +38,7 @@
                                             <viz:feeds>
                                                 <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Under Process,Pending,Cancelled by End User"/>
                                                 <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin,Re-assigned ,Re-opened"/>
-                                                <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="name"/>
+                                                <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Name"/>
                                             </viz:feeds>
                                         </viz:VizFrame>
                                     </commons:content>
