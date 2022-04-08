@@ -3,10 +3,13 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    "sap/m/upload/Uploader"
+    "sap/m/upload/Uploader",
+    "sap/ui/core/Fragment",
+    "sap/ui/Device",
+    "sap/ui/model/Filter"
 ],
 
-    function (BaseController, Controller,JSONModel,MessageBox,Uploader) {
+    function (BaseController, Controller,JSONModel,MessageBox,Uploader,Fragment, Device, Filter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateDisciplinaryRequest", {
             onInit: function () {
@@ -59,8 +62,30 @@ sap.ui.define([
                
                 this._bindView("/MasterSubModules" + this.sParentID);
                 this.onResetPress();
+                this.fnSetDisciplinaryLocalModel();
+                
 
                 
+            },
+            fnSetDisciplinaryLocalModel: function () {
+                // this.EmpInfoObj = oEmpInfoObj;
+               
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+              this.managerID = this.EmpInfoObj.managerId;
+
+              
+
+                var   oCreateDisciplinaryObj = {
+                        "managerId": this.EmpInfoObj.managerId,
+                       
+                      
+                        
+                    },
+                    oCreateDisplinaryModel = new JSONModel(oCreateDisciplinaryObj);
+
+                this.getView().setModel(oCreateDisplinaryModel, "CreateDisplinaryModel");
+
+              
             },
             _bindView: function (sObjectPath) {
                 var objectViewModel = this.getViewModel("objectViewModel");
@@ -91,6 +116,86 @@ sap.ui.define([
 
 
             },
+            onValueHelpRequest: function (oEvent) {
+
+                var oView = this.getView();
+    
+                if (!this._pDialog) {
+                    this._pDialog = Fragment.load({
+                        id: oView.getId(),
+                        name: "com.sal.salhr.Fragments.PRNValueHelp",
+                        controller: this
+                    }).then(function (oDialog) {
+                        oView.addDependent(oDialog);
+                        if (Device.system.desktop) {
+                            oDialog.addStyleClass("sapUiSizeCompact");
+                        }
+                        return oDialog;
+                    });
+                }
+    
+                this._pDialog.then(function (oDialog) {
+                    var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
+                  var userId =    this.managerID;
+                 
+                    var sUserIDFilter = new sap.ui.model.Filter({
+                        path: "managerId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: userId,
+                    });
+                    oList.getBinding("items").filter([sUserIDFilter]);
+                   
+    
+                    oDialog.open();
+                }.bind(this));
+            },
+
+            onValueHelpSearch: function (oEvent) {
+                var sValue = oEvent.getParameter("value");
+                // var oFilter = new Filter(
+                //     [
+                //         new Filter({
+                //             path: "userId",
+                //             operator: "EQ",
+                //             value1: sValue.trim()
+                //         }),
+                //         new Filter({
+                //             path: "firstName",
+                //             operator: "EQ",
+                //             value1: sValue.trim()
+                //         }),
+
+
+                //     ],
+                //     false
+                // );
+    
+                var suserIdFilter = new sap.ui.model.Filter({
+                    path: "userId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: sValue.trim()
+                });
+                var sfirstNameFilter = new sap.ui.model.Filter({
+                    path: "firstName",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: sValue.trim()
+                });
+                var aFilter = [];
+                aFilter.push(suserIdFilter, sfirstNameFilter);
+                oEvent.getSource().getBinding("items").filter(aFilter);
+            },
+
+            onValueHelpClose: function (oEvent) {
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                oEvent.getSource().getBinding("items").filter([]);
+                if (!oSelectedItem) {
+                    return;
+                }
+                var obj = oSelectedItem.getBindingContext().getObject();
+                this.byId("idPRN").setValue(obj["userId"]);
+    
+            },
+    
             _validateMandatoryFields: function () {
                 var bValid = true;
                 if (this.byId("idIncidentDescription").getValue() === "") {
@@ -201,7 +306,8 @@ sap.ui.define([
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
             },
             getDisciplinaryCreatePayload:function(){
-                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                // var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                var sUserID = this.byId("idPRN").getValue();
                 var sAttachmentFileContent, sAttahmentFileName;
                 var sIncidentStartDate = this.byId("idIncidentStartDate").getDateValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),

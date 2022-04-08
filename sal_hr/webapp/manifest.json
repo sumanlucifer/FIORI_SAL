@@ -239,6 +239,17 @@
                     ]
                 },
                 {
+
+                    "pattern": "HealthInsuranceRequest/{parentMaterial}/{layout}",
+                    "name": "HealthInsuranceRequest",
+                    "layout": "EndColumnFullScreen",
+                    "titleTarget": "",
+                    "greedy": false,
+                    "target": [
+                        "HealthInsuranceRequest"
+                    ]
+                },
+                {
                     "pattern": "LetterRequest/{parentMaterial}/{layout}",
                     "name": "LetterRequest",
                     "layout": "EndColumnFullScreen",
@@ -322,13 +333,22 @@
                         "detail",
                         "AdditionalPaymentRequestDetail"]
                     },
-{
+                {
                     "pattern": "detail/{parentMaterial}/BusinessTripRequestDetailPage/{childModule}/{layout}",
                     "name": "BusinessTripRequestDetailPage",
                     "target": [
                         "master",
                         "detail",
                         "BusinessTripRequestDetailPage"
+                    ]
+                },
+                {
+                    "pattern": "detail/{parentMaterial}/LetterRequestDetail/{childModule}/{layout}",
+                    "name": "LetterRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "LetterRequestDetail"
                     ]
                 },
                 {
@@ -350,7 +370,18 @@
                         "EmployeeTerminateDetail"
 
                     ]
+                },
+                {
+                    "pattern": "HealthInsuranceRequestDetail/{parentMaterial}/{childModule}/{layout}",
+                    "name": "HealthInsuranceRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "HealthInsuranceRequestDetail"
+
+                    ]
                 }
+                
 
             ],
             "targets": {
@@ -414,6 +445,11 @@
                     "viewName": "CreateSalaryIncrementRequest",
                     "controlAggregation": "endColumnPages"
                 },
+
+                "HealthInsuranceRequest": {
+                    "viewName": "CreateHealthInsuranceRequest",
+                    "controlAggregation": "endColumnPages"
+                },
                 "LetterRequest": {
                     "viewName": "CreateLetterRequest",
                     "controlAggregation": "endColumnPages"
@@ -453,7 +489,19 @@
                 "EmployeeTerminateDetail": {
                     "viewName": "EmployeeTerminateDetailPage",
                     "controlAggregation": "endColumnPages"
+                },
+
+                "HealthInsuranceRequestDetail": {
+                    "viewName": "HealthInsuranceRequestDetailPage",
+                    "controlAggregation": "endColumnPages"
+                },
+
+                "LetterRequestDetail": {
+                    "viewName": "LetterRequestDetailPage",
+                    "controlAggregation": "endColumnPages"
                 }
+
+                
             }
         }
     },

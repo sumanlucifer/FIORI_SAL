@@ -30,6 +30,8 @@
 
             <Label text="Incident Description Details"  />
             <Text text="{cust_IncidentDetails}"/>
+            <Label text="PRN"  />
+            <Text text="{externalCode}"/>
             <Label text="When would you like your changes to take effect"  />
             <Text text="{path:'cust_DateofIncident',
                                                 type: 'sap.ui.model.type.Date',

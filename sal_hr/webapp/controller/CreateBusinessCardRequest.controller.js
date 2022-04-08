@@ -325,7 +325,7 @@ sap.ui.define([
                 var sCustOfficeNo = this.byId("idCreateOfficeNo").getValue();
                 var sCustEmail = this.byId("idCreateEmail").getValue();
                 var sCustMobile = this.byId("idCreateMobile").getValue();
-                var sCustLocation = this.byId("idCreateDivision").getValue();
+                var sCustLocation = this.byId("idCreateLocation").getValue();
                 var sCustPOBOX = this.byId("idCreatePOBOX").getValue();
                 var sCustJobTitle = this.byId("idCreateJobTitle").getValue();
 

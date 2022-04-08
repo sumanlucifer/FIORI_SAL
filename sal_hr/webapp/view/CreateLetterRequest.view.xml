@@ -21,14 +21,14 @@
             </f:DynamicPageTitle>
         </f:title>
         <f:content>
-            <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
-                <l:content>
-                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+         <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding" >
+                <l:content> 
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                         <Label text="As of Date " required="true" />
                         <DatePicker id="idLetterEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}" enabled="false"/>
                     </fm:SimpleForm>
 
-                    <fm:SimpleForm title="Generate Document" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                    <fm:SimpleForm title="Generate Document" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="1" columnsL="1" columnsXL="1" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="Country Region" required="true"/>
             <Input id="idLetterCountry" value="Saudi Arabia" enabled= "false"/>
 
