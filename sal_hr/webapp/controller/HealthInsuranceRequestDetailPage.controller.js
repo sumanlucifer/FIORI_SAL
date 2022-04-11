@@ -137,7 +137,7 @@ sap.ui.define([
 
             onDownLoadPress:function(oEvent){
                 var oItemRowObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
-                var sLinkText = oEvent.getSource().getText().trim();
+                var sLinkText = oEvent.getSource().getTooltip_Text().trim();
 
 var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : sLinkText === "Download(2)" ? oItemRowObj.cust_attachment2Nav : oItemRowObj.cust_attachment3Nav;
 

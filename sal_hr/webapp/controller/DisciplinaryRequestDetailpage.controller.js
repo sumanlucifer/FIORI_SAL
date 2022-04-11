@@ -65,7 +65,7 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: sKey,
                     parameters: {
-                        expand: "cust_IncidentStatusNav,cust_ReasonNav,cust_SeverityNav,cust_warningTypeNav",
+                        expand: "cust_IncidentStatusNav,cust_ReasonNav,cust_SeverityNav,cust_warningTypeNav,externalCodeNav",
                     },
                     events: {
                         change: function (oEvent) {                        
