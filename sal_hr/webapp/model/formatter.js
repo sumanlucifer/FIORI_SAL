@@ -145,6 +145,15 @@ sap.ui.define([], function () {
 
         },
 
+        handleNoData: function(sValue){
+            if(!sValue){
+                var sNoData = "NA";
+                return sNoData;
+            }else {
+                return sValue;
+            }
+        }
+
         
 
 
