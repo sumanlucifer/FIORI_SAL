@@ -15,6 +15,7 @@ sap.ui.define([
                 this.oRouter.getRoute("BusinessCardRequest").attachPatternMatched(this._onObjectMatched, this);
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
+                this.mainModel.setSizeLimit(1000);
                 var that = this;
 
                 this.sReturnDate = new Date();

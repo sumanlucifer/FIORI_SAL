@@ -1,0 +1,79 @@
+<mvc:View controllerName="com.sal.reports.slacompliancereport.controller.SLACompliance"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:layout="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:commons="sap.suite.ui.commons">
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}" showHeader="false">
+                    <VBox>
+                        <commons:ChartContainer showFullScreen="true" showZoom="false" title="{i18n>SLACompliance}">
+                            <commons:content>
+                                <commons:ChartContainerContent id="idChartContainerContent">
+                                    <commons:content>
+                                        <viz:Popover id="idPopOver"/>
+                                        <viz:VizFrame id="idVizFrame" height="300px" width="100%" vizType='column'>
+                                            <viz:dataset>
+                                                <viz.data:FlattenedDataset data="{path: 'SLAComplianceDataModel>/'}">
+                                                    <viz.data:dimensions>
+                                                        <viz.data:DimensionDefinition name="Name" value="{SLAComplianceDataModel>name}"/>
+                                                    </viz.data:dimensions>
+                                                    <viz.data:measures>
+                                                        <!-- Stacked Column chart Items -->
+                                                        <viz.data:MeasureDefinition group="1" name="Total SLA" value="{SLAComplianceDataModel>totalRequests}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="SLA Compliance Score" value="{SLAComplianceDataModel>completed}"/>
+                                                    </viz.data:measures>
+                                                </viz.data:FlattenedDataset>
+                                            </viz:dataset>
+                                            <viz:feeds>
+                                                <viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Total SLA,SLA Compliance Score"/>
+                                                <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Name"/>
+                                            </viz:feeds>
+                                        </viz:VizFrame>
+                                    </commons:content>
+                                </commons:ChartContainerContent>
+                            </commons:content>
+                        </commons:ChartContainer>
+                        <commons:ChartContainer showFullScreen="true" autoAdjustHeight="false" title="{i18n>SLACompliance}">
+                            <commons:content>
+                                <commons:ChartContainerContent>
+                                    <commons:content>
+                                        <Table items="{path: 'SLAComplianceDataModel>/'}">
+                                            <columns>
+                                                <Column minScreenWidth="Desktop">
+                                                    <Label design="Bold" text="{i18n>Ticket Status}"/>
+                                                </Column>
+                                                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+                                                    <Label design="Bold" text="{i18n>Compliance Score}"/>
+                                                </Column>
+                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                                    <Label design="Bold" text="{i18n>Rating}"/>
+                                                </Column>
+                                                <!-- <Column/> -->
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem vAlign="Middle">
+                                                    <cells>
+                                                        <Label design="Bold" text="{SLAComplianceDataModel>name}"/>
+                                                        <Text text="{SLAComplianceDataModel>completed}"/>
+                                                        <!-- <Text text="{SLAComplianceDataModel>Rating}"/> -->
+                                                        <ObjectStatus text="{SLAComplianceDataModel>Rating}" state="{SLAComplianceDataModel>state}"/>
+                                                        <!-- <ProgressIndicator class="sapUiMediumMarginEnd" percentValue="{SLAComplianceDataModel>displayPercentage}" displayValue="{SLAComplianceDataModel>displayPercentage}%" showValue="true" state="{SLAComplianceDataModel>state}" /> -->
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </commons:content>
+                                </commons:ChartContainerContent>
+                            </commons:content>
+                        </commons:ChartContainer>
+                    </VBox>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

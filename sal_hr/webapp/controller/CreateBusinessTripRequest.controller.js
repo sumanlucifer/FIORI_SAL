@@ -16,6 +16,7 @@ sap.ui.define([
                 this.oRouter.getRoute("BusinessTripRequest").attachPatternMatched(this._onObjectMatched, this);
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
+                this.mainModel.setSizeLimit(1000);
 
                 var oLocalViewModel = new JSONModel({
                     busy: false,

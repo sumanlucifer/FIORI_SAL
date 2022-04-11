@@ -115,12 +115,12 @@ modules:
       name: comsalreportsticketssummaryreport
       target-path: resources/
     - artifacts:
-      - comsalvacancy.zip
-      name: comsalvacancy
-      target-path: resources/
-    - artifacts:
       - comsalreportsrequestsrequestsummaryreports.zip
       name: comsalreportsrequestsrequestsummaryreports
+      target-path: resources/
+    - artifacts:
+      - comsalreportsslacompliancereport.zip
+      name: comsalreportsslacompliancereport
       target-path: resources/
 - name: comsalsalhr
   type: html5
@@ -302,9 +302,9 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comsalvacancy
+- name: comsalreportsrequestsrequestsummaryreports
   type: html5
-  path: vacancy
+  path: request_summary_reports
   build-parameters:
     build-result: dist
     builder: custom
@@ -312,9 +312,9 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comsalreportsrequestsrequestsummaryreports
+- name: comsalreportsslacompliancereport
   type: html5
-  path: request_summary_reports
+  path: sla_compliance_report
   build-parameters:
     build-result: dist
     builder: custom
