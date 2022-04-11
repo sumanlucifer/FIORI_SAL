@@ -136,14 +136,13 @@ sap.ui.define([
     
                 this._pDialog.then(function (oDialog) {
                     var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
-                  var userId =    this.managerID;
-                 
-                    var sUserIDFilter = new sap.ui.model.Filter({
-                        path: "managerId",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: userId,
-                    });
-                    oList.getBinding("items").filter([sUserIDFilter]);
+                //   var userId =    this.managerID;
+                //     var sUserIDFilter = new sap.ui.model.Filter({
+                //         path: "managerId",
+                //         operator: sap.ui.model.FilterOperator.EQ,
+                //         value1: userId
+                //     });
+                //     oList.getBinding("items").filter([sUserIDFilter]);
                    
     
                     oDialog.open();
@@ -152,37 +151,39 @@ sap.ui.define([
 
             onValueHelpSearch: function (oEvent) {
                 var sValue = oEvent.getParameter("value");
-                // var oFilter = new Filter(
-                //     [
-                //         new Filter({
-                //             path: "userId",
-                //             operator: "EQ",
-                //             value1: sValue.trim()
-                //         }),
-                //         new Filter({
-                //             path: "firstName",
-                //             operator: "EQ",
-                //             value1: sValue.trim()
-                //         }),
-
-
-                //     ],
-                //     false
-                // );
+                if(sValue)
+                {
+                    var oFilter = new Filter(
+                        [
+                            new Filter({
+                                path: "userId",
+                                operator: "EQ",
+                                value1: sValue.trim()
+                            }),
+                            new Filter({
+                                path: "firstName",
+                                operator: "EQ",
+                                value1: sValue.trim()
+                            }),
+                            new Filter({
+                                path: "lastName",
+                                operator: "EQ",
+                                value1: sValue.trim()
+                            })
     
-                var suserIdFilter = new sap.ui.model.Filter({
-                    path: "userId",
-                    operator: sap.ui.model.FilterOperator.EQ,
-                    value1: sValue.trim()
-                });
-                var sfirstNameFilter = new sap.ui.model.Filter({
-                    path: "firstName",
-                    operator: sap.ui.model.FilterOperator.EQ,
-                    value1: sValue.trim()
-                });
-                var aFilter = [];
-                aFilter.push(suserIdFilter, sfirstNameFilter);
-                oEvent.getSource().getBinding("items").filter(aFilter);
+    
+                        ],
+                        false
+                    );
+        
+                   
+                    oEvent.getSource().getBinding("items").filter(oFilter);
+                }
+
+                else{
+                    oEvent.getSource().getBinding("items").filter([]);
+                }
+               
             },
 
             onValueHelpClose: function (oEvent) {

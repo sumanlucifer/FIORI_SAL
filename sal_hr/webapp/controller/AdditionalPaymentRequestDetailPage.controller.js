@@ -64,7 +64,7 @@ sap.ui.define([
                         this.getView().bindElement({
                             path: sKey,
                             parameters: {
-                                expand: "payComponentCodeNav,alternativeCostCenterNav",
+                                expand: "payComponentCodeNav,alternativeCostCenterNav,userNav",
                             },
                             events: {
                                 change: function (oEvent) {

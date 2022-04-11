@@ -84,6 +84,7 @@ sap.ui.define([
                 var fileType = oFiles[0].type;
                 //code for base64/binary array 
                 this._getImageData((oFiles[0]), function (base64) {
+                    sap.m.MessageBox.success("Attachment Uploaded Successfully.");
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/attachment1FileContent", base64);
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/attachment1FileName", fileName);
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/isAttach1New", true);
@@ -97,6 +98,7 @@ sap.ui.define([
                 var fileType = oFiles[0].type;
                 //code for base64/binary array 
                 this._getImageData((oFiles[0]), function (base64) {
+                    sap.m.MessageBox.success("Attachment Uploaded Successfully.");
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/attachment2FileContent", base64);
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/attachment2FileName", fileName);
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/isAttach2New", true);
@@ -110,6 +112,7 @@ sap.ui.define([
                 var fileType = oFiles[0].type;
                 //code for base64/binary array 
                 this._getImageData((oFiles[0]), function (base64) {
+                    sap.m.MessageBox.success("Attachment Uploaded Successfully.");
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/attachment3FileContent", base64);
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/attachment3FileName", fileName);
                     that.getView().getModel("HealthItemDetailsModel").setProperty(iRowNumber + "/isAttach3New", true);
@@ -238,9 +241,6 @@ sap.ui.define([
                             );
                             return;
                         }
-
-
-
 
                     }
                 }
