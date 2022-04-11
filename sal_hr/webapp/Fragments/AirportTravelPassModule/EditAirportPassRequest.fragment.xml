@@ -28,8 +28,16 @@
         <Input id="idEditMobileNumberInp" value="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_mobileNumber}" enabled= "false"/>
 
         <Label text="{i18n>Nationality}" required="true" />
-        <Input id="idEditNationalityInp" value="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationality}"/>
-
+        <!-- <Input id="idEditNationalityInp" value="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationality}"/> -->
+        <Select id="idEditNationalityInp" showSecondaryValues="true" selectedKey="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationality}" items="{ path: '/SF_Country', 
+        parameters:{select:'code,externalName_defaultValue,currency'},
+        sorter: { path: 'externalName_defaultValue', descending: false },
+             filters : [{
+                    path : 'externalName_defaultValue', operator : 'NE', value1 : null
+                }]
+            }" change="onTimeTyeChange">
+            <core:ListItem key="{code}" text="{externalName_defaultValue}" additionalText="{code}"/>
+        </Select>
         <Label text="{i18n>AirportLocation}" required="true" />
         <Select id="idEditAirPortLocatonSLT" showSecondaryValues="true" selectedKey="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_airportLoc}" change="onAirportLocationChange" items="{ path: '/SF_PickListValueV2',
                 sorter : {

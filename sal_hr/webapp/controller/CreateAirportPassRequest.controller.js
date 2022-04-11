@@ -174,7 +174,7 @@ sap.ui.define([
 
                 // validate Nationality Field
                 var oNationality = this.getView().byId("idNationalityInp");
-                if (!oNationality.getValue() || oNationality.getValue().length < 2) {
+                if (!oNationality.getSelectedKey() || oNationality.getValue().length < 2) {
                     oNationality.setValueState("Error");
                     oNationality.setValueStateText("Please enter valid Nationality.");
                     sValidationErrorMsg = "Please fill the all required fields.";

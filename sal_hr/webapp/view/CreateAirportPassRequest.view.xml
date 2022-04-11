@@ -48,7 +48,17 @@
                         <Input id="idMobileNumberInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_mobileNumber}" enabled= "false"/>
 
                         <Label text="{i18n>Nationality}" required="true" />
-                        <Input id="idNationalityInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_nationality}"/>
+                        <!-- <Input id="idNationalityInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_nationality}"/> -->
+                        <Select id="idNationalityInp" showSecondaryValues="true" selectedKey="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationality}" items="{ path: '/SF_Country', 
+        parameters:{select:'code,externalName_defaultValue,currency'},
+        sorter: { path: 'externalName_defaultValue', descending: false },
+             filters : [{
+                    path : 'externalName_defaultValue', operator : 'NE', value1 : null
+                }]
+            }" change="onTimeTyeChange">
+                            <core:ListItem key="{code}" text="{externalName_defaultValue}" additionalText="{code}"/>
+                        </Select>
+
 
                         <Label text="{i18n>AirportLocation}" required="true" />
                         <Select id="idAirPortLocatonSLT" showSecondaryValues="true" selectedKey="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_airportLoc}" change="onAirportLocationChange" items="{ path: '/SF_PickListValueV2',
@@ -74,7 +84,7 @@
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="{i18n>PersonalIDCopy}" required="true"/>
-                                <core:Icon id="idInfoIconPersId" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin"  tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB" ></core:Icon>
+                                <core:Icon id="idInfoIconPersId" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
                         </upload:toolbar>
@@ -84,7 +94,7 @@
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="{i18n>PersonalPhoto}" required="true"/>
-                                 <core:Icon id="idInfoIconPersonal" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin"  tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB" ></core:Icon>
+                                <core:Icon id="idInfoIconPersonal" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
                         </upload:toolbar>
@@ -95,7 +105,7 @@
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="{i18n>PassportCopyfornonnationals}" required="false"/>
-                                <core:Icon id="idInfoIconPassport" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin"  tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB" ></core:Icon>
+                                <core:Icon id="idInfoIconPassport" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
                         </upload:toolbar>
@@ -105,7 +115,7 @@
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="{i18n>CompanyIDCopy}" required="true"/>
-                                <core:Icon id="idInfoIconCompany" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin"  tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB" ></core:Icon>
+                                <core:Icon id="idInfoIconCompany" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
                         </upload:toolbar>
