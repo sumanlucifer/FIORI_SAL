@@ -526,12 +526,12 @@ sap.ui.define([
 
                 this._oEmpF4Dialog.then(function (oDialog) {
                     var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
-                    var sUserIDFilter = new Filter({
-                        path: "managerId",
-                        operator: FilterOperator.EQ,
-                        value1: this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/managerId")
-                    });
-                    oList.getBinding("items").filter([sUserIDFilter]);
+                    // var sUserIDFilter = new Filter({
+                    //     path: "managerId",
+                    //     operator: FilterOperator.EQ,
+                    //     value1: this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/managerId")
+                    // });
+                    // oList.getBinding("items").filter([sUserIDFilter]);
                     oDialog.open();
                 }.bind(this));
             },
