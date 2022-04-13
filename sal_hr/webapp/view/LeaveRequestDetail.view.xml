@@ -60,7 +60,7 @@
             <VBox id="idContentVBox" width="100%">
                 <IconTabBar id="idLeaveiconTabBar" >
                     <items>
-                        <IconTabFilter id="idLeaveDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
+                        <IconTabFilter id="idLeaveDisplayDetailsITB" text="{i18n>Details}"  visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
                             <core:Fragment fragmentName="com.sal.salhr.Fragments.LeaveModule.DisplayLeaveDetails" type="XML"/>
                         </IconTabFilter>
                         <IconTabFilter id="idLeaveEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">

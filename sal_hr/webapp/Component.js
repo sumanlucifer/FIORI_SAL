@@ -34,14 +34,13 @@ sap.ui.define([
             },
 
             fnGetLoggedInEmpInfo: function () {
-                //this will return the semantic object and action alongwith the routing params
-                var sHashObjectPath = new sap.ui.core.routing.HashChanger().getHash(),
-                    bIsUserManager = false;
-                if (sHashObjectPath.indexOf("Manage") > 11 && sHashObjectPath.indexOf("Manage") < 20) {
-                    bIsUserManager = true;
-                }
-
-                this.getModel().read("/EmpInfo", {
+                this.getModel().read("/EmpInfo",
+                {
+                    urlParameters: {
+                        "moreInfo" : "true"
+                    },
+                
+                    
                     success: function (oData) {
                         this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
                         this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);

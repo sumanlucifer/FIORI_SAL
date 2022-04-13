@@ -35,9 +35,20 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // this._bindView();
-                this._getTicketData(this.sChildID);
+                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                // // this._bindView();
+                // this._getTicketData(this.sChildID);
+
+                if (sLayout === "ThreeColumnsMidExpanded") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                    this._getTicketData(this.sChildID);
+                }
+                if (sLayout === "EndColumnFullScreen" && this.byId("idFullScreenBTN").getIcon() == "sap-icon://full-screen") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idFullScreenBTN").setIcon("sap-icon://exit-full-screen");
+                    this._getTicketData(this.sChildID);
+                }
             },
 
             _bindView: function (data) {
@@ -48,11 +59,11 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
 
 
-                if (object.status === "APPROVED") {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                }
+                // if (object.status === "APPROVED") {
+                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                // } else {
+                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var that = this;

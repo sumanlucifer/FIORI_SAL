@@ -550,9 +550,14 @@ sap.ui.define([
                 if (sValue === "N") {
                     this.byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(false);
                     isVisaAttachmentMandatory = false;
+                    
+                    this.byId("idPayCompVisa").setValue();
+
                 } else {
                     this.byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(true);
                     isVisaAttachmentMandatory = true;
+
+                    this.byId("idPayCompVisa").setValue("Business Visa Cost (Off-Cycle)");
                 }
 
             },
