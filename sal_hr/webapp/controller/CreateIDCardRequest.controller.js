@@ -59,9 +59,19 @@ sap.ui.define([
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sKey = this.getComponentModel().createKey("/EmpInfo", {
                     userId: sUserID
+                   
+                  
                 });
                 this.getView().bindElement({
                     path: sKey,
+                    parameters:{
+                   
+                    custom:{
+                             moreInfo: "true"
+                            },
+                   
+                        },
+                  
                     events: {
                         change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();

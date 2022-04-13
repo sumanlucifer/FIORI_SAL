@@ -64,6 +64,7 @@ sap.ui.define([
             },
             fnGetLetterRequestPayload: function () {
               var sTemplate = this.byId("idLetterTemplate").getSelectedKey();
+              var sDate = this.byId("idLetterEffectDatePicker").getDateValue();
               if(sTemplate === "1"){
                   sTemplate = "Introduction";
               }else {
@@ -76,7 +77,7 @@ sap.ui.define([
                         "country" : "India",
                          "userId" : "12002425",
                          "template" : sTemplate,
-                         "asOfDate" : new Date()
+                         "asOfDate" : sDate
                      
                   
                 };
