@@ -43,6 +43,7 @@ sap.ui.define([
                     
                     success: function (oData) {
                         this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
+                        this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));

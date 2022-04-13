@@ -64,14 +64,11 @@ sap.ui.define([
                 });
                 this.getView().bindElement({
                     path: sKey,
-                    parameters:{
-                   
-                    custom:{
-                             moreInfo: "true"
-                            },
-                   
-                        },
-                  
+                    parameters: {
+                        custom: {
+                            "moreInfo": "true"
+                        }
+                    },
                     events: {
                         change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();

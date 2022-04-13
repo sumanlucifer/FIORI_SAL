@@ -15,7 +15,7 @@
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
-                                        <viz:Popover id="idPopOver"/>
+                                        <viz:Popover id="idSLAPopOver"/>
                                         <viz:VizFrame id="idVizFrame" height="300px" width="100%" vizType='column'>
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'SLAComplianceDataModel>/'}">

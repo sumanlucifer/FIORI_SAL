@@ -135,7 +135,7 @@
         },
         "pages": {
             "ListReport|Tickets": {
-                "entitySet": "Tickets",
+                "entitySet": "Report",
                 "component": {
                     "name": "sap.suite.ui.generic.template.ListReport",
                     "list": true,

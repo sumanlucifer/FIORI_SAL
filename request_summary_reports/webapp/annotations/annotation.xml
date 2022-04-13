@@ -18,7 +18,7 @@
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.sal.reports.requests">
 
             <!-- For Status field as Dropdown values -->
-            <Annotations Target="HumanResourceService.Tickets/status">
+            <Annotations Target="HumanResourceService.Report/status">
                 <Annotation Term="Common.Label" String="{@i18n>Status}"/>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
@@ -36,21 +36,43 @@
                 <Annotation Term="Common.ValueListWithFixedValues"/>
             </Annotations>
 
+            <!-- For AssignedBusinessUnit field as Dropdown values -->
+            <Annotations Target="HumanResourceService.Report/moduleName">
+                <Annotation Term="Common.Label" String="{@i18n>AssignedBusinessUnit}"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="CollectionPath" String="MasterModules"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="moduleName"/>
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.ValueListWithFixedValues"/>
+            </Annotations>
+
             <!-- To Change the labels of the filter bar fields -->
-            <Annotations Target="HumanResourceService.Tickets/ID">
+            <Annotations Target="HumanResourceService.Report/ticketId">
                 <Annotation Term="Common.Label" String="{@i18n>TicketID}"/>
             </Annotations>
-            <Annotations Target="HumanResourceService.Tickets/externalCreatedAt">
+             <Annotations Target="HumanResourceService.Report/moduleName">
+                <Annotation Term="Common.Label" String="{@i18n>AssignedBusinessUnit}"/>
+            </Annotations>
+            <Annotations Target="HumanResourceService.Report/creationDate">
                 <Annotation Term="Common.Label" String="{@i18n>CreationDate}"/>
             </Annotations>
 
             <!-- To hide any field -->
-            <!-- <Annotations Target="HumanResourceService.Tickets/subModuleId">
+            <!-- <Annotations Target="HumanResourceService.Report/subModuleId">
                 <Annotation Term="UI.Hidden" Bool="true"/>
             </Annotations> -->
 
-            <!-- Annotations for Tickets Entity Restrictions-->
-            <Annotations Target="HumanResourceService.EntityContainer/Tickets">
+            <!-- Annotations for Report Entity Restrictions-->
+            <Annotations Target="HumanResourceService.EntityContainer/Report">
                 <Annotation Term="Capabilities.SearchRestrictions">
                     <Record Type="Capabilities.SearchRestrictionsType">
                         <PropertyValue Property="Searchable" Bool="true"/>
@@ -73,12 +95,12 @@
                 </Annotation>
             </Annotations>
 
-            <Annotations Target="HumanResourceService.Tickets">
+            <Annotations Target="HumanResourceService.Report">
                 <!-- For List Page Filters -->
                 <Annotation Term="UI.SelectionFields">
                     <Collection>
-                        <!-- <PropertyPath>ID</PropertyPath> -->
-                        <PropertyPath>externalCreatedAt</PropertyPath>
+                        <PropertyPath>moduleName</PropertyPath>
+                        <PropertyPath>creationDate</PropertyPath>
                         <PropertyPath>status</PropertyPath>
                     </Collection>
                 </Annotation>
@@ -86,7 +108,7 @@
                 <!-- For List Items Object Attribute -->
                 <Annotation Term="Common.SemanticKey">
                     <Collection>
-                        <PropertyPath>ID</PropertyPath>
+                        <PropertyPath>ticketId</PropertyPath>
                     </Collection>
                 </Annotation>
 
@@ -106,7 +128,7 @@
                     <!-- For columns to be visible on table -->
                     <Collection>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="ID"/>
+                            <PropertyValue Property="Value" Path="ticketId"/>
                             <PropertyValue Property="Label" String="{@i18n>TicketID}"/>
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
@@ -116,7 +138,7 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="module/name"/>
+                            <PropertyValue Property="Value" Path="moduleName"/>
                             <PropertyValue Property="Label" String="{@i18n>AssignedBusinessUnit}"/>
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
@@ -126,7 +148,7 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="assignedTo"/>
+                            <PropertyValue Property="Value" Path="assignedPerson"/>
                             <PropertyValue Property="Label" String="{@i18n>AssignedPerson}"/>
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
@@ -198,7 +220,7 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="externalCreatedAt"/>
+                            <PropertyValue Property="Value" Path="creationDate"/>
                             <PropertyValue Property="Label" String="{@i18n>CreationDate}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
@@ -207,7 +229,7 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="source"/>
+                            <PropertyValue Property="Value" Path="sourceOfTicket"/>
                             <PropertyValue Property="Label" String="{@i18n>source}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
@@ -216,26 +238,7 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="moduleId"/>
-                            <PropertyValue Property="Label" String="{@i18n>ModuleID}"/>
-                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
-                                <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="10rem"/>
-                                </Record>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="subModuleId"/>
-                            <PropertyValue Property="Label" String="{@i18n>subModuleId}"/>
-                            <!-- For Adding CSS property width to set width to table column -->
-                            <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
-                                <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="10rem"/>
-                                </Record>
-                            </Annotation>
-                        </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="summary"/>
+                            <PropertyValue Property="Value" Path="ticketDescription"/>
                             <PropertyValue Property="Label" String="{@i18n>TicketDescription}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">

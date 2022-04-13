@@ -56,6 +56,9 @@ sap.ui.define([
                         expand: "cust_idReplacementDetails, UserNav"
                     },
                     events: {
+                        change: function (oEvent) {
+                            oEvent.getSource().refresh(false);
+                        }.bind(this),
                         dataRequested: function () {
                             this.getView().setBusy(true);
                         }.bind(this),
