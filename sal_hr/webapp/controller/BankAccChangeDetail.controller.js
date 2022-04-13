@@ -64,106 +64,7 @@ sap.ui.define([
                 var oAttachModel = new JSONModel();
                 that.getView().setModel(oAttachModel, "attachmentModel");
                 switch (this.sParentID) {
-                    // Leave Module
-                    case "1":
-                        sKey = oComponentModel.createKey("/SF_Leave", {
-                            externalCode: object.externalCode
-                        });
-                        var sTicketCode = this.object.ticketCode;
-                        this.getView().getModel().read("/SF_Leave('" + object.externalCode + "')", {
-                            urlParameters: {
-                                "$expand": "cust_attachmentNav, timeTypeNav"
-                            },
-                            success: function (oData) {
-                                oAttachModel = new JSONModel(oData.cust_attachmentNav);
-                                var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
-                                that.getView().setModel(oAttachModel, "attachmentModel");
-                                that.getView().setModel(oTimeTypeModel, "timeTypeModel");
-                                // that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
-                                var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
-                                if (sType === "S110" || sType === "500" || sType === "460") {
-                                    that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                                } else {
-                                    that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                                }
-                            },
-                            error: function (oError) {
-
-                            }
-
-                        });
-
-                        this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
-                        this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
-
-                        break;
-
-
-
-
-
-                    // Business Trip Module
-                    case "2":
-                        // sKey = oComponentModel.createKey("/BusinessTrip", {
-                        //     externalCode: this.sChildID
-                        // //     externalCode: "038bf80e30b745b0924f030e4e9b0556"
-                        // });
-                        this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", true);
-                        this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Business Trip Request");
-                        break;
-
-                    // Health Module
-                    case "3":
-                        // sKey = oComponentModel.createKey("/BusinessTrip", {
-                        //     externalCode: this.sChildID
-                        // //     externalCode: "038bf80e30b745b0924f030e4e9b0556"
-                        // });
-                        this.getView().getModel("LocalViewModel").setProperty("/HealthModule", true);
-                        this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance");
-                        break;
-                    // ID Card Replacement
-                    case "7":
-                        var sUserID = this.object.externalCode,
-                            sEffectiveStartDate = this.object.effectiveStartDate,
-                            sKey = oComponentModel.createKey("/SF_IDReplacement", {
-                                User: sUserID,
-                                effectiveStartDate: sEffectiveStartDate
-                            });
-
-                        this.getView().bindElement({
-                            path: sKey,
-                            parameters: {
-                                expand: "cust_idReplacementDetails, UserNav"
-                            },
-                            events: {
-                                dataRequested: function () {
-                                    this.getView().setBusy(true);
-                                }.bind(this),
-                                dataReceived: function () {
-                                    this.getView().setBusy(false);
-                                }.bind(this)
-                            }
-                        });
-                        that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
-                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", true);
-                        this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "ID Replacement Changes");
-                        break;
+                 
 
                     //  Bank Request Module 
                     case "13":
@@ -189,6 +90,9 @@ sap.ui.define([
                 if (this.sParentID !== "7") {
                     this.getView().bindElement({
                         path: sKey,
+                        parameters: {
+                            expand: "externalCodeNav",
+                        },
 
                         events: {
                             change: function (oEvent) {

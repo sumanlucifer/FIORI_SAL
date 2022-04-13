@@ -22,9 +22,32 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
+
+                var params = new URLSearchParams(decodeURIComponent(window.parent.location.href)),
+                subModuleId = params.get("submoduleId"),
+                ticketId = params.get("ticketId");
+                if(subModuleId && ticketId)
+                {
+                this._navToDetail(subModuleId);
+                }
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-            },    
+            },   
+
+            _navToDetail: function (id) {
+               
+                this.getRouter().navTo("detail", {
+                    parentMaterial: id,
+                    layout: "TwoColumnsMidExpanded"
+                },
+                    false
+                );
+
+
+                
+            },
+            
+            
 
            
              onMasterListPress: function (oEvent) {          

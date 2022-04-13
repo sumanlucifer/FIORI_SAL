@@ -143,7 +143,18 @@ sap.ui.define([], function () {
             console.log(oValue);
             return oValue.results[0].name_defaultValue;
 
+        },
+
+        handleNoData: function(sValue){
+            if(!sValue){
+                var sNoData = "NA";
+                return sNoData;
+            }else {
+                return sValue;
+            }
         }
+
+        
 
 
     };

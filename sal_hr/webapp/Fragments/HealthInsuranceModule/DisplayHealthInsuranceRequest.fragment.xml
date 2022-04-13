@@ -32,13 +32,13 @@
                                   <Label text="National ID" required="false" />
                                 </Column>
                                  <Column demandPopin="true" minScreenWidth="Tablet">
-                                      <Label text="National Address" required="false" />
+                                      <Label text="Address" required="false" />
                                 </Column>
                                   <Column demandPopin="true" minScreenWidth="Tablet">
                                       <Label text="Date of Birth" required="false" />
                                 </Column>
                                   <Column demandPopin="true" minScreenWidth="Tablet">
-                                      <Label text="Delivery Location" required="false" />
+                                      <Label text="Location" required="false" />
                                 </Column>
                                <Column demandPopin="true" minScreenWidth="Tablet">
                                       <Label text="Scheme" required="false" />
@@ -69,15 +69,15 @@
                                              <Text text="{DisplayHealthInsuranceModel>cust_location}"/>
                                            <Text text="{DisplayHealthInsuranceModel>cust_scheme}"/>
                                               <VBox>
-                                                 <Link text="Download(1)" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment1Nav',formatter:'.formatter.viewFileNames'}"/>
+                                                 <Link  tooltip="Download(1)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment1Nav',formatter:'.formatter.viewFileNames'}"/>
 
                                                  
                                             </VBox>
                                             <VBox>
-                                               <Link  text="Download(2)" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment2Nav',formatter:'.formatter.viewFileNames'}"/>
+                                               <Link tooltip="Download(2)"  text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment2Nav',formatter:'.formatter.viewFileNames'}"/>
                                             </VBox>
                                             <VBox>
-                                                <Link  text="Download(3)" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment3Nav',formatter:'.formatter.viewFileNames'}"/>
+                                                <Link  tooltip="Download(3)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment3Nav',formatter:'.formatter.viewFileNames'}"/>
                                             </VBox> 
                                     </cells>
                                 </ColumnListItem>

@@ -107,12 +107,12 @@
                             <!-- <Text text="{ticketCode}" /> -->
                             <Text text="{ticketCode}" />
                              <Text text="{externalCode}" />
-                             <Text text="" />
+                             <Text text="{path : 'effectiveStartDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'},formatter:'.formatter.handleNoData'}" />
                              <Text text="{summary}" />
 
                             <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'}}" />
-                             <Text text="" />
-                             <Text text="" />
+                             <Text text="NA" />
+                             <Text text="NA" />
                            
                            <ObjectStatus text="{path:'status',formatter:'.formatter.ticketStatusText'}" state="{path:'status',formatter:'.formatter.ticketStatus'}" />
                         </cells>
