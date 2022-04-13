@@ -4,10 +4,14 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "sap/m/upload/Uploader",
-    "sap/m/UploadCollectionParameter"
+    "sap/m/UploadCollectionParameter",
+    "sap/ui/core/Fragment",
+    "sap/ui/Device",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter) {
+    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter, Fragment, Device, Filter, FilterOperator) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateLeaveRequest", {
             onInit: function () {
@@ -42,9 +46,9 @@ sap.ui.define([
                     busy: false,
                     uploadAttachment: true,
                     currentDate: new Date(),
-                    meetingType:false,
-                    availBal:false,
-                    halfDayType:false
+                    meetingType: false,
+                    availBal: false,
+                    halfDayType: false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -60,9 +64,8 @@ sap.ui.define([
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
                 this._bindView("/MasterSubModules" + this.sParentID);
-               
-
             },
+
             _bindView: function () {
 
                 var oComponentModel = this.getComponentModel();
@@ -83,7 +86,7 @@ sap.ui.define([
                         }.bind(this),
                         dataReceived: function () {
                             this.getView().setBusy(false);
-                           
+
                         }.bind(this)
                     }
                 });
@@ -98,7 +101,7 @@ sap.ui.define([
                     oPayloadObj = this.fnGetLeaveRequestPayload();
 
 
-                if(this.bValid!= false){
+                if (this.bValid != false) {
                     this.getView().setBusy(true);
 
                     this.mainModel.create(sEntityPath, oPayloadObj, {
@@ -109,114 +112,133 @@ sap.ui.define([
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
-    
+
                             });
                         }.bind(this),
                         error: function (oError) {
                             this.getView().setBusy(false);
                             sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
                             this.getView().getModel().refresh();
-    
-    
+
+
                         }.bind(this)
                     })
                 }
-               
+
             },
             fnGetLeaveRequestPayload: function () {
-                var sQtyHrs;
-                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-                if(this.attachReq === true && this.isAttachment === false){
-                    sap.m.MessageBox.error("Please upload the attachments.");
-                    this.bValid = false;
-                }else {
-                    this.bValid = true;                    
-                var sAttachmentFileContent, sAttahmentFileName;
-
-                var sStartDate = this.getView().byId("idStartDate").getDateValue();
-
-                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                    oStartDate = dateFormat.format(new Date(sStartDate));
-                sStartDate = oStartDate + "T00:00:00";
-
-                var sEndDate = this.getView().byId("idEndDate").getDateValue();
-
-            
-
-             
-                var oEndDate = dateFormat.format(new Date(sEndDate));
-                sEndDate = oEndDate + "T00:00:00";
-                var sTimeType = this.getView().byId("idTimeType").getSelectedKey();
-
-                // if(sTimeType === "460"){
-                //     var sQtyHrs = this.getView().byId("TP1").getValue();
-                //     sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                // }else{
-                   
-                // }
-
-                switch (sTimeType) {
-                    case "460":
-                        sQtyHrs = this.getView().byId("TP1").getValue();
-                        sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-
-                   break;
-                   case "HD1":         
-                     sQtyHrs ="0.5";
-                   break;
-                   default:
-                    sQtyHrs ="0.0";
-                }   
-
-                if (this.isAttachment === true) {
-                    sAttachmentFileContent = this.fileContent;
-                    sAttahmentFileName = this.fileName;
-                } else {
-
-                   
-                        sAttachmentFileContent = "on Leave";
-                        sAttahmentFileName = "Leave.txt";
-                    
-                    
+                // validate leave application for other user Field
+                var oLeaveApplicationForINP = this.getView().byId("idLeaveApplicationForINP");
+                if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
+                    if (!oLeaveApplicationForINP.getValue()) {
+                        oLeaveApplicationForINP.setValueState("Error");
+                        oLeaveApplicationForINP.setValueStateText("Please select user for which leave application will be created.");
+                        sValidationErrorMsg = "Please fill the all required fields.";
+                        return;
+                    } else {
+                        oLeaveApplicationForINP.setValueState("None");
+                    }
                 }
 
-                return {
-                    // "endDate": "/Date(" + sEndDate + ")/",
-                    "endDate": sEndDate,
-                    "loaActualReturnDate": null,
-                    "timeType": sTimeType,
-                    "loaExpectedReturnDate": null,
-                    "loaStartJobInfoId": null,
-                    // "startDate": "/Date(" + sStartDate + ")/",
-                    "startDate": sStartDate,
-                    "cust_KronosPayCodeEditID": null,
-                    "startTime": null,
-                    "loaEndJobInfoId": null,
-                    "approvalStatus": null,
-                    "undeterminedEndDate": false,
-                    "userId": sUserID,
-                    "recurrenceGroup": null,
+                var sUserID = null;
+                if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
+                    sUserID = oLeaveApplicationForINP.getValue();
+                } else {
+                    sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                }
 
-                    "endTime": null,
-                    "isAttachmentNew": true,
-                    "attachmentFileContent": sAttachmentFileContent,
-                    "attachmentFileName": sAttahmentFileName,
-                    "attachmentUserId": sUserID,
-                    "fractionQuantity":sQtyHrs
-                  
-                };
-            }   
-        },
+                var sQtyHrs;
+                if (this.attachReq === true && this.isAttachment === false) {
+                    sap.m.MessageBox.error("Please upload the attachments.");
+                    this.bValid = false;
+                } else {
+                    this.bValid = true;
+                    var sAttachmentFileContent, sAttahmentFileName;
+
+                    var sStartDate = this.getView().byId("idStartDate").getDateValue();
+
+                    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                        oStartDate = dateFormat.format(new Date(sStartDate));
+                    sStartDate = oStartDate + "T00:00:00";
+
+                    var sEndDate = this.getView().byId("idEndDate").getDateValue();
+
+
+
+
+                    var oEndDate = dateFormat.format(new Date(sEndDate));
+                    sEndDate = oEndDate + "T00:00:00";
+                    var sTimeType = this.getView().byId("idTimeType").getSelectedKey();
+
+                    // if(sTimeType === "460"){
+                    //     var sQtyHrs = this.getView().byId("TP1").getValue();
+                    //     sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    // }else{
+
+                    // }
+
+                    switch (sTimeType) {
+                        case "460":
+                            sQtyHrs = this.getView().byId("TP1").getValue();
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                            break;
+                        case "HD1":
+                            sQtyHrs = "0.5";
+                            break;
+                        default:
+                            sQtyHrs = "0.0";
+                    }
+
+                    if (this.isAttachment === true) {
+                        sAttachmentFileContent = this.fileContent;
+                        sAttahmentFileName = this.fileName;
+                    } else {
+
+
+                        sAttachmentFileContent = "on Leave";
+                        sAttahmentFileName = "Leave.txt";
+
+
+                    }
+
+                    return {
+                        // "endDate": "/Date(" + sEndDate + ")/",
+                        "endDate": sEndDate,
+                        "loaActualReturnDate": null,
+                        "timeType": sTimeType,
+                        "loaExpectedReturnDate": null,
+                        "loaStartJobInfoId": null,
+                        // "startDate": "/Date(" + sStartDate + ")/",
+                        "startDate": sStartDate,
+                        "cust_KronosPayCodeEditID": null,
+                        "startTime": null,
+                        "loaEndJobInfoId": null,
+                        "approvalStatus": null,
+                        "undeterminedEndDate": false,
+                        "userId": sUserID,
+                        "recurrenceGroup": null,
+
+                        "endTime": null,
+                        "isAttachmentNew": this.isAttachment,
+                        "attachmentFileContent": sAttachmentFileContent,
+                        "attachmentFileName": sAttahmentFileName,
+                        "attachmentUserId": sUserID,
+                        "fractionQuantity": sQtyHrs
+
+                    };
+                }
+            },
 
             onLeaveStartDatChange: function (oEvent) {
                 var oneDay = 24 * 60 * 60 * 1000;
-                
+
                 var sStartDate = oEvent.getSource().getValue();
                 this.getView().byId("idEndDate").setValue(sStartDate);
 
 
-               
-              
+
+
                 // if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
                 //     oEvent.getSource().setValueState("Error");
                 //     oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
@@ -226,7 +248,7 @@ sap.ui.define([
                 //     oEvent.getSource().setValueStateText("");
                 //     this.getView().byId("idEndDate").setValueState();
                 //     this.getView().byId("idEndDate").setValueStateText("");
-                   
+
                 // }
             },
             onLeaveEndDateChange: function (oEvent) {
@@ -363,17 +385,17 @@ sap.ui.define([
             onTimeTyeChange: function (oEvent) {
                 var sType = oEvent.getSource().getSelectedKey();
                 var that = this;
-             
+
 
                 switch (sType) {
-                     case "S110":
+                    case "S110":
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                         this.attachReq = false;
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', true);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
 
-                    break;
+                        break;
                     case "500":
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                         this.attachReq = false;
@@ -381,7 +403,7 @@ sap.ui.define([
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
 
-                    break;
+                        break;
                     case "460":
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                         this.attachReq = false;
@@ -389,7 +411,7 @@ sap.ui.define([
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
 
-                    break;
+                        break;
                     case "HD1":
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
                         this.attachReq = true;
@@ -397,7 +419,7 @@ sap.ui.define([
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', true);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', true);
 
-                    break;
+                        break;
                     default:
                         this.attachReq = true;
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
@@ -405,7 +427,7 @@ sap.ui.define([
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
 
-                }    
+                }
 
 
 
@@ -466,7 +488,7 @@ sap.ui.define([
                 })
 
             },
-            handleTimeChange:function(oEvent){
+            handleTimeChange: function (oEvent) {
                 var oTimePicker = this.byId("TP1"),
                     oTP = oEvent.getSource(),
                     sValue = oEvent.getParameter("value");
@@ -479,14 +501,65 @@ sap.ui.define([
                     sap.m.MessageBox.error("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
                 } else {
                     oTimePicker.setValueState();
-                    
+
                     this.getView().byId("idRaiseRequestBTN").setEnabled(true);
                 }
+            },
+
+
+            onValueHelpRequest: function () {
+                var oView = this.getView();
+
+                if (!this._oEmpF4Dialog) {
+                    this._oEmpF4Dialog = Fragment.load({
+                        id: oView.getId(),
+                        name: "com.sal.salhr.Fragments.PRNValueHelp",
+                        controller: this
+                    }).then(function (oDialog) {
+                        oView.addDependent(oDialog);
+                        if (Device.system.desktop) {
+                            oDialog.addStyleClass("sapUiSizeCompact");
+                        }
+                        return oDialog;
+                    });
+                }
+
+                this._oEmpF4Dialog.then(function (oDialog) {
+                    var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
+                    var sUserIDFilter = new Filter({
+                        path: "managerId",
+                        operator: FilterOperator.EQ,
+                        value1: this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/managerId")
+                    });
+                    oList.getBinding("items").filter([sUserIDFilter]);
+                    oDialog.open();
+                }.bind(this));
+            },
+
+            onValueHelpSearch: function (oEvent) {
+                var sValue = oEvent.getParameter("value");
+                var suserIdFilter = new Filter({
+                    path: "userId",
+                    operator: FilterOperator.EQ,
+                    value1: sValue.trim()
+                });
+                var sfirstNameFilter = new Filter({
+                    path: "firstName",
+                    operator: FilterOperator.EQ,
+                    value1: sValue.trim()
+                });
+                var aFilter = [];
+                aFilter.push(suserIdFilter, sfirstNameFilter);
+                oEvent.getSource().getBinding("items").filter(aFilter);
+            },
+
+            onValueHelpClose: function (oEvent) {
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                oEvent.getSource().getBinding("items").filter([]);
+                if (!oSelectedItem) {
+                    return;
+                }
+                this.byId("idLeaveApplicationForINP").setValue(oSelectedItem.getBindingContext().getObject().userId);
             }
-
-
-
-
-
         });
     });      
