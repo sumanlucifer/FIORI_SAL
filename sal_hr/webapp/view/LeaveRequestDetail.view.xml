@@ -70,7 +70,8 @@
                             <Text text="" />
                         </IconTabFilter> -->
                         <IconTabFilter text="{i18n>History}">
-                            <Text text="" />
+                            <!-- <Text text="" /> -->
+                             <core:Fragment fragmentName="com.sal.salhr.Fragments.LeaveModule.HistoryTab" type="XML"/>
                         </IconTabFilter>
                     </items>
                 </IconTabBar>

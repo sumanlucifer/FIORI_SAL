@@ -136,13 +136,13 @@ sap.ui.define([
     
                 this._pDialog.then(function (oDialog) {
                     var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
-                //   var userId =    this.managerID;
-                //     var sUserIDFilter = new sap.ui.model.Filter({
-                //         path: "managerId",
-                //         operator: sap.ui.model.FilterOperator.EQ,
-                //         value1: userId
-                //     });
-                //     oList.getBinding("items").filter([sUserIDFilter]);
+                  var userId =    this.userId;
+                    var sUserIDFilter = new sap.ui.model.Filter({
+                        path: "managerId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: userId
+                    });
+                    oList.getBinding("items").filter([sUserIDFilter]);
                    
     
                     oDialog.open();
