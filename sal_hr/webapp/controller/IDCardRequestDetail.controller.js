@@ -2,10 +2,11 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "com/sal/salhr/model/formatter"
+    "com/sal/salhr/model/formatter",
+    "sap/m/MessageBox"
 ],
 
-    function (BaseController, Controller, JSONModel, formatter) {
+    function (BaseController, Controller, JSONModel, formatter, MessageBox) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.IDCardRequestDetail", {
             formatter: formatter,
@@ -56,6 +57,9 @@ sap.ui.define([
                         expand: "cust_idReplacementDetails, UserNav"
                     },
                     events: {
+                        change: function (oEvent) {
+                            oEvent.getSource().refresh(false);
+                        }.bind(this),
                         dataRequested: function () {
                             this.getView().setBusy(true);
                         }.bind(this),
@@ -135,7 +139,7 @@ sap.ui.define([
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
                             this.getView().setBusy(false);
-                            sap.m.MessageBox.success("Record Deleted successfully.");
+                            MessageBox.success("Record Deleted successfully.");
                             this.getView().getModel().refresh();
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
@@ -148,6 +152,56 @@ sap.ui.define([
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
+                    }.bind(this)
+                });
+            },
+
+            onApprovePress: function () {
+                this.getView().setBusy(true);
+
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId"),
+                    sEntityPath = "/approveWfRequest??wfRequestId=" + swfRequestId + "L";
+
+                this.getView().getModel().create(sEntityPath, null, {
+                    success: function (oData) {
+                        MessageBox.success("Request Approved Successfully.");
+                        this.getView().setBusy(false);
+                        this.getView().getModel().refresh();
+                        this.oRouter.navTo("detail", {
+                            parentMaterial: this.sParentID,
+                            layout: "TwoColumnsMidExpanded"
+
+                        });
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getView().setBusy(false);
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        this.getView().getModel().refresh();
+                    }.bind(this)
+                });
+            },
+
+            onRejectPress: function () {
+                this.getView().setBusy(true);
+
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId"),
+                    sEntityPath = "/rejectWfRequest??wfRequestId=" + swfRequestId + "L";
+
+                this.getView().getModel().create(sEntityPath, null, {
+                    success: function (oData) {
+                        MessageBox.success("Request Rejected Successfully.");
+                        this.getView().setBusy(false);
+                        this.getView().getModel().refresh();
+                        this.oRouter.navTo("detail", {
+                            parentMaterial: this.sParentID,
+                            layout: "TwoColumnsMidExpanded"
+
+                        });
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getView().setBusy(false);
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        this.getView().getModel().refresh();
                     }.bind(this)
                 });
             }

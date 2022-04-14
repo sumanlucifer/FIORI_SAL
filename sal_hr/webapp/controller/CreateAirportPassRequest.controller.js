@@ -20,6 +20,7 @@ sap.ui.define([
                     currentDate: new Date()
                 });
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
+                this.mainModel.setSizeLimit(1000);
             },
 
             _onObjectMatched: function (oEvent) {
@@ -174,12 +175,13 @@ sap.ui.define([
 
                 // validate Nationality Field
                 var oNationality = this.getView().byId("idNationalityInp");
-                if (!oNationality.getSelectedKey() || oNationality.getValue().length < 2) {
+                if (!oNationality.getSelectedKey()) {
                     oNationality.setValueState("Error");
                     oNationality.setValueStateText("Please enter valid Nationality.");
                     sValidationErrorMsg = "Please fill the all required fields.";
                 } else {
                     oNationality.setValueState("None");
+                    this.getView().getModel("CreateAirpoPassModel").setProperty("/cust_toAirportPassItem/cust_nationality", oNationality.getSelectedKey());
                 }
 
                 // validate Airport Location Field

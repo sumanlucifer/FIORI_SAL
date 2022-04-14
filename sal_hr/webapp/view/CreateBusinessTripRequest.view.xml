@@ -133,10 +133,10 @@
                     <Label text="Other City" />
                     <Input id="idOtherCity" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" />
 
-                    <Label text="City (Other Country)" required="true"/>
+                    <Label text="City (Other Country)" />
                     <Input id="idCityCountry" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}" />
 
-                    <Label text="Inside/Otside Kingdom" required="true" />
+                    <Label text="Inside/Outside Kingdom" required="true" />
                     <Input id="idInsOutKingdom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false" />
 
                     <Label text="Per Diem" />
@@ -181,8 +181,8 @@
                     <Label text="Training Travel Date" required="true"/>
                     <DatePicker id="idTrainingFlightTravelDate" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"></DatePicker>
 
-                    <Label text="Travel From"/>
-                    <Input id="idTrainingTravelFrom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelFrom}"/>
+                    <!-- <Label text="Travel From"/>
+                    <Input id="idTrainingTravelFrom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelFrom}"/> -->
 
                     <Label text="Travel To"/>
                     <Input id="idTrainingTravelTo" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelTo}"/>

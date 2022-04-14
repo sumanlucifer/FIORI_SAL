@@ -56,6 +56,9 @@ sap.ui.define([
                     path: sKey,
                     parameters: {
                         expand: "UserNav",
+                        custom: {
+                            "recordStatus": object.status
+                        }
                     },
                     events: {
                         change: function (oEvent) {

@@ -47,7 +47,7 @@
                     "semanticObject": "Requests_semantic",
                     "action": "display",
                     "title": "{{flpTitle}}",
-                    "subTitle": "{{flpSubtitle}}",
+                    "subTitle": "",
                     "icon": "sap-icon://manager-insight"
                 }
             }
@@ -135,7 +135,7 @@
         },
         "pages": {
             "ListReport|Tickets": {
-                "entitySet": "Tickets",
+                "entitySet": "Report",
                 "component": {
                     "name": "sap.suite.ui.generic.template.ListReport",
                     "list": true,

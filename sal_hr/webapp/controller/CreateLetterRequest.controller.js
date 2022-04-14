@@ -64,6 +64,7 @@ sap.ui.define([
             },
             fnGetLetterRequestPayload: function () {
               var sTemplate = this.byId("idLetterTemplate").getSelectedKey();
+              var sDate = this.byId("idLetterEffectDatePicker").getDateValue();
               if(sTemplate === "1"){
                   sTemplate = "Introduction";
               }else {
@@ -76,7 +77,7 @@ sap.ui.define([
                         "country" : "India",
                          "userId" : "12002425",
                          "template" : sTemplate,
-                         "asOfDate" : new Date()
+                         "asOfDate" : sDate
                      
                   
                 };
@@ -94,6 +95,14 @@ sap.ui.define([
           
             onDownLoadPress: function (fContent) {
               
+                var sTemplate = this.byId("idLetterTemplate").getSelectedKey();
+                if(sTemplate === "1"){
+                    sTemplate = "Introduction Certificate.pdf";
+                }else {
+                  sTemplate = "Introduction Certificate with Salary.pdf";
+                }
+
+
                     var decodedPdfContent = atob(fContent);
                     var byteArray = new Uint8Array(decodedPdfContent.length)
                     for (var i = 0; i < decodedPdfContent.length; i++) {
@@ -103,7 +112,7 @@ sap.ui.define([
                     var _pdfurl = URL.createObjectURL(blob);
                     var a = document.createElement('a');
                     a.href = _pdfurl;
-                    a.download = "Introduction Template.pdf";
+                    a.download = sTemplate;
                     a.dispatchEvent(new MouseEvent('click'));
                
             }
