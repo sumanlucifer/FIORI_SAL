@@ -59,6 +59,67 @@ sap.ui.define([], function () {
                     break;
             }
         },
+        
+        addDesc: function (sValue) {
+            switch (sValue) {
+                case 1:
+                    return 'Create, edit or withdraw leave application';
+                    break;
+                case 2:
+                    return 'Create, edit or withdraw request for business trip requests with required details';
+                    break;
+                case 3:
+                    return 'Raise a request to add a health insurance dependant';
+                    break;
+                case 4:
+                    return 'Create, edit or withdraw request for loan advance';
+                    break;
+                case 5:
+                    return 'Create or withdraw request for business card ';
+                    break;
+                case 6:
+                    return 'Create, edit or withdraw request for airport pass';
+                    break;
+                case 7:
+                    return 'Create a request to update the Id card details';
+                    break;
+                case 8:
+                    return 'Apply for job vacany';
+                    break;
+                case 9:
+                    return 'Performance Management module';
+                    break;
+                case 10:
+                    return 'Create a request for additional payment';
+                    break;
+                case 11:
+                    return 'Raise a request to download Salary certificate or Introductory letter';
+                    break;
+                case 12:
+                    return 'Create a request to HR for disciplinary action against subordinate';
+                    break;
+                case 13:
+                    return 'Create or withdraw Bank account change';
+                    break;
+                case 14:
+                    return 'Create a request to HR for Salary Increment of subordinate';
+                    break;
+                case 15:
+                    return 'Create a request to HR for Promotion of subordinate';
+                    break;
+                case 16:
+                    return 'Create a request to HR for Transfer of subordinate';
+                    break;
+                case 17:
+                    return 'Create a request to HR for Termination of subordinate';
+                    break;
+                case 18:
+                    return 'Learning module';
+                    break;
+            }
+        },
+
+
 
         viewFileNames: function (oData) {
             if (oData) {
