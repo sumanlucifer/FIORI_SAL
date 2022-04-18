@@ -253,6 +253,62 @@ sap.ui.define([
                     }.bind(this)
                 });
             },
+            onTimeTyeChange: function (oEvent) {
+                var sType = oEvent.getSource().getSelectedKey();
+                var that = this;
+
+
+                switch (sType) {
+                    case "S110":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                        break;
+                    case "500":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                        break;
+                    case "460":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                        break;
+                    case "HD1":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        this.attachReq = true;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', true);
+
+                        break;
+                    default:
+                        this.attachReq = true;
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                }
+
+
+
+
+
+
+
+            },
+
+
 
             fnGetLeaveRequestPayload: function () {
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
