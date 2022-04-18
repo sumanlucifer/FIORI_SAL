@@ -71,7 +71,7 @@ sap.ui.define([
                 // this.EmpInfoObj = oEmpInfoObj;
                
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
-              this.managerID = this.EmpInfoObj.managerId;
+              this.managerID = this.EmpInfoObj.userId;
 
               
 
@@ -136,12 +136,13 @@ sap.ui.define([
     
                 this._pDialog.then(function (oDialog) {
                     var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
-                  var userId =    this.userId;
+                  var userId =    this.managerID;
                     var sUserIDFilter = new sap.ui.model.Filter({
-                        path: "managerId",
+                        path: "userId",
                         operator: sap.ui.model.FilterOperator.EQ,
                         value1: userId
                     });
+                    
                     oList.getBinding("items").filter([sUserIDFilter]);
                    
     
@@ -353,28 +354,7 @@ sap.ui.define([
                 };
             },
 
-            onLeaveStartDatChange1:function(oEvent){
-                var oneDay = 24 * 60 * 60 * 1000;
-                var sEndDate = this.byId("idIncidentStartDate").getDateValue();
-                var sStartDate = oEvent.getSource().getDateValue();
-               
-                this.sRequestDay = "";
-                if(sEndDate <= sStartDate){
-                    oEvent.getSource().setValueState("Error");
-                    oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
-                    this.byId("idIncidentStartDate").setValue("");
-                }else{
-                    oEvent.getSource().setValueState();
-                    oEvent.getSource().setValueStateText("");
-                    this.byId("idIncidentStartDate").setValueState();
-                    this.byId("idIncidentStartDate").setValueStateText("");
-                    // this.sRequestDay = Math.round(Math.abs((new Date(sEndDate) - sStartDate) / oneDay)) + 1;
-                    
-                    this.sRequestDay = this.dateDifference(sStartDate,sEndDate);
-
-                    this.getView().getModel("LocalViewModel").setProperty("/requestDay",this.sRequestDay);
-                }
-            },
+         
             onLeaveEndDateChange:function(oEvent){
                 var oneDay = 24 * 60 * 60 * 1000;
                 var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
@@ -402,69 +382,10 @@ sap.ui.define([
                     this.getView().getModel("LocalViewModel").setProperty("/recurringAbs", false);
                  }
             },
-            dateDifference:function(startDate, endDate) {
-               
-                startDate.setHours(12,0,0,0);
-                endDate.setHours(12,0,0,0);
-      
-                var totalDays = Math.round((endDate - startDate) / 8.64e7);
-                
-              
-                var wholeWeeks = totalDays / 7 | 0;
-                
-               
-                var days = wholeWeeks * 5;
-              
-               
-                if (totalDays % 7) {
-                    startDate.setDate(startDate.getDate() + wholeWeeks * 7);
-                  
-                  while (startDate < endDate) {
-                  
-                    startDate.setDate(startDate.getDate() + 1);
-              
-                 
-                    if (startDate.getDay() != 5 && startDate.getDay() != 6) {
-                      ++days;
-                    }
-                  }
-                  startDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/startDate").getDate());
-                }
-                // var data = this.getView().getModel("LocalViewModel").getData();
-                // var sReturnDate = jQuery.extend(true,[],data);
-
-                var sReturnDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idEndDate").getDateValue();
-
-                
-
-                sReturnDate.setDate(sReturnDate.getDate() + 1);
-
-                if(sReturnDate.getDay() === 5){
-                    sReturnDate.setDate(sReturnDate.getDate() + 2);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
-                    this.getView().getModel("LocalViewModel").setProperty("/returnDate",sReturnDate);
-                }else if(sReturnDate.getDay() === 6){
-                    sReturnDate.setDate(sReturnDate.getDate() + 1);
-                    this.getView().getModel("LocalViewModel").setProperty("/returnDate",sReturnDate);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
-                }else {
-                    sReturnDate.setDate(sReturnDate.getDate() + 1);
-                    this.getView().getModel("LocalViewModel").setProperty("/returnDate",sReturnDate);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
-                }
-                endDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/endDate").getDate());
-                return days + 1;
-              },
+          
             
           
-            onTimeTyeChange:function(oEvent){
-                 var sType = oEvent.getSource().getSelectedKey();
-                 if(sType === "S110" || sType === "500"){
-                    this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment' , false);
-                 }else {
-                    this.getView().getModel("LocalViewModel").setProperty('/uploadAttachment' , true);
-                 }
-            },
+          
             onFileSizeExceed: function () {
                 MessageBox.error("File size exceeded, Please upload file upto 10MB.");
             },

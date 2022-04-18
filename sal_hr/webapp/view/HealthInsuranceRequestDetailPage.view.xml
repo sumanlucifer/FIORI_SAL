@@ -62,7 +62,24 @@
           <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
                 <l:content>
  <VBox id="idContentVBox" width="100%">
-                 <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.DisplayHealthInsuranceRequest" type="XML"/>
+                
+
+
+<IconTabBar id="idBusinessTripiconTabBar">
+                    <items>
+                    
+                        <IconTabFilter id="idEditBusinessTripRequestITB" text="{i18n>Details}" >
+                         <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.DisplayHealthInsuranceRequest" type="XML"/>
+                        </IconTabFilter>
+
+                        <IconTabFilter text="{i18n>History}">
+                            <!-- <Text text="" /> -->
+                             <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.HistoryTab" type="XML"/>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+
+
             </VBox>
                 </l:content>
             </l:VerticalLayout>

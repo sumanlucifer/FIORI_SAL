@@ -42,7 +42,7 @@ sap.ui.define([
                 var object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
-
+                this.onCallHistoryData(object.ticketCode);
 
                 if (object.status === "APPROVED") {
                     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
@@ -104,6 +104,29 @@ sap.ui.define([
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance dependent Request");
                         this.getView().getModel("LocalViewModel").refresh();
 
+            },
+
+            onCallHistoryData: function (sticketCode) {
+                var ticketCodeFilter = new sap.ui.model.Filter({
+                    path: "ticketCode",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: sticketCode
+                });
+                var filter = [];
+                filter.push(ticketCodeFilter);
+                this.getOwnerComponent().getModel().read("/TicketHistory", {
+                    filters: [filter],
+                    
+                    success: function (oData, oResponse) {
+                        var oHistoryData = new JSONModel(oData.results);
+                        this.getView().setModel(oHistoryData, "HistoryData");
+                    
+                        
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }
+                });
             },
 
             fnSetDisplayHealthInsuranceModel: function (oData) {

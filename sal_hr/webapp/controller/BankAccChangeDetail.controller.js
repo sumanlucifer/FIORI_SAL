@@ -104,11 +104,36 @@ sap.ui.define([
                             }.bind(this),
                             dataReceived: function () {
                                 this.getView().setBusy(false);
+                                this.onCallHistoryData(object.ticketCode);
                             }.bind(this)
                         }
                     });
                 }
             },
+
+            onCallHistoryData: function (sticketCode) {
+                var ticketCodeFilter = new sap.ui.model.Filter({
+                    path: "ticketCode",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: sticketCode
+                });
+                var filter = [];
+                filter.push(ticketCodeFilter);
+                this.getOwnerComponent().getModel().read("/TicketHistory", {
+                    filters: [filter],
+                    
+                    success: function (oData, oResponse) {
+                        var oHistoryData = new JSONModel(oData.results);
+                        this.getView().setModel(oHistoryData, "HistoryData");
+                    
+                        
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }
+                });
+            },
+
 
             onEditPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
