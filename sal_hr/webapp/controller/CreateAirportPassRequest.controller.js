@@ -127,7 +127,11 @@ sap.ui.define([
                         }.bind(this),
                         error: function (oError) {
                             this.getView().setBusy(false);
-                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                                sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            else {
+                                sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                            }
                         }.bind(this)
                     });
                 } else {

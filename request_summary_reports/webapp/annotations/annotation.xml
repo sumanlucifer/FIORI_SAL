@@ -59,7 +59,7 @@
             <Annotations Target="HumanResourceService.Report/ticketId">
                 <Annotation Term="Common.Label" String="{@i18n>TicketID}"/>
             </Annotations>
-             <Annotations Target="HumanResourceService.Report/moduleName">
+            <Annotations Target="HumanResourceService.Report/moduleName">
                 <Annotation Term="Common.Label" String="{@i18n>AssignedBusinessUnit}"/>
             </Annotations>
             <Annotations Target="HumanResourceService.Report/creationDate">
@@ -75,7 +75,7 @@
             <Annotations Target="HumanResourceService.EntityContainer/Report">
                 <Annotation Term="Capabilities.SearchRestrictions">
                     <Record Type="Capabilities.SearchRestrictionsType">
-                        <PropertyValue Property="Searchable" Bool="true"/>
+                        <PropertyValue Property="Searchable" Bool="false"/>
                     </Record>
                 </Annotation>
                 <Annotation Term="Capabilities.InsertRestrictions">

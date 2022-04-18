@@ -20,7 +20,6 @@ sap.ui.define([
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
                     PageTitle: null,
-                    Modify: true,
                     currentDate: new Date(),
                     AirPortLocatonId: null,
                     AirPortLocatoDesc: null,
@@ -583,6 +582,16 @@ sap.ui.define([
                     parentMaterial: this.sParentID,
                     layout: "TwoColumnsMidExpanded"
                 });
+            },
+
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
+
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
         });
     });        

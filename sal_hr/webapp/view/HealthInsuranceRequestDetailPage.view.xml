@@ -2,11 +2,11 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
-     xmlns:unified="sap.ui.unified"
+    xmlns:unified="sap.ui.unified"
     xmlns:l="sap.ui.layout"
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core"
-     xmlns:fm="sap.ui.layout.form" height="100%">
+    xmlns:fm="sap.ui.layout.form" height="100%">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding">
         <!-- DynamicPage Title -->
         <f:title>
@@ -22,10 +22,19 @@
                 <f:expandedContent>
                     <Label text="{i18n>RequestID} {headerModel>/ticketCode}"/>
                 </f:expandedContent>
+
+                <!--Modify and Withdraw not be visible for Manager Tile -->
                 <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/Modify} === true ? false : false }"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/Modify} === true ? false : false }"/>
+                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
+                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
                 </f:actions>
+
+                <!--Approve and Reject visible for Manager Tile -->
+                <f:actions>
+                    <Button text="Approve" icon="sap-icon://accept" type="Accept" press="onApprovePress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}], formatter: '.formatter.setApproveRejectManagerActionVisibility'}"/>
+                    <Button text="Reject" icon="sap-icon://decline" type="Reject" press="onRejectPress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}], formatter: '.formatter.setApproveRejectManagerActionVisibility'}"/>
+                </f:actions>
+
                 <f:navigationActions>
                     <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
                     <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
@@ -44,7 +53,7 @@
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>
                         <!-- <ObjectAttribute text="{headerModel>/employeeId}"/> -->
-                          <ObjectAttribute text="{DisplayHealthInsuranceModel>/UserNav/firstName} {DisplayHealthInsuranceModel>/UserNav/middleName} {DisplayHealthInsuranceModel>/UserNav/lastName}({headerModel>/employeeId})"/>
+                        <ObjectAttribute text="{DisplayHealthInsuranceModel>/UserNav/firstName} {DisplayHealthInsuranceModel>/UserNav/middleName} {DisplayHealthInsuranceModel>/UserNav/lastName}({headerModel>/employeeId})"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DueBy Date}"/>
@@ -58,12 +67,12 @@
             </f:DynamicPageHeader>
         </f:header>
         <!-- DynamicPage Content -->
-     <f:content>
-          <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
+        <f:content>
+            <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
                 <l:content>
- <VBox id="idContentVBox" width="100%">
-                 <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.DisplayHealthInsuranceRequest" type="XML"/>
-            </VBox>
+                    <VBox id="idContentVBox" width="100%">
+                        <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.DisplayHealthInsuranceRequest" type="XML"/>
+                    </VBox>
                 </l:content>
             </l:VerticalLayout>
         </f:content>

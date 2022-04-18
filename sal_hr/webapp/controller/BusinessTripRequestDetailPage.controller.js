@@ -41,7 +41,6 @@ sap.ui.define([
                     currentDate: new Date(),
                     EditMode: false,
                     PageTitle: null,
-                    Modify: true,
                     businessTravel: false,
                     trainingTravel: false
                 });
@@ -77,9 +76,9 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
 
                 // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                 // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
                 // }
 
                 var oComponentModel = this.getComponentModel();
@@ -814,6 +813,15 @@ sap.ui.define([
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
                 }
+            },
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
+
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
         });
     });

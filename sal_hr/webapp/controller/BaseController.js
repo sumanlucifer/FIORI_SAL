@@ -140,25 +140,25 @@ sap.ui.define([
                             this.fnSetCreateAirpassLocalModel(oData);
                             break;
 
-                      // Business Card Request Module
-                      case "5":
-                        this.fnSetCreateBusinessCardLocalModel(oData);
-                        break;
-                     
+                        // Business Card Request Module
+                        case "5":
+                            this.fnSetCreateBusinessCardLocalModel(oData);
+                            break;
+
                     }
-                  
-                  
-                  
+
+
+
                 }.bind(this),
                 error: function (oError) {
-                    
+
                     this.getView().setBusy(false);
 
                 }.bind(this)
             })
         },
 
-    
+
 
         // fnGetEmpInfo: function (sExternalCode, sParentID) {
         //     var sKey = this.getView().getModel().createKey("/EmpInfo", {
@@ -221,7 +221,54 @@ sap.ui.define([
             }
 
             return iAge;
+        },
+
+        onApproveRequest: function (sWFRequestId) {
+            this.getView().setBusy(true);
+
+            var sEntityPath = "/approveWfRequest??wfRequestId=" + sWFRequestId + "L";
+
+            this.getView().getModel().create(sEntityPath, null, {
+                success: function (oData) {
+                    this.getView().setBusy(false);
+                    MessageBox.success("Request Approved Successfully.");
+                    this.getView().getModel().refresh();
+                    this.oRouter.navTo("detail", {
+                        parentMaterial: this.sParentID,
+                        layout: "TwoColumnsMidExpanded"
+
+                    });
+                }.bind(this),
+                error: function (oError) {
+                    this.getView().setBusy(false);
+                    MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    this.getView().getModel().refresh();
+                }.bind(this)
+            });
+        },
+
+        onRejectRequest: function (sWFRequestId) {
+            this.getView().setBusy(true);
+
+            var sEntityPath = "/rejectWfRequest??wfRequestId=" + sWFRequestId + "L";
+
+            this.getView().getModel().create(sEntityPath, null, {
+                success: function (oData) {
+                    MessageBox.success("Request Rejected Successfully.");
+                    this.getView().setBusy(false);
+                    this.getView().getModel().refresh();
+                    this.oRouter.navTo("detail", {
+                        parentMaterial: this.sParentID,
+                        layout: "TwoColumnsMidExpanded"
+
+                    });
+                }.bind(this),
+                error: function (oError) {
+                    this.getView().setBusy(false);
+                    MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    this.getView().getModel().refresh();
+                }.bind(this)
+            });
         }
-       
     });
 });

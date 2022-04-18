@@ -14,7 +14,6 @@ sap.ui.define([
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
                     PageTitle: null,
-                    Modify: true,
                     IDCardModule: false
                 });
 
@@ -59,6 +58,7 @@ sap.ui.define([
                     events: {
                         change: function (oEvent) {
                             oEvent.getSource().refresh(false);
+                            this.getView().setBusy(false);
                         }.bind(this),
                         dataRequested: function () {
                             this.getView().setBusy(true);
@@ -157,53 +157,13 @@ sap.ui.define([
             },
 
             onApprovePress: function () {
-                this.getView().setBusy(true);
-
-                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId"),
-                    sEntityPath = "/approveWfRequest??wfRequestId=" + swfRequestId + "L";
-
-                this.getView().getModel().create(sEntityPath, null, {
-                    success: function (oData) {
-                        MessageBox.success("Request Approved Successfully.");
-                        this.getView().setBusy(false);
-                        this.getView().getModel().refresh();
-                        this.oRouter.navTo("detail", {
-                            parentMaterial: this.sParentID,
-                            layout: "TwoColumnsMidExpanded"
-
-                        });
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getView().setBusy(false);
-                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
-                        this.getView().getModel().refresh();
-                    }.bind(this)
-                });
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
             },
 
             onRejectPress: function () {
-                this.getView().setBusy(true);
-
-                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId"),
-                    sEntityPath = "/rejectWfRequest??wfRequestId=" + swfRequestId + "L";
-
-                this.getView().getModel().create(sEntityPath, null, {
-                    success: function (oData) {
-                        MessageBox.success("Request Rejected Successfully.");
-                        this.getView().setBusy(false);
-                        this.getView().getModel().refresh();
-                        this.oRouter.navTo("detail", {
-                            parentMaterial: this.sParentID,
-                            layout: "TwoColumnsMidExpanded"
-
-                        });
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getView().setBusy(false);
-                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
-                        this.getView().getModel().refresh();
-                    }.bind(this)
-                });
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
         });
     });

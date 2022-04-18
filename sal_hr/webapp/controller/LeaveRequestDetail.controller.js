@@ -6,7 +6,7 @@ sap.ui.define([
 
 ],
 
-    function (BaseController, Controller, JSONModel,formatter) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.LeaveRequestDetail", {
             formatter: formatter,
@@ -17,27 +17,23 @@ sap.ui.define([
                     BusineesTripModule: false,
                     HealthModule: false,
                     PageTitle: null,
-                    Modify: true,
                     IDCardModule: false,
-                    meetingType:false
+                    meetingType: false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("LeaveRequestDetail").attachPatternMatched(this._onObjectMatched, this);
-               
+
             },
 
             _onObjectMatched: function (oEvent) {
-               
+
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // // this._bindView();
-                // this._getTicketData(this.sChildID);
 
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
@@ -60,9 +56,9 @@ sap.ui.define([
 
 
                 // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                 // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
                 // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
@@ -100,22 +96,22 @@ sap.ui.define([
                                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
 
-                                    break;
+                                        break;
                                     case "500":
                                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
 
-                                    break;
+                                        break;
                                     case "460":
                                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
 
-                                    break;
+                                        break;
                                     default:
                                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
                                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
-                                }    
-                                     
+                                }
+
 
 
 
@@ -249,8 +245,8 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
-            onWithdrawPress: function () {       
-                this.getView().setBusy(true);        
+            onWithdrawPress: function () {
+                this.getView().setBusy(true);
                 this.fnDeleteLeaveRequest();
             },
 
@@ -288,7 +284,7 @@ sap.ui.define([
 
             onSavePress: function () {
                 var sEntityPath = "/SF_Leave('" + this.object.externalCode + "')",
-                        oPayloadObj = this.fnGetLeaveRequestPayload();
+                    oPayloadObj = this.fnGetLeaveRequestPayload();
 
                 this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
@@ -307,7 +303,7 @@ sap.ui.define([
 
             fnGetLeaveRequestPayload: function () {
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-              
+
                 if (this.isAttachmentNew === true) {
                     var sattachmentFileName = this.fileName;
                     var sattachmentFileContent = this.fileContent;
@@ -355,9 +351,9 @@ sap.ui.define([
 
             },
 
-            
+
             onDownLoadPress: function () {
-              
+
                 var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
                 var fileext = this.getView().getModel("attachmentModel").getData().fileExtension;
                 var mimeType = this.getView().getModel("attachmentModel").getData().mimeType;
@@ -459,7 +455,7 @@ sap.ui.define([
 
                 });
             }
-         
+
 
 
         });
