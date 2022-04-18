@@ -74,12 +74,10 @@
                         <IconTabFilter id="idAirportPassRequestEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
                             <core:Fragment fragmentName="com.sal.salhr.Fragments.AirportTravelPassModule.EditAirportPassRequest" type="XML"/>
                         </IconTabFilter>
-                        <!-- <IconTabFilter text="{i18n>Resolution}">
-                            <Text text="" />
-                        </IconTabFilter>
+                      
                         <IconTabFilter text="{i18n>History}">
-                            <Text text="" />
-                        </IconTabFilter> -->
+                          <core:Fragment fragmentName="com.sal.salhr.Fragments.AirportTravelPassModule.HistoryTab" type="XML"/>
+                        </IconTabFilter>
                     </items>
                 </IconTabBar>
 

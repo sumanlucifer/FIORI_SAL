@@ -25,7 +25,7 @@
                                                                      ],
                                                          sorter : {
                                                              path : 'externalName_defaultValue' 
-                                                        } }" change="onTimeTyeChange" selectedKey="{timeTypeModel>/externalName_defaultValue}">
+                                                        } }" change="onTimeTyeChange" selectedKey="{timeTypeModel>/externalCode}">
                             <core:Item key="{externalCode}" text="{externalName_defaultValue}" />
                         </Select>
             

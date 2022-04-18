@@ -54,6 +54,7 @@ sap.ui.define([
                 this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
+                this.onCallHistoryData(object.ticketCode);
 
                 var oComponentModel = this.getComponentModel();
                 var sKey = oComponentModel.createKey("/SF_AirportPassMain", {
@@ -81,6 +82,29 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Airport Travel Pass Request");
             },
 
+
+            onCallHistoryData: function (sticketCode) {
+                var ticketCodeFilter = new sap.ui.model.Filter({
+                    path: "ticketCode",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: sticketCode
+                });
+                var filter = [];
+                filter.push(ticketCodeFilter);
+                this.getOwnerComponent().getModel().read("/TicketHistory", {
+                    filters: [filter],
+                    
+                    success: function (oData, oResponse) {
+                        var oHistoryData = new JSONModel(oData.results);
+                        this.getView().setModel(oHistoryData, "HistoryData");
+                    
+                        
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }
+                });
+            },
             fnSetUserName: function (oData) {
                 var sUserName = "";
                 if (oData.createdByNav.defaultFullName) {
