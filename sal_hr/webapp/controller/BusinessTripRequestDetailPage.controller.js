@@ -99,6 +99,11 @@ sap.ui.define([
                     }.bind(this),
                     error: function () {
                         this.getView().setBusy(false);
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }.bind(this)
                 });
 
@@ -116,15 +121,19 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
+
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
+
+
                     }.bind(this),
                     error: function (oError) {
-                        sap.m.MessageBox.error(JSON.stringify(oError));
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }
                 });
             },
@@ -350,7 +359,11 @@ sap.ui.define([
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
-                        MessageBox.error("Record Not able to delete.");
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }.bind(this),
                 });
             },
@@ -388,7 +401,11 @@ sap.ui.define([
                         }.bind(this),
                         error: function (oError) {
                             this.getView().setBusy(false);
-                            MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                                sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            else {
+                                sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                            }
                         }.bind(this)
                     });
                 } else {

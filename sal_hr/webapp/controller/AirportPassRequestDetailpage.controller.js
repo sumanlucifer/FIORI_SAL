@@ -74,8 +74,13 @@ sap.ui.define([
                         this.fnSetUserName(oData);
                         this._fnSetDisplayEditAirpassModel(oData);
                     }.bind(this),
-                    error: function () {
+                    error: function (oError) {
                         this.getView().setBusy(false);
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }.bind(this)
 
                 });
@@ -93,18 +98,20 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
                     }.bind(this),
                     error: function (oError) {
-                        sap.m.MessageBox.error(JSON.stringify(oError));
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }
                 });
             },
+
             fnSetUserName: function (oData) {
                 var sUserName = "";
                 if (oData.createdByNav.defaultFullName) {
@@ -223,7 +230,11 @@ sap.ui.define([
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
-                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }.bind(this)
                 });
             },
@@ -255,7 +266,11 @@ sap.ui.define([
                         }.bind(this),
                         error: function (oError) {
                             this.getView().setBusy(false);
-                            MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                            if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                                MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            else {
+                                MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                            }
                         }.bind(this)
                     });
                 } else {
@@ -618,4 +633,4 @@ sap.ui.define([
                 this.onRejectRequest(swfRequestId);
             }
         });
-    });        
+    });

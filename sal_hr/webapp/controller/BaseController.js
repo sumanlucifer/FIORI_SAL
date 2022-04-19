@@ -58,16 +58,12 @@ sap.ui.define([
         dismissBusyDialog: function () {
             BusyIndicator.hide();
         },
+
         _getTicketData: function (sId) {
-
             var idFILTER = new sap.ui.model.Filter({
-
                 path: "ID",
-
                 operator: sap.ui.model.FilterOperator.EQ,
-
                 value1: sId
-
             });
 
             var filter = [];
@@ -76,22 +72,17 @@ sap.ui.define([
             var oComponentModel = this.getComponentModel();
             oComponentModel.read("/Tickets", {
                 filters: [filter],
-                success: function (oData, oResponse) {
+                success: function (oData) {
                     this._bindView(oData);
-
                 }.bind(this),
-
                 error: function (oError) {
-
-                    sap.m.MessageBox.error(JSON.stringify(oError));
-
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
                 }
-
             });
-
-
-
-
         },
 
         /**
@@ -135,6 +126,7 @@ sap.ui.define([
                         case "2":
                             this.fnSetCreateBusinessTripModel(oData);
                             break;
+
                         // Airport Travel Pass Request Module
                         case "6":
                             this.fnSetCreateAirpassLocalModel(oData);
@@ -144,55 +136,18 @@ sap.ui.define([
                         case "5":
                             this.fnSetCreateBusinessCardLocalModel(oData);
                             break;
-
                     }
-
-
-
                 }.bind(this),
                 error: function (oError) {
-
                     this.getView().setBusy(false);
-
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
                 }.bind(this)
             })
         },
-
-
-
-        // fnGetEmpInfo: function (sExternalCode, sParentID) {
-        //     var sKey = this.getView().getModel().createKey("/EmpInfo", {
-        //         userId: sExternalCode
-        //     });
-        //     this.sParentID = sParentID;
-        //     this.getView().bindElement({
-        //         path: sKey,
-        //         events: {
-        //             dataRequested: function (oData) {
-        //                 this.getView().setBusy(true);
-        //             }.bind(this),
-        //             dataReceived: function (oData) {
-        //                 this.getView().setBusy(false);
-        //                 switch (this.sParentID) {
-        //                     case "2":
-        //                         this.fnSetCreateBusinessTripModel(oData.getParameter("data"));
-        //                         break;
-        //                     // Airport Travel Pass Request Module
-        //                     case "6":
-        //                         this.fnSetCreateAirpassLocalModel(oData.getParameter("data"));
-        //                         break;
-
-        //                   // Business Card Request Module
-
-        //                   case "5":
-        //                     this.fnSetCreateBusinessCardLocalModel(oData.getParameter("data"));
-        //                      break;
-        //                 }
-
-        //             }.bind(this)
-        //         }
-        //     });
-        // },
 
         fnValidateDateValue: function (oEvent) {
             if (oEvent.getParameter("valid")) {
@@ -236,12 +191,15 @@ sap.ui.define([
                     this.oRouter.navTo("detail", {
                         parentMaterial: this.sParentID,
                         layout: "TwoColumnsMidExpanded"
-
                     });
                 }.bind(this),
                 error: function (oError) {
                     this.getView().setBusy(false);
-                    MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
                     this.getView().getModel().refresh();
                 }.bind(this)
             });
@@ -260,12 +218,15 @@ sap.ui.define([
                     this.oRouter.navTo("detail", {
                         parentMaterial: this.sParentID,
                         layout: "TwoColumnsMidExpanded"
-
                     });
                 }.bind(this),
                 error: function (oError) {
                     this.getView().setBusy(false);
-                    MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
                     this.getView().getModel().refresh();
                 }.bind(this)
             });
