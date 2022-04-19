@@ -8,7 +8,7 @@ sap.ui.define([
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.DisciplinaryRequestDetailpage", {
             formatter: formatter,
-            
+
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
@@ -32,22 +32,22 @@ sap.ui.define([
             _bindView: function (data) {
                 var object = data.results[0];
                 this.object = data.results[0];
-                
+
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
                 this.onCallHistoryData(object.ticketCode);
 
-                if (object.status === "APPROVED") {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                }
+                // if (object.status === "APPROVED") {
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                // } else {
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
+                // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
-                    this.effectiveStartDate = object.effectiveStartDate;
-                    this.externalCode = object.externalCode;
+                this.effectiveStartDate = object.effectiveStartDate;
+                this.externalCode = object.externalCode;
                 sKey = oComponentModel.createKey("/SF_Disciplinary_Action", {
-                    effectiveStartDate:object.effectiveStartDate,
+                    effectiveStartDate: object.effectiveStartDate,
                     externalCode: object.externalCode
                 });
                 this.getView().getModel().read(sKey, {
@@ -56,7 +56,7 @@ sap.ui.define([
                     },
                     success: function (oData) {
                         var oAttachModel = new JSONModel(oData.cust_attachmentNav);
-                        this.getView().setModel(oAttachModel,"attachmentModel");
+                        this.getView().setModel(oAttachModel, "attachmentModel");
                     }.bind(this),
                     error: function (oError) {
                     }.bind(this),
@@ -69,7 +69,7 @@ sap.ui.define([
                         expand: "cust_IncidentStatusNav,cust_ReasonNav,cust_SeverityNav,cust_warningTypeNav,externalCodeNav",
                     },
                     events: {
-                        change: function (oEvent) {                        
+                        change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();
                             oContextBinding.refresh(false);
                         }.bind(this),
@@ -116,11 +116,11 @@ sap.ui.define([
                 //     MessageBox.error("Please enter sKey ID to delete the record.");
                 //     return;
                 // }
-               var oComponentModel = this.getComponentModel(),
-               sKey = oComponentModel.createKey("/SF_Disciplinary_Action", {
-                    effectiveStartDate:this.effectiveStartDate,
-                    externalCode: this.externalCode
-                });
+                var oComponentModel = this.getComponentModel(),
+                    sKey = oComponentModel.createKey("/SF_Disciplinary_Action", {
+                        effectiveStartDate: this.effectiveStartDate,
+                        externalCode: this.externalCode
+                    });
                 this.getView().getModel().remove(sKey, {
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
@@ -149,7 +149,7 @@ sap.ui.define([
                 }
                 this.oRouter.navTo("DisciplinaryRequestDetail", {
                     parentMaterial: this.sParentID,
-                    childModule:this.sChildID,
+                    childModule: this.sChildID,
                     layout: sLayout
                 });
             },
@@ -245,16 +245,16 @@ sap.ui.define([
                     return;
                 }
                 var oPayloadObj = {},
-                sEntityPath = null,
-                oComponentModel = this.getComponentModel(),
+                    sEntityPath = null,
+                    oComponentModel = this.getComponentModel(),
                     sKey = null,
-                sKey = oComponentModel.createKey("/SF_Disciplinary_Action", {
-                    effectiveStartDate:this.effectiveStartDate,
-                    externalCode: this.externalCode
-                });
-                    sEntityPath = sKey;
-                    oPayloadObj = this.fnGetDisciplinaryRequestPayload();
-                    this.getView().setBusy(true);
+                    sKey = oComponentModel.createKey("/SF_Disciplinary_Action", {
+                        effectiveStartDate: this.effectiveStartDate,
+                        externalCode: this.externalCode
+                    });
+                sEntityPath = sKey;
+                oPayloadObj = this.fnGetDisciplinaryRequestPayload();
+                this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
                     success: function (oResponse) {
                         this.getView().setBusy(false);
@@ -272,16 +272,16 @@ sap.ui.define([
             fnGetDisciplinaryRequestPayload: function () {
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sattachmentFileName = this.fileName;
-                var sattachmentFileContent= this.fileContent;
-                var sattachmentFileID= this.getView().getModel("attachmentModel").getData().attachmentId;
+                var sattachmentFileContent = this.fileContent;
+                var sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
                 var sWarningType = this.getView().byId("idEditWarningType").getSelectedKey(),
-                sSeverity = this.getView().byId("idEditSeverity").getSelectedKey(),
-                sIncidentStatus = this.getView().byId("idEditIncidentStatus").getSelectedKey(),
-                sIncidentCategory = this.getView().byId("idEditIncidenCategiory").getSelectedKey(),
-                sIncidentDetails = this.getView().byId("idIncidentDescription").getValue(),
-                sIncidentDate = this.getView().byId("idIncidentStartDate").getDateValue(),
-                sEffectiveStartDateDate = this.getView().byId("idEditEffectStartDate").getDateValue(),
-                dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
+                    sSeverity = this.getView().byId("idEditSeverity").getSelectedKey(),
+                    sIncidentStatus = this.getView().byId("idEditIncidentStatus").getSelectedKey(),
+                    sIncidentCategory = this.getView().byId("idEditIncidenCategiory").getSelectedKey(),
+                    sIncidentDetails = this.getView().byId("idIncidentDescription").getValue(),
+                    sIncidentDate = this.getView().byId("idIncidentStartDate").getDateValue(),
+                    sEffectiveStartDateDate = this.getView().byId("idEditEffectStartDate").getDateValue(),
+                    dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
                 sIncidentDate = dateFormat.format(new Date(sIncidentDate));
                 sIncidentDate = sIncidentDate + "T00:00:00";
                 sEffectiveStartDateDate = dateFormat.format(new Date(sEffectiveStartDateDate));
@@ -301,33 +301,42 @@ sap.ui.define([
                     "isAttachmentNew": true,
                     "attachmentUserId": sUserID,
                     "cust_letterIssued": "Y",
-                    "attachmentId": sattachmentFileID 
+                    "attachmentId": sattachmentFileID
                 }
             },
-            onDownLoadPress:function(){
+            onDownLoadPress: function () {
                 var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
-               var fileext =  this.getView().getModel("attachmentModel").getData().fileExtension;
-               var mimeType =  this.getView().getModel("attachmentModel").getData().mimeType;
+                var fileext = this.getView().getModel("attachmentModel").getData().fileExtension;
+                var mimeType = this.getView().getModel("attachmentModel").getData().mimeType;
                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
-                 fName = fName.split(".")[0];
-                                debugger;
-                              if(fileext === "pdf" || fileext === "png")
-                              {
-                                var decodedPdfContent = atob(fContent);
-                                var byteArray = new Uint8Array(decodedPdfContent.length)
-                                for (var i = 0; i < decodedPdfContent.length; i++) {
-                                    byteArray[i] = decodedPdfContent.charCodeAt(i);
-                                }
-                                var blob = new Blob([byteArray.buffer], { type: mimeType });
-                                var _pdfurl = URL.createObjectURL(blob);
-                                var a = document.createElement('a');
-                                a.href = _pdfurl;
-                                a.download = fName;
-                                a.dispatchEvent(new MouseEvent('click'));
-                              }
-                              else{
-                                sap.ui.core.util.File.save(fContent, fName,fileext, mimeType);
-                              }
+                fName = fName.split(".")[0];
+                debugger;
+                if (fileext === "pdf" || fileext === "png") {
+                    var decodedPdfContent = atob(fContent);
+                    var byteArray = new Uint8Array(decodedPdfContent.length)
+                    for (var i = 0; i < decodedPdfContent.length; i++) {
+                        byteArray[i] = decodedPdfContent.charCodeAt(i);
+                    }
+                    var blob = new Blob([byteArray.buffer], { type: mimeType });
+                    var _pdfurl = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = _pdfurl;
+                    a.download = fName;
+                    a.dispatchEvent(new MouseEvent('click'));
+                }
+                else {
+                    sap.ui.core.util.File.save(fContent, fName, fileext, mimeType);
+                }
+            },
+
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
+
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
         });
     });

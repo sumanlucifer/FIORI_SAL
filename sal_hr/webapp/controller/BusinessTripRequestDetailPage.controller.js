@@ -41,7 +41,6 @@ sap.ui.define([
                     currentDate: new Date(),
                     EditMode: false,
                     PageTitle: null,
-                    Modify: true,
                     businessTravel: false,
                     trainingTravel: false
                 });
@@ -78,9 +77,9 @@ sap.ui.define([
                 this.onCallHistoryData(object.ticketCode);
 
                 // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                 // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
                 // }
 
                 var oComponentModel = this.getComponentModel();
@@ -100,6 +99,11 @@ sap.ui.define([
                     }.bind(this),
                     error: function () {
                         this.getView().setBusy(false);
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }.bind(this)
                 });
 
@@ -117,15 +121,19 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
+
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
+
+
                     }.bind(this),
                     error: function (oError) {
-                        sap.m.MessageBox.error(JSON.stringify(oError));
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }
                 });
             },
@@ -351,7 +359,11 @@ sap.ui.define([
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
-                        MessageBox.error("Record Not able to delete.");
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
                     }.bind(this),
                 });
             },
@@ -389,7 +401,11 @@ sap.ui.define([
                         }.bind(this),
                         error: function (oError) {
                             this.getView().setBusy(false);
-                            MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                                sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            else {
+                                sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                            }
                         }.bind(this)
                     });
                 } else {
@@ -839,6 +855,15 @@ sap.ui.define([
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
                 }
+            },
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
+
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
         });
     });

@@ -6,7 +6,7 @@ sap.ui.define([
 
 ],
 
-    function (BaseController, Controller, JSONModel,formatter) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.HealthInsuranceRequestDetailPage", {
             formatter: formatter,
@@ -23,11 +23,11 @@ sap.ui.define([
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("HealthInsuranceRequestDetail").attachPatternMatched(this._onObjectMatched, this);
-             
+
             },
 
             _onObjectMatched: function (oEvent) {
-               
+
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -44,22 +44,22 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
                 this.onCallHistoryData(object.ticketCode);
 
-                if (object.status === "APPROVED") {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                }
+                // if (object.status === "APPROVED") {
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                // } else {
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
+                // }
                 // var oComponentModel = this.getComponentModel(),
                 //     sKey = null;
                 //         sKey = oComponentModel.createKey("/SF_HealthInsurance", {
                 //             effectiveStartDate: object.effectiveStartDate,
                 //             User: object.externalCode
-                           
+
                 //         });
                 //         this.getView().bindElement({
                 //             path: sKey,
                 //             parameters: {
-                               
+
                 //                 expand: "cust_healthInsuranceDetails",
 
                 //                 // expand: "cust_healthInsuranceDetails,cust_healthInsuranceDetails/cust_relationshipNav,cust_healthInsuranceDetails/cust_genderNav",
@@ -79,30 +79,30 @@ sap.ui.define([
                 //         });
                 this.getView().setBusy(true);
 
-                        var oComponentModel = this.getComponentModel();
-                        var sKey = oComponentModel.createKey("/SF_HealthInsurance", {
-                            effectiveStartDate: object.effectiveStartDate,
-                            User: object.externalCode
-                        });
-        
-                        this.getView().getModel().read(sKey, {
-                            urlParameters: {
-                                $expand: "cust_healthInsuranceDetails,cust_healthInsuranceDetails/cust_relationshipNav,cust_healthInsuranceDetails/cust_genderNav,cust_healthInsuranceDetails/cust_attachment1Nav,cust_healthInsuranceDetails/cust_attachment2Nav,cust_healthInsuranceDetails/cust_attachment3Nav,UserNav"
-                            },
-                            success: function (oData) {
-                                this.getView().setBusy(false);
-                                this.fnSetDisplayHealthInsuranceModel(oData);
-                            }.bind(this),
-                            error: function () {
-                                this.getView().setBusy(false);
-                            }.bind(this)
-                        });
+                var oComponentModel = this.getComponentModel();
+                var sKey = oComponentModel.createKey("/SF_HealthInsurance", {
+                    effectiveStartDate: object.effectiveStartDate,
+                    User: object.externalCode
+                });
 
-                       
+                this.getView().getModel().read(sKey, {
+                    urlParameters: {
+                        $expand: "cust_healthInsuranceDetails,cust_healthInsuranceDetails/cust_relationshipNav,cust_healthInsuranceDetails/cust_genderNav,cust_healthInsuranceDetails/cust_attachment1Nav,cust_healthInsuranceDetails/cust_attachment2Nav,cust_healthInsuranceDetails/cust_attachment3Nav,UserNav"
+                    },
+                    success: function (oData) {
+                        this.getView().setBusy(false);
+                        this.fnSetDisplayHealthInsuranceModel(oData);
+                    }.bind(this),
+                    error: function () {
+                        this.getView().setBusy(false);
+                    }.bind(this)
+                });
 
-                      
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance dependent Request");
-                        this.getView().getModel("LocalViewModel").refresh();
+
+
+
+                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance dependent Request");
+                this.getView().getModel("LocalViewModel").refresh();
 
             },
 
@@ -131,21 +131,21 @@ sap.ui.define([
 
             fnSetDisplayHealthInsuranceModel: function (oData) {
                 this.getView().setBusy(true);
-             
 
-                 var aCust_healthInsuranceDetails = oData.cust_healthInsuranceDetails.results,
+
+                var aCust_healthInsuranceDetails = oData.cust_healthInsuranceDetails.results,
                     oDisplayEditBusinessTripObj = {
                         "externalCode": oData.externalCode,
-                        "UserNav":oData.UserNav,
+                        "UserNav": oData.UserNav,
                         "effectiveStartDate": oData.effectiveStartDate,
                         "cust_healthInsuranceDetails": aCust_healthInsuranceDetails
                     },
                     oDisplayHealthInsuranceModel = new JSONModel(oDisplayEditBusinessTripObj);
-                  
+
 
                 this.getView().setModel(oDisplayHealthInsuranceModel, "DisplayHealthInsuranceModel");
-               
-                   this.getView().setBusy(false);
+
+                this.getView().setBusy(false);
             },
 
 
@@ -158,39 +158,38 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
-            onDownLoadPress:function(oEvent){
+            onDownLoadPress: function (oEvent) {
                 var oItemRowObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
                 var sLinkText = oEvent.getSource().getTooltip_Text().trim();
 
-var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : sLinkText === "Download(2)" ? oItemRowObj.cust_attachment2Nav : oItemRowObj.cust_attachment3Nav;
+                var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : sLinkText === "Download(2)" ? oItemRowObj.cust_attachment2Nav : oItemRowObj.cust_attachment3Nav;
 
-            //    var oFileObj =  oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject().cust_attachment1Nav;
+                //    var oFileObj =  oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject().cust_attachment1Nav;
                 var fContent = oFileObj.fileContent;
-               var fileext =  oFileObj.fileExtension;
-               var mimeType =  oFileObj.mimeType;
+                var fileext = oFileObj.fileExtension;
+                var mimeType = oFileObj.mimeType;
                 var fName = oFileObj.fileName;
-                 fName = fName.split(".")[0];
-                                debugger;
-                              if(fileext === "pdf" || fileext === "png")
-                              {
-                                var decodedPdfContent = atob(fContent);
-                                var byteArray = new Uint8Array(decodedPdfContent.length)
-                                for (var i = 0; i < decodedPdfContent.length; i++) {
-                                    byteArray[i] = decodedPdfContent.charCodeAt(i);
-                                }
-                                var blob = new Blob([byteArray.buffer], { type: mimeType });
-                                var _pdfurl = URL.createObjectURL(blob);
-                                var a = document.createElement('a');
-                                a.href = _pdfurl;
-                                a.download = fName;
-                                a.dispatchEvent(new MouseEvent('click'));
-                              }
-                              else{
-                                sap.ui.core.util.File.save(fContent, fName,fileext, mimeType);
-                              }
+                fName = fName.split(".")[0];
+                debugger;
+                if (fileext === "pdf" || fileext === "png") {
+                    var decodedPdfContent = atob(fContent);
+                    var byteArray = new Uint8Array(decodedPdfContent.length)
+                    for (var i = 0; i < decodedPdfContent.length; i++) {
+                        byteArray[i] = decodedPdfContent.charCodeAt(i);
+                    }
+                    var blob = new Blob([byteArray.buffer], { type: mimeType });
+                    var _pdfurl = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = _pdfurl;
+                    a.download = fName;
+                    a.dispatchEvent(new MouseEvent('click'));
+                }
+                else {
+                    sap.ui.core.util.File.save(fContent, fName, fileext, mimeType);
+                }
             },
-         
-     
+
+
             handleFullScreen: function (oEvent) {
                 var sLayout = "";
                 if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
@@ -201,7 +200,7 @@ var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : s
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
 
-              
+
                 this.oRouter.navTo("HealthInsuranceRequestDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,
@@ -223,9 +222,16 @@ var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : s
                     parentMaterial: this.sParentID,
                     layout: sLayout
                 });
+            },
+
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
+
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
-
-
-
         });
     });

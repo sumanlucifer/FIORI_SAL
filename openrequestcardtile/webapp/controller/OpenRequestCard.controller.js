@@ -90,8 +90,9 @@ sap.ui.define([
                         var cardManifests = new JSONModel();
                         oCardData.donut["sap.card"].content.data.json.measures = oData.results;
                         oCardData.donut["sap.card"].content.data.path = "/measures";
-
-                        // Set Values for Header
+                        
+                         // Set Values for Header
+                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].pending + oData.results[1].pending + oData.results[2].pending + oData.results[3].pending;
                         // oCardData.donut["sap.card"].content.data.json.NumberCount =  "0";
                         // oCardData.donut["sap.card"].content.data.json.Unit = "";
                         // oCardData.donut["sap.card"].content.data.json.Trend= "";

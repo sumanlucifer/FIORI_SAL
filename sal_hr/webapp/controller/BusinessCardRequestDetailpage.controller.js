@@ -36,11 +36,12 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
 
 
-                if (object.status === "APPROVED") {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                }
+                // if (object.status === "APPROVED") {
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                // } else {
+                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
+                // }
+
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 this.effectiveStartDate = object.effectiveStartDate;
@@ -104,7 +105,7 @@ sap.ui.define([
             fnSetCreateBusinessCardLocalModel: function () {
 
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
-             
+
 
                 var sExternalCode = this.EmpInfoObj.userId,
                     sNationalID = this.EmpInfoObj.nationalId,
@@ -118,21 +119,21 @@ sap.ui.define([
                         "sJobTitle": this.EmpInfoObj.jobTitle,
                         "sdivision": this.EmpInfoObj.division,
                         "sLocation": "",
-                        "sEmail":this.EmpInfoObj.email,
-                        "sMobile":this.EmpInfoObj.mobile,
+                        "sEmail": this.EmpInfoObj.email,
+                        "sMobile": this.EmpInfoObj.mobile,
                         "sOfficeNo": this.EmpInfoObj.officeNumber,
                         "effectiveStartDate": new Date()
-                      
-                        
+
+
                     },
                     oCreateBusinessCardModel = new JSONModel(oCreateBusinessCardObj);
 
                 this.getView().setModel(oCreateBusinessCardModel, "CreateBusinessCardModel");
 
-              
+
             },
 
-            
+
             onEditPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
             },
@@ -145,7 +146,7 @@ sap.ui.define([
                 //     return;
                 // }
 
-                  var oComponentModel = this.getComponentModel(),
+                var oComponentModel = this.getComponentModel(),
                     sKey = null,
                     sKey = oComponentModel.createKey("/SF_BusinessCard", {
                         User: this.User,
@@ -217,7 +218,7 @@ sap.ui.define([
                 // }
                 return bValid;
             },
-          
+
             onSavePress: function () {
                 // if (!this._validateMandatoryFields()) {
                 //     return;
@@ -236,7 +237,7 @@ sap.ui.define([
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
                     success: function (oResponse) {
                         this.getView().setBusy(false);
-                   
+
                         sap.m.MessageBox.success("Request Modified successfully.");
                         this.getView().getModel().refresh();
                         this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
@@ -251,7 +252,7 @@ sap.ui.define([
             fnGetBusinessCardRequestPayload: function () {
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
 
-               var scust_email = this.getView().byId("idEditEmail").getValue(),
+                var scust_email = this.getView().byId("idEditEmail").getValue(),
                     scust_mobile = this.getView().byId("idEditMobile").getValue(),
                     scust_poBox = this.getView().byId("idEditPOBOX").getValue(),
                     scust_jobTitle = this.getView().byId("idEditJobTitle").getValue(),
@@ -259,8 +260,8 @@ sap.ui.define([
                     scust_officeNumber = this.getView().byId("idEditOfficeNo").getValue(),
                     seffectiveStartDate = this.getView().byId("idEditIncidentStartDate").getDateValue(),
                     dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
-                    seffectiveStartDate = dateFormat.format(new Date(seffectiveStartDate));
-                    seffectiveStartDate = seffectiveStartDate + "T00:00:00";
+                seffectiveStartDate = dateFormat.format(new Date(seffectiveStartDate));
+                seffectiveStartDate = seffectiveStartDate + "T00:00:00";
                 return {
 
                     "User": sUserID,
@@ -271,15 +272,18 @@ sap.ui.define([
                     "cust_officeNumber": scust_officeNumber,
                     "effectiveStartDate": seffectiveStartDate,
                     "cust_jobTitle": scust_jobTitle
-                
+
                 }
+            },
 
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
 
-                
-
-
-
-
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
         });
     });

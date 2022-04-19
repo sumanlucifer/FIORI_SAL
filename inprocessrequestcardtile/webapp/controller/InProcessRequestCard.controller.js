@@ -92,7 +92,7 @@ sap.ui.define([
                         oCardData.donut["sap.card"].content.data.path = "/measures";
 
                         // Set Values for Header
-                        // oCardData.donut["sap.card"].content.data.json.NumberCount =  "0";
+                        oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].underProcess + oData.results[1].underProcess + oData.results[2].underProcess + oData.results[3].underProcess;
                         // oCardData.donut["sap.card"].content.data.json.Unit = "";
                         // oCardData.donut["sap.card"].content.data.json.Trend= "";
                         // oCardData.donut["sap.card"].content.data.json.TrendColor= "Good";

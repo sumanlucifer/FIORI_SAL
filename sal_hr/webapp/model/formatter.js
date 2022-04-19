@@ -195,7 +195,7 @@ sap.ui.define([], function () {
             }
         },
 
-        setIDCardManagerActionVisibility: function (sStatus, sWorkflowRequestId) {
+        setApproveRejectManagerActionVisibility: function (sStatus, sWorkflowRequestId) {
             var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
 
             if (bIsUserManager && sStatus === "PENDING" && sWorkflowRequestId !== null) {
