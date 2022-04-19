@@ -1,74 +1,69 @@
-<mvc:View controllerName="com.sal.salhr.controller.DetailPage" 
+<mvc:View controllerName="com.sal.salhr.controller.DetailPage"
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:ui="sap.ui.table"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:layout="sap.ui.layout" height="100%">
-    <f:DynamicPage id="dynamicPageId" class="page" >
+    <f:DynamicPage id="dynamicPageId" class="page">
         <!-- DynamicPage Title -->
         <f:title>
-            <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding" >
+            <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding">
                 <f:heading>
                     <Title text="{name}"/>
                 </f:heading>
-           
+
                 <f:navigationActions>
                     <Button text="Raise Request" press="onPressRaiseRequest" type="Emphasized"/>
                     <Button id="idDetailFullScreenBTN" icon="sap-icon://full-screen" press="handleDetailFullScreen" type="Transparent" />
                     <Button id="idCloseButton" icon="sap-icon://decline" type="Transparent" press="handleDetailClose" />
-                    
+
                 </f:navigationActions>
             </f:DynamicPageTitle>
         </f:title>
         <!-- DynamicPage Header -->
         <f:header>
             <f:DynamicPageHeader id="idDetailHeader" pinnable="true">
-             
 
-                	<FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
-				
-				        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Total Requests" class="tblHeaderText"/>
-					        <Text text="{totalRequests}" class="sapUiTinyMarginTop dataPointsColor "/>
-				        </VBox>
-                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Pending" class="tblHeaderText"/>
-					        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
-				        </VBox>
-                        <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Approved" class="tblHeaderText"/>
-					        <Text text="{totalApproved}" class="sapUiTinyMarginTop dataPointsColor"/>
-				        </VBox>
-                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Cancelled" class="tblHeaderText"/>
-					        <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataPointsColor"/>
-				        </VBox>
-                         <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-					        <Label text="Rejected" class="tblHeaderText"/>
-					        <Text text="{totalRejected}" class="sapUiTinyMarginTop dataPointsColor"/>
-				        </VBox>
-			        </FlexBox>
+
+                <FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
+
+                    <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+                        <Label text="Total Requests" class="tblHeaderText"/>
+                        <Text text="{totalRequests}" class="sapUiTinyMarginTop dataPointsColor "/>
+                    </VBox>
+                    <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+                        <Label text="Pending" class="tblHeaderText"/>
+                        <Text text="{totalPending}" class="sapUiTinyMarginTop dataPointsColor"/>
+                    </VBox>
+                    <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+                        <Label text="Approved" class="tblHeaderText"/>
+                        <Text text="{totalApproved}" class="sapUiTinyMarginTop dataPointsColor"/>
+                    </VBox>
+                    <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+                        <Label text="Cancelled" class="tblHeaderText"/>
+                        <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataPointsColor"/>
+                    </VBox>
+                    <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
+                        <Label text="Rejected" class="tblHeaderText"/>
+                        <Text text="{totalRejected}" class="sapUiTinyMarginTop dataPointsColor"/>
+                    </VBox>
+                </FlexBox>
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-              <Table id="idTicketTable" items="{ path: 'tickets', sorter: [
-      {
-        path: 'createdAt', 
-        descending: 'true'   
-      }
-    ]}" inset="false" autoPopinMode="true">
+            <Table id="idTicketTable" items="{ path: 'tickets', sorter: [{path: 'createdAt', descending: 'true'}]}" inset="false" autoPopinMode="true">
                 <headerToolbar>
                     <OverflowToolbar>
                         <content>
                             <Title text="{name}" level="H2"/>
                             <ToolbarSpacer />
                             <SearchField placeholder="Search for ID" width="30%" search=".onSearch"></SearchField>
-                            <Button icon="sap-icon://sort"  press="onSort"/>
-                            <Button id="idSelectFilter" icon="sap-icon://filter"  press="onPressFilter"/>
-                             <Button id="idClearFilter" icon="sap-icon://clear-filter" visible="false"  press="onPressClearFilter"/>
+                            <Button icon="sap-icon://sort" press="onSort"/>
+                            <Button id="idSelectFilter" icon="sap-icon://filter" press="onPressFilter"/>
+                            <Button id="idClearFilter" icon="sap-icon://clear-filter" visible="false" press="onPressClearFilter"/>
 
 
                         </content>
@@ -78,26 +73,26 @@
                     <Column width="10rem" importance="High">
                         <Label text="ID" class="tblHeaderText"/>
                     </Column>
-                    <Column width="18rem" importance="Low" popinDisplay="Inline" >
+                    <Column width="18rem" importance="Low" popinDisplay="Inline">
                         <Label text="SAP ID" class="tblHeaderText" />
                     </Column>
-                     <Column importance="Low" popinDisplay="Inline" >
+                    <Column importance="Low" popinDisplay="Inline">
                         <Label text="Effective From" class="tblHeaderText" />
                     </Column>
-                     <Column width="28rem" importance="Low" popinDisplay="Inline" >
+                    <Column width="28rem" importance="Low" popinDisplay="Inline">
                         <Label text="Summary" class="tblHeaderText" />
                     </Column>
-                    <Column  importance="Low" popinDisplay="Inline" >
+                    <Column importance="Low" popinDisplay="Inline">
                         <Label text="Date of Creation" class="tblHeaderText" />
                     </Column>
-                      <Column  importance="Low" popinDisplay="Inline" >
+                    <Column importance="Low" popinDisplay="Inline">
                         <Label text="Pending With" class="tblHeaderText" />
                     </Column>
-                     <Column  importance="Low" popinDisplay="Inline" >
+                    <Column importance="Low" popinDisplay="Inline">
                         <Label text="Targeted SLA" class="tblHeaderText" />
                     </Column>
-                    
-                    <Column  hAlign="End" width="10rem" importance="High">
+
+                    <Column hAlign="End" width="10rem" importance="High">
                         <Label text="Status" class="tblHeaderText" />
                     </Column>
                 </columns>
@@ -106,15 +101,15 @@
                         <cells>
                             <!-- <Text text="{ticketCode}" /> -->
                             <Text text="{ticketCode}" />
-                             <Text text="{externalCode}" />
-                             <Text text="{path : 'effectiveStartDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'},formatter:'.formatter.handleNoData'}" />
-                             <Text text="{summary}" />
+                            <Text text="{externalCode}" />
+                            <Text text="{path : 'effectiveStartDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'},formatter:'.formatter.handleNoData'}" />
+                            <Text text="{summary}" />
 
                             <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'}}" />
-                             <Text text="NA" />
-                             <Text text="NA" />
-                           
-                           <ObjectStatus text="{path:'status',formatter:'.formatter.ticketStatusText'}" state="{path:'status',formatter:'.formatter.ticketStatus'}" />
+                            <Text text="NA" />
+                            <Text text="NA" />
+
+                            <ObjectStatus text="{path:'status',formatter:'.formatter.ticketStatusText'}" state="{path:'status',formatter:'.formatter.ticketStatus'}" />
                         </cells>
                     </ColumnListItem>
                 </items>
