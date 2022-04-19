@@ -27,7 +27,9 @@
                         
 
                         <Label id="idDateLBL"  required="true" text="{i18n>IssueDate}" />
-                        <DatePicker id="idIssueDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}"  change="handleChange"/>
+                        <DatePicker id="idIssueDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"  change="handleChange"/>
 
 
                         

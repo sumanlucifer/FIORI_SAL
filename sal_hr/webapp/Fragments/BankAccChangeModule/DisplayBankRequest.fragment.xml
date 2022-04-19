@@ -8,7 +8,7 @@
 
                         <Label id="idDisplayDateLBL" text="{i18n>effectiveStartDate}" />
 
-            <Text text="{path:'effectiveStartDate',
+                        <Text text="{path:'effectiveStartDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                      pattern: 'MM/dd/yyyy'

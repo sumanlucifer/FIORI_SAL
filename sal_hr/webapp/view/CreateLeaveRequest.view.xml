@@ -54,10 +54,14 @@
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
 
                         <Label text="Start Date" required="true"/>
-                        <DatePicker id="idStartDate" value="{path:'LocalViewModel>/startDate', type:'sap.ui.model.type.Date'}" change="onLeaveStartDatChange"/>
+                        <DatePicker id="idStartDate" value="{path:'LocalViewModel>/startDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" change="onLeaveStartDatChange"/>
 
                         <Label text="{i18n>EndDate}" required="true"/>
-                        <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date'}" editable="{= ${LocalViewModel>/halfDayType} === true ? false : true }" change="onLeaveEndDateChange"/>
+                        <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" editable="{= ${LocalViewModel>/halfDayType} === true ? false : true }" change="onLeaveEndDateChange"/>
                     </fm:SimpleForm>
 
                     <fm:SimpleForm id="idReqMeetingForm" visible="{= ${LocalViewModel>/meetingType} === true ? true : false }" layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">

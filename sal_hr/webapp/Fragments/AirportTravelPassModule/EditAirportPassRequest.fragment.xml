@@ -4,7 +4,9 @@
     xmlns:upload="sap.m.upload">
     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>whenWouldYouLiketoText}?" required="true" />
-        <DatePicker id="idEditAirportPassEffectDatePicker" change="fnValidateDateValue" minDate="{LocalViewModel>/currentDate}" value="{path:'DisplayEditAirpassModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"/>
+        <DatePicker id="idEditAirportPassEffectDatePicker" change="fnValidateDateValue" minDate="{LocalViewModel>/currentDate}" value="{path:'DisplayEditAirpassModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"/>
     </fm:SimpleForm>
     <fm:SimpleForm id="idEditAirportPassDetailsForm" title="{i18n>AirportPassDetails}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>TypeOfPass}" required="true" />
@@ -22,7 +24,9 @@
         <Input id="idEditNationalIDInp" value="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationalID}" enabled= "false"/>
 
         <Label text="{i18n>DateofBith}" required="true" />
-        <DatePicker id="idEditDateofBithInp" value="{path:'DisplayEditAirpassModel>/cust_toAirportPassItem/cust_dateOfBirth', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}" enabled= "false"/>
+        <DatePicker id="idEditDateofBithInp" value="{path:'DisplayEditAirpassModel>/cust_toAirportPassItem/cust_dateOfBirth', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" enabled= "false"/>
 
         <Label text="{i18n>MobileNumber}" required="true" />
         <Input id="idEditMobileNumberInp" value="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_mobileNumber}" enabled= "false"/>
@@ -51,7 +55,9 @@
         <Input id="idEditDomasticStationInp" visible="{= ${DisplayEditAirpassModel>/cust_toAirportPassItem/cust_airportLoc} === 'Loc05' ? true : false}" value="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_domStationName}"/>
 
         <Label text="{i18n>PermitDate}" required="true" />
-        <DatePicker id="idEditPermitDate" change="fnValidateDateValue" minDate="{LocalViewModel>/currentDate}" value="{path:'DisplayEditAirpassModel>/cust_toAirportPassItem/cust_permitDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"/>
+        <DatePicker id="idEditPermitDate" change="fnValidateDateValue" minDate="{LocalViewModel>/currentDate}" value="{path:'DisplayEditAirpassModel>/cust_toAirportPassItem/cust_permitDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"/>
 
         <Label text="{i18n>PurposeofPermit}" required="true" />
         <TextArea id="idEditPurposeofPermitInp" value="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_permitPurpose}"/>
