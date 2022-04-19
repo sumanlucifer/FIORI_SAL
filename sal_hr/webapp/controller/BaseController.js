@@ -1,7 +1,8 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    'sap/ui/core/BusyIndicator'
-], function (Controller, BusyIndicator) {
+    "sap/ui/core/BusyIndicator",
+    "sap/m/MessageBox"
+], function (Controller, BusyIndicator, MessageBox) {
     "use strict";
 
     return Controller.extend("com.sal.salhr.controller.BaseController", {
@@ -181,9 +182,12 @@ sap.ui.define([
         onApproveRequest: function (sWFRequestId) {
             this.getView().setBusy(true);
 
-            var sEntityPath = "/approveWfRequest??wfRequestId=" + sWFRequestId + "L";
+            // var sEntityPath = "/approveWfRequest?wfRequestId=" + sWFRequestId + "L";
 
-            this.getView().getModel().create(sEntityPath, null, {
+            this.getView().getModel().create("/approveWfRequest", null, {
+                urlParameters: {
+                    "wfRequestId": sWFRequestId + "L"
+                },
                 success: function (oData) {
                     this.getView().setBusy(false);
                     MessageBox.success("Request Approved Successfully.");
@@ -208,9 +212,12 @@ sap.ui.define([
         onRejectRequest: function (sWFRequestId) {
             this.getView().setBusy(true);
 
-            var sEntityPath = "/rejectWfRequest??wfRequestId=" + sWFRequestId + "L";
+            // var sEntityPath = "/rejectWfRequest?wfRequestId=" + sWFRequestId + "L";
 
-            this.getView().getModel().create(sEntityPath, null, {
+            this.getView().getModel().create("/rejectWfRequest", null, {
+                urlParameters: {
+                    "wfRequestId": sWFRequestId + "L"
+                },
                 success: function (oData) {
                     MessageBox.success("Request Rejected Successfully.");
                     this.getView().setBusy(false);
