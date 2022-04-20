@@ -47,16 +47,16 @@ sap.ui.define([
                 debugger;
                 var object = data.results[0];
                 this.object = data.results[0];
-                
+
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
 
 
-                if (object.status === "APPROVED") {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                }
+                // if (object.status === "APPROVED") {
+                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                // } else {
+                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var that = this;
@@ -64,7 +64,7 @@ sap.ui.define([
                 var oAttachModel = new JSONModel();
                 that.getView().setModel(oAttachModel, "attachmentModel");
                 switch (this.sParentID) {
-                 
+
 
                     //  Bank Request Module 
                     case "13":
@@ -121,12 +121,12 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
+
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
+
+
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));
@@ -152,25 +152,25 @@ sap.ui.define([
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueStateText("Please enter only alpha-numeric characters");
                 }
 
-                else{
+                else {
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("None");
 
                 }
 
             },
 
-            
+
             onChangeInpBankName: function (oEve) {
                 var sValue = oEve.getSource().getValue();
 
                 if (!sValue.match(/^[a-zA-Z0-9\s]*$/)) {
-              
+
 
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("Error");
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueStateText("Please enter only alpha-numeric characters");
                 }
 
-                else{
+                else {
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("None");
 
                 }
@@ -532,9 +532,16 @@ sap.ui.define([
                         this.getView().setBusy(false);
                     }.bind(this)
                 });
+            },
+            
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
+
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
-
-
-
         });
     });
