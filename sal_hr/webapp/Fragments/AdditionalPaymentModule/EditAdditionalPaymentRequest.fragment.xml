@@ -5,7 +5,9 @@
                         
 
                         <Label id="idDateLBL"  required="true" text="{i18n>IssueDate}" />
-                        <DatePicker id="idEditIssueDate"  value="{path:'payDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}"  change="handleChange"/>
+                        <DatePicker id="idEditIssueDate"  value="{path:'payDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"  change="handleChange"/>
 
 
                         

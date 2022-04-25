@@ -25,7 +25,9 @@
                 <l:content> 
                     <fm:SimpleForm layout="ColumnLayout" columnsM="1" columnsL="1" columnsXL="1" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                         <Label text="As of Date" />
-                        <DatePicker id="idLetterEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}" />
+                        <DatePicker id="idLetterEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" minDate="{LocalViewModel>/currentDate}" />
                     </fm:SimpleForm>
 
                     <fm:SimpleForm title="Generate Document" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="1" columnsL="1" columnsXL="1" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">

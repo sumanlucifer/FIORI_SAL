@@ -78,7 +78,7 @@
                             <Text text="" />
                         </IconTabFilter>
                         <IconTabFilter text="{i18n>History}">
-                            <Text text="" />
+                      <core:Fragment fragmentName="com.sal.salhr.Fragments.EmployeeTerminateModule.HistoryTab" type="XML"/>
                         </IconTabFilter>
                     </items>
                 </IconTabBar>

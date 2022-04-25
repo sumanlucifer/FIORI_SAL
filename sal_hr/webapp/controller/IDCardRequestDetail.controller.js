@@ -65,6 +65,7 @@ sap.ui.define([
                         }.bind(this),
                         dataReceived: function (oData) {
                             this._fnSetUserName(oData.getParameter("data"));
+                            this.onCallHistoryData(object.ticketCode);
                             this.getView().setBusy(false);
                         }.bind(this)
                     }
@@ -73,6 +74,30 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", true);
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "ID Replacement Changes");
             },
+
+            onCallHistoryData: function (sticketCode) {
+                var ticketCodeFilter = new sap.ui.model.Filter({
+                    path: "ticketCode",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: sticketCode
+                });
+                var filter = [];
+                filter.push(ticketCodeFilter);
+                this.getOwnerComponent().getModel().read("/TicketHistory", {
+                    filters: [filter],
+                    
+                    success: function (oData, oResponse) {
+                        var oHistoryData = new JSONModel(oData.results);
+                        this.getView().setModel(oHistoryData, "HistoryData");
+                    
+                        
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }
+                });
+            },
+
 
             _fnSetUserName: function (oData) {
                 var sUserName = "";

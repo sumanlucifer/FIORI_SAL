@@ -81,8 +81,9 @@
                         <!-- <IconTabFilter text="{i18n>Resolution}">
                             <Text text="" />
                         </IconTabFilter> -->
-                        <IconTabFilter text="{i18n>History}">
-                            <Text text="" />
+                     <IconTabFilter text="{i18n>History}">
+                            <!-- <Text text="" /> -->
+                             <core:Fragment fragmentName="com.sal.salhr.Fragments.DisciplinaryModule.HistoryTab" type="XML"/>
                         </IconTabFilter>
                     </items>
                 </IconTabBar>

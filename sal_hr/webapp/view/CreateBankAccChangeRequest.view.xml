@@ -29,7 +29,9 @@
                         <Title id="idSpecifyDetailsTTL" text="{i18n>BankDetails}" titleStyle="H6" level="H6"/>
 
                         <Label id="idDateLBL" text="{i18n>whenWouldYouLiketoText}" />
-                        <DatePicker id="idFromDatePicker" enabled="false" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}"  change="handleChange"/>
+                        <DatePicker id="idFromDatePicker" enabled="false" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"  change="handleChange"/>
 
 
                         
