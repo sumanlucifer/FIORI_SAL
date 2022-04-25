@@ -6,7 +6,7 @@ sap.ui.define([
 
 ],
 
-    function (BaseController, Controller, JSONModel,formatter) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.AdditionalPaymentRequestDetailPage", {
             formatter: formatter,
@@ -50,63 +50,63 @@ sap.ui.define([
                 this.onCallHistoryData(object.ticketCode);
 
 
-                if (object.status === "APPROVED") {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                }
+                // if (object.status === "APPROVED") {
+                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                // } else {
+                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
-                        sKey = oComponentModel.createKey("/SF_Pay", {
-                            payComponentCode: object.externalCode,
-                            payDate: object.effectiveStartDate,
-                            userId: object.employeeId
-                        });
-                        this.getView().bindElement({
-                            path: sKey,
-                            parameters: {
-                                expand: "payComponentCodeNav,alternativeCostCenterNav,userNav",
-                            },
-                            events: {
-                                change: function (oEvent) {
-                                    var oContextBinding = oEvent.getSource();
-                                    oContextBinding.refresh(false);
-                                }.bind(this),
-                                dataRequested: function () {
-                                    this.getView().setBusy(true);
-                                }.bind(this),
-                                dataReceived: function () {
-                                    this.getView().setBusy(false);
-                                }.bind(this)
-                            }
-                        });
+                sKey = oComponentModel.createKey("/SF_Pay", {
+                    payComponentCode: object.externalCode,
+                    payDate: object.effectiveStartDate,
+                    userId: object.employeeId
+                });
+                this.getView().bindElement({
+                    path: sKey,
+                    parameters: {
+                        expand: "payComponentCodeNav,alternativeCostCenterNav,userNav",
+                    },
+                    events: {
+                        change: function (oEvent) {
+                            var oContextBinding = oEvent.getSource();
+                            oContextBinding.refresh(false);
+                        }.bind(this),
+                        dataRequested: function () {
+                            this.getView().setBusy(true);
+                        }.bind(this),
+                        dataReceived: function () {
+                            this.getView().setBusy(false);
+                        }.bind(this)
+                    }
+                });
 
-                        // this.getView().getModel().read(sKey, {
-                        //     urlParameters: {
-                        //         "$expand": "cust_attachmentNav, timeTypeNav"
-                        //     },
-                        //     success: function (oData) {
-                        //         oAttachModel = new JSONModel(oData.cust_attachmentNav);
-                        //         var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
-                        //         that.getView().setModel(oAttachModel, "attachmentModel");
-                        //         that.getView().setModel(oTimeTypeModel, "timeTypeModel");
-                        //         // that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
-                        //         var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
-                        //         if (sType === "S110" || sType === "500" || sType === "460") {
-                        //             that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                        //         } else {
-                        //             that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                        //         }
-                        //     },
-                        //     error: function (oError) {
+                // this.getView().getModel().read(sKey, {
+                //     urlParameters: {
+                //         "$expand": "cust_attachmentNav, timeTypeNav"
+                //     },
+                //     success: function (oData) {
+                //         oAttachModel = new JSONModel(oData.cust_attachmentNav);
+                //         var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
+                //         that.getView().setModel(oAttachModel, "attachmentModel");
+                //         that.getView().setModel(oTimeTypeModel, "timeTypeModel");
+                //         // that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
+                //         var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
+                //         if (sType === "S110" || sType === "500" || sType === "460") {
+                //             that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                //         } else {
+                //             that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                //         }
+                //     },
+                //     error: function (oError) {
 
-                        //     }
+                //     }
 
-                        // });
+                // });
 
-                      
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Additional Payment Request");
-                        this.getView().getModel("LocalViewModel").refresh();
+
+                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Additional Payment Request");
+                this.getView().getModel("LocalViewModel").refresh();
 
             },
             onCallHistoryData: function (sticketCode) {
@@ -119,12 +119,12 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
+
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
+
+
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));
@@ -149,25 +149,25 @@ sap.ui.define([
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueStateText("Please enter only alpha-numeric characters");
                 }
 
-                else{
+                else {
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idIBANINP").setValueState("None");
 
                 }
 
             },
 
-            
+
             onChangeInpBankName: function (oEve) {
                 var sValue = oEve.getSource().getValue();
 
                 if (!sValue.match(/^[a-zA-Z0-9\s]*$/)) {
-              
+
 
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("Error");
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueStateText("Please enter only alpha-numeric characters");
                 }
 
-                else{
+                else {
                     sap.ui.core.Fragment.byId("idBankChangerequestFragment", "idBankNameINP").setValueState("None");
 
                 }
@@ -227,11 +227,11 @@ sap.ui.define([
             onSavePress: function () {
                 var oPayloadObj = {},
                     sEntityPath = null;
-                    var oComponentModel = this.getComponentModel(),
+                var oComponentModel = this.getComponentModel(),
                     sKey = oComponentModel.createKey("/SF_Pay", {
-                           payComponentCode: this.object.externalCode,
-                            payDate: this.object.effectiveStartDate,
-                            userId: this.object.employeeId
+                        payComponentCode: this.object.externalCode,
+                        payDate: this.object.effectiveStartDate,
+                        userId: this.object.employeeId
 
 
                     });
@@ -252,7 +252,7 @@ sap.ui.define([
                 });
             },
 
-           
+
             fnAddPaymentRequestChangePayload: function () {
 
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
@@ -434,9 +434,16 @@ sap.ui.define([
                         this.getView().setBusy(false);
                     }.bind(this)
                 });
+            },
+
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
+
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
-
-
-
         });
     });

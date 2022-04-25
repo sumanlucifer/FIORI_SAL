@@ -44,11 +44,11 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
 
 
-                if (object.status === "APPROVED") {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                } else {
-                    this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                }
+                // if (object.status === "APPROVED") {
+                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
+                // } else {
+                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
+                // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                         sKey = oComponentModel.createKey("/SF_EmpEmploymentTermination", {
@@ -153,9 +153,17 @@ sap.ui.define([
                     parentMaterial: this.sParentID,
                     layout: sLayout
                 });
+            },
+
+            onApprovePress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onApproveRequest(swfRequestId);
+            },
+
+            onRejectPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                this.onRejectRequest(swfRequestId);
             }
-
-
 
         });
     });

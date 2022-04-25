@@ -94,9 +94,6 @@
                 <ToolbarSpacer/>
             </OverflowToolbar>
         </upload:toolbar>
-        <!-- <upload:items> -->
-            <!-- <upload:UploadSetItem fileName="{AttachmentModel>/PassportAttachment/fileName}" mediaType="{AttachmentModel>/PersonalIdAttachment/mimeType}"/> -->
-        <!-- </upload:items> -->
     </upload:UploadSet>
 
     <upload:UploadSet id="idEditUploadSetCompanyIDCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
