@@ -60,7 +60,7 @@ sap.ui.define([
                             "cust_permitPurpose": null,
                             "cust_nationalID": sNationalID,
                             "cust_typeOfPass": null,
-                            "externalCode": "95924",
+                            "externalCode": sExternalCode,
                             "externalName": null,
                             "cust_dateOfBirth": sDateOfBirth
                         },

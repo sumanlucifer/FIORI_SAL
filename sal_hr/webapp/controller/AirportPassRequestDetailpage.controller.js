@@ -98,7 +98,7 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    success: function (oData, oResponse) {
+                    success: function (oData) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
                     }.bind(this),
@@ -147,7 +147,7 @@ sap.ui.define([
                         "cust_permitPurpose": oData.cust_toAirportPassItem.cust_permitPurpose,
                         "cust_nationalID": oData.cust_toAirportPassItem.cust_nationalID,
                         "cust_typeOfPass": oData.cust_toAirportPassItem.cust_typeOfPass,
-                        "externalCode": oData.cust_toAirportPassItem.externalCode,
+                        "externalCode": oData.externalCode,
                         "externalName": oData.cust_toAirportPassItem.externalName,
                         "cust_dateOfBirth": oData.cust_toAirportPassItem.cust_dateOfBirth
                     },
@@ -187,15 +187,46 @@ sap.ui.define([
 
                 this.getView().setBusy(false);
 
-                this._fnSetAttachmentItemsUploadButtonVisibility();
+                this._fnSetPassportCopyAttachmentItems();
             },
 
-            _fnSetAttachmentItemsUploadButtonVisibility: function () {
-                // To remove items from the Passport uploadset If no records available from backend
-                if (this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment") === null) {
-                    this.byId("idDisplayUploadSetPassportcopy").destroyItems();
-                    this.byId("idEditUploadSetnonnationals").destroyItems();
+            // // Bind items to Passport copy section dynamically To remove items from the Passport uploadset If no records available from backend
+            _fnSetPassportCopyAttachmentItems: function () {
+                var oPassportAttachmentData = {};
+                if (this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment") !== null) {
+                    oPassportAttachmentData = {
+                        items: [this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment")]
+                    };
+                    this.byId("idEditUploadSetnonnationals").getDefaultFileUploader().setEnabled(false);
+                    this.byId("idDisplayPassportcopyDownloadBtn").setEnabled(true);
                 }
+                else {
+                    oPassportAttachmentData = {
+                        items: []
+                    };
+                    this.byId("idEditUploadSetnonnationals").getDefaultFileUploader().setEnabled(true);
+                    this.byId("idDisplayPassportcopyDownloadBtn").setEnabled(false);
+                }
+
+                var oPassportAttachmentModel = new sap.ui.model.json.JSONModel(oPassportAttachmentData);
+                this.byId("idDisplayUploadSetPassportcopy").setModel(oPassportAttachmentModel);
+                this.byId("idEditUploadSetnonnationals").setModel(oPassportAttachmentModel);
+
+                var oNonNationalPassportAttachmentItemDisplay = new sap.m.upload.UploadSetItem({
+                    fileName: "{AttachmentModel>/PassportAttachment/fileName}",
+                    mediaType: "{AttachmentModel>/PersonalIdAttachment/mimeType}",
+                    visibleEdit: false,
+                    visibleRemove: false
+                }), oNonNationalPassportAttachmentItemEdit = new sap.m.upload.UploadSetItem({
+                    fileName: "{AttachmentModel>/PassportAttachment/fileName}",
+                    mediaType: "{AttachmentModel>/PersonalIdAttachment/mimeType}"
+                });
+                this.byId("idDisplayUploadSetPassportcopy").bindAggregation("items", "/items", oNonNationalPassportAttachmentItemDisplay);
+                this.byId("idEditUploadSetnonnationals").bindAggregation("items", "/items", oNonNationalPassportAttachmentItemEdit);
+
+                this.byId("idEditUploadSetPersonalID").getDefaultFileUploader().setEnabled(false);
+                this.byId("idEditUploadSetPersonalPhoto").getDefaultFileUploader().setEnabled(false);
+                this.byId("idEditUploadSetCompanyIDCopy").getDefaultFileUploader().setEnabled(false);
             },
 
             onEditPress: function () {
@@ -252,10 +283,14 @@ sap.ui.define([
 
                     this._fnUpdateAttachmentData();
 
-                    var oPayloadObj = this.getView().getModel("DisplayEditAirpassModel").getProperty("/");
+                    var sTicketID = this.getModel("headerModel").getProperty("/ticketCode"),
+                        oPayloadObj = this.getView().getModel("DisplayEditAirpassModel").getProperty("/");
                     oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
 
                     this.getView().getModel().update(sKey, oPayloadObj, {
+                        urlParameters: {
+                            "ticketId": sTicketID
+                        },
                         success: function (oResponse) {
                             this.getView().setBusy(false);
                             MessageBox.success("Requested changes updated successfully.");
@@ -478,13 +513,14 @@ sap.ui.define([
 
                 this.getView().getModel("DisplayEditAirpassModel").setProperty("/" + oUploadPropertyObj.AttachmentNew, false);
                 this.getView().getModel("DisplayEditAirpassModel").refresh();
+                this.byId(sUploaderName).getDefaultFileUploader().setEnabled(true);
 
                 if (sUploaderName === "idEditUploadSetnonnationals") {
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/isPassportAttachmentNew", false);
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileContent", "PS");
                     this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentFileName", "PS.txt");
 
-                    if (this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment").hasOwnProperty("attachmentId")) {
+                    if (this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment") !== null) {
                         this.getView().getModel("DisplayEditAirpassModel").setProperty("/deletePassportAttachment", true);
                         this.getView().getModel("DisplayEditAirpassModel").setProperty("/passportAttachmentId", this.getView().getModel("AttachmentModel").getProperty("/PassportAttachment/attachmentId"));
                     }

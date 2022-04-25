@@ -34,12 +34,12 @@ sap.ui.define([
                         colorPalette: ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47", "#264478"],
                         gap: {
                             innerGroupSpacing: 0,
-                            groupSpacing: 1
+                            groupSpacing: 1.5
                         },
-                        dataPointSize: {
-                            min: 30,
-                            max: 30
-                        },
+                        // dataPointSize: {
+                        //     min: 30,
+                        //     max: 30
+                        // },
                         dataLabel: {
                             visible: true
                         }
@@ -79,7 +79,6 @@ sap.ui.define([
                     "totalRequests": 105,
                     "completed": 100,
                     "Rating": "Good",
-                    displayPercentage: 80,
                     state: "Success"
                 },
                 {
@@ -88,7 +87,6 @@ sap.ui.define([
                     "totalRequests": 50,
                     "completed": 10,
                     "Rating": "Poor",
-                    displayPercentage: 15,
                     state: "Error"
                 },
                 {
@@ -97,7 +95,6 @@ sap.ui.define([
                     "totalRequests": 80,
                     "completed": 50,
                     "Rating": "Average",
-                    displayPercentage: 70,
                     state: "Warning"
                 },
                 {
@@ -106,7 +103,6 @@ sap.ui.define([
                     "totalRequests": 30,
                     "completed": 17,
                     "Rating": "Average",
-                    displayPercentage: 50,
                     state: "Warning"
                 },
                 {
@@ -115,7 +111,6 @@ sap.ui.define([
                     "totalRequests": 40,
                     "completed": 30,
                     "Rating": "Good",
-                    displayPercentage: 90,
                     state: "Success"
                 },
                 {
@@ -124,7 +119,6 @@ sap.ui.define([
                     "totalRequests": 60,
                     "completed": 40,
                     "Rating": "Good",
-                    displayPercentage: 80,
                     state: "Success"
                 }];
             }
