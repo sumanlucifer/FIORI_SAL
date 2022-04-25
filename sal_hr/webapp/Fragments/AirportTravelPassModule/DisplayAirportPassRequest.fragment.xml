@@ -80,12 +80,9 @@
             <OverflowToolbar>
                 <Label text="{i18n>PassportCopyfornonnationals}" required="false"/>
                 <ToolbarSpacer/>
-                <Button text="Download Attachment" press="onDownLoadPress"/>
+                <Button id="idDisplayPassportcopyDownloadBtn" text="Download Attachment" press="onDownLoadPress"/>
             </OverflowToolbar>
         </upload:toolbar>
-        <!-- <upload:items>
-            <upload:UploadSetItem visibleEdit="false" visibleRemove="false" fileName="{AttachmentModel>/PassportAttachment/fileName}" mediaType="{AttachmentModel>/PersonalIdAttachment/mimeType}"/>
-        </upload:items> -->
     </upload:UploadSet>
 
     <upload:UploadSet id="idDisplayUploadSetCompanyIDCopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200">
