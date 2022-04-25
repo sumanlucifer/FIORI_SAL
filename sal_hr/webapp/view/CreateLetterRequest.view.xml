@@ -42,6 +42,9 @@
                         <core:ListItem key="{ID}" text="{template}" />
 
                     </Select>
+
+             <Label text="Template Description" />
+            <Input id="idDescription" value="" enabled= "false"/>
              
             
 

@@ -132,7 +132,7 @@ sap.ui.define([
                 }
 
               
-                this.oRouter.navTo("AdditionalPaymentRequestDetail", {
+                this.oRouter.navTo("EmployeeTerminateDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,
                     layout: sLayout

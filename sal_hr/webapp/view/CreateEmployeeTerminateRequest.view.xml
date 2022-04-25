@@ -31,12 +31,12 @@
 
 
                         
-                        <Label id="idLblCreateType" required="false" text="{i18n>TerminationDate}" />
+                        <Label id="idLblCreateType" required="true" text="{i18n>TerminationDate}" />
                        <DatePicker id="idTerminationDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}"  change="handleChange"/>
                         </fm:SimpleForm>
 
                           <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <Label required="false" id="idBValueLBL" text="{i18n>TerminationReason}"/>
+                        <Label required="true" id="idBValueLBL" text="{i18n>TerminationReason}"/>
                         <!-- <Input  type="Text" liveChange="OnLiveChangeValue"   /> -->
 
                          <!-- <Select id="idTerminationReasonINP" items="{ path: '/SF_FOEventReason'}" >
