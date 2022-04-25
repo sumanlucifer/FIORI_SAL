@@ -15,8 +15,8 @@
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
-                                        <viz:Popover id="idPopOver"/>
-                                        <viz:VizFrame id="idVizFrame" height="300px" width="100%" vizType='combination'>
+                                        <viz:Popover id="idTicketsPopOver"/>
+                                        <viz:VizFrame id="idTicketsVizFrame" height="300px" width="100%" vizType='combination'>
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
                                                     <viz.data:dimensions>
@@ -25,19 +25,21 @@
                                                     <viz.data:measures>
                                                         <!-- Column chart Items -->
                                                         <viz.data:MeasureDefinition group="1" name="Completed" value="{TicketsSummaryDataModel>completed}"/>
-                                                        <viz.data:MeasureDefinition group="1" name="Under Process" value="{TicketsSummaryDataModel>underProcess}"/>
+                                                        <!-- <viz.data:MeasureDefinition group="1" name="Under Process" value="{TicketsSummaryDataModel>underProcess}"/> -->
                                                         <viz.data:MeasureDefinition group="1" name="Pending" value="{TicketsSummaryDataModel>pending}"/>
                                                         <viz.data:MeasureDefinition group="1" name="Cancelled by End User" value="{TicketsSummaryDataModel>cancelledByEndUser}"/>
                                                         <!-- Line chart Items -->
                                                         <viz.data:MeasureDefinition group="2" name="Cancelled by Admin" value="{TicketsSummaryDataModel>cancelledByAdmin}"/>
-                                                        <viz.data:MeasureDefinition group="2" name="Re-assigned " value="{TicketsSummaryDataModel>reassigned}"/>
-                                                        <viz.data:MeasureDefinition group="2" name="Re-opened" value="{TicketsSummaryDataModel>reopened}"/>
+                                                        <!-- <viz.data:MeasureDefinition group="2" name="Re-assigned " value="{TicketsSummaryDataModel>reassigned}"/>
+                                                        <viz.data:MeasureDefinition group="2" name="Re-opened" value="{TicketsSummaryDataModel>reopened}"/> -->
                                                     </viz.data:measures>
                                                 </viz.data:FlattenedDataset>
                                             </viz:dataset>
                                             <viz:feeds>
-                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Under Process,Pending,Cancelled by End User"/>
-                                                <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin,Re-assigned ,Re-opened"/>
+                                                <!-- <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Under Process,Pending,Cancelled by End User"/>
+                                                <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin,Re-assigned ,Re-opened"/> -->
+                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Pending,Cancelled by End User"/>
+                                                <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin"/>
                                                 <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Name"/>
                                             </viz:feeds>
                                         </viz:VizFrame>
@@ -66,9 +68,9 @@
                                                 <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" width="10%">
                                                     <Label design="Bold" text="{i18n>Completed}"/>
                                                 </Column>
-                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="10%">
+                                                <!-- <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="10%">
                                                     <Label design="Bold" text="{i18n>UnderProcess}"/>
-                                                </Column>
+                                                </Column> -->
                                                 <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="7%">
                                                     <Label design="Bold" text="{i18n>Pending}"/>
                                                 </Column>
@@ -78,12 +80,12 @@
                                                 <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="15%">
                                                     <Label design="Bold" text="{i18n>CancelledbyAdmin}"/>
                                                 </Column>
-                                                <Column hAlign="Center" width="10%">
+                                                <!-- <Column hAlign="Center" width="10%">
                                                     <Label design="Bold" text="{i18n>Reassigned} "/>
                                                 </Column>
                                                 <Column hAlign="Center" width="8%">
                                                     <Label design="Bold" text="{i18n>Reopened}"/>
-                                                </Column>
+                                                </Column> -->
                                                 <Column hAlign="End" width="10%">
                                                     <Label design="Bold" text="{i18n>TotalRequests}"/>
                                                 </Column>
@@ -94,12 +96,12 @@
                                                         <Text text="{TicketsSummaryDataModel>name}"/>
                                                         <!-- <Label design="Bold" text="{TicketsSummaryDataModel>name}"/> -->
                                                         <Text text="{TicketsSummaryDataModel>completed}"/>
-                                                        <Text text="{TicketsSummaryDataModel>underProcess}"/>
+                                                        <!-- <Text text="{TicketsSummaryDataModel>underProcess}"/> -->
                                                         <Text text="{TicketsSummaryDataModel>pending}"/>
                                                         <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
                                                         <Text text="{TicketsSummaryDataModel>cancelledByAdmin}"/>
-                                                        <Text text="{TicketsSummaryDataModel>reassigned}"/>
-                                                        <Text text="{TicketsSummaryDataModel>reopened}"/>
+                                                        <!-- <Text text="{TicketsSummaryDataModel>reassigned}"/>
+                                                        <Text text="{TicketsSummaryDataModel>reopened}"/> -->
                                                         <Label design="Bold" text="{TicketsSummaryDataModel>totalRequests}"/>
                                                     </cells>
                                                 </ColumnListItem>

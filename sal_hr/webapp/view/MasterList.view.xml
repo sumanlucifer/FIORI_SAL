@@ -49,7 +49,7 @@
                                       <cells>
                                             <core:Icon id="idMasterIcon" src="{path:'ID',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem" class="ListIcon"></core:Icon>        
                                             <Text id="idMasterNameTxt" text="{name}" />
-                                             <Text id="idMasterDescText" text="{path:'ID',formatter:'.formatter.addDesc'}" wrapping="true" />
+                                             <Text id="idMasterDescText" text="{description}" wrapping="true" />
                                             <Text id="idTotalReq" text="{totalRequests}" class="infoColor"/>     
                                        </cells> 
                                     </ColumnListItem>

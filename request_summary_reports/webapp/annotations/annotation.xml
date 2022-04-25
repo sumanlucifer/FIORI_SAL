@@ -65,6 +65,12 @@
             <Annotations Target="HumanResourceService.Report/creationDate">
                 <Annotation Term="Common.Label" String="{@i18n>CreationDate}"/>
             </Annotations>
+            <Annotations Target="HumanResourceService.Report/sourceOfTicket">
+                <Annotation Term="Common.Text">
+                    <Annotation Term="Core.RequiresType" String="EP_PORTLET"/>
+                    <Annotation Term="Core.Description" String="PORTLET"/>
+                </Annotation>
+            </Annotations>
 
             <!-- To hide any field -->
             <!-- <Annotations Target="HumanResourceService.Report/subModuleId">
@@ -147,12 +153,12 @@
                                 </Record>
                             </Annotation>
                         </Record>
-                        <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="sourceOfTicket"/>
-                            <PropertyValue Property="Label" String="{@i18n>source}"/>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="subModuleName"/>
+                            <PropertyValue Property="Label" String="{@i18n>Portel/Intent}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="7rem"/>
+                                    <PropertyValue Property="width" String="14rem"/>
                                 </Record>
                             </Annotation>
                         </Record>
@@ -162,7 +168,7 @@
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="12rem"/>
+                                    <PropertyValue Property="width" String="10rem"/>
                                 </Record>
                             </Annotation>
                         </Record>
@@ -182,7 +188,7 @@
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="11rem"/>
+                                    <PropertyValue Property="width" String="6rem"/>
                                 </Record>
                             </Annotation>
                         </Record>
@@ -246,12 +252,12 @@
                                 </Record>
                             </Annotation>
                         </Record>
-                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="subModuleName"/>
-                            <PropertyValue Property="Label" String="{@i18n>subModuleName}"/>
+                          <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="sourceOfTicket"/>
+                            <PropertyValue Property="Label" String="{@i18n>source}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="30rem"/>
+                                    <PropertyValue Property="width" String="7rem"/>
                                 </Record>
                             </Annotation>
                         </Record>

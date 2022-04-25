@@ -15,7 +15,7 @@ sap.ui.define([
             },
 
             fnInitializeChart: function () {
-                var oVizFrame = this.getView().byId("idVizFrame");
+                var oVizFrame = this.getView().byId("idTicketsVizFrame");
                 oVizFrame.setVizProperties({
                     title: {
                         visible: false
@@ -31,13 +31,15 @@ sap.ui.define([
                         }
                     },
                     plotArea: {
-                        colorPalette: ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47", "#264478"],
+                        // colorPalette: ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47", "#264478"],
+                        colorPalette: ["#4472C4", "#A5A5A5", "#FFC000", "#264478"],
                         gap: {
                             innerGroupSpacing: 0,
                             groupSpacing: 1.5
                         },
                         dataShape: {
-                            primaryAxis: ['bar', 'bar', 'bar', 'bar', 'line']
+                            // primaryAxis: ['bar', 'bar', 'bar', 'bar', 'line']
+                            primaryAxis: ['bar', 'bar', 'bar', 'line']
                         },
                         // Enabling this setting sets zoom buttons as disable
                         // dataPointSize: {
