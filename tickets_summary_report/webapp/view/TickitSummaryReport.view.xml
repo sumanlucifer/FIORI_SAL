@@ -11,7 +11,7 @@
             <pages>
                 <Page id="page" title="{i18n>title}" showHeader="false">
                     <VBox>
-                        <commons:ChartContainer showFullScreen="true" showZoom="true" title="{i18n>TicketSummary}">
+                        <commons:ChartContainer showFullScreen="true" showZoom="true">
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>

@@ -283,7 +283,7 @@ sap.ui.define([
 
                     this._fnUpdateAttachmentData();
 
-                    var sTicketID = this.getModel("headerModel").getProperty("/ticketCode"),
+                    var sTicketID = this.getView().getModel("headerModel").getProperty("/ticketCode"),
                         oPayloadObj = this.getView().getModel("DisplayEditAirpassModel").getProperty("/");
                     oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
 
