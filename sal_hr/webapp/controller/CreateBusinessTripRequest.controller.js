@@ -256,8 +256,8 @@ sap.ui.define([
                     oReturnDatePicker = this.byId("idReturnDate"),
                     sDestinationCountry = this.getView().byId("idDestCountry"),
                     // oFlightTravelDatePicker = this.byId("idFlightTravelDate"),
-                    sTravelJustification = this.byId("idTravelJustification"),
-                    sOtherCity = this.byId("idCityCountry");
+                    sTravelJustification = this.byId("idTravelJustification");
+                    //sOtherCity = this.byId("idCityCountry");
 
                 // Validate Business Trip Effective Start Date
                 if (!oEffectStartDatePicker.getValue()) {

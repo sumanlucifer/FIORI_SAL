@@ -29,7 +29,7 @@
                     },
                     "semanticObject": "Reports_semantic",
                     "action": "display",
-                    "title": "{{flpTitle}}",
+                    "title": "Ticket Summary Report",
                     "subTitle": "{{flpSubtitle}}",
                     "icon": "sap-icon://manager-insight"
                 }

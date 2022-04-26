@@ -44,7 +44,7 @@ sap.ui.define([
                             sap.m.MessageBox.success("Request Submitted Successfully.");
                             this.getView().setBusy(false);
                             this.getView().getModel().refresh();
-                            this.onDownLoadPress(oData.result);
+                            this.onDownLoadPress(oData.result, oData.template,  oData.asOfDate);
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
@@ -93,13 +93,19 @@ sap.ui.define([
                 this.mainModel.refresh();
             },
           
-            onDownLoadPress: function (fContent) {
-              
+            onDownLoadPress: function (fContent, sName, sDate) {
+              var sDate = new Date(sDate),
+              sMonth = sDate.getMonth() + 1,
+              sDay = sDate.getDate(),
+              sYear = sDate.getFullYear();
+
+             sDate = `${sMonth}-${sDay}-${sYear}`
                 var sTemplate = this.byId("idLetterTemplate").getSelectedKey();
                 if(sTemplate === "1"){
-                    sTemplate = "Introduction Certificate.pdf";
+                    sTemplate = `${sName}_Certificate_ENGLISH_${sDate}.pdf`;
                 }else {
-                  sTemplate = "Introduction Certificate with Salary.pdf";
+                //   sTemplate = "Introduction Certificate with Salary.pdf";
+                  sTemplate = `${sName}_Certificate with Salary_ENGLISH_${sDate}.pdf`;
                 }
 
 
