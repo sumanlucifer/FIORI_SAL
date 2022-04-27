@@ -9,12 +9,12 @@
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
         <!-- DynamicPage Title -->
         <f:title>
-            <f:DynamicPageTitle id="idDynamicPageTitle">
+              <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New Request" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="New Salary Increment Request" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Request" class="sapUiSmallMarginBegin">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Salary Increment Request" class="sapUiSmallMarginBegin">
                         <Link id="idSalaryLink" text="{i18n>HumanResource}" press="onCreateCancelPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -143,27 +143,185 @@
 				text="Employee Salary Increment"
 				key="increment"
 				>
-				   <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="When would you like your changes to take effect? " required="true" />
             <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
         </fm:SimpleForm>
 			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="Choose what you want to change"/>
+             <CheckBox text="Compensation Information"></CheckBox>
+            <CheckBox text="Job Information"></CheckBox>
            
-            <CheckBox text="Compensation Information"></CheckBox>
              </fm:SimpleForm>
-             <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="Incumbent of ParentPosition" />
+             <fm:SimpleForm title="Compensation Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+           <Label text="Pay Group" required="true" />
+            <Input/>
+            <Label text="is Eligible for Car" />
+            <Input value=""  />
+            <Label text="Monthly Basic" />
+            <Input value="" />
+            <Label text="Country" required="true" />
+            <Input/>
+            <Label text="Pay Type" />
+            <Input value=""  />
+            <Label text="Scheme Change Date" />
+           <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+            <Label text="Change from Commision to Variable" required="true" />
+            <Input/>
+         </fm:SimpleForm> 
+            <VBox>
+                       <Table  id="idConsumedTable" growing="true" growingThreshold="10" items="{HealthItemDetailsModel>/}">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                       <Title text="{i18n>Compensation}" level="H4" />
+                            <content>
+                                <ToolbarSpacer></ToolbarSpacer>
+                                <Button text="Add Details" icon="sap-icon://add" press="onAddDetailsItemsPress"></Button>
+                            </content>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                 <Label text="Pay Component" required="true" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                   <Label text="Amount" required="false" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                   <Label text="Currency" required="true" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                  <Label text="Frequency" required="true" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                  <Label text="Payment-End-Date" required="true" />
+                                </Column>
+                                 <Column demandPopin="true" minScreenWidth="Tablet">
+                                      <Label text="" required="false" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem id="idBOQItems">
+                                    <cells>
+                                             <ComboBox  selectedKey="{HealthItemDetailsModel>Relationship}" items="{ path: '/SF_PickListValueV2',
+                                                sorter : {  
+                                                 path : 'label_defaultValue'},
+                                                filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'ESS_personRelationshipType'}]}" change="onTimeTyeChange">
+                                              <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                                            </ComboBox>
+                                            <Input value="{HealthItemDetailsModel>DependentName}"/>
+                                            <ComboBox  selectedKey="{HealthItemDetailsModel>DependentGender}" items="{ path: '/SF_PickListValueV2',
+                                                sorter : {  
+                                                 path : 'label_defaultValue'},
+                                                filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'Gender'}]}" change="onTimeTyeChange">
+                                              <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                                            </ComboBox>
+                                              <Input type="Number" value="{HealthItemDetailsModel>NationalID}"/>
+                                       <DatePicker   value="{path:'HealthItemDetailsModel>DependentDOB', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"  />
+                                               <Button icon="sap-icon://delete" press="onDeleteItemPress" type="Transparent"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        </VBox>
+
+
+                         <VBox>
+                       <Table  id="idTable" growing="true" growingThreshold="10" items="{HealthItemDetailsModel>/}">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                       <Title text="{i18n>PayTargets}" level="H4" />
+                            <content>
+                                <ToolbarSpacer></ToolbarSpacer>
+                                <Button text="Add Details" icon="sap-icon://add" press="onAddDetailsItemsPress"></Button>
+                            </content>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                 <Label text="Pay Component" required="true" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                   <Label text="Amount" required="false" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                   <Label text="Currency" required="true" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                  <Label text="Frequency" required="true" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                  <Label text="Payment-End-Date" required="true" />
+                                </Column>
+                                 <Column demandPopin="true" minScreenWidth="Tablet">
+                                      <Label text="" required="false" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem id="ids">
+                                    <cells>
+                                             <ComboBox  selectedKey="{HealthItemDetailsModel>Relationship}" items="{ path: '/SF_PickListValueV2',
+                                                sorter : {  
+                                                 path : 'label_defaultValue'},
+                                                filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'ESS_personRelationshipType'}]}" change="onTimeTyeChange">
+                                              <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                                            </ComboBox>
+                                            <Input value="{HealthItemDetailsModel>DependentName}"/>
+                                            <ComboBox  selectedKey="{HealthItemDetailsModel>DependentGender}" items="{ path: '/SF_PickListValueV2',
+                                                sorter : {  
+                                                 path : 'label_defaultValue'},
+                                                filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'Gender'}]}" change="onTimeTyeChange">
+                                              <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                                            </ComboBox>
+                                              <Input type="Number" value="{HealthItemDetailsModel>NationalID}"/>
+                                       <DatePicker   value="{path:'HealthItemDetailsModel>DependentDOB', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"  />
+                                               <Button icon="sap-icon://delete" press="onDeleteItemPress" type="Transparent"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        </VBox>
+
+
+
+                         <fm:SimpleForm title="Job Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+           <Label text="Direct Manager" required="true" />
+            <Input/>
+            <Label text="Job Classification" />
+            <Input value=""  />
+            <Label text="Job Level" />
+            <Input value="" />
+            <Label text="Job Title" required="true" />
+            <Input/>
+            <Label text="Pay Grade" />
+            <Input value=""  />
+            <Label text="Pay Range" />
+            <Input value=""  />
+            <Label text="IK/OOK" required="true" />
             <Input/>
 
-            <Label text="Position" />
-            <Input value=""  />
-           
-            <Label text="Time in Position" />
-            <Input value="" />
+              <Label text="Standard Weekly Hours" required="true" />
+            <Input/>
 
-
-         </fm:SimpleForm>   
+              <Label text="Working Days Per Week" required="true" />
+            <Input/>
+             <Label text="Is Full Time Employee" required="true" />
+            <Input/>
+             <Label text="Employee Type" required="true" />
+            <Input/>
+             <Label text="Notes" required="true" />
+            <Input/>
+             <Label text="Pay Group" required="true" />
+            <Input/>
+            <Label text="Probationary Period End Date" required="true" />
+            <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+             <Label text="Country" required="true" />
+            <Input/>
+         </fm:SimpleForm> 
 			</IconTabFilter>
 			
 		</items>

@@ -129,7 +129,9 @@ sap.ui.define([
              
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var scustomDate6 =  this.getView().byId("idResignationDate").getDateValue();
+                var sBonusDate =  this.getView().byId("idBonusExpDateDate").getDateValue();
                 var sEndDate =  this.getView().byId("idTerminationDate").getDateValue();
+                var sNotes =  this.getView().byId("idNotes").getValue();
                 var sOKToRetire =  this.getView().byId("idOKToRetire").getSelectedIndex();
                 var sEOSBenefit =  this.getView().byId("idEOSBenefit").getSelectedIndex();
                 sOKToRetire =  sOKToRetire === 0 ? true : false;
@@ -140,6 +142,8 @@ sap.ui.define([
                 scustomDate6 = scustomDate6 + "T00:00:00";
                 sEndDate = dateFormat.format(new Date(sEndDate));
                 sEndDate = sEndDate + "T00:00:00";
+                sBonusDate = dateFormat.format(new Date(sBonusDate));
+                sBonusDate = sBonusDate + "T00:00:00";
                 return {
                     "userId": sUserID,
                     "personIdExternal": sUserID,
@@ -148,8 +152,8 @@ sap.ui.define([
                     "eventReason":sTerminationReason,
                     "okToRehire": sOKToRetire,
                     "eligibleForSalContinuation": sEOSBenefit,
-                    "bonusPayExpirationDate": "/Date(1672358400000)/",
-                    "notes": "testing",
+                    "bonusPayExpirationDate": sBonusDate,
+                    "notes": sNotes,
                     "customString19" : "TERSR04"
                 };
             },
