@@ -1,1 +1,4 @@
 /* Enter your custom styles here */
+.customNoPaddingSimpleForm>.sapUiForm>.sapUiFormResGrid>.sapUiRespGrid{
+    padding: 0rem !important;
+}
