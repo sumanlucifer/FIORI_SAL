@@ -9,7 +9,7 @@
 
     <form:SimpleForm id="idDisplayIDRequestSimpleForm" layout="ResponsiveGridLayout" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <form:content>
-            <core:Title id="idDisplayIDDetails" text="ID Replacement Details" titleStyle="H6" level="H6"/>
+            <core:Title id="idDisplayIDDetails" text="ID Card Replacement Details" titleStyle="H6" level="H6"/>
 
             <Label text="PRN" />
             <Text text="{cust_idReplacementDetails/cust_prn}"/>

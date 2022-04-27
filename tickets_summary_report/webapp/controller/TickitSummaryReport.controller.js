@@ -55,8 +55,8 @@ sap.ui.define([
                     }
                 });
 
-                var oPopOver = this.getView().byId("idPopOver");
-                oPopOver.connect(oVizFrame.getVizUid());
+                // var oPopOver = this.getView().byId("idPopOver");
+                // oPopOver.connect(oVizFrame.getVizUid());
             },
 
             fnReadTickitsSummaryData: function () {

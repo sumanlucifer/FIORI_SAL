@@ -11,7 +11,7 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New ID Card Request" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="New ID Card Replacement Request" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="New ID Card Request" class="sapUiSmallMarginBegin">
@@ -27,7 +27,7 @@
             <Label text="When would you like your changes to take effect? " required="true" />
             <Text id="idEffectDatePicker" text="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
         </fm:SimpleForm>
-        <fm:SimpleForm title="ID Replacement Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <fm:SimpleForm title="ID Card Replacement Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="PRN" />
             <Text id="idPRNInp" text="{userId}"/>
 
