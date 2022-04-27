@@ -316,13 +316,13 @@ sap.ui.define([
                 }
 
                 // Validate Other City
-                if (!sOtherCity.getValue()) {
-                    sOtherCity.setValueState("Error");
-                    sOtherCity.setValueStateText("City(Other Country) is required");
-                    sValidationErrorMsg = "Please fill the all required fields.";
-                } else {
-                    sOtherCity.setValueState("None");
-                }
+                // if (!sOtherCity.getValue()) {
+                //     sOtherCity.setValueState("Error");
+                //     sOtherCity.setValueStateText("City(Other Country) is required");
+                //     sValidationErrorMsg = "Please fill the all required fields.";
+                // } else {
+                //     sOtherCity.setValueState("None");
+                // }
 
 
                 // Validate attachment sections
