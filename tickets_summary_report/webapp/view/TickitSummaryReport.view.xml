@@ -15,7 +15,7 @@
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
-                                        <viz:Popover id="idTicketsPopOver"/>
+                                        <!-- <viz:Popover id="idTicketsPopOver"/> -->
                                         <viz:VizFrame id="idTicketsVizFrame" height="300px" width="100%" vizType='combination'>
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">

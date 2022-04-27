@@ -10,7 +10,7 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="ID Card Request"/>
+                    <Title id="idPageTitle" text="ID Card Replacement Request"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
@@ -21,9 +21,8 @@
                     <Label text="Request {headerModel>/ticketCode}"/>
                 </f:expandedContent>
 
-                <!--Modify and Withdraw not be visible for Manager Tile -->
+                <!--Withdraw not be visible for Manager Tile -->
                 <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
                     <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
                 </f:actions>
 
