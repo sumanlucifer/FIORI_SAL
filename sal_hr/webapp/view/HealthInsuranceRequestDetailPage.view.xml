@@ -25,8 +25,8 @@
 
                 <!--Modify and Withdraw not be visible for Manager Tile -->
                 <f:actions>
-                    <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
-                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
+                    <!-- <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
+                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/> -->
                 </f:actions>
 
                 <!--Approve and Reject visible for Manager Tile -->

@@ -13,7 +13,7 @@ sap.ui.define([
             onInit: function () {
                 debugger;
                 this.oRouter = this.getRouter();
-                this.oRouter.getRoute("LeaveRequest").attachPatternMatched(this._onObjectMatched, this);
+                this.oRouter.getRoute("SalaryIncrementRequest").attachPatternMatched(this._onObjectMatched, this);
 
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
@@ -42,9 +42,9 @@ sap.ui.define([
                     busy: false,
                     uploadAttachment: true,
                     currentDate: new Date(),
-                    meetingType:false,
-                    availBal:false,
-                    halfDayType:false
+                   jobInfoVisible: false,
+                   componesationInfoVisible: false
+
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -62,6 +62,32 @@ sap.ui.define([
                 this._bindView("/MasterSubModules" + this.sParentID);
                
 
+            },
+            onSelectCompensation: function(oEve)
+            {
+
+                if(oEve.getSource().getSelected())
+                {
+                    this.getView().getModel("LocalViewModel").setProperty("/componesationInfoVisible", true);
+                }
+
+                else{
+                    this.getView().getModel("LocalViewModel").setProperty("/componesationInfoVisible", false);
+                }
+              
+            },
+
+            onSelectJobInfo: function(oEve)
+            {
+                if(oEve.getSource().getSelected())
+                {
+                    this.getView().getModel("LocalViewModel").setProperty("/jobInfoVisible", true);
+                }
+
+                else{
+                    this.getView().getModel("LocalViewModel").setProperty("/jobInfoVisible", false);
+                }
+              
             },
             _bindView: function () {
 
