@@ -35,8 +35,8 @@
                     "semanticObject": "Chatbot_Summary",
                     "action": "display",
                     "title": "{{flpTitle}}",
-                    "subTitle": "{{flpSubtitle}}",
-                    "icon": ""
+                    "subTitle": "",
+                    "icon": "sap-icon://travel-request"
                 }
             }
         }

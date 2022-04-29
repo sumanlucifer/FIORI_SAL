@@ -22,7 +22,7 @@ sap.ui.define([
                     },
                     valueAxis: {
                         title: {
-                            visible: false
+                            visible: true
                         }
                     },
                     categoryAxis: {
@@ -32,10 +32,10 @@ sap.ui.define([
                     },
                     plotArea: {
                         colorPalette: ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47", "#264478"],
-                        gap: {
-                            innerGroupSpacing: 0,
-                            groupSpacing: 1.5
-                        },
+                        // gap: {
+                        //     innerGroupSpacing: 0,
+                        //     groupSpacing: 1.5
+                        // },
                         // dataPointSize: {
                         //     min: 30,
                         //     max: 30
@@ -51,9 +51,6 @@ sap.ui.define([
                         }
                     }
                 });
-
-                var oPopOver = this.getView().byId("idSLAPopOver");
-                oPopOver.connect(oVizFrame.getVizUid());
             },
 
             fnReadTickitsSummaryData: function () {
@@ -61,8 +58,8 @@ sap.ui.define([
                 this.getView().getModel().read("/MasterModules", {
                     success: function (oData) {
                         this.getView().setBusy(false);
-                        // var oSLAComplianceDataModel = new JSONModel(oData.results);
-                        var oSLAComplianceDataModel = new JSONModel(this.fnGetSampleData());
+                        var oSLAComplianceDataModel = new JSONModel(oData.results);
+                        // var oSLAComplianceDataModel = new JSONModel(this.fnGetSampleData());
                         this.getView().setModel(oSLAComplianceDataModel, "SLAComplianceDataModel");
                         this.fnInitializeChart();
                     }.bind(this),
@@ -72,21 +69,52 @@ sap.ui.define([
                 });
             },
 
+            fnFormatRatingText: function (iComplianceScore) {
+                var iSLAComplianceScore = Number(iComplianceScore),
+                    sRatingText = "";
+                if (iSLAComplianceScore >= 75) {
+                    sRatingText = "Excellent";
+                } else if (iSLAComplianceScore < 75 && iSLAComplianceScore >= 50) {
+                    sRatingText = "Good";
+                } else if (iSLAComplianceScore < 50 && iSLAComplianceScore >= 25) {
+                    sRatingText = "Average";
+                } else {
+                    sRatingText = "Poor";
+                }
+                return sRatingText;
+            },
+
+            fnFormatRatingState: function (iComplianceScore) {
+                var iSLAComplianceScore = Number(iComplianceScore),
+                    sStateValue = "";
+                if (iSLAComplianceScore >= 75) {
+                    sStateValue = "Success";
+                } else if (iSLAComplianceScore < 75 && iSLAComplianceScore >= 50) {
+                    sStateValue = "Information";
+                } else if (iSLAComplianceScore < 50 && iSLAComplianceScore >= 25) {
+                    sStateValue = "Warning";
+                } else {
+                    sStateValue = "Error";
+                }
+                return sStateValue;
+            },
+
+
             fnGetSampleData: function () {
                 return [{
                     "ID": 1,
                     "name": "Human Resource",
                     "totalRequests": 105,
                     "completed": 100,
-                    "Rating": "Good",
+                    "Rating": "Excellent",
                     state: "Success"
                 },
                 {
                     "ID": 2,
                     "name": "Procurement",
                     "totalRequests": 50,
-                    "completed": 10,
-                    "Rating": "Poor",
+                    "completed": 73,
+                    "Rating": "Good",
                     state: "Error"
                 },
                 {
@@ -101,7 +129,7 @@ sap.ui.define([
                     "ID": 4,
                     "name": "IT Service Management",
                     "totalRequests": 30,
-                    "completed": 17,
+                    "completed": 35,
                     "Rating": "Average",
                     state: "Warning"
                 },
@@ -109,8 +137,8 @@ sap.ui.define([
                     "ID": 5,
                     "name": "Center of Excellence",
                     "totalRequests": 40,
-                    "completed": 30,
-                    "Rating": "Good",
+                    "completed": 10,
+                    "Rating": "Poor",
                     state: "Success"
                 },
                 {
@@ -118,7 +146,7 @@ sap.ui.define([
                     "name": "Overall Shared Services",
                     "totalRequests": 60,
                     "completed": 40,
-                    "Rating": "Good",
+                    "Rating": "Average",
                     state: "Success"
                 }];
             }

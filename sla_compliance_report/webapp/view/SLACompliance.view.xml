@@ -11,11 +11,11 @@
             <pages>
                 <Page id="page" title="{i18n>title}" showHeader="false">
                     <VBox>
-                        <commons:ChartContainer showFullScreen="true" showZoom="true" title="{i18n>SLACompliance}">
+                        <commons:ChartContainer showFullScreen="true" showZoom="true">
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
-                                        <viz:Popover id="idSLAPopOver"/>
+                                        <!-- <viz:Popover id="idSLAPopOver"/> -->
                                         <viz:VizFrame id="idVizFrame" height="300px" width="100%" vizType='column'>
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'SLAComplianceDataModel>/'}">
@@ -24,13 +24,13 @@
                                                     </viz.data:dimensions>
                                                     <viz.data:measures>
                                                         <!-- Stacked Column chart Items -->
-                                                        <viz.data:MeasureDefinition group="1" name="Total SLA" value="{SLAComplianceDataModel>totalRequests}"/>
-                                                        <viz.data:MeasureDefinition group="1" name="SLA Compliance Score" value="{SLAComplianceDataModel>completed}"/>
+                                                        <!-- <viz.data:MeasureDefinition group="1" name="Total SLA" value="{SLAComplianceDataModel>totalRequests}"/> -->
+                                                        <viz.data:MeasureDefinition group="1" name="SLA Compliance Score" value="{SLAComplianceDataModel>displayPercentage}"/>
                                                     </viz.data:measures>
                                                 </viz.data:FlattenedDataset>
                                             </viz:dataset>
                                             <viz:feeds>
-                                                <viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Total SLA,SLA Compliance Score"/>
+                                                <viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="SLA Compliance Score"/>
                                                 <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Name"/>
                                             </viz:feeds>
                                         </viz:VizFrame>
@@ -45,7 +45,7 @@
                                         <Table items="{path: 'SLAComplianceDataModel>/'}">
                                             <columns>
                                                 <Column minScreenWidth="Desktop">
-                                                    <Label design="Bold" text="{i18n>Ticket Status}"/>
+                                                    <Label design="Bold" text="{i18n>Module Name}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
                                                     <Label design="Bold" text="{i18n>Compliance Score}"/>
@@ -59,10 +59,8 @@
                                                 <ColumnListItem vAlign="Middle">
                                                     <cells>
                                                         <Label design="Bold" text="{SLAComplianceDataModel>name}"/>
-                                                        <Text text="{SLAComplianceDataModel>completed}"/>
-                                                        <!-- <Text text="{SLAComplianceDataModel>Rating}"/> -->
-                                                        <ObjectStatus text="{SLAComplianceDataModel>Rating}" state="{SLAComplianceDataModel>state}"/>
-                                                        <!-- <ProgressIndicator class="sapUiMediumMarginEnd" percentValue="{SLAComplianceDataModel>displayPercentage}" displayValue="{SLAComplianceDataModel>displayPercentage}%" showValue="true" state="{SLAComplianceDataModel>state}" /> -->
+                                                        <Text text="{SLAComplianceDataModel>displayPercentage}"/>
+                                                        <ObjectStatus text="{path: 'SLAComplianceDataModel>displayPercentage', formatter: '.fnFormatRatingText'}" state="{path: 'SLAComplianceDataModel>displayPercentage', formatter: '.fnFormatRatingState'}"/>
                                                     </cells>
                                                 </ColumnListItem>
                                             </items>
