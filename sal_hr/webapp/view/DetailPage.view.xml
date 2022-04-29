@@ -50,7 +50,7 @@
             </f:DynamicPageHeader>
         </f:header>
         <f:content>
-            <Table id="idTicketTable" items="{ path: 'tickets', sorter: [{path: 'createdAt', descending: 'true'}]}" inset="false" autoPopinMode="true">
+            <Table id="idTicketTable" updateStarted="onUpdateTicketsBindingStart" items="{ path: 'tickets', parameters: { custom: {'IsUserManager': ''}}, sorter: [{path: 'createdAt', descending: 'true'}]}" inset="false" autoPopinMode="true">
                 <headerToolbar>
                     <OverflowToolbar>
                         <content>

@@ -32,6 +32,13 @@ sap.ui.define([
                 // this._filterPCListTable(this.UserEmail);
             },
 
+            // This Function is used to set the custom parameter for Tickets table binding according to user type as Manager or not?
+            onUpdateTicketsBindingStart: function (oEvent) {
+                var sIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+                oEvent.getSource().getBinding("items").sCustomParams = "IsUserManager=" + sIsUserManager;
+                oEvent.getSource().getBinding("items").mCustomParams.IsUserManager = sIsUserManager;
+            },
+
             _bindView: function () {
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
@@ -39,14 +46,14 @@ sap.ui.define([
                     ID: this.sParentID
                 });
 
-                // var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 this.getView().bindElement({
                     path: sKey,
-                    // parameters: {
-                    //     custom: {
-                    //         "IsUserManager": bIsUserManager
-                    //     }
-                    // },
+                    parameters: {
+                        custom: {
+                            "IsUserManager": bIsUserManager
+                        }
+                    },
                     events: {
                         change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();
