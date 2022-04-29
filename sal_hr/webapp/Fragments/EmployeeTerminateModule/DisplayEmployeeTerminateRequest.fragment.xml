@@ -29,6 +29,16 @@
                         <Text id="idDisplay" text="{= ${okToRehire} === true ? 'Yes' : 'No' }"  />
                         <Label id="idDisplayElligibleEOSLBL" text="{i18n>EligibleforEOSBenefit}"/>
                         <Text id="idDisplayEligibleEOSINP" text="{= ${eligibleForSalContinuation} === true ? 'Yes' : 'No' }"  />
+
+                         <Label  text="{i18n>Notes}"/>
+                        <Text  text="{notes}"  />
+
+                         <Label  text="{i18n>BonusPayExpirationDate}"/>
+                       <Text text="{path:'bonusPayExpirationDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"/>
                       
 
                         

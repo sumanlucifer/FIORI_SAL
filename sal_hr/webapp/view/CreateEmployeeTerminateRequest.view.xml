@@ -27,12 +27,16 @@
                         
 
                         <Label id="idDateLBL"  required="false" text="{i18n>ResignationDate}" />
-                        <DatePicker id="idResignationDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}"  change="handleChange"/>
+                        <DatePicker id="idResignationDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"  change="handleChange"/>
 
 
                         
                         <Label id="idLblCreateType" required="true" text="{i18n>TerminationDate}" />
-                       <DatePicker id="idTerminationDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true,UTC: true}}"  change="handleChange"/>
+                       <DatePicker id="idTerminationDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"  change="handleChange"/>
                         </fm:SimpleForm>
 
                           <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
@@ -65,6 +69,14 @@
                                     <RadioButton text="No"/>
                                 </buttons>
                             </RadioButtonGroup>
+                              <Label  text="{i18n>Notes}"/>
+                               <Input  id="idNotes"  />
+                               <Label  text="{i18n>BonusPayExpirationDate}"/>
+                               <DatePicker id="idBonusExpDateDate"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"  change="handleChange"/>
+
+                                               
 
                      </fm:SimpleForm>
                 </l:content>
