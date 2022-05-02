@@ -16,7 +16,7 @@
         <f:content>
               	<Table id="idMasterTable"
 		                    inset="false"
-		                    items="{/MasterModules(1)/masterSubModule}">
+		                    items="{/MasterModules(1)/masterSubModule}" growing="true" growingScrollToLoad="true" growingThreshold="15">
 		                     <headerToolbar>
 			                    <OverflowToolbar id="idMasterOverFlow">
                                     <content>
