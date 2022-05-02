@@ -15,13 +15,12 @@ sap.ui.define([
         return BaseController.extend("com.sal.salhr.controller.DetailPage", {
             formatter: formatter,
             onInit: function () {
-
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("master").attachPatternMatched(this._onObjectMatched, this);
                 this.oRouter.getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
                 this.oRouter.getRoute("detailDetail").attachPatternMatched(this._onObjectMatched, this);
-
             },
+
             _onObjectMatched: function (oEvent) {
                 this._bDescendingSort = false;
                 this.oTicketTable = this.oView.byId("idTicketTable");
@@ -33,17 +32,28 @@ sap.ui.define([
                 // this._filterPCListTable(this.UserEmail);
             },
 
-            _bindView: function () {
+            // This Function is used to set the custom parameter for Tickets table binding according to user type as Manager or not?
+            onUpdateTicketsBindingStart: function (oEvent) {
+                var sIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+                oEvent.getSource().getBinding("items").sCustomParams = "IsUserManager=" + sIsUserManager;
+                oEvent.getSource().getBinding("items").mCustomParams.IsUserManager = sIsUserManager;
+            },
 
+            _bindView: function () {
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
-
                 var sKey = oComponentModel.createKey("/MasterSubModules", {
                     ID: this.sParentID
                 });
 
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 this.getView().bindElement({
                     path: sKey,
+                    parameters: {
+                        custom: {
+                            "IsUserManager": bIsUserManager
+                        }
+                    },
                     events: {
                         change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();
@@ -57,14 +67,9 @@ sap.ui.define([
                         }.bind(this)
                     }
                 });
-
-
             },
 
-           
-
             onPressRaiseRequest: function () {
-
                 switch (this.sParentID) {
                     // Leave Request Module
                     case "1":
@@ -74,7 +79,7 @@ sap.ui.define([
                         })
                         break;
 
-                            // Health Insurance Module
+                    // Health Insurance Module
                     case "3":
                         this.oRouter.navTo("HealthInsuranceRequest", {
                             parentMaterial: this.sParentID,
@@ -139,14 +144,14 @@ sap.ui.define([
                             layout: "EndColumnFullScreen"
                         })
                         break;
-                          //  Salary Increment Request Module 
+                    //  Salary Increment Request Module 
                     case "14":
                         this.oRouter.navTo("SalaryIncrementRequest", {
                             parentMaterial: this.sParentID,
                             layout: "EndColumnFullScreen"
                         })
                         break;
-                         //  Employee Terminate Change Request Module 
+                    //  Employee Terminate Change Request Module 
                     case "17":
                         this.oRouter.navTo("EmployeeTerminateRequest", {
                             parentMaterial: this.sParentID,
@@ -176,6 +181,7 @@ sap.ui.define([
                 //    ************************************************************
 
             },
+
             onPressTicketItem: function (oEvent) {
                 switch (this.sParentID) {
                     // Leave Request Module
@@ -186,16 +192,16 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
-                // Health Insurance Request Module
-                       case "3":
-                       this.oRouter.navTo("HealthInsuranceRequestDetail", {
-                       parentMaterial: this.sParentID,
-                        childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                         layout: "ThreeColumnsMidExpanded"
-                           })
-                             break;
-    
-                           // Additional Payment Request Module
+                    // Health Insurance Request Module
+                    case "3":
+                        this.oRouter.navTo("HealthInsuranceRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
+
+                    // Additional Payment Request Module
                     case "10":
                         this.oRouter.navTo("AdditionalPaymentRequestDetail", {
                             parentMaterial: this.sParentID,
@@ -203,7 +209,7 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
-                    
+
                     // Business Card Module
                     case "5":
                         this.oRouter.navTo("BusinessRequestDetail", {
@@ -214,8 +220,8 @@ sap.ui.define([
 
                         break;
 
-                     // Business Trip Request Module
-                     case "2":
+                    // Business Trip Request Module
+                    case "2":
                         this.oRouter.navTo("BusinessTripRequestDetailPage", {
                             parentMaterial: this.sParentID,
                             childModule: oEvent.getSource().getBindingContext().getObject().ID,
@@ -223,7 +229,7 @@ sap.ui.define([
                         })
                         break;
 
-                   
+
 
                     // Airport Travel Pass Request Module
                     case "6":
@@ -249,7 +255,7 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         });
                         break;
-                        
+
                     // Disciplinary Request Module
                     case "12":
                         this.oRouter.navTo("DisciplinaryRequestDetail", {
@@ -268,7 +274,7 @@ sap.ui.define([
                         })
                         break;
 
-                         //  Employee Terminate Request Module 
+                    //  Employee Terminate Request Module 
                     case "17":
                         this.oRouter.navTo("EmployeeTerminateDetail", {
                             parentMaterial: this.sParentID,
@@ -298,6 +304,7 @@ sap.ui.define([
 
 
             },
+
             onSearch: function (oEvent) {
                 // var oTableSearchState = [],
                 var sQuery = oEvent.getParameter("query");
@@ -313,18 +320,16 @@ sap.ui.define([
 
                         ],
                         and: false
-
                     });
-
-
-
                 }
 
                 this.oTicketTable.getBinding("items").filter(aFilters, "Application");
             },
+
             createFilter: function (key, operator, value, useToLower) {
                 return new Filter(useToLower ? "tolower(" + key + ")" : key, operator, useToLower ? "'" + value.toLowerCase() + "'" : value);
             },
+
             onSort: function () {
                 this._bDescendingSort = !this._bDescendingSort;
                 var oBinding = this.oTicketTable.getBinding("items"),
@@ -332,10 +337,11 @@ sap.ui.define([
 
                 oBinding.sort(oSorter);
             },
-            onReset : function(oEvent)
-            {
+
+            onReset: function (oEvent) {
                 oEvent.getSource().getFilterItems()[1].getCustomControl().setValue("");
             },
+
             onPersonalizationDialogPress: function () {
                 var oView = this.getView();
                 this.oJSONModel = new JSONModel();
@@ -384,6 +390,7 @@ sap.ui.define([
                 }
                 this.oRouter.navTo("master");
             },
+
             onPressFilter: function () {
                 if (!this._oFilterDialog) {
                     this._oFilterDialog = sap.ui.xmlfragment("com.sal.salhr.Fragments.FilterDialog", this);
@@ -395,9 +402,7 @@ sap.ui.define([
                 this._oFilterDialog.open();
             },
 
-            onPressClearFilter: function()
-            {
-                
+            onPressClearFilter: function () {
                 this.byId("idClearFilter").setVisible(false);
                 this.byId("idSelectFilter").setVisible(true);
                 var oFilterSearch = [];
@@ -419,12 +424,9 @@ sap.ui.define([
                 // oDate = dateFormat.format(new Date(sDate));
                 // oDate = oDate + "T00:00:00";
 
-
-
                 var filters = oEvent.getParameters().filterCompoundKeys,
                     sStatusFilter = filters.Status === undefined ? "" : Object.keys(filters.Status)[0],
                     sDateFilter = sDate === "" ? "" : sParsedDate;
-
 
                 if (sStatusFilter != "") {
                     oFilterSearch.push(new Filter("status", FilterOperator.EQ, sStatusFilter));
@@ -435,13 +437,8 @@ sap.ui.define([
                 if (oFilterSearch.length > 0) {
                     this.byId("idClearFilter").setVisible(true);
                     this.byId("idSelectFilter").setVisible(false);
-
-                    
-                    
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     oFilterSearch = [];
-
-
                 }
                 else {
                     this.byId("idClearFilter").setVisible(false);
@@ -450,17 +447,6 @@ sap.ui.define([
                     this.byId("idTicketTable").getBinding("items").filter(new Filter(oFilterSearch, true));
                     //this.byId("idTicketTable").getBinding("items").filter(oFilterSearch, "Application");
                 }
-
-
-
-
-
-
-
-
             }
-
-
-
         });
     });        
