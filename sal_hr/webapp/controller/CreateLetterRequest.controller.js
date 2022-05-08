@@ -65,6 +65,7 @@ sap.ui.define([
             fnGetLetterRequestPayload: function () {
               var sTemplate = this.byId("idLetterTemplate").getSelectedKey();
               var sDate = this.byId("idLetterEffectDatePicker").getDateValue();
+              var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
               if(sTemplate === "1"){
                   sTemplate = "Introduction";
               }else {
@@ -75,7 +76,7 @@ sap.ui.define([
     
                         "language" : "EN",
                         "country" : "India",
-                         "userId" : "12002425",
+                         "userId" : sUserID,
                          "template" : sTemplate,
                          "asOfDate" : sDate
                      

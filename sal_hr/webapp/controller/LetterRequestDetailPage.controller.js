@@ -110,7 +110,7 @@ sap.ui.define([
                     sLayout = "ThreeColumnsMidExpanded";
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
-                this.oRouter.navTo("LeaveRequestDetail", {
+                this.oRouter.navTo("LetterRequestDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,
                     layout: sLayout
