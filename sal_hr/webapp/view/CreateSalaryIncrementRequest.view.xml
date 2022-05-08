@@ -23,21 +23,30 @@
         <f:content>
          <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding" >
                 <l:content> 
-         	<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="When would you like your changes to take effect? " required="true" />
-            <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
-        </fm:SimpleForm>
+         	
+             <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                <Label text="When would you like your changes to take effect? " required="true" />
+                <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+            </fm:SimpleForm>
+
 			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="Choose what you want to change"/>
-            <CheckBox select="onSelectJobInfo" text="Job Information"></CheckBox>
-             <CheckBox select="onSelectCompensation" text="Compensation Information"></CheckBox>
-             </fm:SimpleForm>
-   <Panel visible="{= ${LocalViewModel>/jobInfoVisible} ? true : false }"  >
+                <Label text="Choose what you want to change"/>
+                <CheckBox select="onSelectJobInfo" text="Job Information"></CheckBox>
+                 <CheckBox select="onSelectCompensation" text="Compensation Information"></CheckBox>
+            </fm:SimpleForm>
+  
+        <Panel visible="{= ${LocalViewModel>/jobInfoVisible} ? true : false }"  >
           <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+           
            <Label text="Incumbent of Parent Position" required="true" />
             <Input value="{jobInfoNav>/results/0/managerId}"/>
+
             <Label text="Position" />
-            <Input value=""  />
+            <Select id="idPosition" change="onReqTypeChange" items="{ path: '/SF_Position'}">
+                    <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
+
+            </Select>
+
             <Label text="Time in Position" />
               <Input value=""  />
          </fm:SimpleForm> 
