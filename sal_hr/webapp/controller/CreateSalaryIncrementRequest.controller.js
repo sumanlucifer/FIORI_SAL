@@ -91,14 +91,23 @@ sap.ui.define([
             },
             _bindView: function () {
 
-                var oComponentModel = this.getComponentModel();
+                var oComponentModel = this.getComponentModel(),
 
-                var sKey = oComponentModel.createKey("/MasterSubModules", {
-                    ID: this.sParentID
+             //   var sObject = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+
+                sKey = oComponentModel.createKey("/SF_EmpEmployment", {
+                    personIdExternal: "12002024",
+                    userId: "12002024"
+                    
+
+
                 });
 
                 this.getView().bindElement({
                     path: sKey,
+                    parameters: {
+                        expand: "compInfoNav,jobInfoNav",
+                    },
                     events: {
                         change: function (oEvent) {
                             var oContextBinding = oEvent.getSource();
