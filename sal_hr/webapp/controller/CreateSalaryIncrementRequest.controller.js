@@ -86,7 +86,7 @@ sap.ui.define([
                         dataRequested: function () {
                             this.getView().setBusy(true);
                         }.bind(this),
-                        dataReceived: function () {
+                        dataReceived: function (oData) {
                             this.getView().setBusy(false);
                            
                         }.bind(this)
