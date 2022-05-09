@@ -145,7 +145,7 @@ sap.ui.define([
                         })
                         break;
                     //  Salary Increment Request Module 
-                    case "14":
+                    case "15":
                         this.oRouter.navTo("SalaryIncrementRequest", {
                             parentMaterial: this.sParentID,
                             layout: "EndColumnFullScreen"
