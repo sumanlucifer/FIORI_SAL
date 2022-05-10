@@ -34,6 +34,7 @@ sap.ui.define([
             _onObjectMatched: function (oEvent) {
                 debugger;
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
+                this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
                 this._bindView();
@@ -62,7 +63,8 @@ sap.ui.define([
                 }
               
             },
-            _bindView: function () {
+            _bindView: function (data) {
+               
 
                 var oComponentModel = this.getComponentModel(),
 
@@ -73,46 +75,45 @@ sap.ui.define([
                     userId: "12002024"         
                 });
 
-                this.getView().bindElement({
-                    path: sKey,
-                    parameters: {
-                        expand: "compInfoNav,jobInfoNav",
-                    },
-                    events: {
-                        change: function (oEvent) {
-                            var oContextBinding = oEvent.getSource();
-                            oContextBinding.refresh(false);
-                        }.bind(this),
-                        dataRequested: function () {
-                            this.getView().setBusy(true);
-                        }.bind(this),
-                        dataReceived: function (oData) {
-                            this.getView().setBusy(false);
+                // this.getView().bindElement({
+                //     path: sKey,
+                //     parameters: {
+                //         expand: "compInfoNav,jobInfoNav",
+                //     },
+                //     events: {
+                //         change: function (oEvent) {
+                //             var oContextBinding = oEvent.getSource();
+                //             oContextBinding.refresh(false);
+                //         }.bind(this),
+                //         dataRequested: function () {
+                //             this.getView().setBusy(true);
+                //         }.bind(this),
+                //         dataReceived: function (oData) {
+                //             this.getView().setBusy(false);
                            
-                        }.bind(this)
-                    }
-                });
-
-                // this.getView().getModel().read("/SF_EmpEmployment('" + object.externalCode + "')", {
-                //     urlParameters: {
-                //         "$expand": "compInfoNav, jobInfoNav"
-                  
-                //     },
-                //     success: function (oData) {
-                //         oAttachModel = new JSONModel(oData.cust_attachmentNav);
-                //         var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
-                //         that.getView().setModel(oAttachModel, "attachmentModel");
-                //         that.getView().setModel(oTimeTypeModel, "timeTypeModel");
-                //     },
-                
-                // error: function (oError) {
-                //     if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
-                //         sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
-                //     else {
-                //         sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                //         }.bind(this)
                 //     }
-                // }
                 // });
+
+                this.getView().getModel().read(sKey, {
+                    urlParameters: {
+                        "$expand": "compInfoNav, jobInfoNav"       
+                    },
+                    success: function (oData) {
+                        var oCompensationModel = new JSONModel(oData.compInfoNav),
+                        oJobModel = new JSONModel(oData.jobInfoNav);
+                        that.getView().setModel(oCompensationModel, "compensationModel");
+                        that.getView().setModel(oJobModel, "jobModel");
+                    },
+                
+                error: function (oError) {
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                }
+                });
 
             
 

@@ -77,7 +77,7 @@
             </Select>
             
             <Label text="Time Zone" />
-             <Input value="{/jobInfoNav>results/0/timezone}"  />
+             <Input value="{jobModel>results/0/timezone}"  />
 
             <Label text="Cost Center" />
              <Select id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" >
