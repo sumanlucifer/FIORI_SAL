@@ -90,7 +90,8 @@ sap.ui.define([
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        $expand: "createdByNav,cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_trainingTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav"
+                        "$expand": "createdByNav,cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_trainingTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav",
+                        "recordStatus": object.status
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);

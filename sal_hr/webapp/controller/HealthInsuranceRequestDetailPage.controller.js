@@ -87,7 +87,8 @@ sap.ui.define([
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        $expand: "cust_healthInsuranceDetails,cust_healthInsuranceDetails/cust_relationshipNav,cust_healthInsuranceDetails/cust_genderNav,cust_healthInsuranceDetails/cust_attachment1Nav,cust_healthInsuranceDetails/cust_attachment2Nav,cust_healthInsuranceDetails/cust_attachment3Nav,UserNav"
+                        "$expand": "cust_healthInsuranceDetails,cust_healthInsuranceDetails/cust_relationshipNav,cust_healthInsuranceDetails/cust_genderNav,cust_healthInsuranceDetails/cust_attachment1Nav,cust_healthInsuranceDetails/cust_attachment2Nav,cust_healthInsuranceDetails/cust_attachment3Nav,UserNav",
+                        "recordStatus": object.status 
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);

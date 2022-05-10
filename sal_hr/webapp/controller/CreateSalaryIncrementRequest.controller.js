@@ -93,6 +93,27 @@ sap.ui.define([
                     }
                 });
 
+                // this.getView().getModel().read("/SF_EmpEmployment('" + object.externalCode + "')", {
+                //     urlParameters: {
+                //         "$expand": "compInfoNav, jobInfoNav"
+                  
+                //     },
+                //     success: function (oData) {
+                //         oAttachModel = new JSONModel(oData.cust_attachmentNav);
+                //         var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
+                //         that.getView().setModel(oAttachModel, "attachmentModel");
+                //         that.getView().setModel(oTimeTypeModel, "timeTypeModel");
+                //     },
+                
+                // error: function (oError) {
+                //     if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                //         sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                //     else {
+                //         sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                //     }
+                // }
+                // });
+
             
 
 

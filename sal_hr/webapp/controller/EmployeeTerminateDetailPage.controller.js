@@ -62,6 +62,9 @@ sap.ui.define([
                             parameters: {
                                
                                 expand: "jobInfoNav/eventReasonNav",
+                                custom: {
+                                    "recordStatus": object.status
+                                }
                             },
                             events: {
                                 change: function (oEvent) {

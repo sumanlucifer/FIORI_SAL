@@ -66,6 +66,9 @@ sap.ui.define([
                     path: sKey,
                     parameters: {
                         expand: "payComponentCodeNav,alternativeCostCenterNav,userNav",
+                        custom: {
+                            "recordStatus": object.status
+                        }
                     },
                     events: {
                         change: function (oEvent) {

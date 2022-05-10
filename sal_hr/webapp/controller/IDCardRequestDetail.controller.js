@@ -33,6 +33,7 @@ sap.ui.define([
             },
 
             _bindView: function (data) {
+                var object = data.results[0];
                 this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
@@ -53,7 +54,10 @@ sap.ui.define([
                 this.getView().bindElement({
                     path: sKey,
                     parameters: {
-                        expand: "cust_idReplacementDetails, UserNav"
+                        expand: "cust_idReplacementDetails, UserNav",
+                        custom: {
+                            "recordStatus": object.status
+                        }
                     },
                     events: {
                         change: function (oEvent) {

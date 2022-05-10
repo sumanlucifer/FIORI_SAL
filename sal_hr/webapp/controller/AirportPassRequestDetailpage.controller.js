@@ -66,7 +66,8 @@ sap.ui.define([
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        $expand: "createdByNav,cust_toAirportPassItem,cust_toAirportPassItem/cust_typeOfPassNav,cust_toAirportPassItem/cust_airportLocNav,cust_toAirportPassItem/cust_companyIdNav,cust_toAirportPassItem/cust_passportCopyNav,cust_toAirportPassItem/cust_personalIdNav,cust_toAirportPassItem/cust_personalPhotoNav"
+                        "$expand": "createdByNav,cust_toAirportPassItem,cust_toAirportPassItem/cust_typeOfPassNav,cust_toAirportPassItem/cust_airportLocNav,cust_toAirportPassItem/cust_companyIdNav,cust_toAirportPassItem/cust_passportCopyNav,cust_toAirportPassItem/cust_personalIdNav,cust_toAirportPassItem/cust_personalPhotoNav",
+                        "recordStatus": object.status
                     },
 
                     success: function (oData) {

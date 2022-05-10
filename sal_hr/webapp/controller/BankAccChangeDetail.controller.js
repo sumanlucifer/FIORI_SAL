@@ -92,6 +92,9 @@ sap.ui.define([
                         path: sKey,
                         parameters: {
                             expand: "externalCodeNav",
+                            custom: {
+                                "recordStatus": object.status
+                            }
                         },
 
                         events: {

@@ -53,6 +53,7 @@ sap.ui.define([
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
                         "$expand": "cust_attachmentNav"
+                       
                     },
                     success: function (oData) {
                         var oAttachModel = new JSONModel(oData.cust_attachmentNav);
@@ -67,6 +68,9 @@ sap.ui.define([
                     path: sKey,
                     parameters: {
                         expand: "cust_IncidentStatusNav,cust_ReasonNav,cust_SeverityNav,cust_warningTypeNav,externalCodeNav",
+                        custom: {
+                            "recordStatus": object.status
+                        }
                     },
                     events: {
                         change: function (oEvent) {
