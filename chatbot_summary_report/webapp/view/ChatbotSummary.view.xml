@@ -14,13 +14,13 @@
     xmlns:viz="sap.viz.ui5.controls">
     <uxap:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
         <uxap:sections>
-            <uxap:ObjectPageSection id="idSummaryPageSection" title="Summary" titleUppercase="false">
+            <uxap:ObjectPageSection id="idSummaryPageSection" title="{i18n>Summary}" titleUppercase="false">
                 <uxap:subSections>
-                    <uxap:ObjectPageSubSection id="idSummaryPageSubSection" title="Summary" titleUppercase="false">
+                    <uxap:ObjectPageSubSection id="idSummaryPageSubSection" title="{i18n>Summary}" titleUppercase="false">
                         <VBox>
                             <Toolbar style="Clear">
                                 <ToolbarSpacer/>
-                                <Button icon="sap-icon://show" text="Filters" type="Transparent" press="handleFiltersPress"/>
+                                <Button icon="sap-icon://show" text="{i18n>Filters}" type="Transparent" press="handleFiltersPress"/>
                             </Toolbar>
                             <form:SimpleForm id="idSummarySectionSimpleForm" width="100%" maxContainerCols="2" layout="ResponsiveGridLayout" labelSpanM="12" labelSpanS="12" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" class="customNoPaddingSimpleForm">
                                 <VBox width="100%">
@@ -32,7 +32,7 @@
                                                         <Title titleStyle="H2" text="1K" class="sapUiTinyMarginEnd" />
                                                         <ObjectNumber number="-125" state="Warning" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
-                                                    <Text textAlign="Center" text="Conversations"/>
+                                                    <Text textAlign="Center" text="{i18n>Conversations}"/>
                                                 </FlexBox>
                                             </f:content>
                                         </f:Card>
@@ -43,7 +43,7 @@
                                                         <Title titleStyle="H2" text="1K" class="sapUiTinyMarginEnd" />
                                                         <ObjectNumber number="-125" state="Warning" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
-                                                    <Text textAlign="Center" text="Users"/>
+                                                    <Text textAlign="Center" text="{i18n>Users}"/>
                                                 </FlexBox>
                                             </f:content>
                                         </f:Card>
@@ -56,7 +56,7 @@
                                                         <Title titleStyle="H2" text="1.5K" class="sapUiTinyMarginEnd" />
                                                         <ObjectNumber number="-125" state="Warning" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
-                                                    <Text textAlign="Center" text="Messages Received"/>
+                                                    <Text textAlign="Center" text="{i18n>MessagesReceived}"/>
                                                 </FlexBox>
                                             </f:content>
                                         </f:Card>
@@ -67,14 +67,14 @@
                                                         <Title titleStyle="H2" text="125" class="sapUiTinyMarginEnd" />
                                                         <ObjectNumber number="-125" state="Warning" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
-                                                    <Text textAlign="Center" text="Messages / Conversation"/>
+                                                    <Text textAlign="Center" text="{i18n>MessagesConversation}"/>
                                                 </FlexBox>
                                             </f:content>
                                         </f:Card>
                                     </form:SimpleForm>
                                     <f:Card width="99%" height="185px" class="sapUiTinyMarginTop">
                                         <f:header>
-                                            <card:Header title="Popular Entities"/>
+                                            <card:Header title="{i18n>PopularEntities}"/>
                                         </f:header>
                                         <f:content>
                                             <!-- <ScrollContainer vertical="true">
@@ -136,26 +136,57 @@
                                         </f:content>
                                     </f:Card>
                                 </VBox>
-                                <w:Card id="idChatBotSummary1" manifest="{manifests>/donut}" width="100%" height="400px" action="onAction"/>
+                                <f:Card height="400px">
+                                    <f:header>
+                                        <card:Header title="{i18n>MostUsedSkills}"/>
+                                    </f:header>
+                                    <f:content>
+                                        <commons:ChartContainer  showFullScreen="false" showZoom="false" showLegend="false" showLegendButton="false">
+                                            <commons:content>
+                                                <commons:ChartContainerContent id="idChartDonutContainerContent">
+                                                    <commons:content>
+                                                        <viz:VizFrame id="idDonutVizFrame" width="100%" vizType="Donut" vizProperties="{plotArea: {dataLabel: { visible: true, type: 'label', showTotal: false}}, title: {visible: false}}">
+                                                            <viz:dataset>
+                                                                <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/skills'}">
+                                                                    <viz.data:dimensions>
+                                                                        <viz.data:DimensionDefinition name="Name" value="{ChatbotSummaryModel>ProductName}"/>
+                                                                    </viz.data:dimensions>
+                                                                    <viz.data:measures>
+                                                                        <viz.data:MeasureDefinition group="1" name="Count" value="{ChatbotSummaryModel>Count}"/>
+                                                                    </viz.data:measures>
+                                                                </viz.data:FlattenedDataset>
+                                                            </viz:dataset>
+                                                            <viz:feeds>
+                                                                <viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Count"/>
+                                                                <viz.feeds:FeedItem id='categoryAxisFee' uid="categoryAxis" type="Dimension" values="Name"/>
+                                                            </viz:feeds>
+                                                        </viz:VizFrame>
+                                                    </commons:content>
+                                                </commons:ChartContainerContent>
+                                            </commons:content>
+                                        </commons:ChartContainer>
+                                    </f:content>
+                                </f:Card>
+                                <!-- <w:Card id="idChatBotSummary1" manifest="{ChatbotSummaryModel>/donut}" width="100%" height="400px" action="onAction"/> -->
                             </form:SimpleForm>
                         </VBox>
                     </uxap:ObjectPageSubSection>
                 </uxap:subSections>
             </uxap:ObjectPageSection>
 
-            <uxap:ObjectPageSection id="idConversationPageSection" title="Conversation" titleUppercase="false">
+            <uxap:ObjectPageSection id="idConversationPageSection" title="{i18n>Conversation}" titleUppercase="false">
                 <uxap:subSections>
-                    <uxap:ObjectPageSubSection id="idConversationPageSubSection" title="Conversation" titleUppercase="false">
+                    <uxap:ObjectPageSubSection id="idConversationPageSubSection" title="{i18n>Conversation}" titleUppercase="false">
                         <FlexBox width="100%" height="100%" alignItems="Center" justifyContent="Center" direction="Column">
                             <VBox width="100%">
                                 <f:Card>
                                     <f:content>
-                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" title="{i18n>Conversation(in all languages)}">
+                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>Conversationinalllanguages}">
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContent">
                                                     <commons:content>
                                                         <!-- <viz:Popover id="idPopOver"/> -->
-                                                        <viz:VizFrame id="idVizFrame" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#F6A209'}}">
+                                                        <viz:VizFrame id="idVizFrame" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#F6A209'}, title: {visible: false}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: '/Products'}">
                                                                     <viz.data:dimensions>
@@ -180,12 +211,12 @@
                                 </f:Card>
                                 <f:Card class="sapUiSmallMarginTop">
                                     <f:content>
-                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" title="{i18n>Users(in all languages)}">
+                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>Usersinalllanguages}">
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContent1">
                                                     <commons:content>
                                                         <!-- <viz:Popover id="idPopOver1"/> -->
-                                                        <viz:VizFrame id="idVizFrame1" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#2AD9E8'}}">
+                                                        <viz:VizFrame id="idVizFrame1" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#2AD9E8'}, title: {visible: false}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: '/Products'}">
                                                                     <viz.data:dimensions>
@@ -210,12 +241,12 @@
                                 </f:Card>
                                 <f:Card class="sapUiSmallMarginTop">
                                     <f:content>
-                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" title="{i18n>Messages received(in all languages)}">
+                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>Messagesreceivedinalllanguages}">
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContent2">
                                                     <commons:content>
                                                         <!-- <viz:Popover id="idPopOver2"/> -->
-                                                        <viz:VizFrame id="idVizFrame2" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#0975F6'}}">
+                                                        <viz:VizFrame id="idVizFrame2" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#0975F6'}, title: {visible: false}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: '/Products'}">
                                                                     <viz.data:dimensions>
@@ -240,12 +271,12 @@
                                 </f:Card>
                                 <f:Card class="sapUiSmallMarginTop">
                                     <f:content>
-                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" title="{i18n>Average messages by conversation(in all languages)}">
+                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>Avemessagesbyconversationinalllanguages}">
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContent3">
                                                     <commons:content>
                                                         <!-- <viz:Popover id="idPopOver3"/> -->
-                                                        <viz:VizFrame id="idVizFrame3" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#F6A209'}}">
+                                                        <viz:VizFrame id="idVizFrame3" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#F6A209'}, title: {visible: false}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: '/Products'}">
                                                                     <viz.data:dimensions>
@@ -274,19 +305,19 @@
                 </uxap:subSections>
             </uxap:ObjectPageSection>
 
-            <uxap:ObjectPageSection id="idSkillsUsagePageSection" title="Skills Usage" titleUppercase="false">
+            <uxap:ObjectPageSection id="idSkillsUsagePageSection" title="{i18n>SkillsUsage}" titleUppercase="false">
                 <uxap:subSections>
                     <uxap:ObjectPageSubSection id="idSkillsUsagePageSubSection" title="Skills Usage" titleUppercase="false">
                         <FlexBox width="100%" height="100%" alignItems="Center" justifyContent="Center" direction="Column">
                             <VBox width="100%">
                                 <f:Card>
                                     <f:content>
-                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" title="{i18n>Your skills usage}">
+                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>Yourskillsusage}">
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContentbar">
                                                     <commons:content>
                                                         <!-- <viz:Popover id="idPopOverbar"/> -->
-                                                        <viz:VizFrame id="idVizFramebar" width="100%" vizType='bar' >
+                                                        <viz:VizFrame id="idVizFramebar" width="100%" vizType='bar' vizProperties="{title: {visible: false}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: '/Products'}">
                                                                     <viz.data:dimensions>
@@ -315,7 +346,7 @@
                                 </f:Card>
                                 <f:Card width="100%" class="sapUiSmallMarginTop">
                                     <f:header>
-                                        <card:Header title="Skills never used"/>
+                                        <card:Header title="{i18n>Skillsneverused}"/>
                                     </f:header>
                                     <f:content>
                                         <FlexBox alignContent="Center" alignItems="Center" wrap="Wrap" class="sapUiTinyMargin">
@@ -372,19 +403,19 @@
                 </uxap:subSections>
             </uxap:ObjectPageSection>
 
-            <uxap:ObjectPageSection id="idIntentsUsagePageSection" title="Intents Usage" titleUppercase="false">
+            <uxap:ObjectPageSection id="idIntentsUsagePageSection" title="{i18n>IntentsUsage}" titleUppercase="false">
                 <uxap:subSections>
-                    <uxap:ObjectPageSubSection id="idIntentsUsagePageSubSection" title="Intents Usage" titleUppercase="false">
+                    <uxap:ObjectPageSubSection id="idIntentsUsagePageSubSection" title="{i18n>IntentsUsage}" titleUppercase="false">
                         <FlexBox width="100%" height="100%" alignItems="Center" justifyContent="Center" direction="Column">
                             <VBox width="100%">
                                 <f:Card>
                                     <f:content>
-                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" title="{i18n>Your skills usage}">
+                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>Yourskillsusage}">
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContentbar1">
                                                     <commons:content>
                                                         <!-- <viz:Popover id="idPopOverbar1"/> -->
-                                                        <viz:VizFrame id="idVizFramebar1" width="100%" vizType='bar'>
+                                                        <viz:VizFrame id="idVizFramebar1" width="100%" vizType='bar' vizProperties="{title: {visible: false}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: '/Products'}">
                                                                     <viz.data:dimensions>
@@ -414,7 +445,7 @@
 
                                 <f:Card width="100%" class="sapUiSmallMarginTop">
                                     <f:header>
-                                        <card:Header title="Your users never speaks about these intents"/>
+                                        <card:Header title="{i18n>Yourusersneverspeaksabouttheseintents}"/>
                                     </f:header>
                                     <f:content>
                                         <FlexBox alignContent="Center" alignItems="Center" class="sapUiTinyMargin" wrap="Wrap">

@@ -61,12 +61,14 @@ sap.ui.define([
                     effectiveStartDate: object.effectiveStartDate,
                     externalCode: object.externalCode
                 });
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
                 this.getView().setBusy(true);
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        "$expand": "createdByNav,cust_toAirportPassItem,cust_toAirportPassItem/cust_typeOfPassNav,cust_toAirportPassItem/cust_airportLocNav,cust_toAirportPassItem/cust_companyIdNav,cust_toAirportPassItem/cust_passportCopyNav,cust_toAirportPassItem/cust_personalIdNav,cust_toAirportPassItem/cust_personalPhotoNav",
+                        $expand: "createdByNav,cust_toAirportPassItem,cust_toAirportPassItem/cust_typeOfPassNav,cust_toAirportPassItem/cust_airportLocNav,cust_toAirportPassItem/cust_companyIdNav,cust_toAirportPassItem/cust_passportCopyNav,cust_toAirportPassItem/cust_personalIdNav,cust_toAirportPassItem/cust_personalPhotoNav",
+                        "IsUserManager": bIsUserManager,
                         "recordStatus": object.status
                     },
 

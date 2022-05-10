@@ -6,7 +6,7 @@ sap.ui.define([
 
 ],
 
-    function (BaseController, Controller, JSONModel,formatter) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.EmployeeTerminateDetailPage", {
             formatter: formatter,
@@ -23,11 +23,11 @@ sap.ui.define([
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("EmployeeTerminateDetail").attachPatternMatched(this._onObjectMatched, this);
-             
+
             },
 
             _onObjectMatched: function (oEvent) {
-               
+
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -63,7 +63,8 @@ sap.ui.define([
                                
                                 expand: "jobInfoNav/eventReasonNav",
                                 custom: {
-                                    "recordStatus": object.status
+                                    "recordStatus": object.status,
+                                    "IsUserManager": bIsUserManager
                                 }
                             },
                             events: {
@@ -99,12 +100,12 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
+
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
+
+
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));
@@ -122,8 +123,8 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
-          
-     
+
+
             handleFullScreen: function (oEvent) {
                 var sLayout = "";
                 if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
@@ -134,7 +135,7 @@ sap.ui.define([
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
 
-              
+
                 this.oRouter.navTo("EmployeeTerminateDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,

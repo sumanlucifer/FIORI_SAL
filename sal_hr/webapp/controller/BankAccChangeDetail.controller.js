@@ -61,6 +61,7 @@ sap.ui.define([
                     sKey = null;
                 var that = this;
                 var sTicketCode = this.object.ticketCode;
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 var oAttachModel = new JSONModel();
                 that.getView().setModel(oAttachModel, "attachmentModel");
                 switch (this.sParentID) {
@@ -93,7 +94,8 @@ sap.ui.define([
                         parameters: {
                             expand: "externalCodeNav",
                             custom: {
-                                "recordStatus": object.status
+                                "recordStatus": object.status,
+                                "IsUserManager": bIsUserManager
                             }
                         },
 

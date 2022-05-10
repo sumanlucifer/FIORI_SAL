@@ -82,6 +82,7 @@ sap.ui.define([
                 //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
                 // }
 
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 var oComponentModel = this.getComponentModel();
                 var sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
                     effectiveStartDate: object.effectiveStartDate,
@@ -90,7 +91,8 @@ sap.ui.define([
 
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        "$expand": "createdByNav,cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_trainingTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav",
+                        $expand: "createdByNav,cust_toDutyTravelItem,cust_toDutyTravelItem/cust_businessTravelAttachNav, cust_toDutyTravelItem/cust_trainingTravelAttachNav, cust_toDutyTravelItem/cust_receiptEmbassyNav ,cust_toDutyTravelItem/cust_visaCopyNav",
+                        "IsUserManager": bIsUserManager,
                         "recordStatus": object.status
                     },
                     success: function (oData) {

@@ -6,7 +6,7 @@ sap.ui.define([
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel,Fragment) {
+    function (Controller, JSONModel, Fragment) {
         "use strict";
 
         return Controller.extend("com.sal.report.chatbotsummaryreport.controller.ChatbotSummary", {
@@ -71,14 +71,50 @@ sap.ui.define([
                     }
                 };
 
-                this.getOwnerComponent().getModel().read("/Products", {
-                    success: function (oData) {
-                        var cardManifests = new JSONModel();
-                        oDonutCard.donut["sap.card"].content.data.json.measures = oData.results;
-                        oDonutCard.donut["sap.card"].content.data.path = "/measures";
+                this.sBearerToken = this.fnGetBearerToken();
 
-                        cardManifests.setData(oDonutCard);
-                        this.getView().setModel(cardManifests, "manifests");
+                if (this.sBearerToken) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "/sal_cai_dev/public/api/usage-metrics/v2/summary",
+                        contentType: 'application/json',
+                        headers: {
+                            "X-Token": "12bf59e7e3763bd9b109083e7407e8aa",
+                            "Authorization": "Bearer " + this.sBearerToken
+                        },
+                        success: function (oData) {
+                            var oChatbotSummaryModel = new JSONModel(oData.results);
+                            oDonutCard.donut["sap.card"].content.data.json.measures = oData.results.skills;
+                            oDonutCard.donut["sap.card"].content.data.path = "/measures";
+
+                            this.getView().setModel(oChatbotSummaryModel, "ChatbotSummaryModel");
+                        }.bind(this),
+                        error: function () {
+                        }
+                    });
+                }
+
+                // this.getOwnerComponent().getModel().read("/summary", {
+                //     success: function (oData) {
+                //         var oChatbotSummaryModel = new JSONModel(oData.results);
+                //         oDonutCard.donut["sap.card"].content.data.json.measures = oData.results.skills;
+                //         oDonutCard.donut["sap.card"].content.data.path = "/measures";
+
+                //         this.getView().setModel(oChatbotSummaryModel, "ChatbotSummaryModel");
+                //     }.bind(this),
+                //     error: function () {
+                //     }
+                // });
+            },
+
+            fnGetBearerToken: function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "/sal_cai_auth/oauth/token?grant_type=client_credentials",
+                    contentType: 'application/json',
+                    success: function (oData) {
+                        this.sBearerToken = oData;
+                        return this.sBearerToken;
                     }.bind(this),
                     error: function () {
                     }

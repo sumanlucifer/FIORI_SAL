@@ -16,9 +16,12 @@ server:
             - /test-resources
           url: https://ui5.sap.com
         backend:
-          - path: /V2
-            url: https://services.odata.org
-            destination: northwind
+          - path: /sal_cai_dev
+            url: https://sal-btp-cf-dev-8glkufj3.sapcai.eu10.hana.ondemand.com
+            destination: sal_cai_dev
+          - path: /sal_cai_auth
+            url: https://sal-btp-cf-dev-8glkufj3.authentication.eu10.hana.ondemand.com
+            destination: sal_cai_auth
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
