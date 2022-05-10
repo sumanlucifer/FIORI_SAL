@@ -29,11 +29,6 @@ sap.ui.define([
                 this.setModel(models.createDeviceModel(), "device");
                 this.setModel(models.createLayoutModel(), "layoutModel");
 
-                // Set the user model
-                this.fnGetLoggedInEmpInfo();
-            },
-
-            fnGetLoggedInEmpInfo: function () {
                 //this will return the semantic object and action alongwith the routing params
                 var oHashObjectPath = new sap.ui.core.routing.HashChanger().getHash(),
                     bIsUserManager = false;
@@ -42,6 +37,14 @@ sap.ui.define([
                     bIsUserManager = true;
                 }
 
+                this.setModel(new JSONModel(), "EmpInfoModel");
+                this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
+
+                // Set the user model
+                this.fnGetLoggedInEmpInfo(bIsUserManager);
+            },
+
+            fnGetLoggedInEmpInfo: function (bIsUserManager) {
                 this.getModel().read("/EmpInfo", {
                     urlParameters: {
                         "moreInfo": "true"
