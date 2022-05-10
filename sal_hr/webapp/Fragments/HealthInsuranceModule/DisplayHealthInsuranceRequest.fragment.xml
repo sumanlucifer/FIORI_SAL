@@ -9,7 +9,7 @@
                                                 }}"  change="handleChange"/>
                         </fm:SimpleForm>
                        <VBox>
-              <Table growing="true" growingThreshold="10"  items="{DisplayHealthInsuranceModel>/cust_healthInsuranceDetails}">
+              <Table growing="true" growingScrollToLoad="true" growingThreshold="15"  items="{DisplayHealthInsuranceModel>/cust_healthInsuranceDetails}">
                             <headerToolbar>
                                 <OverflowToolbar>
                             <Title text="{i18n>Details}" level="H4" />

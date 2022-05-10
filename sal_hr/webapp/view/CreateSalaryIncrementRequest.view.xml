@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.sal.salhr.controller.CreateSalaryPromIncRequest"
+<mvc:View controllerName="com.sal.salhr.controller.CreateSalaryIncrementRequest"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
@@ -21,143 +21,209 @@
             </f:DynamicPageTitle>
         </f:title>
         <f:content>
-         		<IconTabBar
-		id="idIconTabBarInlineMode"
-		headerMode="Inline"
-		expanded="{device>/isNoPhone}"
-		class="sapUiResponsiveContentPadding">
-		<items>
-			<IconTabFilter
-				text="Employee Promotion"
-				key="promotion"
-				>
-                <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="When would you like your changes to take effect? " required="true" />
-            <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
-        </fm:SimpleForm>
-			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="Choose what you want to change"/>
-            <CheckBox text="Job Information"></CheckBox>
-            <CheckBox text="Compensation Information"></CheckBox>
-             </fm:SimpleForm>
-             <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="Incumbent of ParentPosition" />
-            <Input/>
+         <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding" >
+                <l:content> 
 
-            <Label text="Position" />
-            <Input id="idPayComp" value=""  />
-           
-            <Label text="Time in Position" />
-            <Input id="idTravelAmt" value="" />
-
-
-         </fm:SimpleForm>   
-        <fm:SimpleForm title="Organization Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="Company" required="true" />
-            <Input/>
-
-            <Label text="Business Unit" />
-            <Input value=""  />
-           
-            <Label text="Division" />
-            <Input value="" />
-
-            <Label text="Department" required="true" />
-            <Input/>
-
-            <Label text="Section" />
-            <Input value=""  />
-           
-            <Label text="Locaiton Group" />
-            <Input value="" />
-            
-              <Label text="Location" required="true" />
-            <Input/>
-
-            <Label text="Time Zone" />
-            <Input value=""  />
-           
-            <Label text="Cost Center" />
-            <Input value="" />
-
-
-         </fm:SimpleForm>  
-			</IconTabFilter>
-			<IconTabFilter
-				text="Employee Transfer"
-				key="transfer"
-				>
-				   <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+         	<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="When would you like your changes to take effect? " required="true" />
             <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
         </fm:SimpleForm>
+
 			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="Choose what you want to change"/>
-            <CheckBox text="Job Information"></CheckBox>
-            <CheckBox text="Compensation Information"></CheckBox>
+            <CheckBox select="onSelectJobInfo" text="Job Information"></CheckBox>
+             <CheckBox select="onSelectCompensation" text="Compensation Information"></CheckBox>
              </fm:SimpleForm>
-             <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="Incumbent of Parent Position" />
-            <Input/>
 
+       <Panel visible="{= ${LocalViewModel>/jobInfoVisible} ? true : false }"  >
+          <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+          
+           <Label text="Incumbent of Parent Position" required="true" />
+            <Input value="{jobInfoNav>/results/0/managerId}"/>
+           
             <Label text="Position" />
-            <Input value=""  />
+             <Select id="idPosition" items="{ path: '/SF_Position'}" >
+                <core:Item key="{externalCode}" text="{externalName_defaultValue}"/>
+            </Select>
            
             <Label text="Time in Position" />
-            <Input value="" />
-            
-
-         </fm:SimpleForm>   
-          <fm:SimpleForm title="Organization Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+              <Input value=""  />
+         </fm:SimpleForm> 
+             <fm:SimpleForm title="Organization Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+           
             <Label text="Company" required="true" />
-            <Input/>
-
-            <Label text="Business Unit" />
-            <Input value=""  />
-           
-            <Label text="Division" />
-            <Input value="" />
-
-            <Label text="Department" required="true" />
-            <Input/>
-
-            <Label text="Section" />
-            <Input value=""  />
-           
-            <Label text="Locaiton Group" />
-            <Input value="" />
+             <Select id="idCompany" items="{ path: '/SF_FOCompany'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
             
-              <Label text="Location" required="true" />
-            <Input/>
+            <Label text="business Unit" />
+            <Select id="idBU" items="{ path: '/SF_BusinessUnit'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
 
+            <Label text="Division" />
+              <Select id="idDivision" items="{ path: '/SF_Division'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+
+           <Label text="Department" />
+            <Select id="idDepartment" items="{ path: '/SF_Department'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+
+            <Label text="Location" />
+            <Select id="idLocation" items="{ path: '/SF_Location'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+            
             <Label text="Time Zone" />
-            <Input value=""  />
-           
+             <Input value="{/jobInfoNav>results/0/timezone}"  />
+
             <Label text="Cost Center" />
+             <Select id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+            
+              <Label text="Location Group" />
+             <Select id="idLocationGroup" items="{ path: '/SF_LocationGroup'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+            
+              <Label text="Section" />
+              <Select id="idSection" items="{ path: '/SF_Section'}" >
+                <core:Item key="{externalCode}" text="{externalName}"/>
+            </Select>
+         </fm:SimpleForm> 
+
+
+            <fm:SimpleForm title="Job Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+           
+             <Label text="Direct Manager" required="true" />
+            <Input value="{jobInfoNav>/results/0/managerId}"/>
+
+            <Label text="Job Classification" />
+           <Select id="idJobclassification" items="{ path: '/SF_JobCode'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+
+            <Label text="Job Level" />
             <Input value="" />
 
+            <Label text="Job Title" required="true" />
+            <Input/>
 
-         </fm:SimpleForm>  
-			</IconTabFilter>
-			<IconTabFilter
-				text="Employee Salary Increment"
-				key="increment"
-				>
-			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="When would you like your changes to take effect? " required="true" />
+            <Label text="Pay Grade" />
+            <Select id="idPayGrade" items="{ path: '/SF_FOPayGrade'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+
+            <Label text="Pay Range" />
+            <Select id="idPayRange" items="{ path: '/SF_PayRange'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+
+            <Label text="IK/OOK" required="true" />
+            <Input/>
+
+              <Label text="Standard Weekly Hours" required="true" />
+            <Input/>
+
+              <Label text="Working Days Per Week" required="true" />
+            <Input/>
+
+             <Label text="Is Full Time Employee" required="true" />
+            <Input/>
+
+             <Label text="Employee Type" required="true" />
+            <Input/>
+
+             <Label text="Notes" required="true" />
+            <Input/>
+            
+             <Label text="Pay Group" required="true" />
+            <Select id="idPayGroup" items="{ path: '/SF_FOPayGroup'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+
+            <Label text="Probationary Period End Date" required="true" />
             <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
-        </fm:SimpleForm>
-			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="Choose what you want to change"/>
-             <CheckBox text="Compensation Information"></CheckBox>
-            <CheckBox text="Job Information"></CheckBox>
+            
+             <Label text="Country" required="true" />
+            <Input/>
+
+             <Label text="Employee Class"  />
+            <Input/>
+              <Label text="Employee Type"  />
+            <Input/>
+
+             <Label text="Pay Scale Type"  />
+            <Select id="idPayScaleType" items="{ path: '/SF_PayScaleType'}" >
+                <core:Item key="{code}" text="{externalName_defaultValue}"/>
+            </Select>
+
+
+             <Label text="Pay Scale Area"  />
+            <Select id="idPayScaleArea" items="{ path: '/SF_PayScaleArea'}" >
+                <core:Item key="{code}" text="{externalName_defaultValue}"/>
+            </Select>
+
+            <Label text="Pay Scale Group"  />
+             <Select id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup'}" >
+                <core:Item key="{code}" text="{externalName_defaultValue}"/>
+            </Select>
+
+             <Label text="Pay Scale Level"  />
+            <Select id="idPayScaleLevel" items="{ path: '/SF_PayScaleLevel'}" >
+                <core:Item key="{code}" text="{externalName_defaultValue}"/>
+            </Select>
+
+             <Label text="Employee Notice Period"  />
+            <Input/>
+              <Label text="Contract Type"  />
+            <Input/>
+
+            <Label text="Duration"  />
+            <Input/>
+
+            <Label text="Contract End Date"  />
+            <Input/>
+
+             <Label text="Auto Renewal"  />
+            <Input/>
+
+            <Label text="Job Family"  />
+            <Input/>
+
+            <Label text="Initial Entry"  />
+            <Input/>
+            <Label text="Entry into Group"  />
+            <Input/>
+
+
+            
+
+
+            
            
-             </fm:SimpleForm>
+
+           
+
+
+            
+         </fm:SimpleForm> 
+     </Panel>
+        <Panel visible="{= ${LocalViewModel>/componesationInfoVisible} ? true : false }"  >
              <fm:SimpleForm title="Compensation Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-           <Label text="Pay Group" required="true" />
-            <Input/>
+        
+            <Label text="Pay Group" required="true" />
+            <Select id="idCompPayGroup" items="{ path: '/SF_PayScaleGroup'}" >
+                            <core:Item key="{externalCode}" text="{externalName_defaultValue}"/>
+            </Select>
+
+          
             <Label text="is Eligible for Car" />
             <Input value=""  />
+           
             <Label text="Monthly Basic" />
             <Input value="" />
             <Label text="Country" required="true" />
@@ -176,7 +242,7 @@
                                        <Title text="{i18n>Compensation}" level="H4" />
                             <content>
                                 <ToolbarSpacer></ToolbarSpacer>
-                                <Button text="Add Details" icon="sap-icon://add" press="onAddDetailsItemsPress"></Button>
+                               
                             </content>
                                 </OverflowToolbar>
                             </headerToolbar>
@@ -226,107 +292,9 @@
                             </items>
                         </Table>
                         </VBox>
-
-
-                         <VBox>
-                       <Table  id="idTable" growing="true" growingThreshold="10" items="{HealthItemDetailsModel>/}">
-                            <headerToolbar>
-                                <OverflowToolbar>
-                                       <Title text="{i18n>PayTargets}" level="H4" />
-                            <content>
-                                <ToolbarSpacer></ToolbarSpacer>
-                                <Button text="Add Details" icon="sap-icon://add" press="onAddDetailsItemsPress"></Button>
-                            </content>
-                                </OverflowToolbar>
-                            </headerToolbar>
-                            <columns>
-                                <Column demandPopin="true" minScreenWidth="Tablet">
-                                 <Label text="Pay Component" required="true" />
-                                </Column>
-                                <Column demandPopin="true" minScreenWidth="Tablet">
-                                   <Label text="Amount" required="false" />
-                                </Column>
-                                <Column demandPopin="true" minScreenWidth="Tablet">
-                                   <Label text="Currency" required="true" />
-                                </Column>
-                                <Column demandPopin="true" minScreenWidth="Tablet">
-                                  <Label text="Frequency" required="true" />
-                                </Column>
-                                <Column demandPopin="true" minScreenWidth="Tablet">
-                                  <Label text="Payment-End-Date" required="true" />
-                                </Column>
-                                 <Column demandPopin="true" minScreenWidth="Tablet">
-                                      <Label text="" required="false" />
-                                </Column>
-                            </columns>
-                            <items>
-                                <ColumnListItem id="ids">
-                                    <cells>
-                                             <ComboBox  selectedKey="{HealthItemDetailsModel>Relationship}" items="{ path: '/SF_PickListValueV2',
-                                                sorter : {  
-                                                 path : 'label_defaultValue'},
-                                                filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'ESS_personRelationshipType'}]}" change="onTimeTyeChange">
-                                              <core:Item key="{externalCode}" text="{label_defaultValue}" />
-                                            </ComboBox>
-                                            <Input value="{HealthItemDetailsModel>DependentName}"/>
-                                            <ComboBox  selectedKey="{HealthItemDetailsModel>DependentGender}" items="{ path: '/SF_PickListValueV2',
-                                                sorter : {  
-                                                 path : 'label_defaultValue'},
-                                                filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'Gender'}]}" change="onTimeTyeChange">
-                                              <core:Item key="{externalCode}" text="{label_defaultValue}" />
-                                            </ComboBox>
-                                              <Input type="Number" value="{HealthItemDetailsModel>NationalID}"/>
-                                       <DatePicker   value="{path:'HealthItemDetailsModel>DependentDOB', type:'sap.ui.model.type.Date', formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
-                                                }}"  />
-                                               <Button icon="sap-icon://delete" press="onDeleteItemPress" type="Transparent"/>
-                                    </cells>
-                                </ColumnListItem>
-                            </items>
-                        </Table>
-                        </VBox>
-
-
-
-                         <fm:SimpleForm title="Job Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-           <Label text="Direct Manager" required="true" />
-            <Input/>
-            <Label text="Job Classification" />
-            <Input value=""  />
-            <Label text="Job Level" />
-            <Input value="" />
-            <Label text="Job Title" required="true" />
-            <Input/>
-            <Label text="Pay Grade" />
-            <Input value=""  />
-            <Label text="Pay Range" />
-            <Input value=""  />
-            <Label text="IK/OOK" required="true" />
-            <Input/>
-
-              <Label text="Standard Weekly Hours" required="true" />
-            <Input/>
-
-              <Label text="Working Days Per Week" required="true" />
-            <Input/>
-             <Label text="Is Full Time Employee" required="true" />
-            <Input/>
-             <Label text="Employee Type" required="true" />
-            <Input/>
-             <Label text="Notes" required="true" />
-            <Input/>
-             <Label text="Pay Group" required="true" />
-            <Input/>
-            <Label text="Probationary Period End Date" required="true" />
-            <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
-             <Label text="Country" required="true" />
-            <Input/>
-         </fm:SimpleForm> 
-			</IconTabFilter>
-			
-		</items>
-	</IconTabBar>
-          
+ </Panel>
+  </l:content>
+            </l:VerticalLayout>
         </f:content>
         <!-- DynamicPage Footer -->
         <f:footer>

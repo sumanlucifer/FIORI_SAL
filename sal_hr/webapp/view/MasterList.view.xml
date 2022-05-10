@@ -14,9 +14,9 @@
             </f:DynamicPageTitle>
         </f:title>	
         <f:content>
-              	<Table id="idMasterTable"
+              	<Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="10"
 		                    inset="false"
-		                    items="{/MasterModules(1)/masterSubModule}">
+		                    items="{/MasterModules(1)/masterSubModule}" >
 		                     <headerToolbar>
 			                    <OverflowToolbar id="idMasterOverFlow">
                                     <content>
