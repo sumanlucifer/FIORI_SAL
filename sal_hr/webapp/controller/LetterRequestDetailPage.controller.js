@@ -6,7 +6,7 @@ sap.ui.define([
 
 ],
 
-    function (BaseController, Controller, JSONModel,formatter) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.LetterRequestDetailPage", {
             formatter: formatter,
@@ -19,18 +19,18 @@ sap.ui.define([
                     PageTitle: null,
                     Modify: true,
                     IDCardModule: false,
-                    meetingType:false
+                    meetingType: false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("LetterRequestDetail").attachPatternMatched(this._onObjectMatched, this);
-               
+
             },
 
             _onObjectMatched: function (oEvent) {
-               
+
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -47,57 +47,48 @@ sap.ui.define([
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
 
-
-                
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
-               
-              
-               
-              
-                        sKey = oComponentModel.createKey("/LetterRequest", {
-                            externalCode: object.externalCode
-                        });
-                     
-                      
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
-                        this.getView().bindElement({
-                            path: sKey,
-    
-                            events: {
-                                change: function (oEvent) {
-                                    var oContextBinding = oEvent.getSource();
-                                    oContextBinding.refresh(false);
-                                }.bind(this),
-                                dataRequested: function () {
-                                    this.getView().setBusy(true);
-                                }.bind(this),
-                                dataReceived: function () {
-                                    this.getView().setBusy(false);
-                                }.bind(this)
-                            }
-                        });
+                sKey = oComponentModel.createKey("/LetterRequest", {
+                    externalCode: object.externalCode
+                });
 
+                this.getView().bindElement({
+                    path: sKey,
+                    parameters: {
+                        custom: {
+                            "IsUserManager": bIsUserManager
+                        }
+                    },
 
+                    events: {
+                        change: function (oEvent) {
+                            var oContextBinding = oEvent.getSource();
+                            oContextBinding.refresh(false);
+                        }.bind(this),
+                        dataRequested: function () {
+                            this.getView().setBusy(true);
+                        }.bind(this),
+                        dataReceived: function () {
+                            this.getView().setBusy(false);
+                        }.bind(this)
+                    }
+                });
 
-
-
-                    
-
-              
             },
 
             onEditPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
-
             },
 
             onCancelPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
-            onWithdrawPress: function () {       
-                this.getView().setBusy(true);        
+            onWithdrawPress: function () {
+                this.getView().setBusy(true);
                 this.fnDeleteLeaveRequest();
             },
 
@@ -135,7 +126,7 @@ sap.ui.define([
 
             onSavePress: function () {
                 var sEntityPath = "/SF_Leave('" + this.object.externalCode + "')",
-                        oPayloadObj = this.fnGetLeaveRequestPayload();
+                    oPayloadObj = this.fnGetLeaveRequestPayload();
 
                 this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
@@ -154,7 +145,7 @@ sap.ui.define([
 
             fnGetLeaveRequestPayload: function () {
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-              
+
                 if (this.isAttachmentNew === true) {
                     var sattachmentFileName = this.fileName;
                     var sattachmentFileContent = this.fileContent;
@@ -202,9 +193,9 @@ sap.ui.define([
 
             },
 
-            
+
             onDownLoadPress: function () {
-              
+
                 var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
                 var fileext = this.getView().getModel("attachmentModel").getData().fileExtension;
                 var mimeType = this.getView().getModel("attachmentModel").getData().mimeType;
@@ -254,8 +245,6 @@ sap.ui.define([
                 this.getView().getModel("attachmentModel").setProperty("/fileName", Filename);
                 this.getView().getModel("attachmentModel").setProperty("/mimeType", Filetype);
                 this.getView().getModel("attachmentModel").refresh();
-
-
 
             },
             _getImageData: function (url, callback, fileName) {

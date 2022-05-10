@@ -258,7 +258,9 @@ sap.ui.define([
                     sEffectiveStartDate = dateFormat.format(new Date(sEffectiveStartDate));
                 sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
                 var cust_healthInsuranceDetails = aData.map(function (item) {
-                    return {
+
+                    var oHealthInsuranceObj =
+                    {
                         cust_address: item.DependentNationalAddress,
                         cust_dateOfBirth: new Date(item.DependentDOB),
                         cust_dependentName: item.DependentName,
@@ -268,20 +270,27 @@ sap.ui.define([
                         cust_nationalID: item.NationalID,
                         cust_gender: item.DependentGender,
                         cust_relationship: item.Relationship,
-                        cust_scheme:item.Scheme,
-                        attachment1FileContent: item.attachment1FileContent,
-                        attachment1FileName: item.attachment1FileName,
-                        isAttach1New: item.isAttach1New,
-                        attachment1UserId: sUserID,
-                        attachment2FileContent: item.attachment2FileContent,
-                        attachment2FileName: item.attachment2FileName,
-                        isAttach2New: item.isAttach2New,
-                        attachment2UserId: sUserID,
-                        attachment3FileContent: item.attachment3FileContent,
-                        attachment3FileName: item.attachment3FileName,
-                        isAttach3New: item.isAttach3New,
-                        attachment3UserId: sUserID
+                        cust_scheme: item.Scheme,
                     };
+
+                    if (item.isAttach1New === true) {
+                        oHealthInsuranceObj.attachment1FileContent = item.attachment1FileContent;
+                        oHealthInsuranceObj.attachment1FileName = item.attachment1FileName;
+                        oHealthInsuranceObj.isAttach1New = item.isAttach1New;
+                        oHealthInsuranceObj.attachment1UserId = sUserID;
+                    }
+                    if (item.isAttach2New === true) {
+                        oHealthInsuranceObj.attachment2FileContent = item.attachment2FileContent;
+                        oHealthInsuranceObj.attachment2FileName = item.attachment2FileName;
+                        oHealthInsuranceObj.isAttach2New = item.isAttach2New;
+                        oHealthInsuranceObj.attachment2UserId = sUserID;
+                    }
+                    if (item.isAttach3New === true) {
+                        oHealthInsuranceObj.attachment3FileContent = item.attachment3FileContent;
+                        oHealthInsuranceObj.attachment3FileName = item.attachment3FileName;
+                        oHealthInsuranceObj.isAttach3New = item.isAttach3New;
+                        oHealthInsuranceObj.attachment3UserId = sUserID;
+                    }
                 });
                 return {
                     "User": sUserID,

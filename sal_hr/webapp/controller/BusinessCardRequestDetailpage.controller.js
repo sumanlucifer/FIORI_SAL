@@ -41,7 +41,7 @@ sap.ui.define([
                 // } else {
                 //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
                 // }
-
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 this.effectiveStartDate = object.effectiveStartDate;
@@ -58,7 +58,8 @@ sap.ui.define([
                     parameters: {
                         expand: "UserNav",
                         custom: {
-                            "recordStatus": object.status
+                            "recordStatus": object.status,
+                            "IsUserManager": bIsUserManager
                         }
                     },
                     events: {
@@ -88,12 +89,12 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
+
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
+
+
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));

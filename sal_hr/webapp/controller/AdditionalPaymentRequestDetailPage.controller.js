@@ -57,6 +57,7 @@ sap.ui.define([
                 // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 sKey = oComponentModel.createKey("/SF_Pay", {
                     payComponentCode: object.externalCode,
                     payDate: object.effectiveStartDate,
@@ -66,6 +67,9 @@ sap.ui.define([
                     path: sKey,
                     parameters: {
                         expand: "payComponentCodeNav,alternativeCostCenterNav,userNav",
+                        custom: {
+                            "IsUserManager": bIsUserManager
+                        }
                     },
                     events: {
                         change: function (oEvent) {

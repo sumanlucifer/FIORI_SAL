@@ -5,7 +5,8 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
     xmlns:viz.data="sap.viz.ui5.data"
-    xmlns:commons="sap.suite.ui.commons">
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:core="sap.ui.core">
     <Shell id="shell">
         <App id="app">
             <pages>
@@ -42,28 +43,18 @@
                             <commons:content>
                                 <commons:ChartContainerContent>
                                     <commons:content>
-                                        <Table items="{path: 'SLAComplianceDataModel>/'}">
+                                        <Table items="{ path:'SLAComplianceDataModel>/',factory:'.fnSLAItemsFactory'}">
                                             <columns>
-                                                <Column minScreenWidth="Desktop">
-                                                    <Label design="Bold" text="{i18n>Module Name}"/>
+                                                <Column width="40%" >
+                                                    <Label design="Bold" text="{i18n>ModuleName}"/>
                                                 </Column>
-                                                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
-                                                    <Label design="Bold" text="{i18n>Compliance Score}"/>
+                                                <Column  demandPopin="true" hAlign="Center" width="35%">
+                                                    <Label design="Bold" text="{i18n>ComplianceScore}"/>
                                                 </Column>
-                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center">
+                                                <Column  demandPopin="true" width="25%">
                                                     <Label design="Bold" text="{i18n>Rating}"/>
                                                 </Column>
-                                                <!-- <Column/> -->
                                             </columns>
-                                            <items>
-                                                <ColumnListItem vAlign="Middle">
-                                                    <cells>
-                                                        <Label design="Bold" text="{SLAComplianceDataModel>name}"/>
-                                                        <Text text="{SLAComplianceDataModel>displayPercentage}"/>
-                                                        <ObjectStatus text="{path: 'SLAComplianceDataModel>displayPercentage', formatter: '.fnFormatRatingText'}" state="{path: 'SLAComplianceDataModel>displayPercentage', formatter: '.fnFormatRatingState'}"/>
-                                                    </cells>
-                                                </ColumnListItem>
-                                            </items>
                                         </Table>
                                     </commons:content>
                                 </commons:ChartContainerContent>

@@ -1,1 +1,15 @@
 /* Enter your custom styles here */
+.ExcellentEmoji::before {
+    content: "\01F929";
+    margin-right: 0.5rem;
+  }
+
+  .GoodEmoji::before {
+    content: "\01F60A	";
+    margin-right: 0.5rem;
+  }
+
+  .BadEmoji::before {
+    content: "\01F641	";
+    margin-right: 0.5rem;
+  }

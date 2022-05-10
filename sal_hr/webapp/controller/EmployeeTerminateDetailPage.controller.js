@@ -6,7 +6,7 @@ sap.ui.define([
 
 ],
 
-    function (BaseController, Controller, JSONModel,formatter) {
+    function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.EmployeeTerminateDetailPage", {
             formatter: formatter,
@@ -23,11 +23,11 @@ sap.ui.define([
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("EmployeeTerminateDetail").attachPatternMatched(this._onObjectMatched, this);
-             
+
             },
 
             _onObjectMatched: function (oEvent) {
-               
+
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -51,38 +51,41 @@ sap.ui.define([
                 // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
-                        sKey = oComponentModel.createKey("/SF_EmpEmploymentTermination", {
-                            endDate: object.endDate,
-                            personIdExternal: object.externalCode,
-                            userId: object.employeeId
-                           
-                        });
-                        this.getView().bindElement({
-                            path: sKey,
-                            parameters: {
-                               
-                                expand: "jobInfoNav/eventReasonNav",
-                            },
-                            events: {
-                                change: function (oEvent) {
-                                    var oContextBinding = oEvent.getSource();
-                                    oContextBinding.refresh(false);
-                                }.bind(this),
-                                dataRequested: function () {
-                                    this.getView().setBusy(true);
-                                }.bind(this),
-                                dataReceived: function () {
-                                    this.getView().setBusy(false);
-                                    this.onCallHistoryData(object.ticketCode);
-                                }.bind(this)
-                            }
-                        });
+                sKey = oComponentModel.createKey("/SF_EmpEmploymentTermination", {
+                    endDate: object.endDate,
+                    personIdExternal: object.externalCode,
+                    userId: object.employeeId
 
-                       
+                });
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+                this.getView().bindElement({
+                    path: sKey,
+                    parameters: {
+                        expand: "jobInfoNav/eventReasonNav",
+                        custom: {
+                            "IsUserManager": bIsUserManager
+                        }
+                    },
+                    events: {
+                        change: function (oEvent) {
+                            var oContextBinding = oEvent.getSource();
+                            oContextBinding.refresh(false);
+                        }.bind(this),
+                        dataRequested: function () {
+                            this.getView().setBusy(true);
+                        }.bind(this),
+                        dataReceived: function () {
+                            this.getView().setBusy(false);
+                            this.onCallHistoryData(object.ticketCode);
+                        }.bind(this)
+                    }
+                });
 
-                      
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Additional Payment Request");
-                        this.getView().getModel("LocalViewModel").refresh();
+
+
+
+                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Additional Payment Request");
+                this.getView().getModel("LocalViewModel").refresh();
 
             },
 
@@ -96,12 +99,12 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
+
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
+
+
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));
@@ -119,8 +122,8 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
-          
-     
+
+
             handleFullScreen: function (oEvent) {
                 var sLayout = "";
                 if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
@@ -131,7 +134,7 @@ sap.ui.define([
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
 
-              
+
                 this.oRouter.navTo("EmployeeTerminateDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,

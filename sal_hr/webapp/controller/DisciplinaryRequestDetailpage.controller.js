@@ -44,6 +44,7 @@ sap.ui.define([
                 // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 this.effectiveStartDate = object.effectiveStartDate;
                 this.externalCode = object.externalCode;
                 sKey = oComponentModel.createKey("/SF_Disciplinary_Action", {
@@ -52,7 +53,8 @@ sap.ui.define([
                 });
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
-                        "$expand": "cust_attachmentNav"
+                        "$expand": "cust_attachmentNav",
+                        "IsUserManager": bIsUserManager
                     },
                     success: function (oData) {
                         var oAttachModel = new JSONModel(oData.cust_attachmentNav);
@@ -93,12 +95,12 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-                    
+
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-                    
-                        
+
+
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));

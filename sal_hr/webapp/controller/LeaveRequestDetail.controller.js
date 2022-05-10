@@ -72,10 +72,12 @@ sap.ui.define([
                             externalCode: object.externalCode
                         });
                         var sTicketCode = this.object.ticketCode;
+                        var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                         this.getView().getModel().read("/SF_Leave('" + object.externalCode + "')", {
                             urlParameters: {
                                 "$expand": "cust_attachmentNav, timeTypeNav,userIdNav",
-                                "recordStatus": object.status
+                                "recordStatus": object.status,
+                                "IsUserManager": bIsUserManager
                             },
                             success: function (oData) {
                                 oAttachModel = new JSONModel(oData.cust_attachmentNav);

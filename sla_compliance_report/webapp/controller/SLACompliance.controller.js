@@ -69,17 +69,52 @@ sap.ui.define([
                 });
             },
 
+            fnSLAItemsFactory: function (sId, oContext) {
+                var idisplayPercentage = oContext.getProperty("displayPercentage"),
+                    sRatingText = this.fnFormatRatingText(idisplayPercentage),
+                    sRatingState = this.fnFormatRatingState(idisplayPercentage),
+                    sCssClassNames = this.fnGetEmojiCSSNames(sRatingState),
+                    oObjectStatus = new sap.m.ObjectStatus({
+                        text: sRatingText,
+                        state: sRatingState
+                    }).addStyleClass(sCssClassNames);
+
+                return new sap.m.ColumnListItem({
+                    cells: [
+                        new sap.m.Label({
+                            design: "Bold",
+                            text: "{SLAComplianceDataModel>name}"
+                        }),
+
+                        new sap.m.Text({
+                            text: "{SLAComplianceDataModel>displayPercentage}"
+                        }),
+
+                        oObjectStatus
+                    ]
+                });
+            },
+
+            fnGetEmojiCSSNames: function (sRatingState) {
+                if (sRatingState === "Success") {
+                    return "ExcellentEmoji sapUiTinyMarginEnd";
+                }
+                else if (sRatingState === "Information") {
+                    return "GoodEmoji sapUiTinyMarginEnd";
+                } else {
+                    return "BadEmoji sapUiTinyMarginEnd";
+                }
+            },
+
             fnFormatRatingText: function (iComplianceScore) {
                 var iSLAComplianceScore = Number(iComplianceScore),
                     sRatingText = "";
-                if (iSLAComplianceScore >= 75) {
+                if (iSLAComplianceScore >= 98) {
                     sRatingText = "Excellent";
-                } else if (iSLAComplianceScore < 75 && iSLAComplianceScore >= 50) {
+                } else if (iSLAComplianceScore >= 95) {
                     sRatingText = "Good";
-                } else if (iSLAComplianceScore < 50 && iSLAComplianceScore >= 25) {
-                    sRatingText = "Average";
                 } else {
-                    sRatingText = "Poor";
+                    sRatingText = "Bad";
                 }
                 return sRatingText;
             },
@@ -87,12 +122,10 @@ sap.ui.define([
             fnFormatRatingState: function (iComplianceScore) {
                 var iSLAComplianceScore = Number(iComplianceScore),
                     sStateValue = "";
-                if (iSLAComplianceScore >= 75) {
+                if (iSLAComplianceScore >= 98) {
                     sStateValue = "Success";
-                } else if (iSLAComplianceScore < 75 && iSLAComplianceScore >= 50) {
+                } else if (iSLAComplianceScore >= 95) {
                     sStateValue = "Information";
-                } else if (iSLAComplianceScore < 50 && iSLAComplianceScore >= 25) {
-                    sStateValue = "Warning";
                 } else {
                     sStateValue = "Error";
                 }
