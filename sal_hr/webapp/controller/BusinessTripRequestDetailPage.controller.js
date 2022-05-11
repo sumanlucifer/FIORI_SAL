@@ -186,7 +186,7 @@ sap.ui.define([
                                 "cust_empName": this.EmpInfoObj.firstName + " " + this.EmpInfoObj.middleName + " " + this.EmpInfoObj.lastName,
                                 "cust_payGrade": this.EmpInfoObj.payGrade,
                                 "cust_costCenter": this.EmpInfoObj.costCentre,
-                                "cust_emerPhoneNum": this.EmpInfoObj.emergencyNumber,
+                                "cust_emerPhoneNum": oTravelItemDetailsObj.cust_emerPhoneNum ? oTravelItemDetailsObj.cust_emerPhoneNum : this.EmpInfoObj.emergencyNumber,
 
                                 "cust_assignStartDate": oTravelItemDetailsObj.cust_assignStartDate,
                                 "cust_assignEndDate": oTravelItemDetailsObj.cust_assignEndDate,
