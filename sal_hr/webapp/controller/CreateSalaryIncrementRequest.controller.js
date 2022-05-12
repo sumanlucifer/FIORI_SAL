@@ -39,7 +39,7 @@ sap.ui.define([
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                this.fnSetCompensationModel();
+               
                 this._bindView();
                
 
@@ -64,26 +64,7 @@ sap.ui.define([
                 }
 
             },
-            fnSetCompensationModel: function () {
-                var oCreateCompObj = {
-
-                    "seqNumber": "",
-                    "userId": "",
-                    "startDate": "",
-                    "endDate": "",
-                    "customDouble1": "",
-                    "payType": "",
-                    "customDate1": "",
-                    "customString4": "",
-                    "customString3": "",
-                    "customString2": "",
-                    "payGroup": "",
-                    "isEligibleForCar": true
-                };
-
-                var oCompensationModel = new JSONModel(oCreateCompObj);
-                 this.getView().setModel(oCompensationModel, "compensationModel");
-            },
+           
             _bindView: function (data) {
 
 
@@ -93,8 +74,8 @@ sap.ui.define([
                     //   var sObject = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
                     sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                        personIdExternal: "12002024",
-                        userId: "12002024"
+                        personIdExternal: "12002425",
+                        userId: "12002425"
                     });
 
                 // this.getView().bindElement({
@@ -122,11 +103,11 @@ sap.ui.define([
                         "$expand": "compInfoNav, jobInfoNav"
                     },
                     success: function (oData) {
-                        // var oCompensationModel = new JSONModel(oData.compInfoNav.results[0]),
-                        //     oJobModel = new JSONModel(oData.jobInfoNav.results[0]);
-                        // that.getView().setModel(oCompensationModel, "compensationModel");
-                        // that.getView().setModel(oJobModel, "jobModel");
-                        that.getView().getModel("compensationModel").setData(oData.compInfoNav.results[0]);
+                        var oCompensationModel = new JSONModel(oData.compInfoNav.results[0]),
+                        oJobModel = new JSONModel(oData.jobInfoNav.results[0]);
+                        that.getView().setModel(oCompensationModel, "compensationModel");
+                        that.getView().setModel(oJobModel, "jobModel");
+                        
                     },
 
                     error: function (oError) {
@@ -150,15 +131,11 @@ sap.ui.define([
 
                 if (sjobInfo === true) {
                     var sEntityPath = "/SF_EmpJob",
-                        oPayload = this.getView().getModel("jobModel").getData();
-                        var sNewPayload = $.extend(true,{},oPayload);
-                           delete sNewPayload._metadata;
+                        oPayload = this.fnGetJobRequestPayload();
 
                 } else if (sCompensationInfo === true) {
                     var sEntityPath = "/SF_EmpCompensation",
-                        oPayload = this.getView().getModel("compensationModel").getData();
-                        var sNewPayload = $.extend(true,{},oPayload);
-                           delete sNewPayload._metadata;
+                        oPayload = this.fnGetCompensationRequestPayload();            
 
                 }
 
@@ -187,7 +164,113 @@ sap.ui.define([
 
 
             },
+            fnGetJobRequestPayload:function(){
+                var sJobData = this.getView().getModel("jobModel").getData(),
+                sStartDate = this.getView().byId("idStartDate").getDateValue(),
+                sNewPayload = $.extend(true,{},sJobData);
+
+                this.getView().getModel("jobModel").setProperty("/startDate",sStartDate);
+
+
+                delete sNewPayload.__metadata;
+                delete sNewPayload.assessmentStatusNav;
+                delete sNewPayload.businessUnitNav;
+                delete sNewPayload.codeOfJobForEldpNav;
+                delete sNewPayload.commitmentIndicatorNav;
+                delete sNewPayload.companyNav;
+                delete sNewPayload.continuedSicknessPayMeasureNav;
+                delete sNewPayload.costCenterNav;
+                delete sNewPayload.customString1Nav;
+                delete sNewPayload.customString2Nav;
+                delete sNewPayload.customString3Nav;
+                delete sNewPayload.customString4Nav;
+                delete sNewPayload.customString5Nav;
+                delete sNewPayload.customString6Nav;
+                delete sNewPayload.customString7Nav;
+                delete sNewPayload.customString9Nav;
+                delete sNewPayload.customString10Nav;
+                delete sNewPayload.customString11Nav;
+                delete sNewPayload.customString12Nav;
+                delete sNewPayload.customString13Nav;
+                delete sNewPayload.departmentNav;
+                delete sNewPayload.dismissalsNoticePeriodForEmployerNav;
+                delete sNewPayload.divisionNav;
+                delete sNewPayload.eeo1JobCategoryNav;
+                delete sNewPayload.eeoClass;
+                delete sNewPayload.electoralCollegeForLaborCourtNav;
+                delete sNewPayload.electoralCollegeForWorkersRepresentativesNav;
+                delete sNewPayload.electoralCollegeForWorksCouncilNav;
+                delete sNewPayload.empRelationshipNav;
+                delete sNewPayload.emplStatusNav;
+                delete sNewPayload.employeeClassNav;
+                delete sNewPayload.employeeNoticePeriodNav;
+
+                delete sNewPayload.employeeTypeNav;
+                delete sNewPayload.employmentNav;
+                delete sNewPayload.employmentTypeNav;
+                delete sNewPayload.eventNav;
+                delete sNewPayload.eventReasonNav;
+                delete sNewPayload.familyRelationshipWithEmployerNav;
+                delete sNewPayload.flsaStatusNav;
+                delete sNewPayload.fromCurrencyNav;
+                delete sNewPayload.harmfulAgentExposureNav;
+                delete sNewPayload.jobCodeNav;
+                delete sNewPayload.laborCourtSectorNav;
+                delete sNewPayload.locationNav;
+                delete sNewPayload.managerEmploymentNav;
+                delete sNewPayload.managerUserNav;
+                delete sNewPayload.occupationalLevelsNav;
+                delete sNewPayload.operation;
+                delete sNewPayload.payGradeNav;
+                delete sNewPayload.payGroupNav;
+                delete sNewPayload.payScaleAreaNav;
+                delete sNewPayload.payScaleGroupNav;
+                delete sNewPayload.payScaleLevelNav;
+                delete sNewPayload.payScaleTypeNav;
+                delete sNewPayload.periodIndicatorNav;
+                delete sNewPayload.positionNav;
+                delete sNewPayload.probationaryPeriodMeasureNav;
+                delete sNewPayload.regularTempNav;
+                delete sNewPayload.toCurrencyNav;
+                delete sNewPayload.userNav;
+                delete sNewPayload.wfRequestNav;
+                delete sNewPayload.workerCategoryNav;
+                
+                return sNewPayload;
+
+            },
             fnGetCompensationRequestPayload: function () {
+                var sCompData = this.getView().getModel("compensationModel").getData(),
+                sStartDate = this.getView().byId("idStartDate").getDateValue(),
+                sNewPayload = $.extend(true,{},sCompData);
+
+                this.getView().getModel("jobModel").setProperty("/startDate",sStartDate);
+                           
+                           delete sNewPayload.__metadata;
+                           delete sNewPayload.customString4;
+                           delete sNewPayload.createdBy;
+                           delete sNewPayload.createdDateTime;
+                           delete sNewPayload.createdOn;
+                           delete sNewPayload.customString2Nav;
+                           delete sNewPayload.employmentNav;
+                           delete sNewPayload.event;
+                           delete sNewPayload.eventNav;
+                           delete sNewPayload.eventReason;
+                           delete sNewPayload.eventReasonNav;
+                           delete sNewPayload.lastModifiedBy;
+                           delete sNewPayload.lastModifiedDateTime;
+                           delete sNewPayload.lastModifiedOn;
+                           delete sNewPayload.operation;
+                           delete sNewPayload.payGroupNav;
+                           delete sNewPayload.userNav;
+                           delete sNewPayload.wfRequestNav;
+                           delete sNewPayload.empPayCompRecurringNav;
+                           delete sNewPayload.payTypeNav;
+                         
+
+                       return sNewPayload;
+
+                         
 
             },
 
