@@ -25,7 +25,7 @@
                 <l:content>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
 
-                        <Label text="Leave Application For" required="true" visible="{EmpInfoModel>/IsUserManager}"/>
+                        <Label text="{i18n>LeaveApplicationFor}" required="true" visible="{EmpInfoModel>/IsUserManager}"/>
                         <Input id="idLeaveApplicationForINP" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" visible="{EmpInfoModel>/IsUserManager}"/>
 
                         <Label text="Time Type" required="true"/>
