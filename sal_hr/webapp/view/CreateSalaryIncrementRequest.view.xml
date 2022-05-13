@@ -198,18 +198,6 @@
             <Input/>
             <Label text="Entry into Group"  />
             <Input/>
-
-
-            
-
-
-            
-           
-
-           
-
-
-            
          </fm:SimpleForm> 
      </Panel>
         <Panel visible="{= ${LocalViewModel>/componesationInfoVisible} ? true : false }"  >

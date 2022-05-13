@@ -1,0 +1,57 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+     <VBox>
+              <Table growing="true" growingScrollToLoad="true" growingThreshold="15"  items="{HistoryData>/}">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                            <Title text="{i18n>Details}" level="H4" />
+                            <content>
+                                <ToolbarSpacer></ToolbarSpacer>
+                            </content>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                              <Column demandPopin="true" minScreenWidth="Tablet">
+                                 <Label text="Request Date" required="false" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                   <Label text="Time" required="false" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                   <Label text="Event" required="false" />
+                                </Column>
+                                <Column demandPopin="true" minScreenWidth="Tablet">
+                                  <Label text="Action Performed by" required="false" />
+                                </Column>
+                                 <Column demandPopin="true" minScreenWidth="Tablet">
+                                      <Label text="Reason" required="false" />
+                                </Column>
+                                 
+                            </columns>
+                            <items>
+                                <ColumnListItem >
+                                    <cells>
+                                             
+                                               <Text text="{path:'HistoryData>effectiveStartDate',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"/>
+                                           <Text text="{
+				path: 'HistoryData>createdAt',
+				type: 'sap.ui.model.type.DateTime',
+				formatOptions: {
+					pattern: 'HH:mm'
+				}
+			}" />
+                                    <Text text=""/>
+                                             <Text text="{HistoryData>modifiedBy}"/>
+                                              	<ExpandableText maxCharacters="10" overflowMode="Popover" class="sapUiTinyMarginBottom sapUiTinyMarginTop" text="{DisplayHealthInsuranceModel>cust_address}"  />
+                                       
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                        </VBox>
+</core:FragmentDefinition>

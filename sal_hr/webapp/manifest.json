@@ -380,6 +380,16 @@
                         "HealthInsuranceRequestDetail"
 
                     ]
+                },
+                {
+                    "pattern": "SalaryIncRequestDetail/{parentMaterial}/{childModule}/{layout}",
+                    "name": "SalaryIncRequestDetail",
+                    "target": [
+                        "master",
+                        "detail",
+                        "SalaryIncRequestDetail"
+
+                    ]
                 }
                 
 
@@ -498,6 +508,11 @@
 
                 "LetterRequestDetail": {
                     "viewName": "LetterRequestDetailPage",
+                    "controlAggregation": "endColumnPages"
+                },
+
+                "SalaryIncRequestDetail": {
+                    "viewName": "SalaryIncrementDetailPage",
                     "controlAggregation": "endColumnPages"
                 }
 
