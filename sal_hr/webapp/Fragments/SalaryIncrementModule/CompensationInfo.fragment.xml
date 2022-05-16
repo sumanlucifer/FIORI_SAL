@@ -5,8 +5,8 @@
      
              <fm:SimpleForm title="Compensation Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         
-            <Label text="Pay Group" required="true" />
-            <Select id="idCompPayGroup" selectedKey="{DisplayCompInfoModel>payGroup}" items="{ path: '/SF_PayScaleGroup'}" >
+            <Label text="Pay Group" required="false" />
+            <Select editable="false" id="idCompPayGroup" selectedKey="{DisplayCompInfoModel>payGroup}" items="{ path: '/SF_PayScaleGroup'}" >
                             <core:Item key="{externalCode}" text="{externalName_defaultValue}"/>
             </Select>
 
@@ -14,7 +14,7 @@
             <Label text="is Eligible for Car" />
          
 
-                <RadioButtonGroup  columns="2"  select="onRbChnageMain" selectedIndex="{= ${DisplayCompInfoModel>/isEligibleForCar}  ? 0 : 1 }">
+                <RadioButtonGroup  editable="false" columns="2"  select="onRbChnageMain" selectedIndex="{= ${DisplayCompInfoModel>/isEligibleForCar}  ? 0 : 1 }">
                                 <buttons>
                                     <RadioButton text="Yes"/>
                                     <RadioButton text="No"/>
@@ -22,17 +22,17 @@
                             </RadioButtonGroup>
            
             <Label text="Monthly Basic" />
-            <Input value="{DisplayCompInfoModel>/customDouble1}" />
-            <Label text="Country" required="true" />
-            <Input value="{DisplayCompInfoModel>/customString2}" />
+            <Text text="{DisplayCompInfoModel>/customDouble1}" />
+            <Label text="Country" required="false" />
+            <Text text="{DisplayCompInfoModel>/customString2}" />
             <Label text="Pay Type" />
-            <Input value="{DisplayCompInfoModel>/payType}" />
+            <Text text="{DisplayCompInfoModel>/payType}" />
             <Label text="Scheme Change Date" />
-           <DatePicker value="{path:'DisplayCompInfoModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: {
+           <Text text="{path:'DisplayCompInfoModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
-            <Label text="Change from Commision to Variable" required="true" />
-            <Input value="{DisplayCompInfoModel>/customString3}"/>
+                                                }}" />
+            <Label text="Change from Commision to Variable" required="false" />
+            <Text text="{DisplayCompInfoModel>/customString3}"/>
          </fm:SimpleForm> 
             <VBox>
         <Table  id="idConsumedTable" growing="true" growingThreshold="10" items="{DisplayCompInfoModel>/componesationDetails}">

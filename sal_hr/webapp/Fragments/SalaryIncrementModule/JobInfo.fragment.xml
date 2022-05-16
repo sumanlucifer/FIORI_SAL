@@ -5,59 +5,59 @@
      
           <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
           
-           <Label text="Incumbent of Parent Position" required="true" />
-            <Input value="{jobInfoNav>/results/0/managerId}"/>
+           <Label text="Incumbent of Parent Position" required="false" />
+            <Text text="{DisplayJobInfoModel>/incumbent}"/>
            
             <Label text="Position" />
-             <Select id="idPosition" items="{ path: '/SF_Position'}" >
+         <Select editable="false" selectedKey="{DisplayJobInfoModel>/position}" id="idPosition" items="{ path: '/SF_Position'}" >
                 <core:Item key="{externalCode}" text="{externalName_defaultValue}"/>
             </Select>
            
             <Label text="Time in Position" />
-              <Input value="{DisplayJobInfoModel>/position}"  />
+              <Text text="{DisplayJobInfoModel>/position}"  />
          </fm:SimpleForm> 
              <fm:SimpleForm title="Organization Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
            
-            <Label text="Company" required="true" />
-             <Select selectedKey="{DisplayJobInfoModel>/company}" id="idCompany" items="{ path: '/SF_FOCompany'}" >
+            <Label text="Company" required="false" />
+             <Select editable="false" selectedKey="{DisplayJobInfoModel>/company}" id="idCompany" items="{ path: '/SF_FOCompany'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
             <Label text="business Unit" />
-            <Select selectedKey="{DisplayJobInfoModel>/businessUnit}" id="idBU" items="{ path: '/SF_BusinessUnit'}" >
+      <Select editable="false" selectedKey="{DisplayJobInfoModel>/businessUnit}" id="idBU" items="{ path: '/SF_BusinessUnit'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Division" />
-              <Select selectedKey="{DisplayJobInfoModel>/division}" id="idDivision" items="{ path: '/SF_Division'}" >
+              <Select editable="false" selectedKey="{DisplayJobInfoModel>/division}" id="idDivision" items="{ path: '/SF_Division'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
            <Label text="Department" />
-            <Select selectedKey="{DisplayJobInfoModel>/department}" id="idDepartment" items="{ path: '/SF_Department'}" >
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/department}" id="idDepartment" items="{ path: '/SF_Department'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Location" />
-            <Select selectedKey="{DisplayJobInfoModel>/location}" id="idLocation" items="{ path: '/SF_Location'}" >
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/location}" id="idLocation" items="{ path: '/SF_Location'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
             <Label text="Time Zone" />
-             <Input value="{DisplayJobInfoModel>/timezone}"  />
+             <Text text="{DisplayJobInfoModel>/timezone}"  />
 
             <Label text="Cost Center" />
-             <Select selectedKey="{DisplayJobInfoModel>/costCenter}" id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" >
+             <Select editable="false" selectedKey="{DisplayJobInfoModel>/costCenter}" id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
               <Label text="Location Group" />
-        <Select selectedKey="{DisplayJobInfoModel>/customString12}" id="idLocationGroup" items="{ path: '/SF_LocationGroup'}" >
+        <Select editable="false" selectedKey="{DisplayJobInfoModel>/customString12}" id="idLocationGroup" items="{ path: '/SF_LocationGroup'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
               <Label text="Section" />
-              <Select selectedKey="{DisplayJobInfoModel>/customString10}" id="idSection" items="{ path: '/SF_Section'}" >
+              <Select editable="false" selectedKey="{DisplayJobInfoModel>/customString10}" id="idSection" items="{ path: '/SF_Section'}" >
                 <core:Item key="{externalCode}" text="{externalName}"/>
             </Select>
          </fm:SimpleForm> 
@@ -65,103 +65,107 @@
 
             <fm:SimpleForm title="Job Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
            
-             <Label text="Direct Manager" required="true" />
-            <Input value="{DisplayJobInfoModel>/managerId}"/>
+             <Label text="Direct Manager" required="false" />
+            <Text text="{DisplayJobInfoModel>/managerId}"/>
 
             <Label text="Job Classification" />
-           <Select selectedKey="{DisplayJobInfoModel>/jobCode}" id="idJobclassification" items="{ path: '/SF_JobCode'}" >
+           <Select editable="false" selectedKey="{DisplayJobInfoModel>/jobCode}" id="idJobclassification" items="{ path: '/SF_JobCode'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Job Level" />
-            <Input value="{DisplayJobInfoModel>/customString1}" />
+            <Text text="{DisplayJobInfoModel>/customString1}" />
 
-            <Label text="Job Title" required="true" />
-            <Input value="{DisplayJobInfoModel>/jobTitle}" />
+            <Label text="Job Title" required="false" />
+            <Text text="{DisplayJobInfoModel>/jobTitle}" />
 
             <Label text="Pay Grade" />
-            <Select id="idPayGrade" items="{ path: '/SF_FOPayGrade'}" >
+            <Select editable="false" id="idPayGrade" selectedKey="{DisplayJobInfoModel>/payGrade}"  items="{ path: '/SF_FOPayGrade'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Pay Range" />
-            <Select selectedKey="{DisplayJobInfoModel>/customString9}" id="idPayRange" items="{ path: '/SF_PayRange'}" >
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/customString9}" id="idPayRange" items="{ path: '/SF_PayRange'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
-            <Label text="IK/OOK" required="true" />
-             <Input value="{DisplayJobInfoModel>/regularTemp}" />
+            <Label text="IK/OOK" required="false" />
+             <Text text="{DisplayJobInfoModel>/regularTemp}" />
 
          
-             <Label text="Is Full Time Employee" required="true" />
-            <Input value="{DisplayJobInfoModel>/isFulltimeEmployee}" />
+             <Label text="Is Full Time Employee" required="false" />
+            <Text text="{DisplayJobInfoModel>/isFulltimeEmployee}" />
 
 
-             <Label text="Employee Type" required="true" />
-            <Input value="{DisplayJobInfoModel>/employeeType}" />
+             <Label text="Employee Type" required="false" />
+            <Text text="{DisplayJobInfoModel>/employeeType}" />
 
 
-             <Label text="Notes" required="true" />
-            <Input value="{DisplayJobInfoModel>/notes}" />
+             <Label text="Notes" required="false" />
+            <Text text="{DisplayJobInfoModel>/notes}" />
             
-             <Label text="Pay Group" required="true" />
-            <Select selectedKey="{DisplayJobInfoModel>/payScaleGroup}" id="idPayGroup" items="{ path: '/SF_FOPayGroup'}" >
+             <Label text="Pay Group" required="false" />
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/payScaleGroup}" id="idPayGroup" items="{ path: '/SF_FOPayGroup'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
-            <Label text="Probationary Period End Date" required="true" />
-            <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+            <Label text="Probationary Period End Date" required="false" />
+            <Text text="{path:'DisplayJobInfoModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" />
             
-             <Label text="Country" required="true" />
-           <Input value="{DisplayJobInfoModel>/countryOfCompany}" />
+             <Label text="Country" required="false" />
+           <Text text="{DisplayJobInfoModel>/countryOfCompany}" />
 
              <Label text="Employee Class"  />
-             <Input value="{DisplayJobInfoModel>/employeeClass}" />
+             <Text text="{DisplayJobInfoModel>/employeeClass}" />
               <Label text="Employee Type"  />
-                <Input value="{DisplayJobInfoModel>/employmentType}" />
+                <Text text="{DisplayJobInfoModel>/employmentType}" />
 
              <Label text="Pay Scale Type"  />
-            <Select id="idPayScaleType" items="{ path: '/SF_PayScaleType'}" >
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/payScaleType}" id="idPayScaleType" items="{ path: '/SF_PayScaleType'}" >
                 <core:Item key="{code}" text="{externalName_defaultValue}"/>
             </Select>
 
 
              <Label text="Pay Scale Area"  />
-            <Select id="idPayScaleArea" items="{ path: '/SF_PayScaleArea'}" >
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/payScaleArea}" id="idPayScaleArea" items="{ path: '/SF_PayScaleArea'}" >
                 <core:Item key="{code}" text="{externalName_defaultValue}"/>
             </Select>
 
             <Label text="Pay Scale Group"  />
-             <Select id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup'}" >
+             <Select editable="false" selectedKey="{DisplayJobInfoModel>/payScaleGroup}" id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup'}" >
                 <core:Item key="{code}" text="{externalName_defaultValue}"/>
             </Select>
 
              <Label text="Pay Scale Level"  />
-            <Select selectedKey="{DisplayJobInfoModel>/payScaleLevel}" id="idPayScaleLevel" items="{ path: '/SF_PayScaleLevel'}" >
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/payScaleLevel}" id="idPayScaleLevel" items="{ path: '/SF_PayScaleLevel'}" >
                 <core:Item key="{code}" text="{externalName_defaultValue}"/>
             </Select>
 
              <Label text="Employee Notice Period"  />
-             <Input value="{DisplayJobInfoModel>/employeeNoticePeriod}" />
+             <Text text="{DisplayJobInfoModel>/employeeNoticePeriod}" />
             <Label text="Contract Type"  />
-            <Input value="{DisplayJobInfoModel>/contractType}" />
+            <Text text="{DisplayJobInfoModel>/contractType}" />
             <Label text="Duration"  />
-              <Input value="{DisplayJobInfoModel>/customString13}" />
+              <Text text="{DisplayJobInfoModel>/customString13}" />
 
             <Label text="Contract End Date"  />
         
-               <DatePicker value="{path:'DisplayJobInfoModel>/contractEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+               <Text text="{path:'DisplayJobInfoModel>/contractEndDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" />
 
              <Label text="Auto Renewal"  />
-              <Input value="{DisplayJobInfoModel>/customString11}" />
+              <Text text="{DisplayJobInfoModel>/customString11}" />
 
             <Label text="Job Family"  />
-             <Input value="{DisplayJobInfoModel>/jobGroup}" />
+             <Text text="{DisplayJobInfoModel>/jobGroup}" />
 
             <Label text="Initial Entry"  />
-              <Input value="{DisplayJobInfoModel>/initialEntryDate}" />
+              <Text text="{DisplayJobInfoModel>/initialEntryDate}" />
             <Label text="Entry into Group"  />
-              <Input value="{DisplayJobInfoModel>/entryIntoGroup}" />
+              <Text text="{DisplayJobInfoModel>/entryIntoGroup}" />
          </fm:SimpleForm> 
      
 </core:FragmentDefinition>
