@@ -42,7 +42,7 @@
           <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
           
            <Label text="Incumbent of Parent Position" required="true" />
-            <Input value="{jobInfoNav>/results/0/managerId}"/>
+            <Input id="idIncumbentPosition" value="{jobInfoNav>/results/0/managerId}"/>
            
             <Label text="Position" />
              <Select id="idPosition" items="{ path: '/SF_Position'}" selectedKey="{jobModel>/position}">
@@ -102,7 +102,7 @@
             <fm:SimpleForm title="Job Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
            
              <Label text="Direct Manager" required="true" />
-            <Input value="{jobInfoNav>/results/0/managerId}"/>
+            <Input id="idDirectManager" value="{jobInfoNav>/results/0/managerId}"/>
 
             <Label text="Job Classification" />
            <Select id="idJobclassification" items="{ path: '/SF_JobCode'}" selectedKey="{jobModel>/jobCode}" >
@@ -113,7 +113,7 @@
             <Input value="{jobModel>/customString1}" />
 
             <Label text="Job Title" required="true" />
-            <Input value="{jobModel>/jobTitle}" />
+            <Input id="idJobTitle" value="{jobModel>/jobTitle}" />
 
             <Label text="Pay Grade" />
             <Select id="idPayGrade" items="{ path: '/SF_FOPayGrade'}" selectedKey="{jobModel>/payGrade}" >
@@ -126,16 +126,16 @@
             </Select>
 
             <Label text="IK/OOK" required="true" />
-            <Input value="{jobModel>/regularTemp}" />
+            <Input id="idIKOOK" value="{jobModel>/regularTemp}" />
 
              <Label text="Is Full Time Employee" required="true" />
-            <Input value="{jobModel>/isFulltimeEmployee}" />
+            <Input id="idFullTimeEmp" value="{jobModel>/isFulltimeEmployee}" />
 
              <Label text="Employee Type" required="true" />
-            <Input value="{jobModel>/employeeType}" />
+            <Input id="idEmpType" value="{jobModel>/employeeType}" />
 
              <Label text="Notes" required="true" />
-            <Input value="{jobModel>/notes}" />
+            <Input id="idNotes" value="{jobModel>/notes}" />
             
              <Label text="Pay Group" required="true" />
             <Select id="idPayGroup" items="{ path: '/SF_FOPayGroup'}" selectedKey="{jobModel>/payGroup}" >
@@ -143,10 +143,10 @@
             </Select>
 
             <Label text="Probationary Period End Date" required="true" />
-            <DatePicker value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+            <DatePicker id="idProbationaryDate" value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
             
              <Label text="Country" required="true" />
-            <Input  value="{jobModel>/countryOfCompany}" />
+            <Input id="idJobCountry" value="{jobModel>/countryOfCompany}" />
 
              <Label text="Employee Class"  />
             <Input value="{jobModel>/employeeClass}" />
@@ -218,7 +218,7 @@
             <Input value="{compensationModel>/customDouble1}" />
 
             <Label text="Country" required="true" />
-            <Input value="{compensationModel>/customString2}"/>
+            <Input id="idCompCountry" value="{compensationModel>/customString2}"/>
 
             <Label text="Pay Type" />
             <Input value="{compensationModel>/payType}" />
@@ -227,7 +227,7 @@
            <DatePicker value="{path:'compensationModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
             
             <Label text="Change from Commision to Variable" required="true" />
-            <Input value="{compensationModel>/customString3}"/>
+            <Input id="idCommision" value="{compensationModel>/customString3}"/>
          </fm:SimpleForm> 
                     <!-- <VBox>
                        <Table  id="idConsumedTable" growing="true" growingThreshold="10" >
