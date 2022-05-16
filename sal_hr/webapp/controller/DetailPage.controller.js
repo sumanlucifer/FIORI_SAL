@@ -282,6 +282,15 @@ sap.ui.define([
                             layout: "ThreeColumnsMidExpanded"
                         })
                         break;
+
+                          //  Salary Increment Request Module 
+                    case "15":
+                        this.oRouter.navTo("SalaryIncRequestDetail", {
+                            parentMaterial: this.sParentID,
+                            childModule: oEvent.getSource().getBindingContext().getObject().ID,
+                            layout: "ThreeColumnsMidExpanded"
+                        })
+                        break;
                 }
 
                 // ***********  old code ***********************
