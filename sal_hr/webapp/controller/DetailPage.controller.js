@@ -183,6 +183,11 @@ sap.ui.define([
             },
 
             onPressTicketItem: function (oEvent) {
+                var sStatus=oEvent.getSource().getBindingContext().getObject().status;
+                if(sStatus==='CANCELLED'){
+                    sap.m.MessageToast.show("The record is removed from the source system.")
+                    return;
+                }
                 switch (this.sParentID) {
                     // Leave Request Module
                     case "1":
