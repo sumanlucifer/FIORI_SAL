@@ -123,8 +123,8 @@ modules:
       name: comsalreportsslacompliancereport
       target-path: resources/
     - artifacts:
-      - comsalreportchatbotsummaryreport.zip
-      name: comsalreportchatbotsummaryreport
+      - comsalchatbotsummaryreport.zip
+      name: comsalchatbotsummaryreport
       target-path: resources/
 - name: comsalsalhr
   type: html5
@@ -326,9 +326,9 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comsalreportchatbotsummaryreport
+- name: comsalchatbotsummaryreport
   type: html5
-  path: chatbot_summary_report
+  path: chatbotsummary_report
   build-parameters:
     build-result: dist
     builder: custom
