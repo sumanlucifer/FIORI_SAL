@@ -36,7 +36,7 @@
                     "action": "display",
                     "title": "{{flpTitle}}",
                     "subTitle": "",
-                    "icon": ""
+                    "icon": "sap-icon://business-objects-experience"
                 }
             }
         }
@@ -114,12 +114,8 @@
                 "controlId": "app",
                 "clearControlAggregation": false
             },
-            "routes": [
-               
-            ],
-            "targets": {
-               
-            }
+            "routes": [],
+            "targets": {}
         },
         "rootView": {
             "viewName": "com.sal.chatbotsummaryreport.view.App",
@@ -127,5 +123,9 @@
             "async": true,
             "id": "App"
         }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "employee_portal_service"
     }
 }

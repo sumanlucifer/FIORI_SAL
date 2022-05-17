@@ -252,9 +252,9 @@
                     <uxap:ObjectPageSubSection id="idSkillsUsagePageSubSection" title="Skills Usage" titleUppercase="false">
                         <FlexBox width="100%" height="100%" alignItems="Center" justifyContent="Center" direction="Column">
                             <VBox width="100%">
-                                <f:Card>
+                                <f:Card id="idCard">
                                     <f:content>
-                                        <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>skills Usage}">
+                                        <commons:ChartContainer id="idChartContainer" class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>skills Usage}">
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContentbar">
                                                     <commons:content>
