@@ -27,8 +27,10 @@
 
          	<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
             <Label text="When would you like your changes to take effect? " required="true" />
-            <DatePicker value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
-        </fm:SimpleForm>
+             <DatePicker id="idStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+            </fm:SimpleForm>
 
 			<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="Choose what you want to change"/>
@@ -40,7 +42,7 @@
           <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
           
            <Label text="Incumbent of Parent Position" required="true" />
-            <Input value="{jobInfoNav>/results/0/managerId}"/>
+            <Input id="idIncumbentPosition" value="{jobInfoNav>/results/0/managerId}"/>
            
             <Label text="Position" />
              <Select id="idPosition" items="{ path: '/SF_Position'}" selectedKey="{jobModel>/position}">
@@ -53,45 +55,45 @@
              <fm:SimpleForm title="Organization Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
            
             <Label text="Company" required="true" />
-             <Select id="idCompany" items="{ path: '/SF_FOCompany'}" selectedKey="{jobModel>/company}" enabled="false">
+             <Select id="idCompany" items="{ path: '/SF_FOCompany'}" selectedKey="{jobModel>/company}">
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
             <Label text="business Unit" />
-            <Select id="idBU" items="{ path: '/SF_BusinessUnit'}" selectedKey="{jobModel>/businessUnit}" enabled="false">
+            <Select id="idBU" items="{ path: '/SF_BusinessUnit'}" selectedKey="{jobModel>/businessUnit}">
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Division" />
-              <Select id="idDivision" items="{ path: '/SF_Division'}" selectedKey="{jobModel>/division}" enabled="false" >
+              <Select id="idDivision" items="{ path: '/SF_Division'}" selectedKey="{jobModel>/division}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
            <Label text="Department" />
-            <Select id="idDepartment" items="{ path: '/SF_Department'}" selectedKey="{jobModel>/department}" enabled="false">
+            <Select id="idDepartment" items="{ path: '/SF_Department'}" selectedKey="{jobModel>/department}">
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Location" />
-            <Select id="idLocation" items="{ path: '/SF_Location'}" selectedKey="{jobModel>/location}" enabled="false">
+            <Select id="idLocation" items="{ path: '/SF_Location'}" selectedKey="{jobModel>/location}">
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
             <Label text="Time Zone" />
-             <Input value="{jobModel>/timezone}" enabled="false" />
+             <Input value="{jobModel>/timezone}" />
 
             <Label text="Cost Center" />
-             <Select id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" selectedKey="{jobModel>/costCenter}" enabled="false" >
+             <Select id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" selectedKey="{jobModel>/costCenter}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
               <Label text="Location Group" />
-             <Select id="idLocationGroup" items="{ path: '/SF_LocationGroup'}" selectedKey="{jobModel>/customString12}" enabled="false" >
+             <Select id="idLocationGroup" items="{ path: '/SF_LocationGroup'}" selectedKey="{jobModel>/customString12}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
               <Label text="Section" />
-              <Select id="idSection" items="{ path: '/SF_Section'}" selectedKey="{jobModel>/customString10}" enabled="false" >
+              <Select id="idSection" items="{ path: '/SF_Section'}" selectedKey="{jobModel>/customString10}">
                 <core:Item key="{externalCode}" text="{externalName}"/>
             </Select>
          </fm:SimpleForm> 
@@ -100,102 +102,102 @@
             <fm:SimpleForm title="Job Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
            
              <Label text="Direct Manager" required="true" />
-            <Input value="{jobInfoNav>/results/0/managerId}"/>
+            <Input id="idDirectManager" value="{jobInfoNav>/results/0/managerId}"/>
 
             <Label text="Job Classification" />
-           <Select id="idJobclassification" items="{ path: '/SF_JobCode'}" selectedKey="{jobModel>/jobCode}" enabled="false" >
+           <Select id="idJobclassification" items="{ path: '/SF_JobCode'}" selectedKey="{jobModel>/jobCode}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Job Level" />
-            <Input value="{jobModel>/customString1}" enabled="false" />
+            <Input value="{jobModel>/customString1}" />
 
             <Label text="Job Title" required="true" />
-            <Input value="{jobModel>/jobTitle}" enabled="false" />
+            <Input id="idJobTitle" value="{jobModel>/jobTitle}" />
 
             <Label text="Pay Grade" />
-            <Select id="idPayGrade" items="{ path: '/SF_FOPayGrade'}" selectedKey="{jobModel>/payGrade}" enabled="false">
+            <Select id="idPayGrade" items="{ path: '/SF_FOPayGrade'}" selectedKey="{jobModel>/payGrade}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Pay Range" />
-            <Select id="idPayRange" items="{ path: '/SF_PayRange'}" selectedKey="{jobModel>/customString9}" enabled="false">
+            <Select id="idPayRange" items="{ path: '/SF_PayRange'}" selectedKey="{jobModel>/customString9}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="IK/OOK" required="true" />
-            <Input value="{jobModel>/regularTemp}" enabled="false" />
+            <Input id="idIKOOK" value="{jobModel>/regularTemp}" />
 
              <Label text="Is Full Time Employee" required="true" />
-            <Input value="{jobModel>/isFulltimeEmployee}" enabled="false"/>
+            <Input id="idFullTimeEmp" value="{jobModel>/isFulltimeEmployee}" />
 
              <Label text="Employee Type" required="true" />
-            <Input value="{jobModel>/employeeType}" enabled="false"/>
+            <Input id="idEmpType" value="{jobModel>/employeeType}" />
 
              <Label text="Notes" required="true" />
-            <Input value="{jobModel>/notes}" enabled="false"/>
+            <Input id="idNotes" value="{jobModel>/notes}" />
             
              <Label text="Pay Group" required="true" />
-            <Select id="idPayGroup" items="{ path: '/SF_FOPayGroup'}" selectedKey="{jobModel>/payGroup}" enabled="false" >
+            <Select id="idPayGroup" items="{ path: '/SF_FOPayGroup'}" selectedKey="{jobModel>/payGroup}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
             <Label text="Probationary Period End Date" required="true" />
-            <DatePicker value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+            <DatePicker id="idProbationaryDate" value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
             
              <Label text="Country" required="true" />
-            <Input  value="{jobModel>/countryOfCompany}" enabled="false"/>
+            <Input id="idJobCountry" value="{jobModel>/countryOfCompany}" />
 
              <Label text="Employee Class"  />
-            <Input value="{jobModel>/employeeClass}" enabled="false"/>
+            <Input value="{jobModel>/employeeClass}" />
 
               <Label text="Employee Type"  />
-            <Input value="{jobModel>/employmentType}" enabled="false"/>
+            <Input value="{jobModel>/employmentType}" />
 
              <Label text="Pay Scale Type"  />
-            <Select id="idPayScaleType" items="{ path: '/SF_PayScaleType'}"  selectedKey="{jobModel>/payScaleType}" enabled="false"  >
+            <Select id="idPayScaleType" items="{ path: '/SF_PayScaleType'}"  selectedKey="{jobModel>/payScaleType}" >
                 <core:Item key="{code}" text="{externalName_defaultValue}"/>
             </Select>
 
 
              <Label text="Pay Scale Area"  />
-            <Select id="idPayScaleArea" items="{ path: '/SF_PayScaleArea'}" selectedKey="{jobModel>/payScaleArea}" enabled="false" >
+            <Select id="idPayScaleArea" items="{ path: '/SF_PayScaleArea'}" selectedKey="{jobModel>/payScaleArea}" >
                 <core:Item key="{code}" text="{externalName_defaultValue}"/>
             </Select>
 
             <Label text="Pay Scale Group"  />
-             <Select id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup'}" selectedKey="{jobModel>/payScaleGroup}" enabled="false" >
+             <Select id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup'}" selectedKey="{jobModel>/payScaleGroup}" >
                 <core:Item key="{code}" text="{externalName_defaultValue}"/>
             </Select>
 
              <Label text="Pay Scale Level"  />
-            <Select id="idPayScaleLevel" items="{ path: '/SF_PayScaleLevel'}" selectedKey="{jobModel>/payScaleLevel}" enabled="false">
+            <Select id="idPayScaleLevel" items="{ path: '/SF_PayScaleLevel'}" selectedKey="{jobModel>/payScaleLevel}" >
                 <core:Item key="{code}" text="{externalName_defaultValue}"/>
             </Select>
 
              <Label text="Employee Notice Period"  />
-            <Input  value="{jobModel>/employeeNoticePeriod}" enabled="false"/>
+            <Input  value="{jobModel>/employeeNoticePeriod}" />
 
               <Label text="Contract Type"  />
-            <Input value="{jobModel>/contractType}" enabled="false"/>
+            <Input value="{jobModel>/contractType}" />
 
             <Label text="Duration"  />
-            <Input value="{jobModel>/customString13}" enabled="false"/>
+            <Input value="{jobModel>/customString13}" />
 
             <Label text="Contract End Date"  />
             <Input value="{path:'jobModel>/contractEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
 
              <Label text="Auto Renewal"  />
-            <Input value="{jobModel>/customString11}" enabled="false"/>
+            <Input value="{jobModel>/customString11}" />
 
             <Label text="Job Family"  />
-            <Input  value="{jobModel>/jobGroup}" enabled="false"/>
+            <Input  value="{jobModel>/jobGroup}" />
 
             <Label text="Initial Entry"  />
-            <Input value="{jobModel>/initialEntryDate}" enabled="false"/>
+            <Input value="{jobModel>/initialEntryDate}" />
 
             <Label text="Entry into Group"  />
-            <Input value="{jobModel>/entryIntoGroup}" enabled="false"/>
+            <Input value="{jobModel>/entryIntoGroup}" />
 
 
          </fm:SimpleForm> 
@@ -204,8 +206,8 @@
              <fm:SimpleForm title="Compensation Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         
             <Label text="Pay Group" required="true" />
-            <Select id="idCompPayGroup" items="{ path: '/SF_PayScaleGroup'}" selectedKey="{compensationModel>/payGroup}" >
-                            <core:Item key="{externalCode}" text="{externalName_defaultValue}"/>
+            <Select id="idCompPayGroup" items="{ path: '/SF_FOPayGroup'}" selectedKey="{compensationModel>/payGroup}" >
+                            <core:Item key="{externalCode}" text="{name}"/>
             </Select>
 
           
@@ -216,7 +218,7 @@
             <Input value="{compensationModel>/customDouble1}" />
 
             <Label text="Country" required="true" />
-            <Input value="{compensationModel>/customString2}"/>
+            <Input id="idCompCountry" value="{compensationModel>/customString2}"/>
 
             <Label text="Pay Type" />
             <Input value="{compensationModel>/payType}" />
@@ -225,9 +227,9 @@
            <DatePicker value="{path:'compensationModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
             
             <Label text="Change from Commision to Variable" required="true" />
-            <Input value="{compensationModel>/customString3}"/>
+            <Input id="idCommision" value="{compensationModel>/customString3}"/>
          </fm:SimpleForm> 
-            <VBox>
+                    <!-- <VBox>
                        <Table  id="idConsumedTable" growing="true" growingThreshold="10" >
                             <headerToolbar>
                                 <OverflowToolbar>
@@ -267,7 +269,7 @@
                                             
                                               <Select id="idFrequency" items="{ path: '/SF_FOFrequency'}" selectedKey="{jobModel>/frequency}">
                                                <core:Item key="{externalCode}" text="{description}"/>
-            </Select>
+                                                </Select>
                                               <DatePicker   value="{path:'jobModel>/endDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"  />
@@ -276,7 +278,7 @@
                                 </ColumnListItem>
                             </items>
                         </Table>
-                        </VBox>
+                    </VBox> -->
          </Panel>
   <!-- </l:content>
             </l:VerticalLayout> -->

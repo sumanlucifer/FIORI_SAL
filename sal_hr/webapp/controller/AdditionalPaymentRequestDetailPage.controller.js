@@ -416,9 +416,10 @@ sap.ui.define([
                 this.getView().setBusy(true);
                 var sUserID = this.object.externalCode,
                     sEffectiveStartDate = new Date(this.object.effectiveStartDate),
-                    sPath = this.getComponentModel().createKey("/SF_IDReplacement", {
-                        User: sUserID,
-                        effectiveStartDate: sEffectiveStartDate
+                    sPath = this.getComponentModel().createKey("/EmpPayCompNonRecurring", {
+                        payComponentCode: this.object.externalCode,
+                        payDate: sEffectiveStartDate,
+                        userId: sUserID
                     });
                 this.getView().getModel().remove(sPath, {
                     success: function (oData) {

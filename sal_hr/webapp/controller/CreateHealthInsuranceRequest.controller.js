@@ -150,12 +150,12 @@ sap.ui.define([
                     DependentDOB: new Date(),
                     DeliveryLoc: "",
                     Scheme: "",
-                    attachment1FileContent: "",
-                    attachment1FileName: "",
-                    attachment2FileContent: "",
-                    attachment2FileName: "",
-                    attachment3FileContent: "",
-                    attachment3FileName: "",
+                    attachment1FileContent: null,
+                    attachment1FileName: null,
+                    attachment2FileContent: null,
+                    attachment2FileName:null,
+                    attachment3FileContent: null,
+                    attachment3FileName:null,
                     isAttach1New: false,
                     isAttach2New: false,
                     isAttach3New: false
@@ -258,9 +258,7 @@ sap.ui.define([
                     sEffectiveStartDate = dateFormat.format(new Date(sEffectiveStartDate));
                 sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
                 var cust_healthInsuranceDetails = aData.map(function (item) {
-
-                    var oHealthInsuranceObj =
-                    {
+                    return {
                         cust_address: item.DependentNationalAddress,
                         cust_dateOfBirth: new Date(item.DependentDOB),
                         cust_dependentName: item.DependentName,
@@ -271,26 +269,52 @@ sap.ui.define([
                         cust_gender: item.DependentGender,
                         cust_relationship: item.Relationship,
                         cust_scheme: item.Scheme,
-                    };
+                        attachment1FileContent :item.attachment1FileContent,
+                        attachment1FileName : item.attachment1FileName,
+                        isAttach1New : item.isAttach1New,
+                        attachment1UserId : sUserID,
+                        attachment2FileContent : item.attachment2FileContent,
+                        attachment2FileName :item.attachment2FileName,
+                        isAttach2New : item.isAttach2New,
+                        attachment2UserId : sUserID,
+                        attachment3FileContent : item.attachment3FileContent,
+                        attachment3FileName : item.attachment3FileName,
+                        isAttach3New : item.isAttach3New,
+                        attachment3UserId : sUserID
+                    }
 
-                    if (item.isAttach1New === true) {
-                        oHealthInsuranceObj.attachment1FileContent = item.attachment1FileContent;
-                        oHealthInsuranceObj.attachment1FileName = item.attachment1FileName;
-                        oHealthInsuranceObj.isAttach1New = item.isAttach1New;
-                        oHealthInsuranceObj.attachment1UserId = sUserID;
-                    }
-                    if (item.isAttach2New === true) {
-                        oHealthInsuranceObj.attachment2FileContent = item.attachment2FileContent;
-                        oHealthInsuranceObj.attachment2FileName = item.attachment2FileName;
-                        oHealthInsuranceObj.isAttach2New = item.isAttach2New;
-                        oHealthInsuranceObj.attachment2UserId = sUserID;
-                    }
-                    if (item.isAttach3New === true) {
-                        oHealthInsuranceObj.attachment3FileContent = item.attachment3FileContent;
-                        oHealthInsuranceObj.attachment3FileName = item.attachment3FileName;
-                        oHealthInsuranceObj.isAttach3New = item.isAttach3New;
-                        oHealthInsuranceObj.attachment3UserId = sUserID;
-                    }
+                    // var oHealthInsuranceObj =
+                    // {
+                    //     cust_address: item.DependentNationalAddress,
+                    //     cust_dateOfBirth: new Date(item.DependentDOB),
+                    //     cust_dependentName: item.DependentName,
+                    //     cust_healthInsurance_User: sUserID,
+                    //     cust_healthInsurance_effectiveStartDate: sEffectiveStartDate,
+                    //     cust_location: item.DeliveryLoc,
+                    //     cust_nationalID: item.NationalID,
+                    //     cust_gender: item.DependentGender,
+                    //     cust_relationship: item.Relationship,
+                    //     cust_scheme: item.Scheme,
+                    // };
+
+                    // if (item.isAttach1New === true) {
+                    //     oHealthInsuranceObj.attachment1FileContent = item.attachment1FileContent;
+                    //     oHealthInsuranceObj.attachment1FileName = item.attachment1FileName;
+                    //     oHealthInsuranceObj.isAttach1New = item.isAttach1New;
+                    //     oHealthInsuranceObj.attachment1UserId = sUserID;
+                    // }
+                    // if (item.isAttach2New === true) {
+                    //     oHealthInsuranceObj.attachment2FileContent = item.attachment2FileContent;
+                    //     oHealthInsuranceObj.attachment2FileName = item.attachment2FileName;
+                    //     oHealthInsuranceObj.isAttach2New = item.isAttach2New;
+                    //     oHealthInsuranceObj.attachment2UserId = sUserID;
+                    // }
+                    // if (item.isAttach3New === true) {
+                    //     oHealthInsuranceObj.attachment3FileContent = item.attachment3FileContent;
+                    //     oHealthInsuranceObj.attachment3FileName = item.attachment3FileName;
+                    //     oHealthInsuranceObj.isAttach3New = item.isAttach3New;
+                    //     oHealthInsuranceObj.attachment3UserId = sUserID;
+                    // }
                 });
                 return {
                     "User": sUserID,

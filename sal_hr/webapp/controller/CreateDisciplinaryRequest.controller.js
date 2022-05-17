@@ -330,8 +330,8 @@ sap.ui.define([
                     sAttachmentFileContent = this.fileContent;
                     sAttahmentFileName = this.fileName;
                 }else{
-                    sAttachmentFileContent = "";
-                    sAttahmentFileName = "";
+                    sAttachmentFileContent = null;
+                    sAttahmentFileName = null;
                  }
               
                 return{
