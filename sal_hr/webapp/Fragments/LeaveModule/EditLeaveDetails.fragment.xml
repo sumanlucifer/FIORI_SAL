@@ -8,7 +8,7 @@
             <Title id="idEditRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
 
             <Label id="idEditLeaveStartDateLBL" text="{i18n>Start Date}" class="sapUiSmallMarginTop" />
-           <DatePicker id="idStartLDatePicker" value="{path:'startDate',
+           <DatePicker id="idStartLDatePicker" value="{path:'leaveModel>/startDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
@@ -38,10 +38,10 @@
            
 
             <Label id="idEditLeaveTotalLeaveHrsLBL" text="{i18n>Total Hrs}" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/>
-            <Input id="idEditRequestHrs" value="{displayQuantity}" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/>
+            <Input id="idEditRequestHrs" value="{leaveModel>/displayQuantity}" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/>
           
             <Label id="idEditLeaveEndDateLBL" text="{i18n>End Date}" />
-            <DatePicker id="idEditLeaveEndDatePicker" value="{path:'endDate',
+            <DatePicker id="idEditLeaveEndDatePicker" value="{path:'leaveModel>/endDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'

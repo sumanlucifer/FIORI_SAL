@@ -33,7 +33,11 @@ sap.ui.define([
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
             },   
-
+            onUpdateMasterListBindingStart:function(oEvent){
+                var sIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+                oEvent.getSource().getBinding("items").sCustomParams = "IsUserManager=" + sIsUserManager;
+                oEvent.getSource().getBinding("items").mCustomParams.IsUserManager = sIsUserManager;
+            },
             _navToDetail: function (id) {
                
                 this.getRouter().navTo("detail", {

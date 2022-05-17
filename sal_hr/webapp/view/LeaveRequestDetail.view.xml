@@ -51,7 +51,8 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>
-                        <ObjectAttribute text="{userIdNav/firstName} {userIdNav/middleName} {userIdNav/lastName}({headerModel>/employeeId})"/>
+                        <!-- <ObjectAttribute text="{userIdNav/firstName} {userIdNav/middleName} {userIdNav/lastName}({headerModel>/employeeId})"/> -->
+                          <ObjectAttribute text="{leaveModel>/userIdNav/defaultFullName}({headerModel>/employeeId})"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DueBy Date}"/>
