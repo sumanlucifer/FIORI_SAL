@@ -18,3 +18,7 @@
 .LabelBoldFont {
     font-weight: bold !important;
 }
+
+.iconBackground {
+    background: lightsteelblue !important;
+}

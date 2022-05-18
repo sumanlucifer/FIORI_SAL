@@ -30,7 +30,7 @@
                                                 <FlexBox width="100%" direction="Column" justifyContent="Center" alignItems="Center" wrap="Wrap">
                                                     <HBox width="100%" justifyContent="Center">
                                                         <Title titleStyle="H2" text="{ChatbotSummaryModel>/conversations}" class="sapUiTinyMarginEnd LabelBoldFont" />
-                                                        <ObjectNumber number="-125" state="Warning" inverted="true" class="sapUiTinyMarginTop" />
+                                                        <ObjectNumber number="{ChatbotSummaryModel>/conversationIndicator}" state="{path: 'ChatbotSummaryModel>/conversationIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
                                                     <Text textAlign="Center" text="{i18n>Conversations}"/>
                                                 </FlexBox>
@@ -41,7 +41,7 @@
                                                 <FlexBox width="100%" direction="Column" justifyContent="Center" alignItems="Center" wrap="Wrap">
                                                     <HBox width="100%" justifyContent="Center">
                                                         <Title titleStyle="H2" text="{ChatbotSummaryModel>/participants}" class="sapUiTinyMarginEnd LabelBoldFont" />
-                                                        <ObjectNumber number="-125" state="Warning" inverted="true" class="sapUiTinyMarginTop" />
+                                                        <ObjectNumber number="{ChatbotSummaryModel>/participantsIndicator}" state="{path: 'ChatbotSummaryModel>/participantsIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
                                                     <Text textAlign="Center" text="{i18n>Users}"/>
                                                 </FlexBox>
@@ -54,7 +54,7 @@
                                                 <FlexBox width="100%" direction="Column" justifyContent="Center" alignItems="Center" wrap="Wrap">
                                                     <HBox width="100%" justifyContent="Center">
                                                         <Title titleStyle="H2" text="{ChatbotSummaryModel>/messagesReceived}" class="sapUiTinyMarginEnd LabelBoldFont" />
-                                                        <ObjectNumber number="-125" state="Warning" inverted="true" class="sapUiTinyMarginTop" />
+                                                        <ObjectNumber number="{ChatbotSummaryModel>/messagesReceivedIndicator}" state="{path: 'ChatbotSummaryModel>/messagesReceivedIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
                                                     <Text textAlign="Center" text="{i18n>MessagesReceived}"/>
                                                 </FlexBox>
@@ -65,7 +65,7 @@
                                                 <FlexBox width="100%" direction="Column" justifyContent="Center" alignItems="Center" wrap="Wrap">
                                                     <HBox width="100%" justifyContent="Center">
                                                         <Title titleStyle="H2" text="{ChatbotSummaryModel>/MessagesPerConversation}" class="sapUiTinyMarginEnd LabelBoldFont" />
-                                                        <ObjectNumber number="-125" state="Warning" inverted="true" class="sapUiTinyMarginTop" />
+                                                        <ObjectNumber number="{ChatbotSummaryModel>/MessagesPerConversationIndicator}" state="{path: 'ChatbotSummaryModel>/MessagesPerConversationIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
                                                     <Text textAlign="Center" text="{i18n>MessagesConversation}"/>
                                                 </FlexBox>
@@ -96,7 +96,7 @@
                                             <commons:content>
                                                 <commons:ChartContainerContent>
                                                     <commons:content>
-                                                        <viz:VizFrame height="360px" width="100%" vizType="donut" renderComplete="fnSetZoomingSizeFive" vizProperties="{title: {visible: false}, plotArea: { dataLabel: { visible: true, type: 'label', showTotal: false}}}">
+                                                        <viz:VizFrame height="360px" width="100%" vizType="donut" vizProperties="{title: {visible: false}, plotArea: { dataLabel: { visible: true, type: 'label', showTotal: false}}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/MostUsedSkills'}">
                                                                     <viz.data:dimensions>
@@ -254,11 +254,16 @@
                             <VBox width="100%">
                                 <f:Card id="idCard">
                                     <f:content>
-                                        <commons:ChartContainer id="idChartContainer" class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>skills Usage}">
+                                        <commons:ChartContainer id="idChartContainer" class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>SkillsUsage}">
+                                            <commons:customIcons>
+                                                <core:Icon src="sap-icon://sort-descending" press="fnSortSkillsIntents"/>
+                                                <core:Icon src="sap-icon://sort-ascending" press="fnSortSkillsIntents"/>
+                                                <core:Icon src="sap-icon://alphabetical-order" press="fnSortSkillsIntents"/>
+                                            </commons:customIcons>
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContentbar">
                                                     <commons:content>
-                                                        <viz:VizFrame id="idVizFramebar" width="100%" vizType="bar" renderComplete="fnSetZoomingSizeFive" vizProperties="{title: {visible: false}}">
+                                                        <viz:VizFrame id="idVizFramebar" width="100%" vizType="bar" vizProperties="{title: {visible: false}, plotArea: {isFixedDataPointSize: true, dataPointSize: { min: 15, max: 20 }, dataLabel: { visible: true, type: 'label', showTotal: true}}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/skills'}">
                                                                     <viz.data:dimensions>
@@ -311,10 +316,15 @@
                                 <f:Card>
                                     <f:content>
                                         <commons:ChartContainer class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>IntentsUsage}">
+                                            <commons:customIcons>
+                                                <core:Icon src="sap-icon://sort-descending" press="fnSortSkillsIntents"/>
+                                                <core:Icon src="sap-icon://sort-ascending" press="fnSortSkillsIntents"/>
+                                                <core:Icon src="sap-icon://alphabetical-order" press="fnSortSkillsIntents"/>
+                                            </commons:customIcons>
                                             <commons:content>
                                                 <commons:ChartContainerContent id="idChartContainerContentbar1">
                                                     <commons:content>
-                                                        <viz:VizFrame id="idVizFramebar1" width="100%" vizType="bar" renderComplete="fnSetZoomingSizeFive" vizProperties="{title: {visible: false}}">
+                                                        <viz:VizFrame id="idVizFramebar1" width="100%" vizType="bar" vizProperties="{title: {visible: false}, plotArea: {isFixedDataPointSize: true, dataPointSize: { min: 15, max: 20 }, dataLabel: { visible: true, type: 'label', showTotal: true}}}">
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/intents'}">
                                                                     <viz.data:dimensions>

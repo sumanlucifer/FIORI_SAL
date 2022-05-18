@@ -21,11 +21,7 @@ sap.ui.define(
                     success: function (oData) {
                         if (oData.chatBotUsageSummary.length > 2) {
                             var oSummaryData = JSON.parse(oData.chatBotUsageSummary);
-                            oSummaryData.MostUsedSkills = oSummaryData.skills.slice(0, 5);
-                            oSummaryData.MostUsedIntents = oSummaryData.intents.slice(0, 10);
-                            oSummaryData.NeverUsedSkills = this.fnGetNeverUsedItems(oSummaryData.skills);
-                            oSummaryData.NeverUsedIntents = this.fnGetNeverUsedItems(oSummaryData.intents);
-                            oSummaryData.MessagesPerConversation = this.fnGetMessagesPerConversation(oSummaryData.conversations, oSummaryData.messagesReceived);
+                            oSummaryData = this.fnGetSummaryDataFormatted(oSummaryData);
 
                             var oChatbotSummaryModel = new JSONModel(oSummaryData);
                             this.getView().setModel(oChatbotSummaryModel, "ChatbotSummaryModel");
@@ -34,21 +30,41 @@ sap.ui.define(
                     }.bind(this),
                     error: function () {
                         this.getView().setBusy(false);
-                    }
+                    }.bind(this)
                 });
             },
 
-            fnGetMessagesPerConversation: function (iConversations, iMessagesReceived) {
-                if (iConversations && iMessagesReceived)
-                    return (iMessagesReceived / iConversations).toFixed(2);
-                else
-                    return 0;
+            fnGetSummaryDataFormatted: function (oSummaryData) {
+                // Format and set Mostly used and Never Used Skills Intents Data
+                oSummaryData.MostUsedSkills = oSummaryData.skills.slice(0, 5);
+                oSummaryData.MostUsedIntents = oSummaryData.intents.slice(0, 10);
+                oSummaryData.NeverUsedSkills = this.fnGetNeverUsedItems(oSummaryData.skills);
+                oSummaryData.NeverUsedIntents = this.fnGetNeverUsedItems(oSummaryData.intents);
+
+                // Format and Set values for Overview fields
+                oSummaryData.MessagesPerConversation = (oSummaryData.messagesReceived / oSummaryData.conversations).toFixed(2);
+                oSummaryData.conversations = oSummaryData.conversations > 999 ? ((oSummaryData.conversations / 1000).toFixed(2)) + "k" : oSummaryData.conversations;
+                oSummaryData.participants = oSummaryData.participants > 999 ? ((oSummaryData.participants / 1000).toFixed(2)) + "k" : oSummaryData.participants;
+                oSummaryData.messagesReceived = oSummaryData.messagesReceived > 999 ? ((oSummaryData.messagesReceived / 1000).toFixed(2)) + "k" : oSummaryData.messagesReceived;
+
+                // Set overview fields counts and Status indicators
+                oSummaryData.conversationIndicator = -10;
+                oSummaryData.participantsIndicator = "+" + 23;
+                oSummaryData.messagesReceivedIndicator = "+" + 125;
+                oSummaryData.MessagesPerConversationIndicator = -123;
+
+                return oSummaryData;
             },
 
             fnGetNeverUsedItems: function (aData) {
                 return aData.filter(function (oItem) {
                     return oItem.count <= 2;
                 });
+            },
+
+            fnSetIndicatorsState: function (iCount) {
+                iCount = Number(iCount);
+                return iCount > 0 ? "Success" : "Warning";
             },
 
             handleFiltersPress: function (oEvent) {
@@ -79,12 +95,50 @@ sap.ui.define(
                 this.fnGetChatBotData(oDateRangeFilter);
             },
 
-            fnSetZoomingSizeFive: function (oEvent) {
-                oEvent.getSource().zoom({ direction: "in" });
-                oEvent.getSource().zoom({ direction: "in" });
-                oEvent.getSource().zoom({ direction: "in" });
-                oEvent.getSource().zoom({ direction: "in" });
-                oEvent.getSource().zoom({ direction: "in" });
+            // Function is used to set the items in Ascending or Descending Order
+            fnSortSkillsIntents: function (oEvent) {
+                var sSectionName = oEvent.getSource().getParent().getProperty("title"),
+                    sPropertyName = null;
+                if (sSectionName === "Skills Usage")
+                    sPropertyName = "/skills";
+                else
+                    sPropertyName = "/intents";
+
+                var aSkills = this.getView().getModel("ChatbotSummaryModel").getProperty(sPropertyName),
+                    sIcon = oEvent.getSource().getProperty("src"),
+                    aCountAscending = aSkills.sort(function (oItem1, oItem2) {
+                        if (oItem1.count < oItem2.count) {
+                            return -1; //oItem1 comes first
+                        }
+                        if (oItem1.count > oItem2.count) {
+                            return 1; // oItem2 comes first
+                        }
+                        return 0;  // oItem1 and oItem2 must be equal
+                    });
+
+                if (sIcon === "sap-icon://sort-ascending") {
+                    this.getView().getModel("ChatbotSummaryModel").setProperty(sPropertyName, aCountAscending);
+                    this.getView().getModel("ChatbotSummaryModel").refresh();
+                    return;
+                }
+                if (sIcon === "sap-icon://sort-descending") {
+                    this.getView().getModel("ChatbotSummaryModel").setProperty(sPropertyName, aCountAscending.reverse());
+                    this.getView().getModel("ChatbotSummaryModel").refresh();
+                    return;
+                }
+                if (sIcon === "sap-icon://alphabetical-order") {
+                    var aAlphaAscending = aSkills.sort(function (oItem1, oItem2) {
+                        if (oItem1.name.toUpperCase() < oItem2.name.toUpperCase()) {
+                            return -1; //oItem1 comes first
+                        }
+                        if (oItem1.name.toUpperCase() > oItem2.name.toUpperCase()) {
+                            return 1; // oItem2 comes first
+                        }
+                        return 0;  // oItem1 and oItem2 must be equal
+                    });
+                    this.getView().getModel("ChatbotSummaryModel").setProperty(sPropertyName, aAlphaAscending);
+                    this.getView().getModel("ChatbotSummaryModel").refresh();
+                }
             }
         });
     })
