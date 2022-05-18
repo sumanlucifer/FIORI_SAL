@@ -16,7 +16,8 @@
         <f:content>
               	<Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="10"
 		                    inset="false"
-		                    items="{/MasterModules(1)/masterSubModule}" >
+                            updateStarted="onUpdateMasterListBindingStart"
+		                    items="{path : '/MasterModules(1)/masterSubModule', parameters: { custom: {'IsUserManager': ''}}}" >
 		                     <headerToolbar>
 			                    <OverflowToolbar id="idMasterOverFlow">
                                     <content>

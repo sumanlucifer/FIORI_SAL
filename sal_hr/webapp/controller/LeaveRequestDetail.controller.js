@@ -80,18 +80,13 @@ sap.ui.define([
                                 "IsUserManager": bIsUserManager
                             },
                             success: function (oData) {
-                                oAttachModel = new JSONModel(oData.cust_attachmentNav);
-                                var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
+                               var oAttachModel = new JSONModel(oData.cust_attachmentNav),
+                                   oTimeTypeModel = new JSONModel(oData.timeTypeNav),
+                                   oLeaveModel = new JSONModel(oData);
                                 that.getView().setModel(oAttachModel, "attachmentModel");
                                 that.getView().setModel(oTimeTypeModel, "timeTypeModel");
-                                // that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
-                                // var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
-
-                                // if (sType === "S110" || sType === "500" || sType === "460") {
-                                //     that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                                // } else {
-                                //     that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                                // }
+                                that.getView().setModel(oLeaveModel, "leaveModel");
+                             
                                 switch (oData.timeType) {
                                     // Leave Module
                                     case "S110":
@@ -113,6 +108,8 @@ sap.ui.define([
                                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
                                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
                                 }
+
+                                that.onCallHistoryData(object.ticketCode);
                             },
                             error: function (oError) {
                                 if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
@@ -124,34 +121,34 @@ sap.ui.define([
                         });
 
                         this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
-                        this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
+                        // this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
+                        // this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
+                        // this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
+                        // this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
                         this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
 
                         break;
                 }
 
                 this.getView().getModel("LocalViewModel").refresh();
-                if (this.sParentID !== "7") {
-                    this.getView().bindElement({
-                        path: sKey,
-                        events: {
-                            change: function (oEvent) {
-                                var oContextBinding = oEvent.getSource();
-                                oContextBinding.refresh(false);
-                            }.bind(this),
-                            dataRequested: function () {
-                                this.getView().setBusy(true);
-                            }.bind(this),
-                            dataReceived: function () {
-                                this.getView().setBusy(false);
-                                this.onCallHistoryData(object.ticketCode);
-                            }.bind(this)
-                        }
-                    });
-                }
+                // if (this.sParentID !== "7") {
+                //     this.getView().bindElement({
+                //         path: sKey,
+                //         events: {
+                //             change: function (oEvent) {
+                //                 var oContextBinding = oEvent.getSource();
+                //                 oContextBinding.refresh(false);
+                //             }.bind(this),
+                //             dataRequested: function () {
+                //                 this.getView().setBusy(true);
+                //             }.bind(this),
+                //             dataReceived: function () {
+                //                 this.getView().setBusy(false);
+                //                 this.onCallHistoryData(object.ticketCode);
+                //             }.bind(this)
+                //         }
+                //     });
+                // }
             },
 
             onCallHistoryData: function (sticketCode) {

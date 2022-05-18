@@ -185,8 +185,13 @@ sap.ui.define([
             onPressTicketItem: function (oEvent) {
                 var sStatus = oEvent.getSource().getBindingContext().getObject().status;
 
-                if(sStatus === "APPROVED" || sStatus === "PENDING" || sStatus=== "REJECTED")
-                {
+                if(sStatus==='CANCELLED'){
+
+                    sap.m.MessageToast.show("The record is removed from the source system.");
+                    return;
+                }
+
+               
                     switch (this.sParentID) {
            
                     
@@ -298,10 +303,8 @@ sap.ui.define([
                             })
                             break;
                     }
-                }
-                else{
-                    sap.m.MessageBox.error("This record is removed from the source system");
-                }
+                
+               
 
            
 
