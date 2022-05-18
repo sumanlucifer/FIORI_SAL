@@ -38,8 +38,9 @@ sap.ui.define([
             },
 
             _bindView: function (data) {
-                debugger;
+    
                 var object = data.results[0];
+                this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
 
@@ -310,7 +311,7 @@ sap.ui.define([
                 var mimeType = oFileObj.mimeType;
                 var fName = oFileObj.fileName;
                 fName = fName.split(".")[0];
-                debugger;
+                
                 if (fileext === "pdf" || fileext === "png") {
                     var decodedPdfContent = atob(fContent);
                     var byteArray = new Uint8Array(decodedPdfContent.length)
@@ -349,6 +350,61 @@ sap.ui.define([
 
             },
 
+
+            onSavePress: function () {
+                // if (!this._validateMandatoryFields()) {
+                //     return;
+                // }
+                var oPayloadObj = {},
+                    sEntityPath = null,
+                    oComponentModel = this.getComponentModel(),
+                    sKey = null,
+                    sKey = oComponentModel.createKey("/SF_EmpCompensation", {
+                        seqNumber:  this.object.externalCode,
+                        startDate: this.object.effectiveStartDate,
+                        userId: this.object.employeeId
+                    });
+                sEntityPath = sKey;
+                oPayloadObj = this.fnGetCompensationRequestPayload();
+                this.getView().setBusy(true);
+                this.getView().getModel().update(sEntityPath, oPayloadObj, {
+                    success: function (oResponse) {
+                        this.getView().setBusy(false);
+                        sap.m.MessageBox.success("Request Submitted successfully.");
+                        this.getView().getModel().refresh();
+                        this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getView().setBusy(false);
+                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        this.getView().getModel().refresh();
+                    }.bind(this)
+                });
+            },
+
+            fnGetCompensationRequestPayload : function()
+            {
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+            
+                
+                  var  sMonthlyBasic = this.getView().byId("idEditMonthlyBasic").getValue(),
+            
+                    sEffectiveStartDateDate = this.getView().byId("idEditSchemeDate").getDateValue(),
+                    dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
+                    sEffectiveStartDateDate = dateFormat.format(new Date(sEffectiveStartDateDate));
+                    sEffectiveStartDateDate = sEffectiveStartDateDate + "T00:00:00";
+                sEffectiveStartDateDate = dateFormat.format(new Date(sEffectiveStartDateDate));
+                sEffectiveStartDateDate = sEffectiveStartDateDate + "T00:00:00";
+                return {
+         
+                    
+                        "seqNumber": this.object.externalCode,  
+                         "userId": sUserID,
+                         "startDate": sEffectiveStartDateDate,
+                         "customDouble1": parseInt(sMonthlyBasic)
+                     
+                }
+            },
             handleClose: function (oEvent) {
                 var sLayout = "",
                     sIcon = this.byId("idFullScreenBTN").getIcon();

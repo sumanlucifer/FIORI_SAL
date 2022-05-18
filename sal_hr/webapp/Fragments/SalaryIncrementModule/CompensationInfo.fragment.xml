@@ -34,7 +34,7 @@
             <Label text="Change from Commision to Variable" required="false" />
             <Text text="{DisplayCompInfoModel>/customString3}"/>
          </fm:SimpleForm> 
-            <VBox>
+            <!-- <VBox>
         <Table  id="idConsumedTable" growing="true" growingThreshold="10" items="{DisplayCompInfoModel>/componesationDetails}">
                             <headerToolbar>
                                 <OverflowToolbar>
@@ -78,6 +78,6 @@
                                 </ColumnListItem>
                             </items>
                         </Table>
-                        </VBox>
+                        </VBox> -->
  
 </core:FragmentDefinition>
