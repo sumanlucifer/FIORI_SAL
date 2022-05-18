@@ -143,10 +143,19 @@
             </Select>
 
             <Label text="Probationary Period End Date" required="true" />
-            <DatePicker id="idProbationaryDate" value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+            <DatePicker id="idProbationaryDate" value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MMMM dd, yyyy'
+                                                }}" minDate="{LocalViewModel>/currentDate}"/>
             
              <Label text="Country" required="true" />
-            <Input id="idJobCountry" value="{jobModel>/countryOfCompany}" />
+         
+             <Select id="idJobCountry" items="{ path: '/SF_Country'}" selectedKey="{jobModel>/countryOfCompany}" >
+                <core:Item key="{code}" text="{externalName_defaultValue}"/>
+            </Select>
+
+
+
+            
 
              <Label text="Employee Class"  />
             <Input value="{jobModel>/employeeClass}" />
@@ -218,13 +227,21 @@
             <Input value="{compensationModel>/customDouble1}" />
 
             <Label text="Country" required="true" />
-            <Input id="idCompCountry" value="{compensationModel>/customString2}"/>
+    
+                 <Select id="idCompCountry" items="{ path: '/SF_Country'}" selectedKey="{compensationModel>/customString2}" >
+                <core:Item key="{code}" text="{externalName_defaultValue}"/>
+            </Select>
 
             <Label text="Pay Type" />
-            <Input value="{compensationModel>/payType}" />
+        
+                <Select   items="{ path: '/SF_PicklistOption'}"  selectedKey="{compensationModel>/payType}" >
+                <core:Item key="{externalCode}" text="{localeLabel}"/>
+            </Select>
 
             <Label text="Scheme Change Date" />
-           <DatePicker value="{path:'compensationModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+           <DatePicker value="{path:'compensationModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: {
+                                                  pattern: 'MM/dd/yyyy'
+                                                }}" minDate="{LocalViewModel>/currentDate}"/>
             
             <Label text="Change from Commision to Variable" required="true" />
             <Input id="idCommision" value="{compensationModel>/customString3}"/>

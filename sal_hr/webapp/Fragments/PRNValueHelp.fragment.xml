@@ -1,6 +1,9 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<SelectDialog resizable="false" contentHeight="40%" contentWidth="30%" id="selectDialog" title="Select PRN" growing="true" growingThreshold="15"
-		 items="{ path: '/SF_User'}" liveChange="onLiveChange1" search=".onValueHelpSearch" confirm=".onValueHelpClose" cancel=".onValueHelpClose">
+		 items="{path: '/SF_User', parameters : {
+                expand : 'manager',
+                select : 'defaultFullName,firstName,middleName,lastName,userId'
+            }}" liveChange="onLiveChange1" search=".onValueHelpSearch" confirm=".onValueHelpClose" cancel=".onValueHelpClose">
 		<StandardListItem title="{firstName} {middleName} {lastName}" description="{userId}"/>
 	</SelectDialog>
 </core:FragmentDefinition>

@@ -11,7 +11,7 @@ sap.ui.define([
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateSalaryIncrementRequest", {
             onInit: function () {
-                debugger;
+              
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("SalaryIncrementRequest").attachPatternMatched(this._onObjectMatched, this);
 
@@ -33,7 +33,7 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
-                debugger;
+            
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -251,7 +251,7 @@ sap.ui.define([
                     sStartDate = this.getView().byId("idStartDate").getDateValue(),
                     sNewPayload = $.extend(true, {}, sCompData);
 
-                this.getView().getModel("jobModel").setProperty("/startDate", sStartDate);
+                this.getView().getModel("compensationModel").setProperty("/startDate", sStartDate);
 
                 delete sNewPayload.__metadata;
                 delete sNewPayload.customString4;
@@ -421,7 +421,7 @@ sap.ui.define([
                     }
 
                     // Validate Comp Country
-                    if (!sCompCountry.getValue()) {
+                    if (!sCompCountry.getSelectedKey()) {
                         sCompCountry.setValueState("Error");
                         sCompCountry.setValueStateText("Please enter Country");
                         sValidationErrorMsg = "Please fill the all required fields.";

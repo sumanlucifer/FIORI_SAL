@@ -138,7 +138,7 @@ sap.ui.define([
                     var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
                   var userId =    this.managerID;
                     var sUserIDFilter = new sap.ui.model.Filter({
-                        path: "userId",
+                        path: "manager/userId",
                         operator: sap.ui.model.FilterOperator.EQ,
                         value1: userId
                     });
@@ -157,24 +157,35 @@ sap.ui.define([
                     var oFilter = new Filter(
                         [
                             new Filter({
-                                path: "userId",
+                                path: "manager/userId",
                                 operator: "EQ",
-                                value1: sValue.trim()
+                                value1: this.managerID
                             }),
-                            new Filter({
-                                path: "firstName",
-                                operator: "EQ",
-                                value1: sValue.trim()
-                            }),
-                            new Filter({
-                                path: "lastName",
-                                operator: "EQ",
-                                value1: sValue.trim()
-                            })
+
+                            new Filter([
+                                new Filter({
+                                    path: "userId",
+                                    operator: "EQ",
+                                    value1: sValue.trim()
+                                }),
+                                new Filter({
+                                    path: "firstName",
+                                    operator: "EQ",
+                                    value1: sValue.trim()
+                                }),
+                                new Filter({
+                                    path: "lastName",
+                                    operator: "EQ",
+                                    value1: sValue.trim()
+                                })
+
+                            ],  false),
+
+                          
     
     
                         ],
-                        false
+                        true
                     );
         
                    

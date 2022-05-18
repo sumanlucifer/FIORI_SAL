@@ -25,10 +25,15 @@
 
                 <!--Modify and Withdraw not be visible for Manager Tile -->
                 <f:actions>
+
+                <HBox visible="{= ${LocalViewModel>/componesationInfoVisible} ? true : false }" >
                 
-                    <!-- <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/> -->
-                   
+                     <HBox   visible="{= ${headerModel>/status} === 'PENDING' ? false : ${headerModel>/status} === 'APPROVED' ? true : ${headerModel>/status} === 'CANCELLED' ? true: false }"  >
+                   <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
+                </HBox>
+                   </HBox>
                 </f:actions>
+
 
                 <!--Approve and Reject visible for Manager Tile -->
                 <f:actions>
@@ -78,7 +83,7 @@
                         <IconTabBar id="idBusinessTripiconTabBar">
                             <items>
 
-                                <IconTabFilter id="idEditBusinessTripRequestITB" text="{i18n>Details}">
+                                <IconTabFilter visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" id="idEditBusinessTripRequestITB" text="{i18n>Details}">
                         <VBox visible="{= ${LocalViewModel>/jobInfoVisible} ? true : false }"  >
                         
                           <core:Fragment  fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.JobInfo" type="XML"/>
@@ -95,12 +100,17 @@
                                    
                                 </IconTabFilter>
 
-                              <IconTabFilter text="{i18n>History}">
+                              <IconTabFilter visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" text="{i18n>History}">
                                     <!-- <Text text="" /> -->
                                     <core:Fragment fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.HistoryTab" type="XML"/>
                                 </IconTabFilter>
+                                  <IconTabFilter  text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.EditComponesationDetails" type="XML"/>
+                        </IconTabFilter>
                             </items>
                         </IconTabBar>
+
+                         
 
 
                     </VBox>
