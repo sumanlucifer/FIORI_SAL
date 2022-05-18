@@ -83,8 +83,54 @@ sap.ui.define(
                 oEvent.getSource().zoom({ direction: "in" });
                 oEvent.getSource().zoom({ direction: "in" });
                 oEvent.getSource().zoom({ direction: "in" });
-                oEvent.getSource().zoom({ direction: "in" });
-                oEvent.getSource().zoom({ direction: "in" });
+                // oEvent.getSource().zoom({ direction: "in" });
+                // oEvent.getSource().zoom({ direction: "in" });
+            },
+
+            // Function is used to set the items in Ascending or Descending Order
+            fnSortSkillsIntents: function (oEvent) {
+                var sSectionName = oEvent.getSource().getParent().getProperty("title"),
+                    sPropertyName = null;
+                if (sSectionName === "Skills Usage")
+                    sPropertyName = "/skills";
+                else
+                    sPropertyName = "/intents";
+
+                var aSkills = this.getView().getModel("ChatbotSummaryModel").getProperty(sPropertyName),
+                    sIcon = oEvent.getSource().getProperty("src"),
+                    aCountAscending = aSkills.sort(function (oItem1, oItem2) {
+                        if (oItem1.count < oItem2.count) {
+                            return -1; //oItem1 comes first
+                        }
+                        if (oItem1.count > oItem2.count) {
+                            return 1; // oItem2 comes first
+                        }
+                        return 0;  // oItem1 and oItem2 must be equal
+                    });
+
+                if (sIcon === "sap-icon://sort-ascending") {
+                    this.getView().getModel("ChatbotSummaryModel").setProperty(sPropertyName, aCountAscending);
+                    this.getView().getModel("ChatbotSummaryModel").refresh();
+                    return;
+                }
+                if (sIcon === "sap-icon://sort-descending") {
+                    this.getView().getModel("ChatbotSummaryModel").setProperty(sPropertyName, aCountAscending.reverse());
+                    this.getView().getModel("ChatbotSummaryModel").refresh();
+                    return;
+                }
+                if (sIcon === "sap-icon://alphabetical-order") {
+                    var aAlphaAscending = aSkills.sort(function (oItem1, oItem2) {
+                        if (oItem1.name.toUpperCase() < oItem2.name.toUpperCase()) {
+                            return -1; //oItem1 comes first
+                        }
+                        if (oItem1.name.toUpperCase() > oItem2.name.toUpperCase()) {
+                            return 1; // oItem2 comes first
+                        }
+                        return 0;  // oItem1 and oItem2 must be equal
+                    });
+                    this.getView().getModel("ChatbotSummaryModel").setProperty(sPropertyName, aAlphaAscending);
+                    this.getView().getModel("ChatbotSummaryModel").refresh();
+                }
             }
         });
     })
