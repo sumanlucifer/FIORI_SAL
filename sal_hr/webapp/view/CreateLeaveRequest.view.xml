@@ -58,7 +58,7 @@
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" change="onLeaveStartDatChange"/>
 
-                        <Label text="{i18n>EndDate}" required="true"/>
+                        <Label text="End Date" required="true"/>
                         <DatePicker id="idEndDate" value="{path:'LocalViewModel>/endDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" editable="{= ${LocalViewModel>/halfDayType} === true ? false : true }" change="onLeaveEndDateChange"/>

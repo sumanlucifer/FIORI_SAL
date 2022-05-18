@@ -187,7 +187,7 @@ sap.ui.define([
 
                 if(sStatus==='CANCELLED'){
 
-                    sap.m.MessageToast.show("The record is removed from the source system.")
+                    sap.m.MessageToast.show("The record is removed from the source system.");
                     return;
                 }
 
@@ -303,7 +303,7 @@ sap.ui.define([
                             })
                             break;
                     }
-                }
+                
                
 
            
