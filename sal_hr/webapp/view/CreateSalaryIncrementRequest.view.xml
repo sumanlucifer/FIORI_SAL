@@ -27,7 +27,7 @@
 
          	<fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
             <Label text="When would you like your changes to take effect? " required="true" />
-             <DatePicker id="idStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+             <DatePicker id="idStartDate" value="{path:'salaryModel>/startDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" minDate="{LocalViewModel>/currentDate}"/>
             </fm:SimpleForm>
@@ -149,8 +149,8 @@
             
              <Label text="Country" required="true" />
          
-             <Select id="idJobCountry" items="{ path: '/SF_Country'}" selectedKey="{jobModel>/countryOfCompany}" >
-                <core:Item key="{code}" text="{externalName_defaultValue}"/>
+             <Select id="idJobCountry" items="{ path: '/SF_Country'}" selectedKey="{jobModel>/customString2}" >
+                <core:Item key="{Numericcountrycode}" text="{externalName_defaultValue}"/>
             </Select>
 
 
@@ -229,7 +229,7 @@
             <Label text="Country" required="true" />
     
                  <Select id="idCompCountry" items="{ path: '/SF_Country'}" selectedKey="{compensationModel>/customString2}" >
-                <core:Item key="{code}" text="{externalName_defaultValue}"/>
+                <core:Item key="{numericCountryCode}" text="{externalName_defaultValue}"/>
             </Select>
 
             <Label text="Pay Type" />

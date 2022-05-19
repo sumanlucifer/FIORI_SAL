@@ -104,9 +104,11 @@ sap.ui.define([
                     },
                     success: function (oData) {
                         var oCompensationModel = new JSONModel(oData.compInfoNav.results[0]),
-                            oJobModel = new JSONModel(oData.jobInfoNav.results[0]);
+                            oJobModel = new JSONModel(oData.jobInfoNav.results[0]),
+                            oSalaryModel = new JSONModel(oData);
                         that.getView().setModel(oCompensationModel, "compensationModel");
                         that.getView().setModel(oJobModel, "jobModel");
+                        that.getView().setModel(oSalaryModel, "salaryModel");
 
                     },
 
@@ -176,7 +178,8 @@ sap.ui.define([
                     sStartDate = this.getView().byId("idStartDate").getDateValue(),
                     sNewPayload = $.extend(true, {}, sJobData);
 
-                this.getView().getModel("jobModel").setProperty("/startDate", sStartDate);
+                // this.getView().getModel("jobModel").setProperty("/startDate", sStartDate);
+                // this.getView().getModel("jobModel").refresh();
 
 
                 delete sNewPayload.__metadata;
@@ -243,15 +246,23 @@ sap.ui.define([
                 delete sNewPayload.wfRequestNav;
                 delete sNewPayload.workerCategoryNav;
 
+                sNewPayload.startDate = sStartDate;
+
                 return sNewPayload;
 
             },
             fnGetCompensationRequestPayload: function () {
                 var sCompData = this.getView().getModel("compensationModel").getData(),
-                    sStartDate = this.getView().byId("idStartDate").getDateValue(),
+                sStartDate = this.getView().byId("idStartDate").getDateValue(),
                     sNewPayload = $.extend(true, {}, sCompData);
 
-                this.getView().getModel("compensationModel").setProperty("/startDate", sStartDate);
+                // this.getView().getModel("compensationModel").setProperty("/startDate", sStartDate);
+                // this.getView().getModel("compensationModel").refresh();
+
+                // var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                // sStartDate = this.getView().byId("idStartDate").getDateValue();
+                //     sStartDate = sStartDate + "T00:00:00";
+
 
                 delete sNewPayload.__metadata;
                 delete sNewPayload.customString4;
@@ -273,7 +284,9 @@ sap.ui.define([
                 delete sNewPayload.wfRequestNav;
                 delete sNewPayload.empPayCompRecurringNav;
                 delete sNewPayload.payTypeNav;
-
+                
+                sNewPayload.startDate = sStartDate;
+                sNewPayload.payType = "21586";
 
                 return sNewPayload;
 
