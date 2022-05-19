@@ -143,7 +143,7 @@ sap.ui.define([], function () {
         },
 
 
-        ticketStatusText: function (sValue) {
+        ticketStatusText: function (sValue, externalStatus) {
             switch (sValue) {
                 case 'CANCELLED':
                     sValue = "CANCELLED";
@@ -155,7 +155,13 @@ sap.ui.define([], function () {
                     sValue = "PENDING";
                     break;
                 case 'REJECTED':
-                    sValue = "REJECTED";
+
+                    if(sValue == 'REJECTED' && (externalStatus !== null && externalStatus !== sValue)) {
+                        sValue = `sValue (${externalStatus})`
+                    } else {
+                        sValue = "REJECTED";
+                    }                
+                    
                     break;
             }
             return sValue;
