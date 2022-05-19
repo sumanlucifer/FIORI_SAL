@@ -165,18 +165,21 @@ sap.ui.define([
                             new Filter([
                                 new Filter({
                                     path: "userId",
-                                    operator: "EQ",
+                                    operator: "Contains",
+                                    caseSensitive: false,
                                     value1: sValue.trim()
                                 }),
                                 new Filter({
                                     path: "firstName",
-                                    operator: "EQ",
-                                    value1: sValue.trim()
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
                                 }),
                                 new Filter({
                                     path: "lastName",
-                                    operator: "EQ",
-                                    value1: sValue.trim()
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
                                 })
 
                             ],  false),
