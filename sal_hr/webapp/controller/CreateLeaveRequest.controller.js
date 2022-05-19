@@ -183,6 +183,19 @@ sap.ui.define([
                             sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
                             break;
+                        case "450":
+                            sQtyHrs = this.getView().byId("TP1").getValue();
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                            break;
+                        case "480":
+                            sQtyHrs = this.getView().byId("TP1").getValue();
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                        case "440":
+                            sQtyHrs = this.getView().byId("TP1").getValue();
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                            break;
                         case "HD1":
                             sQtyHrs = "0.5";
                             break;
@@ -406,6 +419,30 @@ sap.ui.define([
                         break;
                     case "460":
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                        break;
+                    case "450":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                        break;
+                    case "480":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        this.attachReq = false;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                        break;
+                    case "440":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
                         this.attachReq = false;
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);

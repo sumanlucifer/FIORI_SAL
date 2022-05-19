@@ -74,8 +74,8 @@ sap.ui.define([
                     //   var sObject = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
                     sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                        personIdExternal: "12002425",
-                        userId: "12002425"
+                        personIdExternal: "12002024",
+                        userId: "12002024"
                     });
 
                 // this.getView().bindElement({
