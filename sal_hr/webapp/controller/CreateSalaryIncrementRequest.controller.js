@@ -287,7 +287,7 @@ sap.ui.define([
                 
                 sNewPayload.startDate = sStartDate;
                 sNewPayload.payType = "21586";
-                sNewPayload.isEligibleForCar = Boolean(sNewPayload.isEligibleForCar);
+                sNewPayload.isEligibleForCar = JSON.parse(sNewPayload.isEligibleForCar);
 
                 return sNewPayload;
 
