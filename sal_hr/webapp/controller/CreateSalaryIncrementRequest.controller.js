@@ -74,8 +74,8 @@ sap.ui.define([
                     //   var sObject = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
                     sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                        personIdExternal: "12002024",
-                        userId: "12002024"
+                        personIdExternal: "12002425",
+                        userId: "12002425"
                     });
 
                 // this.getView().bindElement({
@@ -247,7 +247,7 @@ sap.ui.define([
                 delete sNewPayload.workerCategoryNav;
 
                 sNewPayload.startDate = sStartDate;
-
+                 
                 return sNewPayload;
 
             },
@@ -287,6 +287,7 @@ sap.ui.define([
                 
                 sNewPayload.startDate = sStartDate;
                 sNewPayload.payType = "21586";
+                sNewPayload.isEligibleForCar = Boolean(sNewPayload.isEligibleForCar);
 
                 return sNewPayload;
 

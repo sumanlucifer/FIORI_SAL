@@ -427,7 +427,7 @@ sap.ui.define([
                         break;
                     case "450":
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                        this.attachReq = false;
+                        this.attachReq = true;
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
@@ -435,7 +435,7 @@ sap.ui.define([
                         break;
                     case "480":
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                        this.attachReq = false;
+                        this.attachReq = true;
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
@@ -443,7 +443,7 @@ sap.ui.define([
                         break;
                     case "440":
                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                        this.attachReq = false;
+                        this.attachReq = true;
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
