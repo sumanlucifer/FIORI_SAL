@@ -80,13 +80,13 @@ sap.ui.define([
                                 "IsUserManager": bIsUserManager
                             },
                             success: function (oData) {
-                               var oAttachModel = new JSONModel(oData.cust_attachmentNav),
-                                   oTimeTypeModel = new JSONModel(oData.timeTypeNav),
-                                   oLeaveModel = new JSONModel(oData);
+                                var oAttachModel = new JSONModel(oData.cust_attachmentNav),
+                                    oTimeTypeModel = new JSONModel(oData.timeTypeNav),
+                                    oLeaveModel = new JSONModel(oData);
                                 that.getView().setModel(oAttachModel, "attachmentModel");
                                 that.getView().setModel(oTimeTypeModel, "timeTypeModel");
                                 that.getView().setModel(oLeaveModel, "leaveModel");
-                             
+
                                 switch (oData.timeType) {
                                     // Leave Module
                                     case "S110":
@@ -102,7 +102,19 @@ sap.ui.define([
                                     case "460":
                                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                        break;
 
+                                    case "450":
+                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                        break;
+                                    case "480":
+                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                        break;
+                                    case "440":
+                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
                                         break;
                                     default:
                                         that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
@@ -268,6 +280,30 @@ sap.ui.define([
                         that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
                         that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
                         that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+                        break;
+                    case "450":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        this.attachReq = true;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                        break;
+                    case "480":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        this.attachReq = true;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
+                        break;
+                    case "440":
+                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                        this.attachReq = true;
+                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                        that.getView().getModel("LocalViewModel").setProperty('/availBal', false);
+                        that.getView().getModel("LocalViewModel").setProperty('/halfDayType', false);
+
                         break;
 
                     case "HD1":

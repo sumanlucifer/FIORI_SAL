@@ -247,7 +247,7 @@ sap.ui.define([
                 delete sNewPayload.workerCategoryNav;
 
                 sNewPayload.startDate = sStartDate;
-
+                 
                 return sNewPayload;
 
             },
@@ -287,6 +287,7 @@ sap.ui.define([
                 
                 sNewPayload.startDate = sStartDate;
                 sNewPayload.payType = "21586";
+                sNewPayload.isEligibleForCar = Boolean(sNewPayload.isEligibleForCar);
 
                 return sNewPayload;
 
