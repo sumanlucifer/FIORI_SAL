@@ -15,7 +15,7 @@
                                                 }}" change="handleChange"/>
 
              <Label id="idEditLeaveTypeLBL" text="{i18n>Leave Type}" />
-             <Select items="{ path: '/SF_Leave_TimeType',
+             <Select id="idEditTimeType" items="{ path: '/SF_Leave_TimeType',
                                                             filters: [
                                                                         {
                                                                              path: 'category',

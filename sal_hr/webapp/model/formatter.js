@@ -157,7 +157,7 @@ sap.ui.define([], function () {
                 case 'REJECTED':
 
                     if(sValue == 'REJECTED' && (externalStatus !== null && externalStatus !== sValue)) {
-                        sValue = `sValue (${externalStatus})`
+                        sValue = `${sValue} (${externalStatus})`
                     } else {
                         sValue = "REJECTED";
                     }                
