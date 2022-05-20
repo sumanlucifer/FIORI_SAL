@@ -184,9 +184,16 @@ sap.ui.define([
 
             onPressTicketItem: function (oEvent) {
                 var sStatus = oEvent.getSource().getBindingContext().getObject().status;
+                var sExternalStatus = oEvent.getSource().getBindingContext().getObject().externalStatus;
 
-                if(sStatus==='CANCELLED' || sStatus==='REJECTED'){
+                if(sStatus==='CANCELLED'){
 
+                    sap.m.MessageToast.show("The record is removed from the source system.");
+                    return;
+                }
+
+                else if(Status==='REJECTED' && sExternalStatus !==Status)
+                {
                     sap.m.MessageToast.show("The record is removed from the source system.");
                     return;
                 }
