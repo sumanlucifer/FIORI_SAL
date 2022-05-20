@@ -241,6 +241,35 @@ sap.ui.define([
                     this.getView().getModel().refresh();
                 }.bind(this)
             });
+        },
+        onSendBackRequest: function (sWFRequestId) {
+            this.getView().setBusy(true);
+
+            // var sEntityPath = "/rejectWfRequest?wfRequestId=" + sWFRequestId + "L";
+
+            this.getView().getModel().create("/sendbackWfRequest", null, {
+                urlParameters: {
+                    "wfRequestId": sWFRequestId + "L"
+                },
+                success: function (oData) {
+                    MessageBox.success("Request Rejected Successfully.");
+                    this.getView().setBusy(false);
+                    this.getView().getModel().refresh();
+                    this.oRouter.navTo("detail", {
+                        parentMaterial: this.sParentID,
+                        layout: "TwoColumnsMidExpanded"
+                    });
+                }.bind(this),
+                error: function (oError) {
+                    this.getView().setBusy(false);
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                    this.getView().getModel().refresh();
+                }.bind(this)
+            });
         }
     });
 });
