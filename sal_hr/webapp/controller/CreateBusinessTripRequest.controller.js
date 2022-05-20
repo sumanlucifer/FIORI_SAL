@@ -215,6 +215,16 @@ sap.ui.define([
                     sValidationErrorMsg = this.fnValidateBusinessTripPayload(),
                     oPayload = this.getView().getModel("CreateBusinessTripModel").getData();
 
+
+                    var sStartDate = this.getView().byId("idEffectDatePicker").getDateValue();
+
+                    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                        oStartDate = dateFormat.format(new Date(sStartDate));
+                    sStartDate = oStartDate + "T00:00:00";
+
+                    oPayload.effectiveStartDate = sStartDate;
+                    // oPayload.cust_dutyTravelMain_effectiveStartDate = sStartDate;
+
                 // Convert selcted time to specific time format as "PT0H31M30S"
                 if (oPayload.cust_toDutyTravelItem[0].cust_travelTime) {
                     oPayload.cust_toDutyTravelItem[0].cust_travelTime = "PT" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[0] + "H" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[1] + "M00S";

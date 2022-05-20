@@ -24,9 +24,12 @@
             <VBox>
                 <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                     <Label text="When would you like your changes to take effect? " required="true" />
-                    <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
+                    <!-- <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" minDate="{LocalViewModel>/currentDate}"/> -->
+                    <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" minDate="{LocalViewModel>/currentDate}"/>                
                 </form:SimpleForm>
                 <form:SimpleForm title="Business Travel Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                     <Label text="Request Type" required="true"/>
