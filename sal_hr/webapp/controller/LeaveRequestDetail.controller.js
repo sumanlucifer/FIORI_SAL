@@ -325,6 +325,7 @@ sap.ui.define([
 
             fnGetLeaveRequestPayload: function () {
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                var sType = this.getView().byId("idEditTimeType").getSelectedKey();
 
                 if (this.isAttachmentNew === true) {
                     var sattachmentFileName = this.fileName;
@@ -348,7 +349,7 @@ sap.ui.define([
                 return {
                     "endDate": "/Date(" + sEndDate + ")/",
                     "loaActualReturnDate": null,
-                    "timeType": "S110",
+                    "timeType": sType,
                     "loaExpectedReturnDate": null,
                     "loaStartJobInfoId": null,
                     "startDate": "/Date(" + sStartDate + ")/",
