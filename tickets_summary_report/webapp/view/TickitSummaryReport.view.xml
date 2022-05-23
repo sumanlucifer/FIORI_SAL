@@ -1,7 +1,6 @@
 <mvc:View controllerName="com.sal.reports.ticketssummaryreport.controller.TickitSummaryReport"
     xmlns="sap.m"
     xmlns:viz="sap.viz.ui5.controls"
-    xmlns:layout="sap.ui.layout"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
     xmlns:viz.data="sap.viz.ui5.data"
@@ -15,7 +14,6 @@
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
-                                        <!-- <viz:Popover id="idTicketsPopOver"/> -->
                                         <viz:VizFrame id="idTicketsVizFrame" height="300px" width="100%" vizType='combination'>
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
@@ -52,15 +50,6 @@
                                 <commons:ChartContainerContent>
                                     <commons:content>
                                         <Table items="{path: 'TicketsSummaryDataModel>/'}">
-                                            <!-- <headerToolbar>
-                                                <OverflowToolbar>
-                                                    <content>
-                                                        <Title text="Ticket Summary" level="H2"/>
-                                                        <ToolbarSpacer />
-                                                        <Button icon="sap-icon://sort"/>
-                                                    </content>
-                                                </OverflowToolbar>
-                                            </headerToolbar> -->
                                             <columns>
                                                 <Column minScreenWidth="Desktop" width="15%">
                                                     <Label design="Bold" text="{i18n>ModuleName}"/>
@@ -94,7 +83,6 @@
                                                 <ColumnListItem vAlign="Middle">
                                                     <cells>
                                                         <Text text="{TicketsSummaryDataModel>name}"/>
-                                                        <!-- <Label design="Bold" text="{TicketsSummaryDataModel>name}"/> -->
                                                         <Text text="{TicketsSummaryDataModel>completed}"/>
                                                         <!-- <Text text="{TicketsSummaryDataModel>underProcess}"/> -->
                                                         <Text text="{TicketsSummaryDataModel>pending}"/>

@@ -2,13 +2,10 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
-    "sap/ui/Device",
     "sap/m/MessageBox"
 ],
 
-    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device, MessageBox) {
+    function (BaseController, JSONModel, formatter, MessageBox) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.AirportPassRequestDetailpage", {
@@ -62,16 +59,13 @@ sap.ui.define([
                     externalCode: object.externalCode
                 });
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
-
                 this.getView().setBusy(true);
-
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
                         $expand: "createdByNav,cust_toAirportPassItem,cust_toAirportPassItem/cust_typeOfPassNav,cust_toAirportPassItem/cust_airportLocNav,cust_toAirportPassItem/cust_companyIdNav,cust_toAirportPassItem/cust_passportCopyNav,cust_toAirportPassItem/cust_personalIdNav,cust_toAirportPassItem/cust_personalPhotoNav",
                         "IsUserManager": bIsUserManager,
                         "recordStatus": object.status
                     },
-
                     success: function (oData) {
                         this.getView().setBusy(false);
                         this.fnSetUserName(oData);
@@ -85,11 +79,9 @@ sap.ui.define([
                             MessageBox.error(JSON.parse(oError.responseText).error.message.value);
                         }
                     }.bind(this)
-
                 });
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Airport Travel Pass Request");
             },
-
 
             onCallHistoryData: function (sticketCode) {
                 var ticketCodeFilter = new sap.ui.model.Filter({
@@ -99,13 +91,16 @@ sap.ui.define([
                 });
                 var filter = [];
                 filter.push(ticketCodeFilter);
+                this.getView().setBusy(true);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
                     success: function (oData) {
+                        this.getView().setBusy(false);
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
                     }.bind(this),
                     error: function (oError) {
+                        this.getView().setBusy(false);
                         if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
                             MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
                         else {
@@ -132,6 +127,7 @@ sap.ui.define([
             },
 
             _fnSetDisplayEditAirpassModel: function (oData) {
+                this.getView().setBusy(true);
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var oDisplayEditAirpassObj = {
                     "externalCode": oData.externalCode,
@@ -282,12 +278,12 @@ sap.ui.define([
                 this.getView().setBusy(true);
                 var oComponentModel = this.getComponentModel(),
                     sKey = oComponentModel.createKey("/SF_AirportPassMain", {
-                        // effectiveStartDate: new Date("2022/03/19"),
                         effectiveStartDate: this.object.effectiveStartDate,
                         externalCode: this.object.externalCode
                     });
                 oComponentModel.remove(sKey, {
                     success: function (oData) {
+                        this.getView().setBusy(false);
                         if (oData !== "" || oData !== undefined) {
                             MessageBox.success("Record Deleted successfully.");
                             oComponentModel.refresh();
@@ -298,7 +294,6 @@ sap.ui.define([
                         } else {
                             MessageBox.error("Record Not able to delete.");
                         }
-                        this.getView().setBusy(false);
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
@@ -313,7 +308,6 @@ sap.ui.define([
 
             onSavePress: function () {
                 var sValidationErrorMsg = this.fnValidateAirPassPayload(),
-
                     sKey = this.getView().getModel().createKey("/SF_AirportPassMain", {
                         effectiveStartDate: this.object.effectiveStartDate,
                         externalCode: this.object.externalCode
@@ -604,10 +598,8 @@ sap.ui.define([
                         };
                         break;
                 }
-
                 return oUploadPropertyObj;
             },
-
 
             onDownLoadPress: function (oEvent) {
                 var sUploaderName = oEvent.getSource().getParent().getParent().getParent().getId().split("--")[1],

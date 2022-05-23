@@ -48,18 +48,7 @@
             <core:Item key="Yes" text="Yes"/>
             <core:Item key="No" text="No"/>
         </Select>
-
-        <!-- <Label text="Expense Type: Business Travel" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" />
-        <Select id="idEditBusinessExpense" change="onBusinessExpenseChange" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" items="{ path: '/SF_PickListValueV2',
-                                sorter : {
-                                    path : 'label_defaultValue' 
-                                },
-                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelExpTypeTravel'} ]
-                                       }">
-            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
-        </Select> -->
-
-        <Label text="Expense Type: Training Travel" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }"/>
+        <Label text="{i18n>ExpenseTypeTrainingTravel}" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }"/>
         <Select id="idEditTrainingExpense" change="onTrainingExpenseChange" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }" items="{ path: '/SF_PickListValueV2',
                                 sorter : {
                                     path : 'label_defaultValue' 
@@ -81,8 +70,6 @@
         <DatePicker id="idEditReturnDate" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignEndDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"></DatePicker>
 
         <Label text="{i18n>DesiredAirlineTicketTravelTime}"/>
-        <!-- <Input id="idEditTravelTime" value="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}" /> -->
-        <!-- <TimePicker id="idEditTravelTime" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime}" valueFormat="HH:mm:ss" support2400="true" placeholder="Enter Time"/> -->
         <TimePicker id="idEditTravelTime" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime}" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On" />
 
         <Label text="{i18n>DestinationCountry}"/>
@@ -218,8 +205,6 @@
             <upload:UploadSetItem fileName="{BusinessTripAttachmentModel>/receiptEmbassyAttachment/fileName}" mediaType="{BusinessTripAttachmentModel>/receiptEmbassyAttachment/mimeType}"/>
         </upload:items>
     </upload:UploadSet>
-
-
     <form:SimpleForm title="{i18n>EmployeeInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>EmployeeName}" required="true"/>
         <Input id="idEditCustEmpName" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_empName}" enabled="false"></Input>

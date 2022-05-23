@@ -1,12 +1,10 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter",
     "sap/m/MessageBox"
 ],
-
-    function (BaseController, Controller, JSONModel, formatter, MessageBox) {
+    function (BaseController, JSONModel, formatter, MessageBox) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.IDCardRequestDetail", {
             formatter: formatter,
@@ -52,6 +50,7 @@ sap.ui.define([
                     });
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
+                this.getView().setBusy(true);
                 this.getView().bindElement({
                     path: sKey,
                     parameters: {
@@ -67,7 +66,6 @@ sap.ui.define([
                             this.getView().setBusy(false);
                         }.bind(this),
                         dataRequested: function () {
-                            this.getView().setBusy(true);
                         }.bind(this),
                         dataReceived: function (oData) {
                             this._fnSetUserName(oData.getParameter("data"));
@@ -89,21 +87,21 @@ sap.ui.define([
                 });
                 var filter = [];
                 filter.push(ticketCodeFilter);
+
+                this.getView().setBusy(true);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-
-                    success: function (oData, oResponse) {
+                    success: function (oData) {
+                        this.getView().setBusy(false);
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-
-
                     }.bind(this),
                     error: function (oError) {
+                        this.getView().setBusy(false);
                         sap.m.MessageBox.error(JSON.stringify(oError));
                     }
                 });
             },
-
 
             _fnSetUserName: function (oData) {
                 var sUserName = "";
@@ -140,10 +138,9 @@ sap.ui.define([
                     childModule: this.sChildID,
                     layout: sLayout
                 });
-
             },
 
-            handleClose: function (oEvent) {
+            handleClose: function () {
                 var sLayout = "",
                     sIcon = this.byId("idFullScreenBTN").getIcon();
                 if (sIcon === "sap-icon://full-screen") {

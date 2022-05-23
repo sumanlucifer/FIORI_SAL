@@ -3,18 +3,16 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:l="sap.ui.layout"
-    xmlns:core="sap.ui.core"
-    xmlns:fm="sap.ui.layout.form"
-    xmlns:upload="sap.m.upload" height="100%">
+    xmlns:fm="sap.ui.layout.form" height="100%">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true">
         <!-- DynamicPage Title -->
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New ID Card Replacement Request" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="{i18n>NewIDCardReplacementRequest}" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New ID Card Request" class="sapUiSmallMarginBegin">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="{i18n>NewIDCardRequest}" class="sapUiSmallMarginBegin">
                         <Link id="idHumanResourceLink" text="{i18n>HumanResource}" press="onCreateCancelPress" />
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -23,44 +21,44 @@
         <f:content>
             <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
                 <l:content>
-                 <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="When would you like your changes to take effect? " required="true" />
-            <Text id="idEffectDatePicker" text="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
-        </fm:SimpleForm>
-        <fm:SimpleForm title="ID Card Replacement Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-            <Label text="PRN" />
-            <Text id="idPRNInp" text="{userId}"/>
+                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                        <Label text="{i18n>whenWouldYouLiketoText}? " required="true" />
+                        <Text id="idEffectDatePicker" text="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+                    </fm:SimpleForm>
+                    <fm:SimpleForm title="ID Card Replacement Details" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+                        <Label text="{i18n>PRN}" />
+                        <Text id="idPRNInp" text="{userId}"/>
 
-            <Label text="First Name" />
-            <Text id="idFirstNameInp" text="{firstName}"/>
+                        <Label text="{i18n>FirstName}" />
+                        <Text id="idFirstNameInp" text="{firstName}"/>
 
-            <Label text="Last Name" />
-            <Text id="idLastNameInp" text="{lastName}"/>
+                        <Label text="{i18n>LastName}" />
+                        <Text id="idLastNameInp" text="{lastName}"/>
 
-            <Label text="Second Name" />
-            <Text id="idSecondNameInp" text="{middleName}"/>
+                        <Label text="{i18n>SecondName}" />
+                        <Text id="idSecondNameInp" text="{middleName}"/>
 
-            <Label text="Job Title" />
-            <Text id="idJobTitleInp" text="{jobTitle}"/>
+                        <Label text="{i18n>JobTitle}" />
+                        <Text id="idJobTitleInp" text="{jobTitle}"/>
 
-            <Label text="Seniority Date" />
-            <Text id="idSeniorityDate" text="{path:'seniorityDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
+                        <Label text="{i18n>SeniorityDate}" />
+                        <Text id="idSeniorityDate" text="{path:'seniorityDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
 
-            <Label text="Cost Centre" />
-            <Text id="idCostCentreInp" text="{costCentre}"/>
+                        <Label text="{i18n>CostCentre}" />
+                        <Text id="idCostCentreInp" text="{costCentre}"/>
 
-            <Label text="Nationality" />
-            <Text id="idNationalityInp" text="{nationality}"/>
+                        <Label text="{i18n>Nationality}" />
+                        <Text id="idNationalityInp" text="{nationality}"/>
 
-            <Label text="Pay Grade" />
-            <Text id="idPayGradeInp" text="{payGrade}"/>
+                        <Label text="{i18n>PayGrade}" />
+                        <Text id="idPayGradeInp" text="{payGrade}"/>
 
-            <Label text="Blood Group" />
-            <Text id="idBloodGroupInp" text="{bloodGroup}"/>
+                        <Label text="{i18n>BloodGroup}" />
+                        <Text id="idBloodGroupInp" text="{bloodGroup}"/>
 
-            <Label text="Emergency Phone" />
-            <Text id="idEmergencyPhoneInp" text="{emergencyNumber}" />
-        </fm:SimpleForm>
+                        <Label text="{i18n>EmergencyPhone}" />
+                        <Text id="idEmergencyPhoneInp" text="{emergencyNumber}" />
+                    </fm:SimpleForm>
                 </l:content>
             </l:VerticalLayout>
         </f:content>
@@ -68,7 +66,6 @@
         <f:footer>
             <OverflowToolbar id="idOverflowToolbar" visible="true">
                 <ToolbarSpacer id="idToolbarSpacer"/>
-                <!-- <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/> -->
                 <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
                 <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
             </OverflowToolbar>

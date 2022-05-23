@@ -1,13 +1,10 @@
 sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
-    "com/sal/salhr/model/formatter",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
-    "sap/ui/Device"
+    "com/sal/salhr/model/formatter"
 ],
 
-    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device) {
+    function (BaseController, JSONModel, formatter) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.CreateAirportPassRequest", {
@@ -28,8 +25,6 @@ sap.ui.define([
                 var sLayout = oEvent.getParameter("arguments").layout;
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-
-                // this.fnGetEmpInfo("12002024", this.sParentID);
 
                 this.fnSetCreateAirpassLocalModel();
             },
@@ -116,7 +111,7 @@ sap.ui.define([
                     oPayload.cust_toAirportPassItem.cust_domStationName = oPayload.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayload.cust_toAirportPassItem.cust_domStationName : null;
 
                     this.mainModel.create(sPath, oPayload, {
-                        success: function (oData, oResponse) {
+                        success: function () {
                             this.getView().setBusy(false);
                             sap.m.MessageBox.success("Request Submitted Successfully.");
                             this.getView().getModel().refresh();
