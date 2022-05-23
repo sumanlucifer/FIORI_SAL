@@ -247,7 +247,7 @@ sap.ui.define([
                 delete sNewPayload.workerCategoryNav;
 
                 sNewPayload.startDate = sStartDate;
-
+                 
                 return sNewPayload;
 
             },
@@ -259,10 +259,10 @@ sap.ui.define([
                 // this.getView().getModel("compensationModel").setProperty("/startDate", sStartDate);
                 // this.getView().getModel("compensationModel").refresh();
 
-                // var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                // sStartDate = this.getView().byId("idStartDate").getDateValue();
-                //     sStartDate = sStartDate + "T00:00:00";
-
+              
+                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                    oStartDate = dateFormat.format(new Date(sStartDate));
+                sStartDate = oStartDate + "T00:00:00";
 
                 delete sNewPayload.__metadata;
                 delete sNewPayload.customString4;
@@ -285,9 +285,13 @@ sap.ui.define([
                 delete sNewPayload.empPayCompRecurringNav;
                 delete sNewPayload.payTypeNav;
                 
+              
                 sNewPayload.startDate = sStartDate;
-                sNewPayload.payType = "21586";
+              
+                sNewPayload.isEligibleForCar = JSON.parse(sNewPayload.isEligibleForCar);
+               
 
+               
                 return sNewPayload;
 
 
@@ -489,7 +493,13 @@ sap.ui.define([
             },
             onResetPress: function () {
 
-                this.onCreateResetPress();
+                this._bindView();
+
+                this.getView().getModel("LocalViewModel").setProperty("/componesationInfoVisible",false);
+                this.getView().getModel("LocalViewModel").setProperty("/jobInfoVisible",false);
+
+                this.getView().byId("idJobInfo").setSelected(false);
+                this.getView().byId("idCompensationInfo").setSelected(false);
 
 
 

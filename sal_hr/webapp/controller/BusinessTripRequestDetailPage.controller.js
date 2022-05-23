@@ -331,6 +331,44 @@ sap.ui.define([
             },
 
             onWithdrawPress: function () {
+
+                if(this.object.status === "PENDING" || this.object.status === "REJECTED" ) 
+                {
+                    var swfID =   this.object.workflowRequestId;
+                    var sPath = `/withdrawWfRequest?wfRequestId=<${swfID}>`;       
+                  
+                  this.mainModel.create(sPath, {
+                      success: function (oData, oResponse) {
+                          if (oData !== "" || oData !== undefined) {
+                              sap.m.MessageBox.success("Record Deleted successfully.");
+                              this.oRouter.navTo("detail", {
+                                  parentMaterial: this.sParentID,
+                                  layout: "TwoColumnsMidExpanded"
+                              });
+                              this.getView().getModel().refresh();
+                          } else {
+                              MessageBox.error("Record Not able to delete.");
+                          }
+                      }.bind(this),
+                      error: function (oError) {
+                          sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);  
+                          this.getView().getModel().refresh();
+                          this.getView().setBusy(false);
+                         
+                      }.bind(this)
+                  })
+                }
+                else{
+                    this.onDeleteAPICall();
+                }
+               
+           
+
+               
+            },
+
+
+            onDeleteAPICall: function () {
                 this.getView().setBusy(true);
                 var oComponentModel = this.getComponentModel(),
                     sKey = oComponentModel.createKey("/SF_DutyTravelMain", {

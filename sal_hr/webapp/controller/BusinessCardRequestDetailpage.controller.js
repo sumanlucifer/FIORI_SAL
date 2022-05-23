@@ -143,57 +143,68 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
             onWithdrawPress: function () {
-                // if (sKey === "" || sKey === undefined) {
-                //     MessageBox.error("Please enter sKey ID to delete the record.");
-                //     return;
-                // // }
-              var swfID =   "this.object.workflowRequestId";
-                  var sPath = `/withdrawWfRequest?wfRequestId=<${swfID}>`;       
-                
-                this.mainModel.create(sPath, {
-                    success: function (oData, oResponse) {
-                        if (oData !== "" || oData !== undefined) {
-                            sap.m.MessageBox.success("Record Deleted successfully.");
-                            this.oRouter.navTo("detail", {
-                                parentMaterial: this.sParentID,
-                                layout: "TwoColumnsMidExpanded"
-                            });
-                            this.getView().getModel().refresh();
-                        } else {
-                            MessageBox.error("Record Not able to delete.");
-                        }
-                    }.bind(this),
-                    error: function (oError) {
-                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);  
+
+                if(this.object.status === "PENDING" || this.object.status === "REJECTED" ) 
+                {
+                    var swfID =   this.object.workflowRequestId;
+                    var sPath = `/withdrawWfRequest?wfRequestId=<${swfID}>`;       
+                  
+                  this.mainModel.create(sPath, {
+                      success: function (oData, oResponse) {
+                          if (oData !== "" || oData !== undefined) {
+                              sap.m.MessageBox.success("Record Deleted successfully.");
+                              this.oRouter.navTo("detail", {
+                                  parentMaterial: this.sParentID,
+                                  layout: "TwoColumnsMidExpanded"
+                              });
+                              this.getView().getModel().refresh();
+                          } else {
+                              MessageBox.error("Record Not able to delete.");
+                          }
+                      }.bind(this),
+                      error: function (oError) {
+                          sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);  
+                          this.getView().getModel().refresh();
+                          this.getView().setBusy(false);
+                         
+                      }.bind(this)
+                  })
+                }
+                else{
+                    this.onDeleteAPICall();
+                }
+               
+           
+
+               
+            },
+
+
+            onDeleteAPICall: function()
+            {
+                var oComponentModel = this.getComponentModel(),
+                sKey = null,
+                sKey = oComponentModel.createKey("/SF_BusinessCard", {
+                    User: this.User,
+                    effectiveStartDate: this.effectiveStartDate,
+
+                });
+            this.getView().getModel().remove(sKey, {
+                success: function (oData) {
+                    if (oData !== "" || oData !== undefined) {
+                        sap.m.MessageBox.success("Record Deleted successfully.");
+                        this.oRouter.navTo("detail", {
+                            parentMaterial: this.sParentID,
+                            layout: "TwoColumnsMidExpanded"
+                        });
                         this.getView().getModel().refresh();
-                        this.getView().setBusy(false);
-                       
-                    }.bind(this)
-                })
-
-                // var oComponentModel = this.getComponentModel(),
-                //     sKey = null,
-                //     sKey = oComponentModel.createKey("/withdrawWfRequest", {
-                //         wfRequestId: this.object.workflowRequestId
-                       
-
-                //     });
-                // this.getView().getModel().remove(sKey, {
-                //     success: function (oData) {
-                //         if (oData !== "" || oData !== undefined) {
-                //             sap.m.MessageBox.success("Record Deleted successfully.");
-                //             this.oRouter.navTo("detail", {
-                //                 parentMaterial: this.sParentID,
-                //                 layout: "TwoColumnsMidExpanded"
-                //             });
-                //             this.getView().getModel().refresh();
-                //         } else {
-                //             MessageBox.error("Record Not able to delete.");
-                //         }
-                //     }.bind(this),
-                //     error: function (oError) {
-                //     }.bind(this)
-                // });
+                    } else {
+                        MessageBox.error("Record Not able to delete.");
+                    }
+                }.bind(this),
+                error: function (oError) {
+                }.bind(this)
+            });
             },
             handleFullScreen: function (oEvent) {
                 var sLayout = "";

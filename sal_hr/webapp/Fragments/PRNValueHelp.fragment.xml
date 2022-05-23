@@ -3,7 +3,7 @@
 		 items="{path: '/SF_User', parameters : {
                 expand : 'manager',
                 select : 'defaultFullName,firstName,middleName,lastName,userId'
-            }}" liveChange="onLiveChange1" search=".onValueHelpSearch" confirm=".onValueHelpClose" cancel=".onValueHelpClose">
+            }}" liveChange="onLiveChange1" search=".onValueHelpSearch" confirm=".onValueHelpClose" cancel=".onValueHelpClose1">
 		<StandardListItem title="{firstName} {middleName} {lastName}" description="{userId}"/>
 	</SelectDialog>
 </core:FragmentDefinition>
