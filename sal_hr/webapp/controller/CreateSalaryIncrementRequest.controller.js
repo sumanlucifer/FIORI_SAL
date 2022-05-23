@@ -493,7 +493,13 @@ sap.ui.define([
             },
             onResetPress: function () {
 
-                this.onCreateResetPress();
+                this._bindView();
+
+                this.getView().getModel("LocalViewModel").setProperty("/componesationInfoVisible",false);
+                this.getView().getModel("LocalViewModel").setProperty("/jobInfoVisible",false);
+
+                this.getView().byId("idJobInfo").setSelected(false);
+                this.getView().byId("idCompensationInfo").setSelected(false);
 
 
 
