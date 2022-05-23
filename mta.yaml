@@ -126,6 +126,10 @@ modules:
       - comsalchatbotsummaryreport.zip
       name: comsalchatbotsummaryreport
       target-path: resources/
+    - artifacts:
+      - comsalsalhrcreateuser.zip
+      name: comsalsalhrcreateuser
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -329,6 +333,16 @@ modules:
 - name: comsalchatbotsummaryreport
   type: html5
   path: chatbotsummary_report
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalsalhrcreateuser
+  type: html5
+  path: createuser
   build-parameters:
     build-result: dist
     builder: custom

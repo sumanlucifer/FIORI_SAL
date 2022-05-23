@@ -1,0 +1,89 @@
+<mvc:View controllerName="com.sal.salhr.createuser.controller.CreateUser" height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:vm="sap.ui.comp.variants">
+    <f:DynamicPage headerExpanded="true" stickySubheaderProvider="idIconTabBar" class="sapUiContentPadding">
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar id="filterbar" showRestoreOnFB="true" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true">
+                        <fb:filterGroupItems>
+                         
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="Offer Type" label="Name" visibleInFilterBar="true">
+                                <fb:control>
+                                    <ComboBox placeholder="Name" items="" >
+                                        <core:Item text="" key="" />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                       
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="Email" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input placeholder="Email" />
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                          
+                           
+                           
+                           
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <!-- DynamicPage Content -->
+        <f:content>
+            <Table id="idOffersTable" width="auto" items="" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="10" updateFinished="onUpdateFinished">
+
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="User Items" />
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://add" text="Add User"  tooltip="Add User" type="Emphasized" press="onPressAdd"/>
+                     
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column>
+                        <Text text="Name"/>
+                    </Column>
+                    <Column>
+                        <Text text="Email"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="User ID"/>
+                    </Column>
+
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Reporting To"/>
+                    </Column>
+                   
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Navigation" press="onPressListItem">
+                        <cells>
+                            <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
+                            <Text text="{OfferCode}"/>
+                            <Text text="{OfferType/OfferType}"/>
+                           
+                            <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                            
+                            <HBox justifyContent="Center">
+                                <Button visible="{parts:['IsUpdateApplicable','LoginInfo>/UserTypeId','OfferStatus'],formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
+                                <!-- <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button> -->
+                            </HBox>
+
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
