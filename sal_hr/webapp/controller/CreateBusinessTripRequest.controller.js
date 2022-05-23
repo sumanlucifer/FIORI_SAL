@@ -1,20 +1,14 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox",
-    "sap/m/upload/Uploader",
-    "sap/m/UploadCollectionParameter"
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter) {
+    function (BaseController, JSONModel) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateBusinessTripRequest", {
             onInit: function () {
-                debugger;
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("BusinessTripRequest").attachPatternMatched(this._onObjectMatched, this);
-                // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
                 this.mainModel.setSizeLimit(1000);
 
@@ -33,7 +27,6 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
-                debugger;
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
 

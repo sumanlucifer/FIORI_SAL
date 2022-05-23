@@ -29,9 +29,6 @@
         <Label text="{i18n>HotelBookingRequired}?" />
         <Text id="idDisplayHotlBook" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_hotelBooking} === true ? 'Yes' : 'No'}"/>
 
-        <!-- <Label text="Expense Type: Business Travel" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" />
-        <Text id="idisplayBusinessExpense" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory}" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }"/> -->
-
         <Label text="{i18n>TravelBusinessJustification}" />
         <Text id="idDisplayTravelJustification" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignJustification}"/>
     </form:SimpleForm>
@@ -91,12 +88,13 @@
         <Text id="idDisplayTicketAmt" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount} ? ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount} : '-'}"/>
     </form:SimpleForm>
 
-    <upload:UploadSet id="idDisplayAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? true : false}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+    <upload:UploadSet id="idDisplayAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? true : false}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" 
+    instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>AttachBoardingPass}"/>
                 <ToolbarSpacer/>
-                <Button text="Download Attachment" press="onDownLoadPress"/>
+                <Button text="{i18n>DownloadAttachment}" press="onDownLoadPress"/>
             </OverflowToolbar>
         </upload:toolbar>
         <upload:items>
@@ -104,12 +102,13 @@
         </upload:items>
     </upload:UploadSet>
 
-    <upload:UploadSet id="idDisplayAttachBoardingPassTraining" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? false : true}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+    <upload:UploadSet id="idDisplayAttachBoardingPassTraining" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? false : true}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" 
+    instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>AttachBoardingPass}"/>
                 <ToolbarSpacer/>
-                <Button text="Download Attachment" press="onDownLoadPress"/>
+                <Button text="{i18n>DownloadAttachment}" press="onDownLoadPress"/>
             </OverflowToolbar>
         </upload:toolbar>
         <upload:items>
@@ -133,7 +132,7 @@
             <OverflowToolbar>
                 <Label text="{i18n>AttachVisaCopy}"/>
                 <ToolbarSpacer/>
-                <Button text="Download Attachment" press="onDownLoadPress"/>
+                <Button text="{i18n>DownloadAttachment}" press="onDownLoadPress"/>
             </OverflowToolbar>
         </upload:toolbar>
         <upload:items>
@@ -146,7 +145,7 @@
             <OverflowToolbar>
                 <Label text="{i18n>AttachEmbassyReceipt}"/>
                 <ToolbarSpacer/>
-                <Button text="Download Attachment" press="onDownLoadPress"/>
+                <Button text="{i18n>DownloadAttachment}" press="onDownLoadPress"/>
             </OverflowToolbar>
         </upload:toolbar>
         <upload:items>

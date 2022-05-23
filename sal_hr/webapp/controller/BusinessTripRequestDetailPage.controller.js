@@ -2,13 +2,9 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
-    "sap/ui/Device",
     "sap/m/MessageBox"
 ],
-
-    function (BaseController, JSONModel, formatter, Filter, FilterOperator, Device, MessageBox) {
+    function (BaseController, JSONModel, formatter, MessageBox) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.BusinessTripRequestDetailPage", {
@@ -76,12 +72,6 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
                 this.onCallHistoryData(object.ticketCode);
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
-                // }
-
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 var oComponentModel = this.getComponentModel();
                 var sKey = oComponentModel.createKey("/SF_DutyTravelMain", {
@@ -113,25 +103,26 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Business Trip Request");
             },
 
-
             onCallHistoryData: function (sticketCode) {
                 var ticketCodeFilter = new sap.ui.model.Filter({
                     path: "ticketCode",
                     operator: sap.ui.model.FilterOperator.EQ,
                     value1: sticketCode
                 });
+
                 var filter = [];
                 filter.push(ticketCodeFilter);
+
+                this.getView().setBusy(true);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-
-                    success: function (oData, oResponse) {
+                    success: function (oData) {
+                        this.getView().setBusy(false);
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-
-
                     }.bind(this),
                     error: function (oError) {
+                        this.getView().setBusy(false);
                         if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
                             sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
                         else {
@@ -376,8 +367,6 @@ sap.ui.define([
                     sKey = this.getView().getModel().createKey("/SF_DutyTravelMain", {
                         effectiveStartDate: this.object.effectiveStartDate,
                         externalCode: this.object.externalCode
-                        // effectiveStartDate: "2022-03-14",
-                        // externalCode: "12002428"
                     });
 
                 if (sValidationErrorMsg === "") {
@@ -567,7 +556,7 @@ sap.ui.define([
                 });
             },
 
-            handleClose: function (oEvent) {
+            handleClose: function () {
                 var sLayout = "",
                     sIcon = this.byId("idBusinessTripetailsFullScreenBTN").getIcon();
                 if (sIcon === "sap-icon://full-screen") {
@@ -589,17 +578,6 @@ sap.ui.define([
                 });
             },
 
-            onVisaTypeChange: function (oEvent) {
-                // var bEnabledandRequired = oEvent.getSource().getSelectedKey() === "N" ? false : true;
-
-                // this.byId("idEditPayCompVisaLabel").setRequired(bEnabledandRequired);
-                // this.byId("idEditAttachVisaCopyLabel").setRequired(bEnabledandRequired);
-                // this.byId("idEditAttachEmbassyReceiptLabel").setRequired(bEnabledandRequired);
-
-                // this.byId("idEditAttachVisaCopy").getDefaultFileUploader().setEnabled(bEnabledandRequired);
-                // this.byId("idEditAttachEmbassyReceipt").getDefaultFileUploader().setEnabled(bEnabledandRequired);
-            },
-
             onTripCategoryChange: function (oEvent) {
                 if (oEvent.getSource().getSelectedKey() === "B") {
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
@@ -609,7 +587,6 @@ sap.ui.define([
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", true);
                 }
             },
-
 
             _fnUpdateAttachmentData: function () {
                 var oData = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
@@ -752,16 +729,6 @@ sap.ui.define([
                     oInsOutKingdom.setValueState("None");
                 }
 
-                // // validate Flight Travel Date Field
-                // var oFlightTravelDate = this.getView().byId("idEditFlightTravelDate");
-                // if (!oFlightTravelDate.getValue()) {
-                //     oFlightTravelDate.setValueState("Error");
-                //     oFlightTravelDate.setValueStateText("Please enter Flight Travel Date.");
-                //     sValidationErrorMsg = "Please fill the all required fields.";
-                // } else {
-                //     oFlightTravelDate.setValueState("None");
-                // }
-
                 // validate Visa Type Field
                 var oVisaType = this.getView().byId("idEditVisaType");
                 if (oVisaType.getSelectedKey() === "Select") {
@@ -771,16 +738,6 @@ sap.ui.define([
                 } else {
                     oVisaType.setValueState("None");
                 }
-
-                // // validate Flight Travel Date Field
-                // var oEmergencyPhn = this.getView().byId("idEditEmergencyPhn");
-                // if (!oEmergencyPhn.getValue()) {
-                //     oEmergencyPhn.setValueState("Error");
-                //     oEmergencyPhn.setValueStateText("Please enter Emergency Phone.");
-                //     sValidationErrorMsg = "Please fill the all required fields.";
-                // } else {
-                //     oEmergencyPhn.setValueState("None");
-                // }
 
                 // Validate Boarding Pass attachment sections
                 if (this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_tripCategory") === "B") {

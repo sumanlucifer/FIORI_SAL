@@ -11,10 +11,10 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New Airport Pass Request" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="{i18n>NewAirportPassRequest}" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Airport Pass Request" class="sapUiSmallMarginBegin">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="{i18n>NewAirportPassRequest}" class="sapUiSmallMarginBegin">
                         <Link id="idHumanResourceLink" text="{i18n>HumanResource}" press="onBreadCrumbNavPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -52,7 +52,6 @@
                         <Input id="idMobileNumberInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_mobileNumber}" enabled= "false"/>
 
                         <Label text="{i18n>Nationality}" required="true" />
-                        <!-- <Input id="idNationalityInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_nationality}"/> -->
                         <Select id="idNationalityInp" showSecondaryValues="true" selectedKey="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationality}" items="{ path: '/SF_Country', 
                             parameters:{select:'code,externalName_defaultValue,currency'},
                             sorter: { path: 'externalName_defaultValue', descending: false },

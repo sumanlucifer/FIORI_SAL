@@ -256,7 +256,7 @@
                                     <f:content>
                                         <commons:ChartContainer id="idChartContainer" class="CustomWidth100" showFullScreen="true" showZoom="true" showLegend="false" showLegendButton="false" title="{i18n>SkillsUsage}">
                                             <commons:customIcons>
-                                                <core:Icon src="sap-icon://sort-descending" press="fnSortSkillsIntents"/>
+                                                <core:Icon src="sap-icon://sort-descending" color="#ffffff" backgroundColor="#333333" press="fnSortSkillsIntents"/>
                                                 <core:Icon src="sap-icon://sort-ascending" press="fnSortSkillsIntents"/>
                                                 <core:Icon src="sap-icon://alphabetical-order" press="fnSortSkillsIntents"/>
                                             </commons:customIcons>
