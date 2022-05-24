@@ -20,7 +20,7 @@
             <Input 
                 change="onVendorCodeChange"
                 name="Name"
-                required="true"
+                required="false"
                 maxLength="30"
                 value="{
                     path: 'CreateUserViewModel>/name',

@@ -19,7 +19,7 @@
                                 </fb:control>
                             </fb:FilterGroupItem>
                        
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="SF UserID" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="SF User ID" visibleInFilterBar="true">
                                 <fb:control>
                                     <Input value="{oModelControl>/filterBar/sfuserID}" placeholder="SF UserID" />
                                 </fb:control>
@@ -63,7 +63,7 @@
                         <Text text="SF User ID"/>
                     </Column>
                     <Column minScreenWidth="Tablet" demandPopin="true">
-                        <Text text="ITSM UserID"/>
+                        <Text text="ITSM User ID"/>
                     </Column>
 
                     <Column minScreenWidth="Tablet" demandPopin="true">
