@@ -192,7 +192,7 @@ sap.ui.define([
                     return;
                 }
 
-                else if(Status==='REJECTED' && sExternalStatus !==Status)
+                else if(sStatus==='REJECTED' && sExternalStatus !==sStatus)
                 {
                     sap.m.MessageToast.show("The record is removed from the source system.");
                     return;
