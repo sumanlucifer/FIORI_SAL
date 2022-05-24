@@ -15,15 +15,13 @@
                          
                             <fb:FilterGroupItem groupName="__$INTERNAL$" name="Offer Type" label="Name" visibleInFilterBar="true">
                                 <fb:control>
-                                    <ComboBox placeholder="Name" items="" >
-                                        <core:Item text="" key="" />
-                                    </ComboBox>
+                                    <Input placeholder="Name" value="{oModelControl>/filterBar/Name}" />
                                 </fb:control>
                             </fb:FilterGroupItem>
                        
-                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="Email" visibleInFilterBar="true">
+                            <fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="SF UserID" visibleInFilterBar="true">
                                 <fb:control>
-                                    <Input placeholder="Email" />
+                                    <Input value="{oModelControl>/filterBar/sfuserID}" placeholder="SF UserID" />
                                 </fb:control>
                             </fb:FilterGroupItem>
                           
@@ -38,11 +36,12 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idOffersTable" width="auto" items="" noDataText="{i18n>tableNoDataText}" growing="true" growingScrollToLoad="false" growingThreshold="10" updateFinished="onUpdateFinished">
+            <Table id="idCreateUserTable" width="auto" items="{path: '/SALUser',sorter:{path:'createdAt',descending:true}}" noDataText="No Data Found" growing="true" growingScrollToLoad="false" growingThreshold="10" updateFinished="onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
-                        <Title text="User Items" />
+                     
+                           <Title text="{worklistView>/TableTitle}" />
                         <ToolbarSpacer />
                         <Button icon="sap-icon://add" text="Add User"  tooltip="Add User" type="Emphasized" press="onPressAdd"/>
                      
@@ -56,28 +55,51 @@
                     <Column>
                         <Text text="Email"/>
                     </Column>
-                    <Column minScreenWidth="Tablet" demandPopin="true">
+
+                     <Column>
                         <Text text="User ID"/>
+                    </Column>
+                      <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="SF User ID"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="ITSM UserID"/>
                     </Column>
 
                     <Column minScreenWidth="Tablet" demandPopin="true">
                         <Text text="Reporting To"/>
                     </Column>
+                       <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Created At"/>
+                    </Column>
+                      <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text="Created By"/>
+                    </Column>
+                     <Column minScreenWidth="Tablet" demandPopin="true">
+                        <Text text=""/>
+                    </Column>
                    
                 </columns>
 
                 <items>
-                    <ColumnListItem type="Navigation" press="onPressListItem">
+                    <ColumnListItem >
                         <cells>
-                            <ObjectIdentifier tooltip="{Title}" title="{Title}" titleActive="true"/>
-                            <Text text="{OfferCode}"/>
-                            <Text text="{OfferType/OfferType}"/>
+                            <ObjectIdentifier tooltip="{name}" title="{name}" titleActive="true"/>
+                            <Text text="{email}"/>
+                             <Text text="{ID}"/>
+                            <Text text="{sfUserId}"/>
+                             <Text text="{itsmUserId}"/>
+                            <Text text="{reportingTo}"/>
+
+
+                             
                            
-                            <Text text="{path:'StartDate',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                            <Text text="{path:'createdAt',type :'sap.ui.model.type.Date',formatOptions:{pattern:'dd/MM/yyyy'} }"/>
+                              <Text text="{createdBy}"/>
                             
                             <HBox justifyContent="Center">
-                                <Button visible="{parts:['IsUpdateApplicable','LoginInfo>/UserTypeId','OfferStatus'],formatter:'.formatter.btnEditOfferTable'}" tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditOffer"></Button>
-                                <!-- <Button icon="sap-icon://delete" type="Transparent" press="onDeactivate"></Button> -->
+                                <Button  tooltip="{i18n>Edit}" icon="sap-icon://edit" type="Transparent" press="onEditUser"></Button>
+                                <Button icon="sap-icon://delete" type="Transparent" press="onDeleteUser"></Button>
                             </HBox>
 
                         </cells>

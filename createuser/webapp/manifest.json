@@ -16,12 +16,12 @@
         },
         "dataSources": {
             "mainService": {
-                "uri": "/sap/opu/odata/",
+                "uri": "/odata/v2/HumanResourceService/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
                     "localUri": "localService/metadata.xml",
-                    "odataVersion": "4.0"
+                    "odataVersion": "2.0"
                 }
             }
         },
@@ -90,14 +90,17 @@
                 }
             },
             "": {
-                "dataSource": "mainService",
-                "preload": true,
+                "type": "sap.ui.model.odata.v2.ODataModel",
                 "settings": {
-                    "synchronizationMode": "None",
-                    "operationMode": "Server",
-                    "autoExpandSelect": true,
-                    "earlyRequests": true
-                }
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": true,
+                    "useBatch": false,
+                    "defaultUpdateMethod": "PUT"
+                },
+                "dataSource": "mainService",
+                "preload": true
             }
         },
         "resources": {
@@ -134,12 +137,11 @@
                     "viewName": "CreateUser"
                 }
             }
-        },
-        "rootView": {
-            "viewName": "com.sal.salhr.createuser.view.App",
-            "type": "XML",
-            "async": true,
-            "id": "App"
         }
+       
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "employee_portal_service"
     }
 }

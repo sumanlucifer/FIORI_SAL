@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
-
 specVersion: "2.5"
 metadata:
   name: com.sal.salhr.createuser
@@ -15,9 +13,11 @@ server:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
+          version: '' # The UI5 version, for instance, 1.78.1. Empty string means latest version
         backend:
-          - path: /sap
-            url: http://localhost
+          - path: /odata
+            url: https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de3438ae57.cfapps.eu10.hana.ondemand.com
+            destination: human-resource-srv
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
@@ -27,5 +27,6 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: com.sal.salhr.createuser
+        component: com.sal.salhr
         ui5Theme: sap_fiori_3
+
