@@ -6,7 +6,7 @@
             <pages>
                 <Page id="page" title="{i18n>title}">
                     <content>
-                        <Label id="idLabel" text="Welcome to My Request In Process App"/>
+                        <Label id="idLabel" text="{i18n>WelcometoMyRequestInProcess}"/>
                     </content>
                 </Page>
             </pages>

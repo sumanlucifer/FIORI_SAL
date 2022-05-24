@@ -32,9 +32,17 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // this._bindView();
-                this._getTicketData(this.sChildID);
+
+                if (sLayout === "ThreeColumnsMidExpanded") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                    this._getTicketData(this.sChildID);
+                }
+                if (sLayout === "EndColumnFullScreen" && this.byId("idFullScreenBTN").getIcon() == "sap-icon://full-screen") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idFullScreenBTN").setIcon("sap-icon://exit-full-screen");
+                    this._getTicketData(this.sChildID);
+                }
             },
 
             _bindView: function (data) {
@@ -87,10 +95,10 @@ sap.ui.define([
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
                 this.getView().getModel().read(sKey, {
-                    urlParameters: {                  
+                    urlParameters: {
                         $expand: "cust_healthInsuranceDetails,cust_healthInsuranceDetails/cust_relationshipNav,cust_healthInsuranceDetails/cust_genderNav,cust_healthInsuranceDetails/cust_attachment1Nav,cust_healthInsuranceDetails/cust_attachment2Nav,cust_healthInsuranceDetails/cust_attachment3Nav,UserNav",
                         "IsUserManager": bIsUserManager,
-                        "recordStatus": object.status 
+                        "recordStatus": object.status
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);

@@ -1,12 +1,11 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter"
 
 ],
 
-    function (BaseController, Controller, JSONModel, formatter) {
+    function (BaseController, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.AdditionalPaymentRequestDetailPage", {
             formatter: formatter,
@@ -36,9 +35,19 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // this._bindView();
-                this._getTicketData(this.sChildID);
+                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                // // this._bindView();
+                // this._getTicketData(this.sChildID);
+                if (sLayout === "ThreeColumnsMidExpanded") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                    this._getTicketData(this.sChildID);
+                }
+                if (sLayout === "EndColumnFullScreen" && this.byId("idFullScreenBTN").getIcon() == "sap-icon://full-screen") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idFullScreenBTN").setIcon("sap-icon://exit-full-screen");
+                    this._getTicketData(this.sChildID);
+                }
             },
 
             _bindView: function (data) {
@@ -180,36 +189,34 @@ sap.ui.define([
             },
 
 
-            onWithdrawPress  : function()
-            {
+            onWithdrawPress: function () {
                 this.mainModel = this.getOwnerComponent().getModel();
-                if(this.object.status === "PENDING" || this.object.status === "REJECTED" ) 
-                {
-                    var swfID =   this.object.workflowRequestId;
-                    var sPath = `/withdrawWfRequest?wfRequestId=<${swfID}>`;       
-                  
-                  this.mainModel.create(sPath, {
-                      success: function (oData, oResponse) {
-                          if (oData !== "" || oData !== undefined) {
-                              sap.m.MessageBox.success("Record Deleted successfully.");
-                              this.oRouter.navTo("detail", {
-                                  parentMaterial: this.sParentID,
-                                  layout: "TwoColumnsMidExpanded"
-                              });
-                              this.getView().getModel().refresh();
-                          } else {
-                              MessageBox.error("Record Not able to delete.");
-                          }
-                      }.bind(this),
-                      error: function (oError) {
-                          sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);  
-                          this.getView().getModel().refresh();
-                          this.getView().setBusy(false);
-                         
-                      }.bind(this)
-                  })
+                if (this.object.status === "PENDING" || this.object.status === "REJECTED") {
+                    var swfID = this.object.workflowRequestId;
+                    var sPath = `/withdrawWfRequest?wfRequestId=<${swfID}>`;
+
+                    this.mainModel.create(sPath, {
+                        success: function (oData, oResponse) {
+                            if (oData !== "" || oData !== undefined) {
+                                sap.m.MessageBox.success("Record Deleted successfully.");
+                                this.oRouter.navTo("detail", {
+                                    parentMaterial: this.sParentID,
+                                    layout: "TwoColumnsMidExpanded"
+                                });
+                                this.getView().getModel().refresh();
+                            } else {
+                                MessageBox.error("Record Not able to delete.");
+                            }
+                        }.bind(this),
+                        error: function (oError) {
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            this.getView().getModel().refresh();
+                            this.getView().setBusy(false);
+
+                        }.bind(this)
+                    })
                 }
-                else{
+                else {
                     this.onDeleteServiceCall();
                 }
             },

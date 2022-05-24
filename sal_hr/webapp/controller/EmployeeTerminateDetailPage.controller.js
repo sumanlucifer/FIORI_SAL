@@ -32,9 +32,19 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // this._bindView();
-                this._getTicketData(this.sChildID);
+                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                // // this._bindView();
+                // this._getTicketData(this.sChildID);
+                if (sLayout === "ThreeColumnsMidExpanded") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                    this._getTicketData(this.sChildID);
+                }
+                if (sLayout === "EndColumnFullScreen" && this.byId("idFullScreenBTN").getIcon() == "sap-icon://full-screen") {
+                    this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                    this.byId("idFullScreenBTN").setIcon("sap-icon://exit-full-screen");
+                    this._getTicketData(this.sChildID);
+                }
             },
 
             _bindView: function (data) {
@@ -51,42 +61,42 @@ sap.ui.define([
                 // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
-                        sKey = oComponentModel.createKey("/SF_EmpEmploymentTermination", {
-                            endDate: object.endDate,
-                            personIdExternal: object.externalCode,
-                            userId: object.employeeId
-                           
-                        });
-                        this.getView().bindElement({
-                            path: sKey,
-                            parameters: {
-                               
-                                expand: "jobInfoNav/eventReasonNav",
-                                custom: {
-                                    "recordStatus": object.status,
-                                    "IsUserManager": bIsUserManager
-                                }
-                            },
-                            events: {
-                                change: function (oEvent) {
-                                    var oContextBinding = oEvent.getSource();
-                                    oContextBinding.refresh(false);
-                                }.bind(this),
-                                dataRequested: function () {
-                                    this.getView().setBusy(true);
-                                }.bind(this),
-                                dataReceived: function () {
-                                    this.getView().setBusy(false);
-                                    this.onCallHistoryData(object.ticketCode);
-                                }.bind(this)
-                            }
-                        });
+                sKey = oComponentModel.createKey("/SF_EmpEmploymentTermination", {
+                    endDate: object.endDate,
+                    personIdExternal: object.externalCode,
+                    userId: object.employeeId
 
-                       
+                });
+                this.getView().bindElement({
+                    path: sKey,
+                    parameters: {
 
-                      
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Additional Payment Request");
-                        this.getView().getModel("LocalViewModel").refresh();
+                        expand: "jobInfoNav/eventReasonNav",
+                        custom: {
+                            "recordStatus": object.status,
+                            "IsUserManager": bIsUserManager
+                        }
+                    },
+                    events: {
+                        change: function (oEvent) {
+                            var oContextBinding = oEvent.getSource();
+                            oContextBinding.refresh(false);
+                        }.bind(this),
+                        dataRequested: function () {
+                            this.getView().setBusy(true);
+                        }.bind(this),
+                        dataReceived: function () {
+                            this.getView().setBusy(false);
+                            this.onCallHistoryData(object.ticketCode);
+                        }.bind(this)
+                    }
+                });
+
+
+
+
+                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Additional Payment Request");
+                this.getView().getModel("LocalViewModel").refresh();
 
             },
 
