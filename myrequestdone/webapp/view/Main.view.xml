@@ -9,7 +9,7 @@
             <pages>
                 <Page id="page" title="{i18n>title}">
                     <content>
-                        <Label id="idLabel" text="Welcome to My Request Done App"/>
+                        <Label id="idLabel" text="{i18n>WelcometoMyRequestDoneApp}"/>
                     </content>
                 </Page>
             </pages>

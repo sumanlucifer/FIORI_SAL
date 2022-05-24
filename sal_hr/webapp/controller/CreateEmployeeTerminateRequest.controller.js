@@ -62,8 +62,10 @@ sap.ui.define([
 
                 this._bindView("/MasterSubModules" + this.sParentID);
 
-
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+                this.managerID = this.EmpInfoObj.userId;
             },
+
             _bindView: function () {
 
                 var oComponentModel = this.getComponentModel();
@@ -212,7 +214,6 @@ sap.ui.define([
 
             },
 
-
             onCreateCancelPress: function () {
                 this.oRouter.navTo("detail", {
                     parentMaterial: this.sParentID,
@@ -221,17 +222,14 @@ sap.ui.define([
                 });
                 this.mainModel.refresh();
             },
+
             onResetPress: function () {
 
                 this.onAdditionalPymntResetPress();
 
-
-
-
             },
+
             onAdditionalPymntResetPress: function () {
-
-
                 this.getView().byId("idTerminationReasonINP").setSelectedKey("");
                 this.getView().byId("idEOSBenefit").setSelectedIndex(null);
                 this.getView().byId("idOKToRetire").setSelectedIndex(null);
@@ -259,25 +257,57 @@ sap.ui.define([
 
                 this._oEmpF4Dialog.then(function (oDialog) {
                     var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
+                    var userId = this.managerID;
+                    var sUserIDFilter = new sap.ui.model.Filter({
+                        path: "manager/userId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: userId
+                    });
+
+                    oList.getBinding("items").filter([sUserIDFilter]);
                     oDialog.open();
                 }.bind(this));
             },
 
             onValueHelpSearch: function (oEvent) {
                 var sValue = oEvent.getParameter("value");
-                var suserIdFilter = new Filter({
-                    path: "userId",
-                    operator: FilterOperator.EQ,
-                    value1: sValue.trim()
-                });
-                var sfirstNameFilter = new Filter({
-                    path: "firstName",
-                    operator: FilterOperator.EQ,
-                    value1: sValue.trim()
-                });
-                var aFilter = [];
-                aFilter.push(suserIdFilter, sfirstNameFilter);
-                oEvent.getSource().getBinding("items").filter(aFilter);
+                if (sValue) {
+                    var oFilter = new Filter(
+                        [
+                            new Filter({
+                                path: "manager/userId",
+                                operator: "EQ",
+                                value1: this.managerID
+                            }),
+
+                            new Filter([
+                                new Filter({
+                                    path: "userId",
+                                    operator: "Contains",
+                                    caseSensitive: false,
+                                    value1: sValue.trim()
+                                }),
+                                new Filter({
+                                    path: "firstName",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                }),
+                                new Filter({
+                                    path: "lastName",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                })
+                            ], false),
+                        ],
+                        true
+                    );
+                    oEvent.getSource().getBinding("items").filter(oFilter);
+                }
+                else {
+                    oEvent.getSource().getBinding("items").filter([]);
+                }
             },
 
             onValueHelpClose: function (oEvent) {
