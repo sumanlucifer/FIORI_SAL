@@ -6,10 +6,11 @@ sap.ui.define([
     "sap/m/upload/Uploader",
     "sap/m/UploadCollectionParameter",
     "sap/ui/core/Fragment",
-    "sap/ui/Device"
+    "sap/ui/Device",
+    "sap/ui/model/Filter"
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter,Fragment,Device) {
+    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter,Fragment,Device,Filter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateEmployeeTerminateRequest", {
             onInit: function () {
