@@ -1,14 +1,12 @@
 sap.ui.define([
     "./BaseController",
-    "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox",
     "sap/ui/core/Fragment",
-    "sap/ui/Device"
-
+    "sap/ui/Device",
+    "sap/ui/model/Filter"
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Fragment, Device) {
+    function (BaseController, JSONModel, Fragment, Device,Filter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateAdditionalPaymentRequest", {
             onInit: function () {
