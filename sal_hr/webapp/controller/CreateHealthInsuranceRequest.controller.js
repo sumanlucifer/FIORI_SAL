@@ -188,7 +188,7 @@ sap.ui.define([
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
-                        sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        sap.m.MessageBox.error(oError.message.value);
                         this.getView().getModel().refresh();
                     }.bind(this)
                 })

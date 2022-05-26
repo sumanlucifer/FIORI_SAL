@@ -155,17 +155,36 @@ sap.ui.define([], function () {
                     sValue = "PENDING";
                     break;
                 case 'REJECTED':
-
-                    if(sValue == 'REJECTED' && (externalStatus !== null && externalStatus !== sValue)) {
-                        sValue = `${sValue} (${externalStatus})`
-                    } else {
-                        sValue = "REJECTED";
-                    }                
-                    
+                    sValue = "REJECTED";
                     break;
             }
             return sValue;
         },
+        ticketStatusText1: function (sValue, externalStatus) {
+            switch (sValue) {
+                case 'CANCELLED':
+                    sValue = "CANCELLED";
+                    break;
+                case 'APPROVED':
+                    sValue = "APPROVED";
+                    break;
+                case 'PENDING':
+                    sValue = "PENDING";
+                    break;
+                    case 'REJECTED':
+
+                        if(sValue == 'REJECTED' && (externalStatus !== null && externalStatus !== sValue)) {
+                            sValue = `${sValue} (${externalStatus})`
+                        } else {
+                            sValue = "REJECTED";
+                        }                
+                        
+                        break;
+            }
+            return sValue;
+        },
+
+        
         ticketStatus: function (sValue) {
             var returnStatus = "None";
             switch (sValue) {
