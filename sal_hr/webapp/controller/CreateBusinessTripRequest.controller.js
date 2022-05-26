@@ -250,6 +250,13 @@ sap.ui.define([
                     sap.m.MessageBox.error(sValidationErrorMsg);
                 }
             },
+            onHotelBookChange:function(evt){
+
+                var sValue = JSON.parse(evt.getSource().getSelectedKey());
+                this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_hotelBooking");
+
+                
+            },
             fnValidateBusinessTripPayload: function () {
                 this.getView().setBusy(true);
 

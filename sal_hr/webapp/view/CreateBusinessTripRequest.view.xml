@@ -62,15 +62,15 @@
                     </Select>
 
                     <Label text="{i18n>AirlinetickettobebookedbyHR}?" required="true"/>
-                    <Select id="idHRBook" change="onHRBookChange" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_hotelBooking}">
+                    <Select id="idHRBook" change="onHRBookChange" >
                         <core:Item key="true" text="Yes" />
                         <core:Item key="false" text="No" />
                     </Select>
 
                     <Label text="{i18n>HotelBookingRequired}?" />
-                    <Select id="idHotlBook" change="onHotelBookChange">
-                        <core:Item key="Yes" text="Yes" />
-                        <core:Item key="No" text="No" />
+                    <Select id="idHotlBook" change="onHotelBookChange" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_hotelBooking}">
+                        <core:Item key="true" text="Yes" />
+                        <core:Item key="false" text="No" />
                     </Select>
 
                     <Label text="{i18n>ExpenseTypeBusinessTravel}" visible="{= ${LocalViewModel>/businessTravel} === true ? true : false }" />
