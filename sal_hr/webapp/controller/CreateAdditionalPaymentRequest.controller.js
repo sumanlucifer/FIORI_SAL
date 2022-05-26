@@ -6,7 +6,7 @@ sap.ui.define([
     "sap/ui/model/Filter"
 ],
 
-    function (BaseController, JSONModel, Fragment, Device,Filter) {
+    function (BaseController, JSONModel, Fragment, Device, Filter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateAdditionalPaymentRequest", {
             onInit: function () {
@@ -19,7 +19,8 @@ sap.ui.define([
 
                 var oLocalViewModel = new JSONModel({
                     busy: false,
-                    currentDate: new Date()
+                    currentDate: new Date(),
+                    managerId: "12345"
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -236,7 +237,14 @@ sap.ui.define([
                     oEvent.getSource().getBinding("items").filter(oFilter);
                 }
                 else {
-                    oEvent.getSource().getBinding("items").filter([]);
+                    var userId = this.managerID;
+                    var sUserIDFilter = new sap.ui.model.Filter({
+                        path: "manager/userId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: userId
+                    });
+
+                    oEvent.getSource().getBinding("items").filter([sUserIDFilter]);
                 }
             },
 
