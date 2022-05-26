@@ -537,9 +537,10 @@ sap.ui.define([
                     });
                 this.getView().getModel().remove(`${sPath}`, {
                     success: function (oData) {
+                        this.getView().setBusy(false);
                         if (oData !== "" || oData !== undefined) {
                             sap.m.MessageBox.success("Record Deleted successfully.");
-                            this.oRouter.navTo("detail", {
+                            this.getRouter().navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
 
@@ -547,9 +548,10 @@ sap.ui.define([
                         } else {
                             sap.m.MessageBox.error("Record Not able to delete.");
                         }
-                    },
+                    }.bind(this),
                     error: function (oError) {
-                    }
+                        this.getView().setBusy(false);
+                    }.bind(this),
 
                 });
 
