@@ -44,7 +44,8 @@ sap.ui.define([
                     recurringAbs: false,
                     busy: false,
                     uploadAttachment: true,
-                    currentDate: new Date()
+                    currentDate: new Date(),
+                    managerId: "12345"
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -307,7 +308,14 @@ sap.ui.define([
                     oEvent.getSource().getBinding("items").filter(oFilter);
                 }
                 else {
-                    oEvent.getSource().getBinding("items").filter([]);
+                    var userId = this.managerID;
+                    var sUserIDFilter = new sap.ui.model.Filter({
+                        path: "manager/userId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: userId
+                    });
+
+                    oEvent.getSource().getBinding("items").filter([sUserIDFilter]);
                 }
             },
 

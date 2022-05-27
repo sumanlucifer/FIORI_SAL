@@ -473,6 +473,20 @@ sap.ui.define([
             onRejectPress: function () {
                 var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
                 this.onRejectRequest(swfRequestId);
+            },
+
+            setModifyVisibility: function (sStatus) {
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
+
+                if (bIsUserManager && this.getView().getModel("LocalViewModel").getProperty("/EditMode") === false) {
+                    return (sStatus.toUpperCase() === "APPROVED" || sStatus.toUpperCase() === "CANCELLED" || sStatus.toUpperCase() === "REJECTED");
+                } else
+                    return false;
+            },
+
+            setWithdrawVisibility: function (sStatus) {
+                return (this.getView().getModel("LocalViewModel").getProperty("/EditMode") === false && sStatus.toUpperCase() === "PENDING");
             }
+
         });
     });

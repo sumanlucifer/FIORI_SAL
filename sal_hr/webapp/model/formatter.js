@@ -59,7 +59,7 @@ sap.ui.define([], function () {
                     break;
             }
         },
-        
+
         addDesc: function (sValue) {
             switch (sValue) {
                 case 1:
@@ -171,20 +171,20 @@ sap.ui.define([], function () {
                 case 'PENDING':
                     sValue = "PENDING";
                     break;
-                    case 'REJECTED':
+                case 'REJECTED':
 
-                        if(sValue == 'REJECTED' && (externalStatus !== null && externalStatus !== sValue)) {
-                            sValue = `${sValue} (${externalStatus})`
-                        } else {
-                            sValue = "REJECTED";
-                        }                
-                        
-                        break;
+                    if (sValue == 'REJECTED' && (externalStatus !== null && externalStatus !== sValue)) {
+                        sValue = `${sValue} (${externalStatus})`
+                    } else {
+                        sValue = "REJECTED";
+                    }
+
+                    break;
             }
             return sValue;
         },
 
-        
+
         ticketStatus: function (sValue) {
             var returnStatus = "None";
             switch (sValue) {
@@ -229,5 +229,6 @@ sap.ui.define([], function () {
                 return false;
             }
         }
+
     };
 });
