@@ -44,7 +44,8 @@ sap.ui.define([
                     currentDate: new Date(),
                     meetingType: false,
                     availBal: false,
-                    halfDayType: false
+                    halfDayType: false,
+                    managerId: "12345"
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -611,7 +612,14 @@ sap.ui.define([
                     oEvent.getSource().getBinding("items").filter(oFilter);
                 }
                 else {
-                    oEvent.getSource().getBinding("items").filter([]);
+                    var userId = this.managerID;
+                    var sUserIDFilter = new sap.ui.model.Filter({
+                        path: "manager/userId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: userId
+                    });
+
+                    oEvent.getSource().getBinding("items").filter([sUserIDFilter]);
                 }
             },
 
