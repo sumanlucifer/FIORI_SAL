@@ -163,7 +163,7 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="createdBy"/>
+                            <PropertyValue Property="Value" Path="createdFor"/>
                             <PropertyValue Property="Label" String="{@i18n>RequestedFor}"/>
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
