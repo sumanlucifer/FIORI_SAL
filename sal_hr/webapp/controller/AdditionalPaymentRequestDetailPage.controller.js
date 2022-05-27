@@ -212,6 +212,8 @@ sap.ui.define([
                 this.getView().setBusy(true);
                 this.fnDeleteAdditionalPymnt();
 
+                
+
 
             },
 
