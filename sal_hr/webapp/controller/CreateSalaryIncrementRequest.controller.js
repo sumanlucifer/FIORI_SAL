@@ -408,9 +408,9 @@ sap.ui.define([
                     }
 
                     // Validate Job Country
-                    if (!sJobCountry.getValue()) {
+                    if (!sJobCountry.getSelectedKey()) {
                         sJobCountry.setValueState("Error");
-                        sJobCountry.setValueStateText("Please enter Job title");
+                        sJobCountry.setValueStateText("Please enter Country");
                         sValidationErrorMsg = "Please fill the all required fields.";
                     } else {
                         sJobCountry.setValueState("None");

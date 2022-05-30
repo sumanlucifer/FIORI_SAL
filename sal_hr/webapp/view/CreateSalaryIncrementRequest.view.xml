@@ -150,7 +150,7 @@
              <Label text="Country" required="true" />
          
              <Select id="idJobCountry" items="{ path: '/SF_Country'}" selectedKey="{jobModel>/customString2}" >
-                <core:Item key="{Numericcountrycode}" text="{externalName_defaultValue}"/>
+                <core:Item key="{numericCountryCode}" text="{externalName_defaultValue}"/>
             </Select>
 
 
