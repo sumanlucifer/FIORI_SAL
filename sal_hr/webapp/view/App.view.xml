@@ -6,8 +6,6 @@
 	xmlns="sap.f"
 	xmlns:mvc="sap.ui.core.mvc"
 >
-   
-
     <m:App>
         <m:pages>
     	<FlexibleColumnLayout

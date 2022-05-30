@@ -57,8 +57,8 @@
                         <ObjectAttribute text="{headerModel>/employeeId}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
-                        <ObjectAttribute title="{i18n>DueBy Date}"/>
-                        <ObjectAttribute text="{path:'headerModel>/modifiedAt',
+                        <ObjectAttribute title="{i18n>DateofCreation}"/>
+                        <ObjectAttribute text="{path:'headerModel>/requestDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MM/dd/yyyy'

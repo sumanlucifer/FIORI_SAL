@@ -24,7 +24,7 @@
                 <f:actions>
 
             <HBox   visible="{= ${headerModel>/status} === 'PENDING' ? false : ${headerModel>/status} === 'APPROVED' ? true : ${headerModel>/status} === 'CANCELLED' ? true: ${headerModel>/status} === 'REJECTED' ? true : false }"  >
-                   <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
+                   <Button text="{i18n>Modify}" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
                 </HBox>
                     <!-- <Button text="{i18n>Modify}" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/> -->
                     <Button text="{i18n>Withdraw}" type="Emphasized" press="onWithdrawPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
@@ -55,8 +55,8 @@
                         <ObjectAttribute text="{headerModel>/UserName}({headerModel>/employeeId})"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
-                        <ObjectAttribute title="{i18n>DueByDate}"/>
-                        <ObjectAttribute text="{path:'headerModel>/modifiedAt',
+                        <ObjectAttribute title="{i18n>DateofCreation}"/>
+                        <ObjectAttribute text="{path:'headerModel>/requestDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
