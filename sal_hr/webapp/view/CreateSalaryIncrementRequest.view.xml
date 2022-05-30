@@ -235,7 +235,7 @@
             <Label text="Pay Type" />
         
                 <Select   items="{ path: '/SF_PicklistOption'}"  selectedKey="{compensationModel>/payType}" >
-                <core:Item key="{externalCode}" text="{localeLabel}"/>
+                <core:Item key="{id}" text="{localeLabel}"/>
             </Select>
 
             <Label text="Scheme Change Date" />
