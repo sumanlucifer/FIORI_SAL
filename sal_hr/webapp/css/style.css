@@ -34,6 +34,63 @@
 
 }
 
+.dataValuePendingColor {
+	color : #ffba10 !important;
+    font-weight: 400;
+    font-size: 20px !important;
+
+}
+.dataValueApprovedColor {
+	color : #107e3e !important;
+    font-weight: 400;
+    font-size: 20px !important;
+
+}
+.dataValueRejectColor {
+	color : #b00 !important;
+    font-weight: 400;
+    font-size: 20px !important;
+
+}
+.dataValueCancelledColor {
+	color : #b00 !important;
+    font-weight: 400;
+    font-size: 20px !important;
+
+}
+
+
+.dataPointsColorPending {
+	color : #ffba10 !important;
+   
+
+}
+
+.dataPointsColorApproved {
+	color : #107e3e !important;
+   
+
+}
+
+.dataPointsColorCancelled {
+	color : #b00 !important;
+    
+
+}
+
+
+.dataPointsColorRejected {
+	color : #b00 !important;
+    
+
+}
+
+
+
+
+
+
+
 .ListIcon {
     color : #8A2BE2;
     }
