@@ -57,7 +57,7 @@ sap.ui.define([
                                     }
                                 },
                                 "title": {
-                                    "text": "Open request by Type",
+                                    "text": "Rejected requests by Type",
                                     "visible": true
                                 },
                                 "measureAxis": "size",

@@ -57,7 +57,7 @@ sap.ui.define([
                                     }
                                 },
                                 "title": {
-                                    "text": "Request In Process by Type",
+                                    "text": "Pending requests by Type",
                                     "visible": true
                                 },
                                 "measureAxis": "size",

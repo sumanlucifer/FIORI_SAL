@@ -57,7 +57,7 @@ sap.ui.define([
                                     }
                                 },
                                 "title": {
-                                    "text": "Completed request by Type",
+                                    "text": "Completed requests by Type",
                                     "visible": true
                                 },
                                 "measureAxis": "size",
