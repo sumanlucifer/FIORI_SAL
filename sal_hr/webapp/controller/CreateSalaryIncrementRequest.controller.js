@@ -69,13 +69,13 @@ sap.ui.define([
 
 
                 var oComponentModel = this.getComponentModel(),
-                    that = this,
+                    that = this;
 
-                      var sObject = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+                    this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
-                    sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                        personIdExternal: sObject.userId,
-                        userId: sObject.userId
+                  var sKey = oComponentModel.createKey("/SF_EmpEmployment", {
+                        personIdExternal: this.EmpInfoObj.userId,
+                        userId: this.EmpInfoObj.userId
                     });
 
                 // this.getView().bindElement({
