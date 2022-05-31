@@ -20,7 +20,7 @@ sap.ui.define([
                             "type": "Analytical",
                             "header": {
                                 "type": "Numeric",
-                                "title": "Done",
+                                "title": "Approved",
                                 "subTitle": "Total Request that are completed",
                                 "data": {
                                     "json": {

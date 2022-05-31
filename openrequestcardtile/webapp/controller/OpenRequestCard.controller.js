@@ -20,7 +20,7 @@ sap.ui.define([
                             "type": "Analytical",
                             "header": {
                                 "type": "Numeric",
-                                "title": "Open",
+                                "title": "Rejected",
                                 "subTitle": "Total Open request",
                                 "data": {
                                     "json": {
@@ -77,7 +77,7 @@ sap.ui.define([
                                 "measures": [
                                     {
                                         "label": "Value",
-                                        "value": "{totalRequests}"
+                                        "value": "{totalRejected}"
                                     }
                                 ]
                             }

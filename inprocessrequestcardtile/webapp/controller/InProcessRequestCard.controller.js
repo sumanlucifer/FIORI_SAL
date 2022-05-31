@@ -20,7 +20,7 @@ sap.ui.define([
                             "type": "Analytical",
                             "header": {
                                 "type": "Numeric",
-                                "title": "In Process",
+                                "title": "Pending",
                                 "subTitle": "Total Request In Process",
                                 "data": {
                                     "json": {
