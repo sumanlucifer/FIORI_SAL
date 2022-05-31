@@ -21,7 +21,7 @@ sap.ui.define([
                             "header": {
                                 "type": "Numeric",
                                 "title": "Pending",
-                                "subTitle": "Total Request In Process",
+                                "subTitle": "Total requests that are pending",
                                 "data": {
                                     "json": {
                                         "NumberCount": "0",

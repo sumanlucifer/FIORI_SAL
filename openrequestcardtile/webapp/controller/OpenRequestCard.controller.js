@@ -21,7 +21,7 @@ sap.ui.define([
                             "header": {
                                 "type": "Numeric",
                                 "title": "Rejected",
-                                "subTitle": "Total Open request",
+                                "subTitle": "Total requests that are rejected",
                                 "data": {
                                     "json": {
                                         "NumberCount": "0",

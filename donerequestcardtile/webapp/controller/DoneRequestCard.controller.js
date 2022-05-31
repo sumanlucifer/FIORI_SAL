@@ -21,7 +21,7 @@ sap.ui.define([
                             "header": {
                                 "type": "Numeric",
                                 "title": "Approved",
-                                "subTitle": "Total Request that are completed",
+                                "subTitle": "Total requests that are completed",
                                 "data": {
                                     "json": {
                                         "NumberCount": "0",
