@@ -22,7 +22,7 @@
                 <Annotation Term="Common.Label" String="{@i18n>Status}"/>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
-                        <PropertyValue Property="CollectionPath" String="Status"/>
+                        <PropertyValue Property="CollectionPath" String="MasterReportStatus"/>
                         <PropertyValue Property="Parameters">
                             <Collection>
                                 <Record Type="Common.ValueListParameterInOut">
