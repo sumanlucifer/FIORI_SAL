@@ -21,7 +21,7 @@ sap.ui.define([
                             "header": {
                                 "type": "Numeric",
                                 "title": "Approved",
-                                "subTitle": "Total requests that are completed",
+                                "subTitle": "Total requests that are Approved",
                                 "data": {
                                     "json": {
                                         "NumberCount": "0",
@@ -57,7 +57,7 @@ sap.ui.define([
                                     }
                                 },
                                 "title": {
-                                    "text": "Completed requests by Type",
+                                    "text": "Approved requests by Type",
                                     "visible": true
                                 },
                                 "measureAxis": "size",

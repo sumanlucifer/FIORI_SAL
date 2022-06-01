@@ -206,18 +206,33 @@ sap.ui.define([
             onRaiseRequestPress: function () {
                 var sPath = "/SF_DutyTravelMain",
                     sValidationErrorMsg = this.fnValidateBusinessTripPayload(),
-                    oPayload = this.getView().getModel("CreateBusinessTripModel").getData();
+                    oPayload = this.getView().getModel("CreateBusinessTripModel").getData(),
+                    dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
 
 
-                    var sStartDate = this.getView().byId("idEffectDatePicker").getDateValue();
-
-                    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                        oStartDate = dateFormat.format(new Date(sStartDate));
+                    var sStartDate = this.getView().byId("idEffectDatePicker").getDateValue(),
+                    oStartDate = dateFormat.format(new Date(sStartDate));
                     sStartDate = oStartDate + "T00:00:00";
-
                     oPayload.effectiveStartDate = sStartDate;
-                    // oPayload.cust_dutyTravelMain_effectiveStartDate = sStartDate;
+                    
+                    var sTravelDate = this.getView().byId("idTravelDate").getDateValue(),
+                    oTravelDate = dateFormat.format(new Date(sTravelDate));
+                    sTravelDate = oTravelDate + "T00:00:00";
+                    oPayload.cust_toDutyTravelItem[0].cust_assignStartDate = sTravelDate;
 
+
+                    var sReturnDate = this.getView().byId("idReturnDate").getDateValue(),
+                    oReturnDate = dateFormat.format(new Date(sReturnDate));
+                    sReturnDate = oReturnDate + "T00:00:00";
+                    oPayload.cust_toDutyTravelItem[0].cust_assignEndDate = sReturnDate;
+                    
+
+                    var sBusinessTravelDate = this.getView().byId("idFlightTravelDate").getDateValue(),
+                    oBusinessTravelDate = dateFormat.format(new Date(sBusinessTravelDate));
+                    sBusinessTravelDate = oBusinessTravelDate + "T00:00:00";
+                    oPayload.cust_toDutyTravelItem[0].cust_businessTravelDate = sBusinessTravelDate;
+                    
+                    
                 // Convert selcted time to specific time format as "PT0H31M30S"
                 if (oPayload.cust_toDutyTravelItem[0].cust_travelTime) {
                     oPayload.cust_toDutyTravelItem[0].cust_travelTime = "PT" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[0] + "H" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[1] + "M00S";
