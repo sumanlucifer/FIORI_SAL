@@ -17,6 +17,9 @@ sap.ui.define(
             fnGetChatBotData: function (oDateRangeFilter) {
                 this.getView().setBusy(true);
                 this.getOwnerComponent().getModel().read("/chatBotUsageSummary", {
+                    urlParameters: {
+                        "IsUserManager": "true"
+                    },
                     filters: [oDateRangeFilter],
                     success: function (oData) {
                         if (oData.chatBotUsageSummary.length > 2) {

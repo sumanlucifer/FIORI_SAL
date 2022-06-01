@@ -4,14 +4,17 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
     "sap/m/upload/Uploader",
-    "sap/m/UploadCollectionParameter"
+    "sap/m/UploadCollectionParameter",
+    "sap/ui/core/Fragment",
+    "sap/ui/Device",
+    "sap/ui/model/Filter"
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter) {
+    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter, Fragment, Device, Filter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateSalaryIncrementRequest", {
             onInit: function () {
-              
+
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("SalaryIncrementRequest").attachPatternMatched(this._onObjectMatched, this);
 
@@ -23,7 +26,9 @@ sap.ui.define([
                     busy: false,
                     currentDate: new Date(),
                     jobInfoVisible: false,
-                    componesationInfoVisible: false
+                    componesationInfoVisible: false,
+                    managerId: "12345"
+
 
                 });
 
@@ -33,7 +38,7 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
-            
+
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -70,9 +75,7 @@ sap.ui.define([
 
                 var oComponentModel = this.getComponentModel(),
                     that = this,
-
-                      var sObject = this.getOwnerComponent().getModel("EmpInfoModel").getData();
-
+                    sObject = this.getOwnerComponent().getModel("EmpInfoModel").getData(),
                     sKey = oComponentModel.createKey("/SF_EmpEmployment", {
                         personIdExternal: sObject.userId,
                         userId: sObject.userId
@@ -143,9 +146,14 @@ sap.ui.define([
                 }
 
                 if (sValidationErrorMsg === "") {
-
                     this.getView().setBusy(true);
-
+                    var sUserID = null;
+                    if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
+                        sUserID = this.byId("idSalIncPRN").getValue();
+                    } else {
+                        sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                    }
+                    oPayload.userId = sUserID;
                     this.mainModel.create(sEntityPath, oPayload, {
                         success: function (oData, oResponse) {
                             sap.m.MessageBox.success("Request Submitted Successfully.");
@@ -154,7 +162,6 @@ sap.ui.define([
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
-
                             });
                         }.bind(this),
                         error: function (oError) {
@@ -247,19 +254,19 @@ sap.ui.define([
                 delete sNewPayload.workerCategoryNav;
 
                 sNewPayload.startDate = sStartDate;
-                 
+
                 return sNewPayload;
 
             },
             fnGetCompensationRequestPayload: function () {
                 var sCompData = this.getView().getModel("compensationModel").getData(),
-                sStartDate = this.getView().byId("idStartDate").getDateValue(),
+                    sStartDate = this.getView().byId("idStartDate").getDateValue(),
                     sNewPayload = $.extend(true, {}, sCompData);
 
                 // this.getView().getModel("compensationModel").setProperty("/startDate", sStartDate);
                 // this.getView().getModel("compensationModel").refresh();
 
-              
+
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                     oStartDate = dateFormat.format(new Date(sStartDate));
                 sStartDate = oStartDate + "T00:00:00";
@@ -284,14 +291,14 @@ sap.ui.define([
                 delete sNewPayload.wfRequestNav;
                 delete sNewPayload.empPayCompRecurringNav;
                 delete sNewPayload.payTypeNav;
-                
-              
-                sNewPayload.startDate = sStartDate;
-              
-                sNewPayload.isEligibleForCar = JSON.parse(sNewPayload.isEligibleForCar);
-               
 
-               
+
+                sNewPayload.startDate = sStartDate;
+
+                sNewPayload.isEligibleForCar = JSON.parse(sNewPayload.isEligibleForCar);
+
+
+
                 return sNewPayload;
 
 
@@ -320,7 +327,8 @@ sap.ui.define([
                     sPayGroup = this.byId("idPayGroup"),
                     sCompCountry = this.byId("idCompCountry"),
                     sCommision = this.byId("idCommision"),
-                    sCompanyPayGroup = this.byId("idCompPayGroup");
+                    sCompanyPayGroup = this.byId("idCompPayGroup"),
+                    oPRNId=this.byId("idSalIncPRN");
 
                 if (sjobInfo === true) {
 
@@ -457,9 +465,7 @@ sap.ui.define([
 
                 }
 
-
-
-                // Validate Business Trip Effective Start Date
+                // Validate Effective Start Date
                 if (!oStartDatePicker.getValue()) {
                     oStartDatePicker.setValueState("Error");
                     oStartDatePicker.setValueStateText("Please select Efective Start date");
@@ -468,20 +474,19 @@ sap.ui.define([
                     oStartDatePicker.setValueState("None");
                 }
 
-
-
-
+                // Validate PRN Value
+                if (!oPRNId.getValue()) {
+                    oPRNId.setValueState("Error");
+                    oPRNId.setValueStateText("Please select PRN value");
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                } else {
+                    oPRNId.setValueState("None");
+                }
 
                 this.getView().setBusy(false);
                 return sValidationErrorMsg;
 
-
-
             },
-
-
-
-
 
             onCreateCancelPress: function () {
                 this.oRouter.navTo("detail", {
@@ -495,8 +500,8 @@ sap.ui.define([
 
                 this._bindView();
 
-                this.getView().getModel("LocalViewModel").setProperty("/componesationInfoVisible",false);
-                this.getView().getModel("LocalViewModel").setProperty("/jobInfoVisible",false);
+                this.getView().getModel("LocalViewModel").setProperty("/componesationInfoVisible", false);
+                this.getView().getModel("LocalViewModel").setProperty("/jobInfoVisible", false);
 
                 this.getView().byId("idJobInfo").setSelected(false);
                 this.getView().byId("idCompensationInfo").setSelected(false);
@@ -519,14 +524,108 @@ sap.ui.define([
                 this.getView().byId("idRecCheckbox").setSelected(false);
                 this.getView().getModel("LocalViewModel").setData(dataReset);
                 this.getView().getModel("LocalViewModel").refresh();
+            },
+
+            onValueHelpRequest: function (oEvent) {
+
+                var oView = this.getView();
+
+                if (!this._pDialog) {
+                    this._pDialog = Fragment.load({
+                        id: oView.getId(),
+                        name: "com.sal.salhr.Fragments.PRNValueHelp",
+                        controller: this
+                    }).then(function (oDialog) {
+                        oView.addDependent(oDialog);
+                        if (Device.system.desktop) {
+                            oDialog.addStyleClass("sapUiSizeCompact");
+                        }
+                        return oDialog;
+                    });
+                }
+
+                this._pDialog.then(function (oDialog) {
+                    var oList = oDialog.getAggregation("_dialog").getAggregation("content")[1];
+                    var userId = this.managerID;
+                    var sUserIDFilter = new sap.ui.model.Filter({
+                        path: "manager/userId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: userId
+                    });
+
+                    oList.getBinding("items").filter([sUserIDFilter]);
+
+
+                    oDialog.open();
+                }.bind(this));
+            },
+
+            onValueHelpSearch: function (oEvent) {
+                var sValue = oEvent.getParameter("value");
+                if (sValue) {
+                    var oFilter = new Filter(
+                        [
+                            new Filter({
+                                path: "manager/userId",
+                                operator: "EQ",
+                                value1: this.managerID
+                            }),
+
+                            new Filter([
+                                new Filter({
+                                    path: "userId",
+                                    operator: "Contains",
+                                    caseSensitive: false,
+                                    value1: sValue.trim()
+                                }),
+                                new Filter({
+                                    path: "firstName",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                }),
+                                new Filter({
+                                    path: "lastName",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                })
+
+                            ], false),
+
+
+
+
+                        ],
+                        true
+                    );
+
+
+                    oEvent.getSource().getBinding("items").filter(oFilter);
+                }
+
+                else {
+                    var userId = this.managerID;
+                    var sUserIDFilter = new sap.ui.model.Filter({
+                        path: "manager/userId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: userId
+                    });
+
+                    oEvent.getSource().getBinding("items").filter([sUserIDFilter]);
+                }
+
+            },
+
+            onValueHelpClose: function (oEvent) {
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                oEvent.getSource().getBinding("items").filter([]);
+                if (!oSelectedItem) {
+                    return;
+                }
+                var obj = oSelectedItem.getBindingContext().getObject();
+                this.byId("idSalIncPRN").setValue(obj["userId"]);
+                this.byId("idSalIncPRN").setValueState("None");
             }
-
-
-
-
-
-
-
-
         });
     });      

@@ -56,6 +56,9 @@ sap.ui.define([
             fnReadTickitsSummaryData: function () {
                 this.getView().setBusy(true);
                 this.getView().getModel().read("/MasterModules", {
+                    urlParameters: {
+                        "IsUserManager": "true"
+                    },
                     success: function (oData) {
                         this.getView().setBusy(false);
                         var oSLAComplianceDataModel = new JSONModel(oData.results);

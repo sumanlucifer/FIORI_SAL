@@ -6,7 +6,7 @@
         <m:tileContent>
             <m:TileContent id="idPlantMainReq_SummaryTileContent" frameType="TwoByOne">
                 <m:content>
-                    <ComparisonMicroChart id="idPlantMainReq_Chart" view="Wide" size="M" shrinkable="true" width="100%">
+                    <ComparisonMicroChart id="idPlantMainReq_Chart" view="Wide" size="M" shrinkable="true" width="100%" class="zCustomTitleWidth">
                         <data>
                             <ComparisonMicroChartData id="idPlantMainReq_Pending" title="{i18n>Pending}" value="{totalPending}" color="Critical"/>
                             <ComparisonMicroChartData id="idPlantMainReq_Approved" title="{i18n>Approved}" value="{totalApproved}" color="Good"/>
