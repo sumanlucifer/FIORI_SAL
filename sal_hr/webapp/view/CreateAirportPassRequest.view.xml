@@ -40,15 +40,15 @@
                             <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
                         </Select>
 
-                        <Label text="{i18n>NationalID}" required="true" />
+                        <Label text="{i18n>NationalID}" required="false" />
                         <Input id="idNationalIDInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_nationalID}" enabled= "false"/>
 
-                        <Label text="{i18n>DateofBith}" required="true" />
+                        <Label text="{i18n>DateofBith}" required="false" />
                         <DatePicker id="idDateofBithInp" value="{path:'CreateAirpoPassModel>/cust_toAirportPassItem/cust_dateOfBirth', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" enabled= "false"/>
 
-                        <Label text="{i18n>MobileNumber}" required="true" />
+                        <Label text="{i18n>MobileNumber}" required="false" />
                         <Input id="idMobileNumberInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_mobileNumber}" enabled= "false"/>
 
                         <Label text="{i18n>Nationality}" required="true" />
