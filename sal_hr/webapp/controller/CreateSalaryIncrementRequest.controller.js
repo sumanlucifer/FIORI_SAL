@@ -11,7 +11,7 @@ sap.ui.define([
     "sap/ui/model/FilterOperator"
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter, Fragment, Device, Filter,FilterOperator) {
+    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter, Fragment, Device, Filter, FilterOperator) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateSalaryIncrementRequest", {
             onInit: function () {
@@ -44,9 +44,9 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-
-
                 this._bindView();
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+                this.managerID = this.EmpInfoObj.userId;
 
 
             },
