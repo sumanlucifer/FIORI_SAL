@@ -137,7 +137,7 @@
                 <!-- For Displaying the List -->
                 <Annotation Term="UI.LineItem">
                     <!-- For Setting Criticality of item, i.e Highlight color to list Items left side  -->
-                    <Annotation Term="UI.Criticality" Path="statusValue"/>
+                    <Annotation Term="UI.Criticality" Path="statusColourCode"/>
 
                     <!-- For columns to be visible on table -->
                     <Collection>
@@ -203,7 +203,7 @@
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Label" String="{@i18n>Status}"/>
                             <PropertyValue Property="Value" Path="status"/>
-                            <PropertyValue Property="Criticality" Path="statusValue"/>
+                            <PropertyValue Property="Criticality" Path="statusColourCode"/>
                             <PropertyValue Property="CriticalityRepresentation" EnumMember="UI.CriticalityRepresentationType/WithoutIcon"/>
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
