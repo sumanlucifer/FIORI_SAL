@@ -239,17 +239,8 @@
 
                         <Label text="Pay Type" />
 
-                       <Select items="{ path: '/SF_PicklistOption',parameters: { expand: 'picklist,picklistLabels ' , select:'picklistLabels/label'},
-                                                                filters: [
-                                                                        {
-                                                                             path: 'picklist/picklistId',
-                                                                             operator: 'EQ',
-                                                                             value1: 'PayType'
-                                                                         }
-                                                                     ]
-                                                                    }" selectedKey="{compensationModel>/payType}">
-                            <core:Item key="{optionId}" text="{label}"/>
-
+                       <Select items="{PayTypeModel>/}" selectedKey="{compensationModel>/payType}">
+                            <core:Item key="{PayTypeModel>picklistLabels/results/0/optionId}" text="{PayTypeModel>picklistLabels/results/0/label}"/>
                         </Select>
 
                         <Label text="Scheme Change Date" />

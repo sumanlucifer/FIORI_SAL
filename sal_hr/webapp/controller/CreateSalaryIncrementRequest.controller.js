@@ -7,10 +7,11 @@ sap.ui.define([
     "sap/m/UploadCollectionParameter",
     "sap/ui/core/Fragment",
     "sap/ui/Device",
-    "sap/ui/model/Filter"
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ],
 
-    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter, Fragment, Device, Filter) {
+    function (BaseController, Controller, JSONModel, MessageBox, Uploader, UploadCollectionParameter, Fragment, Device, Filter,FilterOperator) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateSalaryIncrementRequest", {
             onInit: function () {
@@ -72,16 +73,16 @@ sap.ui.define([
 
             _bindView: function (data) {
 
-
+                this.fnGetPayType();
                 var oComponentModel = this.getComponentModel(),
                     that = this;
 
-                    this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
-                  var sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                        personIdExternal: this.EmpInfoObj.userId,
-                        userId: this.EmpInfoObj.userId
-                    });
+                var sKey = oComponentModel.createKey("/SF_EmpEmployment", {
+                    personIdExternal: this.EmpInfoObj.userId,
+                    userId: this.EmpInfoObj.userId
+                });
 
                 // this.getView().bindElement({
                 //     path: sKey,
@@ -330,7 +331,7 @@ sap.ui.define([
                     sCompCountry = this.byId("idCompCountry"),
                     sCommision = this.byId("idCommision"),
                     sCompanyPayGroup = this.byId("idCompPayGroup"),
-                    oPRNId=this.byId("idSalIncPRN");
+                    oPRNId = this.byId("idSalIncPRN");
 
                 if (sjobInfo === true) {
 
@@ -628,6 +629,26 @@ sap.ui.define([
                 var obj = oSelectedItem.getBindingContext().getObject();
                 this.byId("idSalIncPRN").setValue(obj["userId"]);
                 this.byId("idSalIncPRN").setValueState("None");
+            },
+
+
+            fnGetPayType: function (data) {
+                var oFilter = new Filter("picklist/picklistId", FilterOperator.EQ, "PayType");
+                this.getView().getModel().read("/SF_PicklistOption", {
+                    filters: [oFilter],
+                    urlParameters: {
+                        "$expand": "picklist, picklistLabels",
+                        "$select": "picklistLabels/label"
+                    },
+                    success: function (oData) {
+                        var oPayTypeModel = new JSONModel(oData.results);
+                        this.getView().setModel(oPayTypeModel, "PayTypeModel");
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                });
             }
+
         });
     });      

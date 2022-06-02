@@ -48,7 +48,7 @@
         <Text id="idDisplayPurposeofPermitInp" text="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_permitPurpose}"/>
     </form:SimpleForm>
 
-    <upload:UploadSet id="idDisplayUploadSetPersonalIDCopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+    <upload:UploadSet id="idDisplayUploadSetPersonalIDCopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png" mode="None" >
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>PersonalIDCopy}"/>
@@ -61,7 +61,7 @@
         </upload:items>
     </upload:UploadSet>
 
-    <upload:UploadSet id="idDisplayUploadSetPersonalPhoto" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200">
+    <upload:UploadSet id="idDisplayUploadSetPersonalPhoto" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" mode="None" >
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>PersonalPhoto}"/>
@@ -75,7 +75,7 @@
     </upload:UploadSet>
 
 
-    <upload:UploadSet id="idDisplayUploadSetPassportcopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200">
+    <upload:UploadSet id="idDisplayUploadSetPassportcopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" mode="None" >
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>PassportCopyfornonnationals}" required="false"/>
@@ -85,7 +85,7 @@
         </upload:toolbar>
     </upload:UploadSet>
 
-    <upload:UploadSet id="idDisplayUploadSetCompanyIDCopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200">
+    <upload:UploadSet id="idDisplayUploadSetCompanyIDCopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" mode="None" >
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>CompanyIDCopy}"/>
