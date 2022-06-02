@@ -17,15 +17,27 @@
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.sal.reports.requests">
 
-            <!-- For Status field as Dropdown values -->
-            <Annotations Target="HumanResourceService.Report/status">
-                <Annotation Term="Capabilities.FilterExpression">
-                    <Record Type="Capabilities.FilterExpressionType">
-                        <PropertyValue Property="SingleValue" Bool="true"/>
+            <!-- For Setting Module Name and Status field as Dropdown as Single select -->
+            <Annotations Target="HumanResourceService.EntityContainer/Report">
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="status" />
+                                    <PropertyValue Property="AllowedExpressions" String="SingleValue" />
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="moduleName" />
+                                    <PropertyValue Property="AllowedExpressions" String="SingleValue" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
                     </Record>
                 </Annotation>
             </Annotations>
 
+            <!-- For Setting Status field as Dropdown -->
             <Annotations Target="HumanResourceService.Report/status">
                 <Annotation Term="Common.Label" String="{@i18n>Status}"/>
                 <Annotation Term="Common.ValueList">
