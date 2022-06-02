@@ -19,6 +19,14 @@
 
             <!-- For Status field as Dropdown values -->
             <Annotations Target="HumanResourceService.Report/status">
+                <Annotation Term="Capabilities.FilterExpression">
+                    <Record Type="Capabilities.FilterExpressionType">
+                        <PropertyValue Property="SingleValue" Bool="true"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="HumanResourceService.Report/status">
                 <Annotation Term="Common.Label" String="{@i18n>Status}"/>
                 <Annotation Term="Common.ValueList">
                     <Record Type="Common.ValueListType">
@@ -153,7 +161,7 @@
                                 </Record>
                             </Annotation>
                         </Record>
-                          <Record Type="UI.DataField">
+                        <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="subModuleName"/>
                             <PropertyValue Property="Label" String="{@i18n>Portel/Intent}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
@@ -252,7 +260,7 @@
                                 </Record>
                             </Annotation>
                         </Record>
-                          <Record Type="UI.DataField">
+                        <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="sourceOfTicket"/>
                             <PropertyValue Property="Label" String="{@i18n>source}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
