@@ -31,9 +31,11 @@
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" minDate="{LocalViewModel>/currentDate}"/>
                     <Label text="PRN" required="true" />
+                    
+                    <!-- passing hardcode PRN value to test salary increment issue -->
+                    <Input id="idSalIncPRN" value="12002425" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
 
-
-                    <Input id="idSalIncPRN" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
+                    <!-- <Input id="idSalIncPRN" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" /> -->
 
                 </fm:SimpleForm>
 
@@ -239,7 +241,7 @@
 
                         <Label text="Pay Type" />
 
-                       <Select items="{PayTypeModel>/}" selectedKey="{compensationModel>/payType}">
+                        <Select items="{PayTypeModel>/}" selectedKey="{compensationModel>/payType}">
                             <core:Item key="{PayTypeModel>picklistLabels/results/0/optionId}" text="{PayTypeModel>picklistLabels/results/0/label}"/>
                         </Select>
 
