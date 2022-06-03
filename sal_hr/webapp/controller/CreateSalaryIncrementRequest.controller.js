@@ -157,7 +157,7 @@ sap.ui.define([
                         sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                     }
                     //passing hardcode PRN value to test salary increment issue
-                    sUserID = "12002425";
+                    // sUserID = "12002425";
 
                     oPayload.userId = sUserID;
                     this.mainModel.create(sEntityPath, oPayload, {

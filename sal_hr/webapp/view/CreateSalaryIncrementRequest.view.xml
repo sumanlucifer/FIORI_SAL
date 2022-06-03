@@ -33,9 +33,9 @@
                     <Label text="PRN" required="true" />
                     
                     <!-- passing hardcode PRN value to test salary increment issue -->
-                    <Input id="idSalIncPRN" value="12002425" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
+                    <!-- <Input id="idSalIncPRN" value="12002425" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" /> -->
 
-                    <!-- <Input id="idSalIncPRN" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" /> -->
+                    <Input id="idSalIncPRN" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
 
                 </fm:SimpleForm>
 
