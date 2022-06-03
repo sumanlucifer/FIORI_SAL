@@ -84,7 +84,7 @@
                         <TextArea id="idPurposeofPermitInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_permitPurpose}"/>
                     </fm:SimpleForm>
 
-                    <upload:UploadSet id="UploadSetPersonalID" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded">
+                    <upload:UploadSet id="UploadSetPersonalID" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="{i18n>PersonalIDCopy}" required="true"/>
@@ -94,7 +94,7 @@
                         </upload:toolbar>
                     </upload:UploadSet>
 
-                    <upload:UploadSet id="UploadSetPersonalPhoto" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded">
+                    <upload:UploadSet id="UploadSetPersonalPhoto" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="{i18n>PersonalPhoto}" required="true"/>
@@ -105,7 +105,7 @@
                     </upload:UploadSet>
 
 
-                    <upload:UploadSet id="UploadSetnonnationals" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded">
+                    <upload:UploadSet id="UploadSetnonnationals" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed" >
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="{i18n>PassportCopyfornonnationals}" required="false"/>
@@ -115,7 +115,7 @@
                         </upload:toolbar>
                     </upload:UploadSet>
 
-                    <upload:UploadSet id="UploadSetCompanyIDCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded">
+                    <upload:UploadSet id="UploadSetCompanyIDCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="{i18n>CompanyIDCopy}" required="true"/>

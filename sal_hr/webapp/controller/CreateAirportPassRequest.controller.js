@@ -395,6 +395,32 @@ sap.ui.define([
                     parentMaterial: this.sParentID,
                     layout: "TwoColumnsMidExpanded"
                 });
+            },
+
+            onFileRenamed: function (oEvent) {
+                var sFileRenamedName = oEvent.getParameter("item").getProperty("fileName"),
+                    sUploadSetId = oEvent.getSource().getId().split("--")[1],
+                    sFileNameProperty = null;
+
+                switch (sUploadSetId) {
+                    case "UploadSetPersonalID":
+                        sFileNameProperty = "/personalIdAttachmentFileName";
+                        break;
+
+                    case "UploadSetPersonalPhoto":
+                        sFileNameProperty = "/personalPhotoAttachmentFileName";
+                        break;
+
+                    case "UploadSetnonnationals":
+                        sFileNameProperty = "/passportAttachmentFileName";
+                        break;
+
+                    case "UploadSetCompanyIDCopy":
+                        sFileNameProperty = "/companyIdAttachmentFileName";
+                        break;
+                }
+                this.getView().getModel("CreateAirpoPassModel").setProperty(sFileNameProperty, sFileRenamedName);
+                this.getView().getModel("CreateAirpoPassModel").refresh;
             }
         });
     });

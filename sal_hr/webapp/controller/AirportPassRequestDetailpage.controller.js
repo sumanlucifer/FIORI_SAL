@@ -234,20 +234,16 @@ sap.ui.define([
 
             onCancelPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                this._getTicketData(this.sChildID);
             },
 
-
-
-
-            onWithdrawPress  : function()
-            {
+            onWithdrawPress: function () {
                 this.mainModel = this.getOwnerComponent().getModel();
-                if(this.object.status === "PENDING" || this.object.status === "REJECTED" ) 
-                {
-                    var swfID =   this.object.workflowRequestId;
+                if (this.object.status === "PENDING" || this.object.status === "REJECTED") {
+                    var swfID = this.object.workflowRequestId;
                     this.onWithdrawRequest(swfID);
                 }
-                else{
+                else {
                     this.onDeleteServiceCall();
                 }
             },
@@ -300,6 +296,8 @@ sap.ui.define([
                     var sTicketID = this.getView().getModel("headerModel").getProperty("/ticketCode"),
                         oPayloadObj = this.getView().getModel("DisplayEditAirpassModel").getProperty("/");
                     oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
+                    oPayloadObj.cust_toAirportPassItem.cust_acknowledge1 = this.getView().byId("idEditAcknowledgeTextFirstSLT").getSelectedKey() === "true" ? true : false;
+                    oPayloadObj.cust_toAirportPassItem.cust_acknowledge2 = this.getView().byId("idEditAcknowledgeTextSecondSLT").getSelectedKey() === "true" ? true : false;
 
                     this.getView().getModel().update(sKey, oPayloadObj, {
                         urlParameters: {
