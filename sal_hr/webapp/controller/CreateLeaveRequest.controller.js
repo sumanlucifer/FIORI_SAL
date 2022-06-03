@@ -11,7 +11,6 @@ sap.ui.define([
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateLeaveRequest", {
             onInit: function () {
-                debugger;
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("LeaveRequest").attachPatternMatched(this._onObjectMatched, this);
 
@@ -54,7 +53,6 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
-                debugger;
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
 
@@ -345,7 +343,6 @@ sap.ui.define([
                 return days + 1;
             },
             onFileAdded: function (oEvent) {
-                debugger;
                 var that = this;
 
                 //  var file = oEvent.getParameters().files[0];
@@ -508,9 +505,15 @@ sap.ui.define([
             },
 
             fnGetLeaveBalance: function () {
-                debugger;
-                var that = this;
-                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                var that = this,
+                    sUserID = null,
+                    oLeaveApplicationForINP = this.getView().byId("idLeaveApplicationForINP");
+                if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
+                    sUserID = oLeaveApplicationForINP.getValue();
+                } else {
+                    sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                }
+
                 this.getView().getModel().read("/SF_Leave_AccountBalance", {
                     urlParameters: {
                         "$filter": "(userId eq '" + sUserID + "' and timeAccountType eq 'Annual_vacation')"
@@ -630,6 +633,9 @@ sap.ui.define([
                     return;
                 }
                 this.byId("idLeaveApplicationForINP").setValue(oSelectedItem.getBindingContext().getObject().userId);
+
+                // To show Available Leave Balance of Selected employee
+                this.fnGetLeaveBalance();
             }
         });
     });      

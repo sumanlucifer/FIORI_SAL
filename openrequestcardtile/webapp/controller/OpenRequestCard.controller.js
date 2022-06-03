@@ -20,8 +20,8 @@ sap.ui.define([
                             "type": "Analytical",
                             "header": {
                                 "type": "Numeric",
-                                "title": "Open",
-                                "subTitle": "Total Open request",
+                                "title": "Rejected",
+                                "subTitle": "Total requests that are Rejected",
                                 "data": {
                                     "json": {
                                         "NumberCount": "0",
@@ -57,7 +57,7 @@ sap.ui.define([
                                     }
                                 },
                                 "title": {
-                                    "text": "Open request by Type",
+                                    "text": "Rejected requests by Type",
                                     "visible": true
                                 },
                                 "measureAxis": "size",
@@ -77,7 +77,7 @@ sap.ui.define([
                                 "measures": [
                                     {
                                         "label": "Value",
-                                        "value": "{totalRequests}"
+                                        "value": "{totalRejected}"
                                     }
                                 ]
                             }
