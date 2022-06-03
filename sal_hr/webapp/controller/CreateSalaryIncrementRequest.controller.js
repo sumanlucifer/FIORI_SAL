@@ -73,16 +73,16 @@ sap.ui.define([
 
             _bindView: function (data) {
 
-                this.fnGetPayType();
-                var oComponentModel = this.getComponentModel(),
-                    that = this;
-
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+                var oComponentModel = this.getComponentModel(),
+                 that = this,
 
-                var sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                    personIdExternal: this.EmpInfoObj.userId,
-                    userId: this.EmpInfoObj.userId
-                });
+               
+
+                    sKey = oComponentModel.createKey("/SF_EmpEmployment", {
+                        personIdExternal: this.EmpInfoObj.userId,
+                        userId: this.EmpInfoObj.userId
+                    });
 
                 // this.getView().bindElement({
                 //     path: sKey,
@@ -164,7 +164,7 @@ sap.ui.define([
                         success: function (oData, oResponse) {
                             sap.m.MessageBox.success("Request Submitted Successfully.");
                             this.getView().setBusy(false);
-                            this.getView().getModel().refresh();
+                            // this.getView().getModel().refresh();
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
@@ -175,7 +175,7 @@ sap.ui.define([
                             // sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
 
                             sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-                            this.getView().getModel().refresh();
+                            // this.getView().getModel().refresh();
 
 
                         }.bind(this)

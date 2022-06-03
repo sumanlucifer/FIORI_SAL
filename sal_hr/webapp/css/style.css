@@ -28,14 +28,14 @@
 }
 
 .dataPointsColor {
-	color : #800000 !important;
+	color : purple !important;
     font-weight: 400;
     font-size: 20px !important;
 
 }
 
 .dataValuePendingColor {
-	color : #ffba10 !important;
+	color : #FFBF00 !important;
     font-weight: 400;
     font-size: 20px !important;
 
@@ -53,7 +53,7 @@
 
 }
 .dataValueCancelledColor {
-	color : #b00 !important;
+	color : 99FFFF !important;
     font-weight: 400;
     font-size: 20px !important;
 
