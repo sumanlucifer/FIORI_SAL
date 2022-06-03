@@ -1,12 +1,14 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/viz/ui5/format/ChartFormatter",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, ChartFormatter, JSONModel) {
+    function (Controller, ChartFormatter, JSONModel,Filter,FilterOperator) {
         "use strict";
 
         return Controller.extend("com.sal.reports.slacompliancereport.controller.SLACompliance", {
@@ -55,7 +57,9 @@ sap.ui.define([
 
             fnReadTickitsSummaryData: function () {
                 this.getView().setBusy(true);
+                var oFilter = new Filter("isHidden", FilterOperator.EQ, false);
                 this.getView().getModel().read("/MasterModules", {
+                    filters: [oFilter],
                     urlParameters: {
                         "IsUserManager": "true"
                     },

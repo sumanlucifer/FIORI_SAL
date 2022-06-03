@@ -127,7 +127,7 @@
             }
         },
         "rootView": {
-            "viewName": "com.sal.tasksummaryreport.view.App",
+            "viewName": "com.sal.tasksummaryreport.view.TaskSummaryReport",
             "type": "XML",
             "async": true,
             "id": "App"
