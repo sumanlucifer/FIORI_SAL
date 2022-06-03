@@ -10,6 +10,7 @@
                     <Title text="{name}"/>
                 </f:heading>
 
+
                 <f:navigationActions>
                     <Button text="{i18n>RaiseRequest}" press="onPressRaiseRequest" type="Emphasized"/>
                     <Button id="idDetailFullScreenBTN" icon="sap-icon://full-screen" press="handleDetailFullScreen" type="Transparent" />
@@ -26,19 +27,19 @@
                         <Text text="{totalRequests}" class="sapUiTinyMarginTop dataPointsColor "/>
                     </VBox>
                     <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                        <Label text="{i18n>Pending}" class="tblHeaderText"/>
+                        <Label text="{i18n>Pending}" class="tblHeaderText dataPointsColorPending"/>
                         <Text  text="{totalPending}" class="sapUiTinyMarginTop dataValuePendingColor "/>
                     </VBox>
                     <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                        <Label text="{i18n>Approved}" class="tblHeaderText"/>
+                        <Label text="{i18n>Approved}" class="tblHeaderText dataPointsColorApproved"/>
                         <Text text="{totalApproved}" class="sapUiTinyMarginTop dataValueApprovedColor "/>
                     </VBox>
                     <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                        <Label text="{i18n>Cancelled}" class="tblHeaderText"/>
+                        <Label text="{i18n>Cancelled}" class="tblHeaderText dataPointsColorCancelled"/>
                         <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataValueCancelledColor "/>
                     </VBox>
                     <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                        <Label text="{i18n>Rejected}" class="tblHeaderText"/>
+                        <Label text="{i18n>Rejected}" class="tblHeaderText dataPointsColorRejected"/>
                         <Text text="{totalRejected}" class="sapUiTinyMarginTop dataValueRejectColor "/>
                     </VBox>
                 </FlexBox>

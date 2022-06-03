@@ -182,7 +182,7 @@
                     <Input id="idPayCom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelPayComp}" enabled="false"/>
 
                     <Label text="{i18n>TicketAmount}" />
-                    <Input id="idTicketAmt" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}" type="Number" change="fnCalculateTotalPerDiem"/>
+                    <Input id="idTicketAmt" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}" change="fnCalculateTotalPerDiem"/>
 
                 </form:SimpleForm>
 
