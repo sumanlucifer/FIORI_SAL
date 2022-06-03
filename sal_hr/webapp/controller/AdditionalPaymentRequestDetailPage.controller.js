@@ -286,16 +286,18 @@ sap.ui.define([
             fnAddPaymentRequestChangePayload: function () {
 
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-                var sPayDate = this.byId("idEditIssueDate").getDateValue();
-                var sPayDate = this.byId("idEditIssueDate").getDateValue();
                 var sValue = this.byId("idEditValueINP").getValue();
                 var sCurrency = this.byId("idInpCurrencyCode").getSelectedKey();
                 var sAltCostCenter = this.byId("idInpAltCostCenter").getSelectedKey();
-                var sPayDate = this.byId("idEditIssueDate").getDateValue();
+                var sPayDate = this.byId("idEditIssueDate").getDateValue(),
+
+                dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
+                sPayDate = dateFormat.format(new Date(sPayDate));
+                sPayDate = sPayDate + "T00:00:00";
                 return {
                     "payComponentCode": "9244",
                     "userId": sUserID,
-                    "payDate": "/Date(1646697600000)/",
+                    "payDate": sPayDate,
                     "notes": null,
                     "alternativeCostCenter": sAltCostCenter,
                     "currencyCode": sCurrency,
