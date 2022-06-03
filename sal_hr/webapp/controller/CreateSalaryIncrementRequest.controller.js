@@ -156,8 +156,8 @@ sap.ui.define([
                     } else {
                         sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                     }
-                   //passing hardcode PRN value to test salary increment issue
-                    sUserID="12002425";
+                    //passing hardcode PRN value to test salary increment issue
+                    sUserID = "12002425";
 
                     oPayload.userId = sUserID;
                     this.mainModel.create(sEntityPath, oPayload, {
@@ -259,8 +259,9 @@ sap.ui.define([
                 delete sNewPayload.wfRequestNav;
                 delete sNewPayload.workerCategoryNav;
 
-                sNewPayload.startDate = sStartDate;
-
+                sStartDate = new Date(sStartDate);
+                sStartDate.setHours(0,0,0,0);
+                sNewPayload.startDate = new Date(sStartDate);
                 return sNewPayload;
 
             },
@@ -298,16 +299,12 @@ sap.ui.define([
                 delete sNewPayload.empPayCompRecurringNav;
                 delete sNewPayload.payTypeNav;
 
-
-                sNewPayload.startDate = sStartDate;
-
+                sStartDate = new Date(sStartDate);
+                sStartDate.setHours(0,0,0,0);
+                sNewPayload.startDate = new Date(sStartDate);
                 sNewPayload.isEligibleForCar = JSON.parse(sNewPayload.isEligibleForCar);
 
-
-
                 return sNewPayload;
-
-
 
             },
 
