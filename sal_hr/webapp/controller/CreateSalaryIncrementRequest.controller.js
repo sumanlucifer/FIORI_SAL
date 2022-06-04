@@ -44,6 +44,7 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
+                this.fnGetPayType();
                 this._bindView();
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
                 this.managerID = this.EmpInfoObj.userId;
@@ -632,7 +633,7 @@ sap.ui.define([
             },
 
 
-            fnGetPayType: function (data) {
+            fnGetPayType: function () {
                 var oFilter = new Filter("picklist/picklistId", FilterOperator.EQ, "PayType");
                 this.getView().getModel().read("/SF_PicklistOption", {
                     filters: [oFilter],
