@@ -42,6 +42,7 @@ sap.ui.define([
 
                 // Set the user model
                 this.fnGetLoggedInEmpInfo(bIsUserManager);
+                this.fnGetRoleAccess();
             },
 
             fnGetLoggedInEmpInfo: function (bIsUserManager) {
@@ -49,6 +50,19 @@ sap.ui.define([
                     urlParameters: {
                         "moreInfo": "true"
                     },
+                    success: function (oData) {
+                        this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
+                        this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }.bind(this),
+                });
+            },
+
+            fnGetRoleAccess: function () {
+                debugger;
+                this.getModel().read("/MasterRolePermission", {
                     success: function (oData) {
                         this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
                         this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
