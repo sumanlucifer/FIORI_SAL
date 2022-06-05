@@ -27,19 +27,19 @@
                         <Text text="{totalRequests}" class="sapUiTinyMarginTop dataPointsColor "/>
                     </VBox>
                     <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                        <Label text="{i18n>Pending}" class="tblHeaderText "/>
+                        <Label text="{i18n>Pending}" class="tblHeaderText"/>
                         <Text  text="{totalPending}" class="sapUiTinyMarginTop dataValuePendingColor "/>
                     </VBox>
                     <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                        <Label text="{i18n>Approved}" class="tblHeaderText "/>
+                        <Label text="{i18n>Approved}" class="tblHeaderText"/>
                         <Text text="{totalApproved}" class="sapUiTinyMarginTop dataValueApprovedColor "/>
                     </VBox>
                     <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                        <Label text="{i18n>Cancelled}" class="tblHeaderText "/>
+                        <Label text="{i18n>Cancelled}" class="tblHeaderText"/>
                         <Text text="{totalCancelled}" class="sapUiTinyMarginTop dataValueCancelledColor "/>
                     </VBox>
                     <VBox justifyContent="Center" class="sapUiSmallMarginEnd">
-                        <Label text="{i18n>Rejected}" class="tblHeaderText "/>
+                        <Label text="{i18n>Rejected}" class="tblHeaderText"/>
                         <Text text="{totalRejected}" class="sapUiTinyMarginTop dataValueRejectColor "/>
                     </VBox>
                 </FlexBox>
