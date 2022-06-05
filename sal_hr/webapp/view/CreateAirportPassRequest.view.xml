@@ -25,7 +25,7 @@
                 <l:content>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                         <Label text="{i18n>whenWouldYouLiketoText}?" required="true" />
-                        <DatePicker id="idAirportPassEffectDatePicker" change="fnValidateDateValue" value="{path:'CreateAirpoPassModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
+                        <DatePicker enabled="false" id="idAirportPassEffectDatePicker" change="fnValidateDateValue" value="{path:'CreateAirpoPassModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
                     </fm:SimpleForm>

@@ -88,7 +88,7 @@
                             </layoutData>
                         </Input>
                         <Label id="idDateLBL" text="{i18n>whenWouldYouLiketoText}" />
-                        <DatePicker id="idEffectStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                        <DatePicker id="idEffectStartDate" enabled="false" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" change="onLeaveStartDatChdange"/>
                     </fm:SimpleForm>
