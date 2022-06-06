@@ -307,6 +307,16 @@ sap.ui.define([], function () {
                 bWithdrawVisible = false;
             }
             return bWithdrawVisible;
+        },
+
+        setApproveRejectManagerActionVisibility: function (sStatus, sWorkflowRequestId) {
+            var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
+
+            if (bIsUserManager && sStatus === "PENDING" && sWorkflowRequestId !== null) {
+                return true;
+            } else {
+                return false;
+            }
         }
     };
 });
