@@ -228,7 +228,15 @@
 
 
                         <Label text="is Eligible for Car" />
-                        <Input enabled="false" value="{compensationModel>/isEligibleForCar}" />
+                        <!-- <Input enabled="false" value="{compensationModel>/isEligibleForCar}" /> -->
+
+
+                        <RadioButtonGroup  editable="false" columns="2"  select="onRbChnageMain" selectedIndex="{= ${compensationModel>/isEligibleForCar}  ? 0 : 1 }">
+                                <buttons>
+                                    <RadioButton text="Yes"/>
+                                    <RadioButton text="No"/>
+                                </buttons>
+                            </RadioButtonGroup>
 
                         <Label text="Monthly Basic" />
                         <Input value="{compensationModel>/customDouble1}" />
