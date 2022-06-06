@@ -64,6 +64,24 @@ sap.ui.define([
                         this.getView().setBusy(false);
                     }.bind(this)
                 });
+            },
+
+            fnSetChartTableVisibility: function (oEvent) {
+                var sIcon = oEvent.getSource().getProperty("src"),
+                    oTableView = this.getView().byId("idTaskListTable"),
+                    oChartView = this.getView().byId("idTaskVizFrame");
+
+                if (sIcon === "sap-icon://table-view") {
+                    oTableView.setVisible(true);
+                    oChartView.setVisible(false);
+                }
+                else if (sIcon === "sap-icon://horizontal-stacked-chart") {
+                    oTableView.setVisible(false);
+                    oChartView.setVisible(true);
+                } else {
+                    oTableView.setVisible(true);
+                    oChartView.setVisible(true);
+                }
             }
         });
     });
