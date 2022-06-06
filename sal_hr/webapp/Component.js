@@ -40,8 +40,11 @@ sap.ui.define([
                 this.setModel(new JSONModel(), "EmpInfoModel");
                 this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
 
+                this.setModel(new JSONModel(), "RoleInfoModel");
+
                 // Set the user model
                 this.fnGetLoggedInEmpInfo(bIsUserManager);
+                
             },
 
             fnGetLoggedInEmpInfo: function (bIsUserManager) {
@@ -58,6 +61,8 @@ sap.ui.define([
                     }.bind(this),
                 });
             },
+
+           
 
             getContentDensityClass: function () {
                 if (this._sContentDensityClass === undefined) {

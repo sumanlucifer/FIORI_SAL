@@ -318,13 +318,13 @@ sap.ui.define([
 
                 var sValidationErrorMsg = "",
                     oStartDatePicker = this.byId("idStartDate"),
-                    oIncumbentPosition = this.byId("idIncumbentPosition"),
+                    // oIncumbentPosition = this.byId("idIncumbentPosition"),
                     oCompany = this.byId("idCompany"),
                     sDirectManager = this.getView().byId("idDirectManager"),
                     sJobCountry = this.byId("idJobCountry"),
                     sNotes = this.byId("idNotes"),
                     oProbationaryDate = this.byId("idProbationaryDate"),
-                    sJobTitle = this.byId("idJobTitle"),
+                    // sJobTitle = this.byId("idJobTitle"),
                     sIKOOK = this.byId("idIKOOK"),
                     sFullTimeEmp = this.byId("idFullTimeEmp"),
                     sEmpType = this.byId("idEmpType"),
@@ -337,13 +337,13 @@ sap.ui.define([
                 if (sjobInfo === true) {
 
                     // Validate Incumbent Parent Position
-                    if (!oIncumbentPosition.getValue()) {
-                        oIncumbentPosition.setValueState("Error");
-                        oIncumbentPosition.setValueStateText("Incumbent Parent Posiiton is required");
-                        sValidationErrorMsg = "Please fill the all required fields.";
-                    } else {
-                        oIncumbentPosition.setValueState("None");
-                    }
+                    // if (!oIncumbentPosition.getValue()) {
+                    //     oIncumbentPosition.setValueState("Error");
+                    //     oIncumbentPosition.setValueStateText("Incumbent Parent Posiiton is required");
+                    //     sValidationErrorMsg = "Please fill the all required fields.";
+                    // } else {
+                    //     oIncumbentPosition.setValueState("None");
+                    // }
 
 
                     // validate Company Field
@@ -393,13 +393,13 @@ sap.ui.define([
                     }
 
                     // Validate Job Title
-                    if (!sJobTitle.getValue()) {
-                        sJobTitle.setValueState("Error");
-                        sJobTitle.setValueStateText("Please enter Job title");
-                        sValidationErrorMsg = "Please fill the all required fields.";
-                    } else {
-                        sJobTitle.setValueState("None");
-                    }
+                    // if (!sJobTitle.getValue()) {
+                    //     sJobTitle.setValueState("Error");
+                    //     sJobTitle.setValueStateText("Please enter Job title");
+                    //     sValidationErrorMsg = "Please fill the all required fields.";
+                    // } else {
+                    //     sJobTitle.setValueState("None");
+                    // }
 
                     // Validate IK/OOK
                     if (!sIKOOK.getValue()) {

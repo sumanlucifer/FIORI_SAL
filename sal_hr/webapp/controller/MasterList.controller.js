@@ -61,6 +61,10 @@ sap.ui.define([
            
             _showObject: function (oItem) {
                 var that = this;
+                var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
+                var subModuleId = oItem.getBindingContext().getObject().ID;
+                this.fnGetRoleAccess(sManagerTile,subModuleId);
+
                 var sPath = oItem.getBindingContextPath()
                 this.getRouter().navTo("detail", {
                     parentMaterial: oItem.getModel().getProperty(sPath).ID,
@@ -93,6 +97,40 @@ sap.ui.define([
                     oSorter = new Sorter("name", this._bDescendingSort);
     
                 oBinding.sort(oSorter);
+            },
+            fnGetRoleAccess: function (sManagerTile,subModuleId) {
+                debugger;
+            
+                this.sManagerTile = sManagerTile;
+                var oComponentModel = this.getComponentModel();
+                oComponentModel.read("/MasterRolePermission", {
+                urlParameters: {
+                    "subModuleId": subModuleId
+                }, 
+                
+                    success: function (oData) {
+                        
+                        if(this.sManagerTile === false){
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/createSelf", oData.results[0].createSelf);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/deleteSelf", oData.results[0].deleteSelf);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/readSelf", oData.results[0].readSelf);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateSelf", oData.results[0].updateSelf);
+                        }else{
+    
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/approveOther", oData.results[0].approveOther);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/createOther", oData.results[0].createOther);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/deleteOther", oData.results[0].deleteOther);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/readOther", oData.results[0].readOther);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/rejectOther", oData.results[0].rejectOther);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateOther", oData.results[0].updateOther);
+                        }
+                       
+                        
+                    }.bind(this),
+                    error: function (oError) {
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }.bind(this),
+                });
             }
 
         });

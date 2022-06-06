@@ -26,7 +26,7 @@
                     <!-- <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" minDate="{LocalViewModel>/currentDate}"/> -->
-                    <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
+                    <DatePicker enabled="false" id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" minDate="{LocalViewModel>/currentDate}"/>                
                 </form:SimpleForm>

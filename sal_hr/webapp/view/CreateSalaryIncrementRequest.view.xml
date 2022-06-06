@@ -48,7 +48,7 @@
                 <Panel visible="{= ${LocalViewModel>/jobInfoVisible} ? true : false }">
                     <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
 
-                        <Label text="Incumbent of Parent Position" required="true" />
+                        <Label text="Incumbent of Parent Position" required="false" />
                         <Input id="idIncumbentPosition" value="{jobInfoNav>/results/0/managerId}"/>
 
                         <Label text="Position" />
@@ -66,7 +66,7 @@
                             <core:Item key="{externalCode}" text="{name}"/>
                         </Select>
 
-                        <Label text="business Unit" />
+                        <Label text="Business Unit" />
                         <Select id="idBU" items="{ path: '/SF_BusinessUnit'}" selectedKey="{jobModel>/businessUnit}">
                             <core:Item key="{externalCode}" text="{name}"/>
                         </Select>
@@ -119,7 +119,7 @@
                         <Label text="Job Level" />
                         <Input value="{jobModel>/customString1}" />
 
-                        <Label text="Job Title" required="true" />
+                        <Label text="Job Title" required="false" />
                         <Input id="idJobTitle" value="{jobModel>/jobTitle}" />
 
                         <Label text="Pay Grade" />
@@ -228,7 +228,7 @@
 
 
                         <Label text="is Eligible for Car" />
-                        <Input value="{compensationModel>/isEligibleForCar}" />
+                        <Input enabled="false" value="{compensationModel>/isEligibleForCar}" />
 
                         <Label text="Monthly Basic" />
                         <Input value="{compensationModel>/customDouble1}" />
