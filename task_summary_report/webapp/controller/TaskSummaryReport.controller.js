@@ -10,9 +10,9 @@ sap.ui.define([
 
         return Controller.extend("com.sal.tasksummaryreport.controller.TaskSummaryReport", {
             onInit: function () {
-                this.fnReadTickitsSummaryData();
+                this.fnReadTaskChartData(1);
 
-                this.fnInitializeChart();
+                this.fnReadTaskSummaryTableData();
 
                 var oLocalViewModel = new JSONModel({
                     SelectedSegmentBTNKey: "HR"
@@ -45,16 +45,41 @@ sap.ui.define([
                 });
             },
 
-            fnReadTickitsSummaryData: function () {
+            fnReadTaskChartData: function (iModuleID) {
+                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                    oStartDate = dateFormat.format(new Date(sStartDate));
+                    sStartDate = oStartDate + "T00:00:00";
+
+                var sPath = "MasterModules(" + iModuleID + ")/masterSubModule";
+
+
                 this.getView().setBusy(true);
-                this.getView().getModel().read("/MasterModules", {
+                this.getView().getModel().read(sPath, {
                     urlParameters: {
-                        "IsUserManager": "true"
+                        "taskSummaryReport": "true"
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);
-                        var oTicketsSummaryData = new JSONModel(oData.results);
-                        this.getView().setModel(oTicketsSummaryData, "TicketsSummaryDataModel");
+                        var oTaskChartReportModel = new JSONModel(oData.results);
+                        this.getView().setModel(oTaskChartReportModel, "TaskChartReportModel");
+                        this.fnInitializeChart();
+                    }.bind(this),
+                    error: function () {
+                        this.getView().setBusy(false);
+                    }.bind(this)
+                });
+            },
+
+            fnReadTaskSummaryTableData: function () {
+                this.getView().setBusy(true);
+                this.getView().getModel().read("/Tickets", {
+                    urlParameters: {
+                        "taskSummaryReport": "true"
+                    },
+                    success: function (oData) {
+                        this.getView().setBusy(false);
+                        var oTaskTableReportModel = new JSONModel(oData.results);
+                        this.getView().setModel(oTaskTableReportModel, "TaskTableReportModel");
                         this.fnInitializeChart();
                     }.bind(this),
                     error: function () {
@@ -83,31 +108,39 @@ sap.ui.define([
 
             onSegmentBTNSelect: function (oEvent) {
                 var oSelectedKey = oEvent.getSource().getProperty("selectedKey"),
+                    iModuleID = "",
                     sSegmentTitle = "";
 
                 switch (oSelectedKey) {
                     case "HR":
                         sSegmentTitle = "Human Resource";
+                        iModuleID = 1;
                         break;
 
                     case "Procurement":
                         sSegmentTitle = "Procurement";
+                        iModuleID = 2;
                         break;
 
                     case "ITSM":
                         sSegmentTitle = "IT Service Management";
+                        iModuleID = 4;
                         break;
 
                     case "PM":
                         sSegmentTitle = "Plant Maintenance";
+                        iModuleID = 3;
                         break;
-                    
+
                     default:
                         sSegmentTitle = "Human Resource";
+                        iModuleID = 1;
                         break;
                 }
 
                 this.getView().byId("idChartContainer").setTitle(sSegmentTitle);
+                this.fnReadTaskChartData(iModuleID);
+
             }
         });
     });
