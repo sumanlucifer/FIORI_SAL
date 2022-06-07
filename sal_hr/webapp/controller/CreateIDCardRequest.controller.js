@@ -74,7 +74,11 @@ sap.ui.define([
 
             onRaiseRequestPress: function () {
                 var sEntityPath = "/SF_IDReplacement",
-                    oPayloadObj = this.fnGetIDReplacementRequestPayload();
+                    oPayloadObj = this.fnGetIDReplacementRequestPayload(),
+                    dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                    oeffectiveStartDate = dateFormat.format(new Date(oPayloadObj.effectiveStartDate));
+
+                oeffectiveStartDate = oeffectiveStartDate + "T00:00:00";
 
                 this.getView().setBusy(true);
                 this.mainModel.create(sEntityPath, oPayloadObj, {

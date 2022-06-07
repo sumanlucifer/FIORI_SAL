@@ -11,10 +11,17 @@ sap.ui.define([
         return Controller.extend("com.sal.tasksummaryreport.controller.TaskSummaryReport", {
             onInit: function () {
                 this.fnReadTickitsSummaryData();
+
+                this.fnInitializeChart();
+
+                var oLocalViewModel = new JSONModel({
+                    SelectedSegmentBTNKey: "HR"
+                });
+                this.getView().setModel(oLocalViewModel, "LocalViewModel");
             },
 
             fnInitializeChart: function () {
-                var oVizFrame = this.getView().byId("idTicketsVizFrame");
+                var oVizFrame = this.getView().byId("idTaskVizFrame");
                 oVizFrame.setVizProperties({
                     title: {
                         visible: false
@@ -28,16 +35,6 @@ sap.ui.define([
                         title: {
                             visible: false
                         }
-                    },
-                    plotArea: {
-                        colorPalette: ["#4472C4", "#A5A5A5", "#FFC000", "#264478"],
-                        gap: {
-                            innerGroupSpacing: 0,
-                            groupSpacing: 1.5
-                        },
-                        dataShape: {
-                            primaryAxis: ['bar', 'bar', 'bar', 'line']
-                        },
                     },
                     legendGroup: {
                         layout: {
@@ -82,6 +79,35 @@ sap.ui.define([
                     oTableView.setVisible(true);
                     oChartView.setVisible(true);
                 }
+            },
+
+            onSegmentBTNSelect: function (oEvent) {
+                var oSelectedKey = oEvent.getSource().getProperty("selectedKey"),
+                    sSegmentTitle = "";
+
+                switch (oSelectedKey) {
+                    case "HR":
+                        sSegmentTitle = "Human Resource";
+                        break;
+
+                    case "Procurement":
+                        sSegmentTitle = "Procurement";
+                        break;
+
+                    case "ITSM":
+                        sSegmentTitle = "IT Service Management";
+                        break;
+
+                    case "PM":
+                        sSegmentTitle = "Plant Maintenance";
+                        break;
+                    
+                    default:
+                        sSegmentTitle = "Human Resource";
+                        break;
+                }
+
+                this.getView().byId("idChartContainer").setTitle(sSegmentTitle);
             }
         });
     });

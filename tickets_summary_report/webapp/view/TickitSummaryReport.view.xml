@@ -14,7 +14,7 @@
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
-                                        <viz:VizFrame id="idTicketsVizFrame" height="300px" width="100%" vizType='combination'>
+                                        <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='combination'>
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
                                                     <viz.data:dimensions>
