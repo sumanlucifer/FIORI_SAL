@@ -122,7 +122,7 @@ sap.ui.define([], function () {
 
 
 
-        
+
 
         viewFileNames: function (oData) {
             if (oData) {
@@ -223,15 +223,90 @@ sap.ui.define([], function () {
             }
         },
 
-        setApproveRejectManagerActionVisibility: function (sStatus, sWorkflowRequestId) {
+        setApproveVisibility: function (sStatus, sWorkflowRequestId) {
             var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
+            var bApproveVisible = false;
 
-            if (bIsUserManager && sStatus === "PENDING" && sWorkflowRequestId !== null) {
-                return true;
-            } else {
-                return false;
+            if (bIsUserManager) {
+                if (sStatus === "PENDING" && sWorkflowRequestId !== null) {
+                    var bApproveOther = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/approveOther");
+                    bApproveVisible = bApproveOther === true ? true : false;
+                } else {
+                    bApproveVisible = false;
+                }
             }
-        }
+            else {
+                bApproveVisible = false;
+            }
+            return bApproveVisible;
+        },
 
+        setRejectVisibility: function (sStatus, sWorkflowRequestId) {
+            var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
+            var bRejectVisible = false;
+
+            if (bIsUserManager) {
+                if (sStatus === "PENDING" && sWorkflowRequestId !== null) {
+                    var bRejectOther = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/rejectOther");
+                    bRejectVisible = bRejectOther === true ? true : false;
+                } else {
+                    bRejectVisible = false;
+                }
+            }
+            else {
+                bRejectVisible = false;
+            }
+            return bRejectVisible;
+        },
+
+        fnSetRaiseRequestVisibilty: function (bIsUserManager) {
+            var bRaiseRequestVisible = false;
+
+            if (bIsUserManager) {
+                var bCreateOther = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/createOther");
+                bRaiseRequestVisible = bCreateOther === true ? true : false;
+            }
+            if (!bIsUserManager) {
+                var bCreateSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/createSelf");
+                bRaiseRequestVisible = bCreateSelf === true ? true : false;
+            }
+            return bRaiseRequestVisible;
+        },
+
+        fnSetModifyVisibilty: function (bEditMode, bIsUserManager) {
+            var bModifyVisible = false;
+
+            if (bEditMode === false) {
+                if (bIsUserManager) {
+                    var bUpdateOther = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/updateOther");
+                    bModifyVisible = bUpdateOther === true ? true : false;
+                }
+                if (!bIsUserManager) {
+                    var bUpdateSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/updateSelf");
+                    bModifyVisible = bUpdateSelf === true ? true : false;
+                }
+            } else {
+                bModifyVisible = false;
+            }
+            return bModifyVisible;
+        },
+
+        fnSetWithdrawtVisibilty: function (bEditMode, bIsUserManager) {
+            var bWithdrawVisible = false;
+
+            if (bEditMode === false) {
+                if (bIsUserManager) {
+                    var bDeleteOther = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/deleteOther");
+                    bWithdrawVisible = bDeleteOther === true ? true : false;
+                }
+                if (!bIsUserManager) {
+                    var bDeleteSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/deleteSelf");
+                    bWithdrawVisible = bDeleteSelf === true ? true : false;
+                }
+            } else {
+                bWithdrawVisible = false;
+            }
+            return bWithdrawVisible;
+        }
     };
 });

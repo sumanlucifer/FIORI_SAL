@@ -4,17 +4,23 @@
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:viz.data="sap.viz.ui5.data"
-    xmlns:commons="sap.suite.ui.commons">
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:core="sap.ui.core">
     <Shell id="shell">
         <App id="app">
             <pages>
                 <Page id="page" title="{i18n>title}">
                     <VBox>
                         <commons:ChartContainer showFullScreen="true" showZoom="true">
+                            <commons:customIcons>
+                                <core:Icon src="sap-icon://table-view" color="#ffffff" backgroundColor="#333333" press="fnSetChartTableVisibility"/>
+                                <core:Icon src="sap-icon://horizontal-stacked-chart" press="fnSetChartTableVisibility"/>
+                                <core:Icon src="sap-icon://chart-table-view" press="fnSetChartTableVisibility"/>
+                            </commons:customIcons>
                             <commons:content>
-                                <commons:ChartContainerContent id="idChartContainerContent">
+                                <commons:ChartContainerContent id="idTaskChartContainer">
                                     <commons:content>
-                                        <viz:VizFrame id="idTicketsVizFrame" height="300px" width="100%" vizType='stacked_bar'>
+                                        <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='stacked_bar'>
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
                                                     <viz.data:dimensions>
@@ -23,21 +29,14 @@
                                                     <viz.data:measures>
                                                         <!-- Column chart Items -->
                                                         <viz.data:MeasureDefinition group="1" name="Completed" value="{TicketsSummaryDataModel>completed}"/>
-                                                        <!-- <viz.data:MeasureDefinition group="1" name="Under Process" value="{TicketsSummaryDataModel>underProcess}"/> -->
                                                         <viz.data:MeasureDefinition group="1" name="Pending" value="{TicketsSummaryDataModel>pending}"/>
                                                         <viz.data:MeasureDefinition group="1" name="Cancelled by End User" value="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                                        <!-- Line chart Items -->
-                                                        <viz.data:MeasureDefinition group="2" name="Cancelled by Admin" value="{TicketsSummaryDataModel>cancelledByAdmin}"/>
-                                                        <!-- <viz.data:MeasureDefinition group="2" name="Re-assigned " value="{TicketsSummaryDataModel>reassigned}"/>
-                                                        <viz.data:MeasureDefinition group="2" name="Re-opened" value="{TicketsSummaryDataModel>reopened}"/> -->
+                                                        <viz.data:MeasureDefinition group="1" name="Cancelled by Admin" value="{TicketsSummaryDataModel>cancelledByAdmin}"/>
                                                     </viz.data:measures>
                                                 </viz.data:FlattenedDataset>
                                             </viz:dataset>
                                             <viz:feeds>
-                                                <!-- <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Under Process,Pending,Cancelled by End User"/>
-                                                <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin,Re-assigned ,Re-opened"/> -->
-                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Pending,Cancelled by End User"/>
-                                                <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin"/>
+                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Pending,Cancelled by End User,Cancelled by Admin"/>
                                                 <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Name"/>
                                             </viz:feeds>
                                         </viz:VizFrame>
@@ -45,7 +44,7 @@
                                 </commons:ChartContainerContent>
                             </commons:content>
                         </commons:ChartContainer>
-                        <commons:ChartContainer showFullScreen="true" autoAdjustHeight="false" title="{i18n>TicketSummary}">
+                        <commons:ChartContainer id="idTaskListTable" showFullScreen="true" autoAdjustHeight="false" title="{i18n>TicketSummary}">
                             <commons:content>
                                 <commons:ChartContainerContent>
                                     <commons:content>
