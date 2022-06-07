@@ -22,19 +22,20 @@
                 </f:expandedContent>
 
                 <!--Modify and Withdraw not be visible for Manager Tile -->
-                <f:actions>
+         <f:actions>
+                    <HBox visible="{= ${headerModel>/status} === 'PENDING' ? false : ${headerModel>/status} === 'APPROVED' ? true : ${headerModel>/status} === 'CANCELLED' ? true: ${headerModel>/status} === 'REJECTED' ? true : false }">
+                        <Button text="Modify" type="Emphasized" press="onEditPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}], formatter:'.formatter.fnSetModifyVisibilty'}"/>
+                    </HBox>
 
-         <HBox   visible="{= ${headerModel>/status} === 'PENDING' ? false : ${headerModel>/status} === 'APPROVED' ? true : ${headerModel>/status} === 'CANCELLED' ? true: ${headerModel>/status} === 'REJECTED' ? true : false }"  >
-                   <Button text="{i18n>Modify}" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
-                </HBox>
-                    <!-- <Button text="Modify" type="Emphasized" press="onEditPress"  visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/> -->
-                    <Button text="{i18n>Withdraw}" type="Emphasized" press="onWithdrawPress"  visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/>
+                    <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}], formatter:'.formatter.fnSetWithdrawtVisibilty'}"/>
                 </f:actions>
 
                 <!--Approve and Reject visible for Manager Tile -->
                 <f:actions>
-                    <Button text="{i18n>Approve}" icon="sap-icon://accept" type="Accept" press="onApprovePress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}], formatter: '.formatter.setApproveRejectManagerActionVisibility'}"/>
-                    <Button text="{i18n>Reject}" icon="sap-icon://decline" type="Reject" press="onRejectPress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}], formatter: '.formatter.setApproveRejectManagerActionVisibility'}"/>
+                    <Button text="Approve" icon="sap-icon://accept" type="Accept" press="onApprovePress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}], formatter:'.formatter.setApproveVisibility'}"/>
+                     
+                    <Button text="Reject" icon="sap-icon://decline" type="Reject" press="onRejectPress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}], formatter:'.formatter.setRejectVisibility'}"/>
+                   
                 </f:actions>
 				
                 <f:navigationActions>
