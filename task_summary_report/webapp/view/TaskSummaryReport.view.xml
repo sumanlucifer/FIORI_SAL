@@ -5,13 +5,26 @@
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:commons="sap.suite.ui.commons"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:uxap="sap.uxap">
     <Shell id="shell">
         <App id="app">
             <pages>
-                <Page id="page" title="{i18n>title}">
-                    <VBox>
-                        <commons:ChartContainer showFullScreen="true" showZoom="true">
+                <Page id="page" showHeader="false" title="{i18n>title}">
+                    <VBox class="sapUiTinyMarginTop">
+                        <Toolbar style="Clear">
+                            <ToolbarSpacer/>
+                            <DateRangeSelection id="DRS2" width="20%" change="handleChange"/>
+                            <SegmentedButton selectedKey="{LocalViewModel>/SelectedSegmentBTNKey}" width="25%" selectionChange="onSegmentBTNSelect">
+                                <items>
+                                    <SegmentedButtonItem text="{i18n>HR}" key="HR" width="12%"/>
+                                    <SegmentedButtonItem text="{i18n>Procurement}" key="Procurement"/>
+                                    <SegmentedButtonItem text="{i18n>ITSM}" key="ITSM"/>
+                                    <SegmentedButtonItem text="{i18n>PlantMaintenance}" key="PM"/>
+                                </items>
+                            </SegmentedButton>
+                        </Toolbar>
+                        <commons:ChartContainer id="idChartContainer" showFullScreen="true" showZoom="true" title="{i18n>HumanResource}">
                             <commons:customIcons>
                                 <core:Icon src="sap-icon://table-view" color="#ffffff" backgroundColor="#333333" press="fnSetChartTableVisibility"/>
                                 <core:Icon src="sap-icon://horizontal-stacked-chart" press="fnSetChartTableVisibility"/>
@@ -20,18 +33,18 @@
                             <commons:content>
                                 <commons:ChartContainerContent id="idTaskChartContainer">
                                     <commons:content>
-                                        <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='stacked_bar'>
+                                        <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='stacked_bar' vizProperties="{title: {visible: false}}">
                                             <viz:dataset>
-                                                <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
+                                                <viz.data:FlattenedDataset data="{path: 'TaskChartReportModel>/'}">
                                                     <viz.data:dimensions>
-                                                        <viz.data:DimensionDefinition name="Name" value="{TicketsSummaryDataModel>name}"/>
+                                                        <viz.data:DimensionDefinition name="Name" value="{TaskChartReportModel>name}"/>
                                                     </viz.data:dimensions>
                                                     <viz.data:measures>
                                                         <!-- Column chart Items -->
-                                                        <viz.data:MeasureDefinition group="1" name="Completed" value="{TicketsSummaryDataModel>completed}"/>
-                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TicketsSummaryDataModel>pending}"/>
-                                                        <viz.data:MeasureDefinition group="1" name="Cancelled by End User" value="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                                        <viz.data:MeasureDefinition group="1" name="Cancelled by Admin" value="{TicketsSummaryDataModel>cancelledByAdmin}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Completed" value="{TaskChartReportModel>completed}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TaskChartReportModel>pending}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Cancelled by End User" value="{TaskChartReportModel>cancelledByEndUser}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Cancelled by Admin" value="{TaskChartReportModel>cancelledByAdmin}"/>
                                                     </viz.data:measures>
                                                 </viz.data:FlattenedDataset>
                                             </viz:dataset>
@@ -44,52 +57,55 @@
                                 </commons:ChartContainerContent>
                             </commons:content>
                         </commons:ChartContainer>
-                        <commons:ChartContainer id="idTaskListTable" showFullScreen="true" autoAdjustHeight="false" title="{i18n>TicketSummary}">
+
+                        <Toolbar style="Clear" class="sapUiTinyMarginTop">
+                            <Label text="{i18n>Module}:" />
+                            <ComboBox items="{path: '/MasterModules', sorter: { path: 'name'}}" change="onModuleChange">
+                                <core:Item key="{id}" text="{name}" />
+                            </ComboBox>
+                            <Label text="{i18n>Portlet}:" />
+                            <ComboBox items="{path: '/CountriesCollection',sorter: { path: 'text' }}">
+                                <core:Item key="{key}" text="{text}" />
+                            </ComboBox>
+                            <Label text="{i18n>Status}:" />
+                            <ComboBox items="{path: '/MasterReportStatus',sorter: { path: 'status'}}">
+                                <core:Item key="{id}" text="{status}" />
+                            </ComboBox>
+                        </Toolbar>
+                        <commons:ChartContainer id="idTaskListTable" showFullScreen="true" autoAdjustHeight="false" title="{i18n>TaskSummary}">
                             <commons:content>
                                 <commons:ChartContainerContent>
                                     <commons:content>
-                                        <Table items="{path: 'TicketsSummaryDataModel>/'}">
+                                        <Table items="{path: 'TaskTableReportModel>/'}">
                                             <columns>
                                                 <Column minScreenWidth="Desktop" width="15%">
                                                     <Label design="Bold" text="{i18n>ModuleName}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" width="10%">
-                                                    <Label design="Bold" text="{i18n>Completed}"/>
+                                                    <Label design="Bold" text="{i18n>Portlate}"/>
                                                 </Column>
-                                                <!-- <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="10%">
-                                                    <Label design="Bold" text="{i18n>UnderProcess}"/>
-                                                </Column> -->
-                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="7%">
-                                                    <Label design="Bold" text="{i18n>Pending}"/>
-                                                </Column>
-                                                <Column hAlign="Center" width="15%">
-                                                    <Label design="Bold" text="{i18n>CancelledbyEndUser}"/>
-                                                </Column>
-                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="15%">
-                                                    <Label design="Bold" text="{i18n>CancelledbyAdmin}"/>
-                                                </Column>
-                                                <!-- <Column hAlign="Center" width="10%">
-                                                    <Label design="Bold" text="{i18n>Reassigned} "/>
+                                                <Column hAlign="Center" width="10%">
+                                                    <Label design="Bold" text="{i18n>From} "/>
                                                 </Column>
                                                 <Column hAlign="Center" width="8%">
-                                                    <Label design="Bold" text="{i18n>Reopened}"/>
-                                                </Column> -->
+                                                    <Label design="Bold" text="{i18n>To}"/>
+                                                </Column>
+                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="15%">
+                                                    <Label design="Bold" text="{i18n>Status}"/>
+                                                </Column>
                                                 <Column hAlign="End" width="10%">
-                                                    <Label design="Bold" text="{i18n>TotalRequests}"/>
+                                                    <Label design="Bold" text="{i18n>Lastupdatedby}"/>
                                                 </Column>
                                             </columns>
                                             <items>
                                                 <ColumnListItem vAlign="Middle">
                                                     <cells>
-                                                        <Text text="{TicketsSummaryDataModel>name}"/>
-                                                        <Text text="{TicketsSummaryDataModel>completed}"/>
-                                                        <!-- <Text text="{TicketsSummaryDataModel>underProcess}"/> -->
-                                                        <Text text="{TicketsSummaryDataModel>pending}"/>
-                                                        <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
-                                                        <Text text="{TicketsSummaryDataModel>cancelledByAdmin}"/>
-                                                        <!-- <Text text="{TicketsSummaryDataModel>reassigned}"/>
-                                                        <Text text="{TicketsSummaryDataModel>reopened}"/> -->
-                                                        <Label design="Bold" text="{TicketsSummaryDataModel>totalRequests}"/>
+                                                        <Text text="{TaskTableReportModel>name}"/>
+                                                        <Text text="{TaskTableReportModel>completed}"/>
+                                                        <Text text="{TaskTableReportModel>reassigned}"/>
+                                                        <Text text="{TaskTableReportModel>reopened}"/>
+                                                        <Text text="{TaskTableReportModel>cancelledByAdmin}"/>
+                                                        <Label design="Bold" text="{TaskTableReportModel>totalRequests}"/>
                                                     </cells>
                                                 </ColumnListItem>
                                             </items>
