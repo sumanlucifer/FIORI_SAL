@@ -439,7 +439,9 @@ sap.ui.define([
                 this.fileName = Filename;
                 this.isAttachmentNew = true;
             },
-
+            onFileEdited:function(oEvent){
+                this.isAttachmentNew = true;                
+            },
             fnDeleteLeaveRequest: function () {
                 this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {
                     success: function (oData) {
