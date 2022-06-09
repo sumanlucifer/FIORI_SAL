@@ -76,7 +76,7 @@ sap.ui.define([
                 //     }
                 // });
 
-                this.getView().getModel().read(`/Tickets(guid'${this.object.ID}')`, {
+                this.getView().getModel().read(`/Tickets(guid'${this.object.ID}')/letterRequests`, {
                     urlParameters: {
                         "IsUserManager": bIsUserManager
                     
@@ -87,6 +87,7 @@ sap.ui.define([
                     }.bind(this),
                     error: function () {
                         this.getView().setBusy(false);
+                        this.getView().getModel("DisplayLetterModel").setProperty("/", null);
                     }.bind(this)
                 });
 
@@ -102,9 +103,7 @@ sap.ui.define([
 
                 var aDetails = oData,
                     oDisplayLetterObj = {
-                        "externalCode": oData.externalCode,
-                        "UserNav": oData.UserNav,
-                        "effectiveStartDate": oData.effectiveStartDate,
+                        
                         "cust_LetterDetails": aDetails
                     },
                     oDisplayLetterModel = new JSONModel(oDisplayLetterObj);
