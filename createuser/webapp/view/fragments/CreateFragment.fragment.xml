@@ -3,7 +3,7 @@
 
 
 <core:FragmentDefinition xmlns="sap.m"   xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
-	<Dialog title="Create User Details" id="idCreate" class="sapUiSmallMargin">
+	<Dialog title="Manage User Details" id="idCreate" class="sapUiSmallMargin">
 		<content>
 		
 		
@@ -71,6 +71,13 @@
                         maxLength: 50
                     }
                 }"/>
+
+
+                  <Label text="Role"/>
+
+                 <Select id="idRole" items="{ path: '/MasterRole'}" selectedKey="{CreateUserViewModel>/roleID}">
+                            <core:Item key="{ID}" text="{roleName}"/>
+                        </Select>
            
             
             

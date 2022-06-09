@@ -34,6 +34,7 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
+                this.PRNFlag = true;
 
 
             },
@@ -73,16 +74,26 @@ sap.ui.define([
             },
 
             _bindView: function (data) {
-
+              var sUserID;
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
                 var oComponentModel = this.getComponentModel(),
-                 that = this,
+                 that = this;
 
+              
+                 if(this.PRNFlag)
+                 {
+                    sUserID = this.EmpInfoObj.userId
+                 }
+                 
+
+                 else{
+                    sUserID = this.prnID;
+                 }
                
 
-                    sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                        personIdExternal: this.EmpInfoObj.userId,
-                        userId: this.EmpInfoObj.userId
+                  var sKey = oComponentModel.createKey("/SF_EmpEmployment", {
+                        personIdExternal: sUserID,
+                        userId: sUserID
                     });
 
                 // this.getView().bindElement({
@@ -322,7 +333,7 @@ sap.ui.define([
                     oCompany = this.byId("idCompany"),
                     sDirectManager = this.getView().byId("idDirectManager"),
                     sJobCountry = this.byId("idJobCountry"),
-                    sNotes = this.byId("idNotes"),
+                    // sNotes = this.byId("idNotes"),
                     oProbationaryDate = this.byId("idProbationaryDate"),
                     // sJobTitle = this.byId("idJobTitle"),
                     sIKOOK = this.byId("idIKOOK"),
@@ -366,13 +377,13 @@ sap.ui.define([
                     }
 
                     // Validate Notes
-                    if (!sNotes.getValue()) {
-                        sNotes.setValueState("Error");
-                        sNotes.setValueStateText("Please enter Notes");
-                        sValidationErrorMsg = "Please fill the all required fields.";
-                    } else {
-                        sNotes.setValueState("None");
-                    }
+                    // if (!sNotes.getValue()) {
+                    //     sNotes.setValueState("Error");
+                    //     sNotes.setValueStateText("Please enter Notes");
+                    //     sValidationErrorMsg = "Please fill the all required fields.";
+                    // } else {
+                    //     sNotes.setValueState("None");
+                    // }
 
                     // validate Pay Group
                     if (!sPayGroup.getSelectedKey()) {
@@ -630,6 +641,10 @@ sap.ui.define([
                 var obj = oSelectedItem.getBindingContext().getObject();
                 this.byId("idSalIncPRN").setValue(obj["userId"]);
                 this.byId("idSalIncPRN").setValueState("None");
+
+                this.PRNFlagn = false;
+                this.prnID = obj["userId"];
+                this._bindView();
             },
 
 

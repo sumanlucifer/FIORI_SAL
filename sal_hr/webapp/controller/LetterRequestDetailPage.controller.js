@@ -41,9 +41,10 @@ sap.ui.define([
             },
 
             _bindView: function (data) {
-                debugger;
+            
                 var object = data.results[0];
                 this.object = data.results[0];
+                this.getView().setBusy(true);
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
 
@@ -51,32 +52,66 @@ sap.ui.define([
                     sKey = null;
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
-                sKey = oComponentModel.createKey("/LetterRequest", {
-                    externalCode: object.externalCode
-                });
+                sKey = `Tickets`;
 
-                this.getView().bindElement({
-                    path: sKey,
-                    parameters: {
-                        custom: {
-                            "IsUserManager": bIsUserManager
-                        }
+                // this.getView().bindElement({
+                //     path: sKey,
+                //     parameters: {
+                //         custom: {
+                //             "IsUserManager": bIsUserManager
+                //         }
+                //     },
+
+                //     events: {
+                //         change: function (oEvent) {
+                //             var oContextBinding = oEvent.getSource();
+                //             oContextBinding.refresh(false);
+                //         }.bind(this),
+                //         dataRequested: function () {
+                //             this.getView().setBusy(true);
+                //         }.bind(this),
+                //         dataReceived: function () {
+                //             this.getView().setBusy(false);
+                //         }.bind(this)
+                //     }
+                // });
+
+                this.getView().getModel().read(`/Tickets(guid'${this.object.ID}')/letterRequests`, {
+                    urlParameters: {
+                        "IsUserManager": bIsUserManager
+                    
                     },
-
-                    events: {
-                        change: function (oEvent) {
-                            var oContextBinding = oEvent.getSource();
-                            oContextBinding.refresh(false);
-                        }.bind(this),
-                        dataRequested: function () {
-                            this.getView().setBusy(true);
-                        }.bind(this),
-                        dataReceived: function () {
-                            this.getView().setBusy(false);
-                        }.bind(this)
-                    }
+                    success: function (oData) {
+                       
+                         this.fnSetDisplayLetterRequestModel(oData);
+                    }.bind(this),
+                    error: function () {
+                        this.getView().setBusy(false);
+                        this.getView().getModel("DisplayLetterModel").setProperty("/", null);
+                    }.bind(this)
                 });
 
+
+
+
+
+            },
+
+            fnSetDisplayLetterRequestModel: function (oData) {
+                this.getView().setBusy(true);
+
+
+                var aDetails = oData,
+                    oDisplayLetterObj = {
+                        
+                        "cust_LetterDetails": aDetails
+                    },
+                    oDisplayLetterModel = new JSONModel(oDisplayLetterObj);
+
+
+                this.getView().setModel(oDisplayLetterModel, "DisplayLetterModel");
+
+                this.getView().setBusy(false);
             },
 
             onEditPress: function () {
@@ -201,7 +236,7 @@ sap.ui.define([
                 var mimeType = this.getView().getModel("attachmentModel").getData().mimeType;
                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
                 fName = fName.split(".")[0];
-                debugger;
+           
                 if (fileext === "pdf" || fileext === "png") {
                     var decodedPdfContent = atob(fContent);
                     var byteArray = new Uint8Array(decodedPdfContent.length)
@@ -224,7 +259,7 @@ sap.ui.define([
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
             },
             onFileAdded: function (oEvent) {
-                debugger;
+                
                 var that = this;
 
                 //  var file = oEvent.getParameters().files[0];

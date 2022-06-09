@@ -64,6 +64,50 @@
         <!-- DynamicPage Content -->
      <f:content>
           
+    <form:SimpleForm id="idNewDisplayTripRquestSimpleForm" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" layout="ResponsiveGridLayout" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <form:content>
+            <Title text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
+
+            <Label text="Created At" />
+            <Text text="{path:'DisplayLetterModel>/cust_LetterDetails/createdAt',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"/>
+           <Label text="Created By"  />
+            <Text text="{DisplayLetterModel>/cust_LetterDetails/createdBy}"/>
+            <Label text="Modified At"  />
+            <Text text="{path:'DisplayLetterModel>/cust_LetterDetails/modifiedAt',
+                                                type: 'sap.ui.model.type.Date',
+                                                formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"/>
+             <Label text="Modified By"  />
+            <Text text="{DisplayLetterModel>/cust_LetterDetails/modifiedBy}"/>
+
+
+
+
+             <Label text="Country"  />               
+            <Text text="{DisplayLetterModel>/cust_LetterDetails/country}"/>
+
+            <Label text="Language"  />
+               <Text text="{DisplayLetterModel>/cust_LetterDetails/language}"/>
+            <Label text="Type"  />
+           <Text text="{DisplayLetterModel>/cust_LetterDetails/type}"/>
+            <Label text="Description"  />
+                <Text text="{DisplayLetterModel>/cust_LetterDetails/description}"/>
+
+
+             
+          
+        </form:content>
+
+   
+        
+        
+        
+    </form:SimpleForm>
         </f:content>
         <f:footer>
             <OverflowToolbar id="idOverflowToolbar" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">

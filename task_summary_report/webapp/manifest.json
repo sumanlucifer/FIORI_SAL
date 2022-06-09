@@ -36,8 +36,8 @@
                     "semanticObject": "TaskSummary_Report",
                     "action": "Display",
                     "title": "{{flpTitle}}",
-                    "subTitle": "{{flpSubtitle}}",
-                    "icon": ""
+                    "subTitle": "",
+                    "icon": "sap-icon://activity-2"
                 }
             }
         }
@@ -85,9 +85,17 @@
                 }
             },
             "": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+                "settings": {
+                    "defaultOperationMode": "Server",
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": true,
+                    "useBatch": false,
+                    "defaultUpdateMethod": "PUT"
+                },
                 "dataSource": "mainService",
-                "preload": true,
-                "settings": {}
+                "preload": true
             }
         },
         "resources": {
@@ -132,5 +140,9 @@
             "async": true,
             "id": "App"
         }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "employee_portal_service"
     }
 }

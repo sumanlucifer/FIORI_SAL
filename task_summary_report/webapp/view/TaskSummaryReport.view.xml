@@ -14,7 +14,7 @@
                     <VBox class="sapUiTinyMarginTop">
                         <Toolbar style="Clear">
                             <ToolbarSpacer/>
-                            <DateRangeSelection id="DRS2" width="20%" change="handleChange"/>
+                            <DateRangeSelection id="DRS2" width="20%" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
                             <SegmentedButton selectedKey="{LocalViewModel>/SelectedSegmentBTNKey}" width="25%" selectionChange="onSegmentBTNSelect">
                                 <items>
                                     <SegmentedButtonItem text="{i18n>HR}" key="HR" width="12%"/>
@@ -23,17 +23,19 @@
                                     <SegmentedButtonItem text="{i18n>PlantMaintenance}" key="PM"/>
                                 </items>
                             </SegmentedButton>
+                            <SegmentedButton selectedKey="{LocalViewModel>/SelectedViewSegmentBTNKey}" selectionChange="fnSetChartTableVisibility">
+                                <items>
+                                    <SegmentedButtonItem key="ChartTableBoth" icon="sap-icon://chart-table-view"/>
+                                    <SegmentedButtonItem key="TableOnly" icon="sap-icon://table-view"/>
+                                    <SegmentedButtonItem key="ChartOnly" icon="sap-icon://horizontal-stacked-chart"/>
+                                </items>
+                            </SegmentedButton>
                         </Toolbar>
                         <commons:ChartContainer id="idChartContainer" showFullScreen="true" showZoom="true" title="{i18n>HumanResource}">
-                            <commons:customIcons>
-                                <core:Icon src="sap-icon://table-view" color="#ffffff" backgroundColor="#333333" press="fnSetChartTableVisibility"/>
-                                <core:Icon src="sap-icon://horizontal-stacked-chart" press="fnSetChartTableVisibility"/>
-                                <core:Icon src="sap-icon://chart-table-view" press="fnSetChartTableVisibility"/>
-                            </commons:customIcons>
                             <commons:content>
                                 <commons:ChartContainerContent id="idTaskChartContainer">
                                     <commons:content>
-                                        <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='stacked_bar' vizProperties="{title: {visible: false}}">
+                                        <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='stacked_bar' vizProperties="{title: {visible: false},valueAxis: {title: {visible: false}},categoryAxis: {title: {visible: false}},legendGroup: {layout: {position: 'bottom', alignment: 'center'}}, plotArea: {colorPalette: ['#0a8333', '#eda21b', '#D32821','#A5A5A5'],isFixedDataPointSize: true, dataPointSize: { min: 10, max: 20 }, dataLabel: { visible: true, type: 'label', showTotal: true}}}">
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TaskChartReportModel>/'}">
                                                     <viz.data:dimensions>
@@ -41,15 +43,15 @@
                                                     </viz.data:dimensions>
                                                     <viz.data:measures>
                                                         <!-- Column chart Items -->
-                                                        <viz.data:MeasureDefinition group="1" name="Completed" value="{TaskChartReportModel>completed}"/>
-                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TaskChartReportModel>pending}"/>
-                                                        <viz.data:MeasureDefinition group="1" name="Cancelled by End User" value="{TaskChartReportModel>cancelledByEndUser}"/>
-                                                        <viz.data:MeasureDefinition group="1" name="Cancelled by Admin" value="{TaskChartReportModel>cancelledByAdmin}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Approved" value="{TaskChartReportModel>totalApproved}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TaskChartReportModel>totalPending}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Rejected" value="{TaskChartReportModel>totalRejected}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Cancelled" value="{TaskChartReportModel>totalCancelled}"/>
                                                     </viz.data:measures>
                                                 </viz.data:FlattenedDataset>
                                             </viz:dataset>
                                             <viz:feeds>
-                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Pending,Cancelled by End User,Cancelled by Admin"/>
+                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Approved,Pending,Rejected,Cancelled"/>
                                                 <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Name"/>
                                             </viz:feeds>
                                         </viz:VizFrame>
@@ -58,54 +60,56 @@
                             </commons:content>
                         </commons:ChartContainer>
 
-                        <Toolbar style="Clear" class="sapUiTinyMarginTop">
-                            <Label text="{i18n>Module}:" />
-                            <ComboBox items="{path: '/MasterModules', sorter: { path: 'name'}}" change="onModuleChange">
-                                <core:Item key="{id}" text="{name}" />
+                        <Toolbar id="idTableToolbar" style="Clear" class="sapUiTinyMarginTop sapUiTinyMarginBegin">
+                            <Label text="{i18n>Module}:" required="true"/>
+                            <ComboBox items="{path: '/MasterModules', sorter: { path: 'name'}}" selectedKey="{LocalViewModel>/SelectedModuleID}" selectionChange="onModuleChange">
+                                <core:Item key="{ID}" text="{name}" />
                             </ComboBox>
-                            <Label text="{i18n>Portlet}:" />
-                            <ComboBox items="{path: '/CountriesCollection',sorter: { path: 'text' }}">
-                                <core:Item key="{key}" text="{text}" />
+                            <Label text="{i18n>Portlet}:"/>
+                            <ComboBox items="{PortletModel>/}" selectedKey="{LocalViewModel>/SelectedPortletID}">
+                                <core:Item key="{PortletModel>ID}" text="{PortletModel>name}" />
                             </ComboBox>
-                            <Label text="{i18n>Status}:" />
-                            <ComboBox items="{path: '/MasterReportStatus',sorter: { path: 'status'}}">
-                                <core:Item key="{id}" text="{status}" />
+                            <Label text="{i18n>Status}:"/>
+                            <ComboBox items="{path: '/MasterReportStatus',sorter: { path: 'status'}}" selectedKey="{LocalViewModel>/SelectedStatus}">
+                                <core:Item key="{status}" text="{status}" />
                             </ComboBox>
+                            <Button text="Go" press="onFilterTablePress" type="Emphasized"/>
                         </Toolbar>
                         <commons:ChartContainer id="idTaskListTable" showFullScreen="true" autoAdjustHeight="false" title="{i18n>TaskSummary}">
                             <commons:content>
                                 <commons:ChartContainerContent>
                                     <commons:content>
-                                        <Table items="{path: 'TaskTableReportModel>/'}">
+                                        <Table items="{path: 'TaskTableReportModel>/'}" growing="true" growingThreshold="10" growingScrollToLoad="true">
                                             <columns>
-                                                <Column minScreenWidth="Desktop" width="15%">
+                                                <Column minScreenWidth="Tablet" width="15%">
                                                     <Label design="Bold" text="{i18n>ModuleName}"/>
                                                 </Column>
-                                                <Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" width="10%">
-                                                    <Label design="Bold" text="{i18n>Portlate}"/>
+                                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                                    <Label design="Bold" text="{i18n>Portlet}"/>
                                                 </Column>
-                                                <Column hAlign="Center" width="10%">
-                                                    <Label design="Bold" text="{i18n>From} "/>
+                                                <Column width="15%">
+                                                    <Label design="Bold" text="{i18n>From}"/>
                                                 </Column>
-                                                <Column hAlign="Center" width="8%">
+                                                <Column width="15%">
                                                     <Label design="Bold" text="{i18n>To}"/>
                                                 </Column>
-                                                <Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center" width="15%">
-                                                    <Label design="Bold" text="{i18n>Status}"/>
-                                                </Column>
-                                                <Column hAlign="End" width="10%">
+                                                <Column width="15%">
                                                     <Label design="Bold" text="{i18n>Lastupdatedby}"/>
+                                                </Column>
+                                                <Column minScreenWidth="Tablet" demandPopin="true" width="10%">
+                                                    <Label design="Bold" text="{i18n>Status}"/>
                                                 </Column>
                                             </columns>
                                             <items>
                                                 <ColumnListItem vAlign="Middle">
                                                     <cells>
-                                                        <Text text="{TaskTableReportModel>name}"/>
-                                                        <Text text="{TaskTableReportModel>completed}"/>
-                                                        <Text text="{TaskTableReportModel>reassigned}"/>
-                                                        <Text text="{TaskTableReportModel>reopened}"/>
-                                                        <Text text="{TaskTableReportModel>cancelledByAdmin}"/>
-                                                        <Label design="Bold" text="{TaskTableReportModel>totalRequests}"/>
+                                                        <Text text="{TaskTableReportModel>module/name}"/>
+                                                        <Text text="{TaskTableReportModel>subModule/name}"/>
+                                                        <Text text="{path : 'TaskTableReportModel>effectiveStartDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'},formatter:'.formatter.handleNoData'}" />
+                                                        <Text text="{path : 'TaskTableReportModel>endDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'},formatter:'.formatter.handleNoData'}" />
+                                                        <Label design="Bold" text="{TaskTableReportModel>externalModifiedBy}"/>
+                                                        <!-- <Text text="{TaskTableReportModel>status}"/> -->
+                                                        <ObjectStatus text="{TaskTableReportModel>status}" state="{path:'TaskTableReportModel>status',formatter:'.formatter.ticketStatus'}" />
                                                     </cells>
                                                 </ColumnListItem>
                                             </items>
