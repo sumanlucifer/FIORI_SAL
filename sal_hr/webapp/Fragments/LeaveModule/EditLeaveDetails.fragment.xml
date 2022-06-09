@@ -58,7 +58,12 @@
 
              
          
-            <upload:UploadSet id="idEditUploadSet" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true"  maxFileNameLength="30" maxFileSize="200" mediaTypes="text/plain,application/msword,image/jpeg" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : false}">
+            <upload:UploadSet id="idEditUploadSet" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true"  maxFileNameLength="30" maxFileSize="200" mediaTypes="text/plain,application/msword,image/jpeg" 
+            afterItemRemoved="onFileDeleted"
+            afterItemAdded="onFileAdded" 
+            afterItemEdited="onFileEdited" 
+            attachFileRenamed="onFileEdited" 
+            visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : false}">
                 <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="Attachments" required="true"/>
@@ -67,7 +72,7 @@
                             </OverflowToolbar>
                         </upload:toolbar>
                 <upload:items>
-                    <upload:UploadSetItem fileName="{attachmentModel>/fileName}" mediaType="attachmentModel>/mimeType}">
+                    <upload:UploadSetItem fileName="{attachmentModel>/fileName}" mediaType="attachmentModel>/mimeType}" >
                     </upload:UploadSetItem>
                 </upload:items>
             </upload:UploadSet>
