@@ -36,7 +36,7 @@
 
         <!-- DynamicPage Content -->
         <f:content>
-            <Table id="idCreateUserTable" width="auto" items="{path: '/SALUser',sorter:{path:'createdAt',descending:true}}" noDataText="No Data Found" growing="true" growingScrollToLoad="false" growingThreshold="10" updateFinished="onUpdateFinished">
+            <Table id="idCreateUserTable" width="auto" items="{path: '/SALUser',sorter:{path:'createdAt',descending:true},parameters:{expand:'masterRole' }}" noDataText="No Data Found" growing="true" growingScrollToLoad="false" growingThreshold="10" updateFinished="onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
