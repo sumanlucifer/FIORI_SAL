@@ -27,7 +27,7 @@
 
                 <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                     <Label text="When would you like your changes to take effect? " required="true" />
-                    <DatePicker id="idStartDate" value="{path:'', type:'sap.ui.model.type.Date', formatOptions: {
+                    <DatePicker id="idStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" minDate="{LocalViewModel>/currentDate}"/>
                     <Label text="PRN" required="true" />

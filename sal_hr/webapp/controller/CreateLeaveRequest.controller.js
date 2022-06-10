@@ -144,6 +144,8 @@ sap.ui.define([
                 } else {
                     sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 }
+                var sLoginID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                
 
                 var sQtyHrs;
                 if (this.attachReq === true && this.isAttachment === false) {
@@ -234,7 +236,7 @@ sap.ui.define([
                         "isAttachmentNew": this.isAttachment,
                         "attachmentFileContent": sAttachmentFileContent,
                         "attachmentFileName": sAttahmentFileName,
-                        "attachmentUserId": sUserID,
+                        "attachmentUserId": sLoginID,
                         "fractionQuantity": sQtyHrs
 
                     };
