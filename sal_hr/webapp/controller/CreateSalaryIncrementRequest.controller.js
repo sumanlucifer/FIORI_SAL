@@ -26,6 +26,7 @@ sap.ui.define([
                 var oLocalViewModel = new JSONModel({
                     busy: false,
                     currentDate: new Date(),
+                    minDate: new Date(),
                     jobInfoVisible: false,
                     componesationInfoVisible: false,
                     managerId: "12345"
@@ -34,7 +35,7 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
-                this.PRNFlag = true;
+                this.PRNFlag = false;
 
 
             },
@@ -82,12 +83,13 @@ sap.ui.define([
               
                  if(this.PRNFlag)
                  {
-                    sUserID = this.EmpInfoObj.userId
+               
+                    sUserID = this.prnID;
                  }
                  
 
                  else{
-                    sUserID = this.prnID;
+                    sUserID = this.EmpInfoObj.userId;
                  }
                
 
@@ -642,7 +644,7 @@ sap.ui.define([
                 this.byId("idSalIncPRN").setValue(obj["userId"]);
                 this.byId("idSalIncPRN").setValueState("None");
 
-                this.PRNFlagn = false;
+                this.PRNFlag = true;
                 this.prnID = obj["userId"];
                 this._bindView();
             },
