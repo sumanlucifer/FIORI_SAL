@@ -46,7 +46,7 @@ sap.ui.define([
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
                 this.fnGetPayType();
-                this._bindView();
+                //this._bindView();
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
                 this.managerID = this.EmpInfoObj.userId;
 

@@ -99,6 +99,11 @@ sap.ui.define([
                     },
 
                     success: function (oData) {
+                        if(oData.results.length === 0)
+                        {
+                            sap.m.MessageBox.error("You do not have permission to perform this action");
+                            return ;
+                        }
 
                         if (this.sManagerTile === false) {
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/createSelf", oData.results[0].createSelf);

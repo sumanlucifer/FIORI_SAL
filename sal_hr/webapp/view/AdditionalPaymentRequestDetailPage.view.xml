@@ -57,6 +57,15 @@
 
                         <ObjectAttribute text="{userNav/firstName} {userNav/middleName} {userNav/lastName} ({headerModel>/employeeId})"/>
                     </layout:VerticalLayout>
+
+                      <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                         <ObjectAttribute title="Requested For"/>
+                        <ObjectAttribute text="{headerModel>/externalModifiedBy}"/>
+                    </layout:VerticalLayout>
+                    
+
+
+                    
                     <layout:VerticalLayout>
                         <ObjectAttribute title="{i18n>DateofCreation}"/>
                         <ObjectAttribute text="{path:'headerModel>/requestDate',
