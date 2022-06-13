@@ -627,7 +627,8 @@ sap.ui.define([
                     a.dispatchEvent(new MouseEvent('click'));
                 }
                 else {
-                    sap.ui.core.util.File.save(sFileContent, sFileName, sFileext, sMimeType);
+                    var decodedContent = atob(sFileContent);
+                    sap.ui.core.util.File.save(decodedContent, sFileName, sFileext, sMimeType);
                 }
             },
 
