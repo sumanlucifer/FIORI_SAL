@@ -210,6 +210,10 @@ sap.ui.define([
                     dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
 
 
+                if (sValidationErrorMsg === "") {
+                    this.getView().setBusy(true);
+                    
+                    
                     var sStartDate = this.getView().byId("idEffectDatePicker").getDateValue(),
                     oStartDate = dateFormat.format(new Date(sStartDate));
                     sStartDate = oStartDate + "T00:00:00";
@@ -238,9 +242,7 @@ sap.ui.define([
                     oPayload.cust_toDutyTravelItem[0].cust_travelTime = "PT" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[0] + "H" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[1] + "M00S";
                 }
 
-                if (sValidationErrorMsg === "") {
-                    this.getView().setBusy(true);
-                    this.getView().setBusy(true);
+                   
 
                     this.mainModel.create(sPath, oPayload, {
                         success: function (oData, oResponse) {
