@@ -38,7 +38,8 @@
            
 
             <Label id="idEditLeaveTotalLeaveHrsLBL" text="{i18n>Total Hrs}" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/>
-            <Input id="idEditRequestHrs" value="{leaveModel>/displayQuantity}" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/>
+            <!-- <Input id="idEditRequestHrs" value="{leaveModel>/displayQuantity}" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/> -->
+             <TimePicker id="idEditRequestHrs" value="{leaveModel>/displayQuantity}" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On" change="handleTimeChange" visible="{= ${LocalViewModel>/meetingType} === true ? true : false}"/>
           
             <Label id="idEditLeaveEndDateLBL" text="{i18n>End Date}" />
             <DatePicker id="idEditLeaveEndDatePicker" value="{path:'leaveModel>/endDate',
