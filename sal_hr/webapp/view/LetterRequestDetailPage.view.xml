@@ -48,7 +48,7 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>Requested by}"/>
-                        <ObjectAttribute text="{headerModel>/employeeId}"/>
+                        <ObjectAttribute text="{EmpInfoModel>/firstName} {EmpInfoModel>/middleName} {EmpInfoModel>/lastName}  {headerModel>/employeeId}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">

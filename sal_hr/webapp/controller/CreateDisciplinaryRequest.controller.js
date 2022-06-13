@@ -177,6 +177,13 @@ sap.ui.define([
                                     value1: sValue.trim(),
                                     caseSensitive: false
                                 }),
+
+                                new Filter({
+                                    path: "middleName",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                }),
                                 new Filter({
                                     path: "lastName",
                                     operator: "Contains",
@@ -185,10 +192,6 @@ sap.ui.define([
                                 })
 
                             ],  false),
-
-                          
-    
-    
                         ],
                         true
                     );
