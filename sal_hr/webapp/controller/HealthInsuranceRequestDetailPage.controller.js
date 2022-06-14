@@ -182,7 +182,7 @@ sap.ui.define([
                 var fName = oFileObj.fileName;
                 fName = fName.split(".")[0];
                 debugger;
-                if (fileext === "pdf" || fileext === "png") {
+                if (fileext === "pdf" || fileext === "png" || fileext === "jpg" || fileext === "jpeg") {
                     var decodedPdfContent = atob(fContent);
                     var byteArray = new Uint8Array(decodedPdfContent.length)
                     for (var i = 0; i < decodedPdfContent.length; i++) {
