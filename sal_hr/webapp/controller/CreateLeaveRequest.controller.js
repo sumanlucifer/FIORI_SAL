@@ -125,6 +125,7 @@ sap.ui.define([
 
             },
             fnGetLeaveRequestPayload: function () {
+                var sQtyHrs;
                 // validate leave application for other user Field
                 var oLeaveApplicationForINP = this.getView().byId("idLeaveApplicationForINP");
                 if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
