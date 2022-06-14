@@ -13,3 +13,10 @@
     content: "\01F641	";
     margin-right: 0.5rem;
   }
+
+  .NAEmoji::before {
+    content: "\01F615	";
+    margin-right: 0.5rem;
+  }
+
+ 
