@@ -9,8 +9,10 @@ sap.ui.define([
 
     function (BaseController, Controller, formatter, Filter, FilterOperator, Sorter) {
         "use strict";
+       
 
         return BaseController.extend("com.sal.salhr.controller.MasterList", {
+           
             formatter: formatter,
             onInit: function () {
                 var oModel = this.getOwnerComponent().getModel("layoutModel");
@@ -121,6 +123,7 @@ sap.ui.define([
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateOther", oData.results[0].updateOther);
                         }
                         var sPath = oItem.getBindingContextPath()
+                        this.getView().getModel("EmpInfoModel").refresh(true);
                         this.getRouter().navTo("detail", {
                             parentMaterial: oItem.getModel().getProperty(sPath).ID,
                             layout: "TwoColumnsMidExpanded"

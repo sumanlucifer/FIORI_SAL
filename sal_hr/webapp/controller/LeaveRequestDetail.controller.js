@@ -326,6 +326,8 @@ sap.ui.define([
             fnGetLeaveRequestPayload: function () {
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sType = this.getView().byId("idEditTimeType").getSelectedKey();
+                var sQtyHrs;
+
 
                 if (this.isAttachmentNew === true) {
                     var sattachmentFileName = this.fileName;
@@ -346,6 +348,35 @@ sap.ui.define([
                 sStartDate = Date.parse(sStartDate);
                 isAttachmentNew = false;
 
+
+                switch (sType) {
+                    case "460":
+                        sQtyHrs = this.getView().byId("idEditRequestHrs").getValue();
+                        sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                        break;
+                    case "450":
+                        sQtyHrs = this.getView().byId("idEditRequestHrs").getValue();
+                        sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                        break;
+                    case "480":
+                        sQtyHrs = this.getView().byId("idEditRequestHrs").getValue();
+                        sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    case "440":
+                        sQtyHrs = this.getView().byId("idEditRequestHrs").getValue();
+                        sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                        break;
+                    case "HD1":
+                        sQtyHrs = "0.5";
+                        break;
+                    default:
+                        sQtyHrs = "0.0";
+                }
+
+              
+               
                 return {
                     "endDate": "/Date(" + sEndDate + ")/",
                     "loaActualReturnDate": null,
@@ -360,13 +391,31 @@ sap.ui.define([
                     "undeterminedEndDate": false,
                     "userId": sUserID,
                     "recurrenceGroup": null,
-                    "fractionQuantity": "1",
+                    "fractionQuantity": sQtyHrs,
                     "endTime": null,
                     "isAttachmentNew": isAttachmentNew,
                     "attachmentId": sattachmentFileID,
                     "attachmentFileContent": sattachmentFileContent,
                     "attachmentFileName": sattachmentFileName,
                     "attachmentUserId": sUserID
+                }
+            },
+
+            handleTimeChange: function (oEvent) {
+                var oTimePicker = this.byId("idEditRequestHrs"),
+                    oTP = oEvent.getSource(),
+                    sValue = oEvent.getParameter("value");
+
+
+                if (sValue > "08:00") {
+                    oTimePicker.setValueState("Error");
+                    // oTimePicker.setValueText("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
+                    this.getView().byId("idSaveBTN").setEnabled(false);
+                    sap.m.MessageBox.error("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
+                } else {
+                    oTimePicker.setValueState();
+
+                    this.getView().byId("idSaveBTN").setEnabled(true);
                 }
             },
 

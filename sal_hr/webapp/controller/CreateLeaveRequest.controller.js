@@ -125,6 +125,7 @@ sap.ui.define([
 
             },
             fnGetLeaveRequestPayload: function () {
+                var sQtyHrs;
                 // validate leave application for other user Field
                 var oLeaveApplicationForINP = this.getView().byId("idLeaveApplicationForINP");
                 if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
@@ -147,7 +148,8 @@ sap.ui.define([
                 var sLoginID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 
 
-                var sQtyHrs;
+                                
+
                 if (this.attachReq === true && this.isAttachment === false) {
                     sap.m.MessageBox.error("Please upload the attachments.");
                     this.bValid = false;

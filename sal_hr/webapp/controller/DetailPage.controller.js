@@ -11,7 +11,7 @@ sap.ui.define([
 
     function (BaseController, Controller, JSONModel, formatter, Sorter, Filter, FilterOperator, Device) {
         "use strict";
-
+        
         return BaseController.extend("com.sal.salhr.controller.DetailPage", {
             formatter: formatter,
             onInit: function () {
@@ -160,26 +160,7 @@ sap.ui.define([
                         break;
                 }
 
-                // ***********  old code ***********************
-
-                // if (this.sParentID === "12") {
-
-                //     this.oRouter.navTo("DisciplinaryRequest", {
-
-                //         parentMaterial: this.sParentID,
-
-                //         layout: "EndColumnFullScreen"
-
-                //     })
-
-                // } else {
-                //     this.oRouter.navTo("RaiseRequest", {
-                //         parentMaterial: this.sParentID,
-                //         layout: "EndColumnFullScreen"
-                //     })
-                // }
-                //    ************************************************************
-
+               
             },
 
             onPressTicketItem: function (oEvent) {
@@ -312,26 +293,8 @@ sap.ui.define([
                     }
                 
                
-
+                    
            
-
-                // ***********  old code ***********************
-                // if (this.sParentID === "12") {
-                //     this.oRouter.navTo("DisciplinaryRequestDetail", {
-                //         parentMaterial: this.sParentID,
-                //         childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                //         layout: "ThreeColumnsMidExpanded"
-                //     });
-
-                // } else {
-                //     this.oRouter.navTo("detailDetail", {
-                //         parentMaterial: this.sParentID,
-                //         childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                //         layout: "ThreeColumnsMidExpanded"
-
-                //     });
-                // }
-                //    ************************************************************
 
 
             },
