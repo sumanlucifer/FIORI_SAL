@@ -14,7 +14,7 @@
                             <commons:content>
                                 <commons:ChartContainerContent id="idChartContainerContent">
                                     <commons:content>
-                                        <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='combination'>
+                                        <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='combination' >
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
                                                     <viz.data:dimensions>
@@ -36,7 +36,7 @@
                                             <viz:feeds>
                                                 <!-- <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Under Process,Pending,Cancelled by End User"/>
                                                 <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin,Re-assigned ,Re-opened"/> -->
-                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Pending,Cancelled by End User"/>
+                                                <viz.feeds:FeedItem id='valueAxisFeed6' uid="valueAxis" type="Measure" values="Completed,Pending,Cancelled by End User" />
                                                 <viz.feeds:FeedItem id='valueAxisFeed7' uid="valueAxis" type="Measure" values="Cancelled by Admin"/>
                                                 <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Name"/>
                                             </viz:feeds>

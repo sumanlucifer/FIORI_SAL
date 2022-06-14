@@ -16,7 +16,7 @@ sap.ui.define([
             },
 
             fnInitializeChart: function () {
-                var oVizFrame = this.getView().byId("idTicketsVizFrame");
+                var oVizFrame = this.getView().byId("idTaskVizFrame");
                 oVizFrame.setVizProperties({
                     title: {
                         visible: false
