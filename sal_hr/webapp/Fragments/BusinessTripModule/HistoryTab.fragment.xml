@@ -20,9 +20,7 @@
                 <Column demandPopin="true" minScreenWidth="Tablet">
                     <Label text="{i18n>ActionPerformedby}" required="false" />
                 </Column>
-                <Column demandPopin="true" minScreenWidth="Tablet">
-                    <Label text="{i18n>Reason}" required="false" />
-                </Column>
+               
             </columns>
             <items>
                 <ColumnListItem >
@@ -39,9 +37,9 @@
                                                 pattern: 'HH:mm'
                                             }
                                         }" />
-                        <Text text=""/>
+                        <Text text="{HistoryData>summary}"/>
                         <Text text="{HistoryData>modifiedBy}"/>
-                        <ExpandableText maxCharacters="10" overflowMode="Popover" class="sapUiTinyMarginBottom sapUiTinyMarginTop" text="{DisplayHealthInsuranceModel>cust_address}" />
+                       
                     </cells>
                 </ColumnListItem>
             </items>

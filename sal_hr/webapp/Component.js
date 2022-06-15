@@ -3,9 +3,10 @@ sap.ui.define([
     "sap/ui/Device",
     "com/sal/salhr/model/models",
     'sap/ui/model/json/JSONModel',
-    'sap/f/library'
+    'sap/f/library',
+    'sap/ui/core/BusyIndicator'
 ],
-    function (UIComponent, Device, models, JSONModel, fioriLibrary) {
+    function (UIComponent, Device, models, JSONModel, fioriLibrary,BusyIndicator) {
         "use strict";
 
         return UIComponent.extend("com.sal.salhr.Component", {
@@ -48,15 +49,18 @@ sap.ui.define([
             },
 
             fnGetLoggedInEmpInfo: function (bIsUserManager) {
+                BusyIndicator.show();
                 this.getModel().read("/EmpInfo", {
                     urlParameters: {
                         "moreInfo": "true"
                     },
                     success: function (oData) {
+                        BusyIndicator.hide();
                         this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
                         this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
                     }.bind(this),
                     error: function (oError) {
+                        BusyIndicator.hide();
                         sap.m.MessageBox.error(JSON.stringify(oError));
                     }.bind(this),
                 });

@@ -52,9 +52,11 @@
                         <Input id="idIncumbentPosition" value="{jobInfoNav>/results/0/managerId}"/>
 
                         <Label text="Position" />
-                        <Select id="idPosition" items="{ path: '/SF_Position'}" selectedKey="{jobModel>/position}">
+                        <!-- <Select id="idPosition" items="{ path: '/SF_Position'}" selectedKey="{jobModel>/position}">
                             <core:Item key="{code}" text="{externalName_defaultValue}"/>
-                        </Select>
+                        </Select> -->
+
+                         <Input id="idPosition"  width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onPositionRequest" />
 
                         <Label text="Time in Position" />
                         <Input value="" />
