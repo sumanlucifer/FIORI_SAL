@@ -38,11 +38,19 @@ sap.ui.define([
                             "rules":
                             [
                                 {
-                                    "dataContext": {"SLA Compliance Score": {"min": 95} },
+                                    "dataContext": {"SLA Compliance Score": {"min": 98} },
                                     "properties": {
                                         "color":"sapUiChartPaletteSemanticGood"
                                     },
-                                    "displayName": "SLA Compliance Score > 95"
+                                    "displayName": "SLA Compliance Score >= 98"
+                                   
+                                },
+                                {
+                                    "dataContext": {"SLA Compliance Score": {"min": 95,"max": 98} },
+                                    "properties": {
+                                        "color":"sapUiChartPaletteSemanticCritical"
+                                    },
+                                    "displayName": "SLA Compliance Score >=95 & < 98"
                                    
                                 }
                             ],
@@ -125,7 +133,7 @@ sap.ui.define([
                 if (sRatingState === "Success") {
                     return "ExcellentEmoji sapUiTinyMarginEnd";
                 }
-                else if (sRatingState === "Information") {
+                else if (sRatingState === "Warning") {
                     return "GoodEmoji sapUiTinyMarginEnd";
                 } else if (sRatingState === "None") {
                     return "NAEmoji sapUiTinyMarginEnd";
@@ -155,7 +163,7 @@ sap.ui.define([
                 if (iSLAComplianceScore >= 98) {
                     sStateValue = "Success";
                 } else if (iSLAComplianceScore >= 95) {
-                    sStateValue = "Information";
+                    sStateValue = "Warning";
                 } else if (iSLAComplianceScore < 95) {
                     sStateValue = "Error";
                 }else {
