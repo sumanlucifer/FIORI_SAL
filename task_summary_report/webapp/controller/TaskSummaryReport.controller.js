@@ -47,6 +47,7 @@ sap.ui.define([
                 this.getView().getModel().read(sPath, {
                     urlParameters: {
                         "taskSummaryReport": "true",
+                        "IsUserManager": "true",
                         "from": sStartDate,
                         "to": sEndDate
                     },
@@ -97,6 +98,7 @@ sap.ui.define([
                     filters: aFilters,
                     urlParameters: {
                         "taskSummaryReport": "true",
+                        "IsUserManager": "true",
                         "from": sStartDate,
                         "to": sEndDate,
                         "$expand": "module,subModule"
@@ -132,6 +134,7 @@ sap.ui.define([
                     filters: [oModuleIdFilter],
                     urlParameters: {
                         "taskSummaryReport": "true",
+                        "IsUserManager": "true",
                         "from": sStartDate,
                         "to": sEndDate,
                         "$expand": "module,subModule",

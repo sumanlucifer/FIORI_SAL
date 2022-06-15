@@ -11,16 +11,36 @@ sap.ui.define(
 
         return Controller.extend("com.sal.chatbotsummaryreport.controller.controller.App", {
             onInit: function () {
+                var oCurrentDate = new Date(),
+                    oFromDate = oCurrentDate.getDate() - 7;
+
+                oFromDate = new Date(oCurrentDate.setDate(oFromDate));
+
+                var oLocalViewModel = new JSONModel({
+                    FromDate: oFromDate,
+                    ToDate: new Date()
+                });
+                this.getView().setModel(oLocalViewModel, "LocalViewModel");
+
                 this.fnGetChatBotData();
             },
 
-            fnGetChatBotData: function (oDateRangeFilter) {
+            fnGetChatBotData: function () {
+                var oFromDate = this.getView().getModel("LocalViewModel").getProperty("/FromDate"),
+                    oToDate = this.getView().getModel("LocalViewModel").getProperty("/ToDate"),
+                    dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                    oStartDate = dateFormat.format(new Date(oFromDate)),
+                    oEndDate = dateFormat.format(new Date(oToDate)),
+                    sStartDate = oStartDate + "T00:00:00.000Z",
+                    sEndDate = oEndDate + "T00:00:00.000Z";
+
                 this.getView().setBusy(true);
                 this.getOwnerComponent().getModel().read("/chatBotUsageSummary", {
                     urlParameters: {
-                        "IsUserManager": "true"
+                        "IsUserManager": "true",
+                        "from": sStartDate,
+                        "to": sEndDate
                     },
-                    filters: [oDateRangeFilter],
                     success: function (oData) {
                         if (oData.chatBotUsageSummary.length > 2) {
                             var oSummaryData = JSON.parse(oData.chatBotUsageSummary);
@@ -92,10 +112,13 @@ sap.ui.define(
 
             handleFiltersOkPress: function (oEvent) {
                 var oFromDate = this.getView().byId("idDateRangeSelector").getDateValue(),
-                    oToDate = this.getView().byId("idDateRangeSelector").getSecondDateValue(),
-                    oDateRangeFilter = new Filter("Date", FilterOperator.BT, oFromDate, oToDate);
+                    oToDate = this.getView().byId("idDateRangeSelector").getSecondDateValue();
 
-                this.fnGetChatBotData(oDateRangeFilter);
+                this.getView().getModel("LocalViewModel").setProperty("/FromDate", oFromDate);
+                this.getView().getModel("LocalViewModel").setProperty("/ToDate", oToDate);
+                this.getView().getModel("LocalViewModel").refresh();
+
+                this.fnGetChatBotData();
             },
 
             // Function is used to set the items in Ascending or Descending Order
