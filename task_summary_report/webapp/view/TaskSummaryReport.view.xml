@@ -12,10 +12,10 @@
             <pages>
                 <Page id="page" showHeader="false" title="{i18n>title}">
                     <VBox class="sapUiTinyMarginTop">
-                        <Toolbar style="Clear">
+                        <OverflowToolbar style="Clear">
                             <ToolbarSpacer/>
                             <DateRangeSelection id="DRS2" width="20%" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
-                            <SegmentedButton selectedKey="{LocalViewModel>/SelectedSegmentBTNKey}" width="25%" selectionChange="onSegmentBTNSelect">
+                            <SegmentedButton selectedKey="{LocalViewModel>/SelectedSegmentBTNKey}" selectionChange="onSegmentBTNSelect">
                                 <items>
                                     <SegmentedButtonItem text="{i18n>HR}" key="HR" width="12%"/>
                                     <SegmentedButtonItem text="{i18n>Procurement}" key="Procurement"/>
@@ -30,7 +30,7 @@
                                     <SegmentedButtonItem key="ChartOnly" icon="sap-icon://horizontal-stacked-chart"/>
                                 </items>
                             </SegmentedButton>
-                        </Toolbar>
+                        </OverflowToolbar>
                         <commons:ChartContainer id="idChartContainer" showFullScreen="true" showZoom="true" title="{i18n>HumanResource}">
                             <commons:content>
                                 <commons:ChartContainerContent id="idTaskChartContainer">
@@ -60,21 +60,21 @@
                             </commons:content>
                         </commons:ChartContainer>
 
-                        <Toolbar id="idTableToolbar" style="Clear" class="sapUiTinyMarginTop sapUiTinyMarginBegin">
+                        <OverflowToolbar id="idTableToolbar" style="Clear" class="sapUiTinyMarginTop sapUiTinyMarginBegin">
                             <Label text="{i18n>Module}:" required="true"/>
-                            <ComboBox items="{path: '/MasterModules', sorter: { path: 'name'}}" selectedKey="{LocalViewModel>/SelectedModuleID}" selectionChange="onModuleChange">
+                            <ComboBox width="25%" items="{path: '/MasterModules', sorter: { path: 'name'}}" selectedKey="{LocalViewModel>/SelectedModuleID}" selectionChange="onModuleChange">
                                 <core:Item key="{ID}" text="{name}" />
                             </ComboBox>
                             <Label text="{i18n>Portlet}:"/>
-                            <ComboBox items="{PortletModel>/}" selectedKey="{LocalViewModel>/SelectedPortletID}">
+                            <ComboBox width="25%" items="{PortletModel>/}" selectedKey="{LocalViewModel>/SelectedPortletID}">
                                 <core:Item key="{PortletModel>ID}" text="{PortletModel>name}" />
                             </ComboBox>
                             <Label text="{i18n>Status}:"/>
-                            <ComboBox items="{path: '/MasterReportStatus',sorter: { path: 'status'}}" selectedKey="{LocalViewModel>/SelectedStatus}">
+                            <ComboBox width="20%" items="{path: '/MasterReportStatus',sorter: { path: 'status'}}" selectedKey="{LocalViewModel>/SelectedStatus}">
                                 <core:Item key="{status}" text="{status}" />
                             </ComboBox>
                             <Button text="Go" press="onFilterTablePress" type="Emphasized"/>
-                        </Toolbar>
+                        </OverflowToolbar>
                         <commons:ChartContainer id="idTaskListTable" showFullScreen="true" autoAdjustHeight="false" title="{i18n>TaskSummary}">
                             <commons:content>
                                 <commons:ChartContainerContent>
