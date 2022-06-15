@@ -182,7 +182,7 @@ sap.ui.define([
                 var fName = oFileObj.fileName;
                 fName = fName.split(".")[0];
                 debugger;
-                if (fileext === "pdf" || fileext === "png") {
+                if (fileext === "pdf" || fileext === "png" || fileext === "jpg" || fileext === "jpeg") {
                     var decodedPdfContent = atob(fContent);
                     var byteArray = new Uint8Array(decodedPdfContent.length)
                     for (var i = 0; i < decodedPdfContent.length; i++) {
@@ -196,7 +196,8 @@ sap.ui.define([
                     a.dispatchEvent(new MouseEvent('click'));
                 }
                 else {
-                    sap.ui.core.util.File.save(fContent, fName, fileext, mimeType);
+                    var decodedContent = atob(fContent);
+                    sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
                 }
             },
 

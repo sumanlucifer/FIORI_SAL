@@ -186,6 +186,11 @@ sap.ui.define(
           this.getView()
             .getModel("CreateUserViewModel")
             .setProperty("/s4UserId", oBject.s4UserId);
+            this.getView()
+            .getModel("CreateUserViewModel")
+            .setProperty("/roleID",  oBject.masterRoleId);
+
+           
 
           this.action = "Edit";
           this.openUserFragment();
@@ -313,13 +318,14 @@ sap.ui.define(
                 //  this.onResetPress();
               }.bind(this),
               error: function (oError) {
+                this.getView().setBusy(false);
                 sap.m.MessageBox.error(
                   JSON.parse(
                     JSON.parse(oError.responseText).error.message.value
                   ).error.message.value.split("]")[1]
                 );
                 this.getView().getModel().refresh();
-                this.getView().setBusy(false);
+              
               }.bind(this),
             });
         },
@@ -338,13 +344,14 @@ sap.ui.define(
                 this.getView().getModel().refresh();
               }.bind(this),
               error: function (oError) {
+                this.getView().setBusy(false);
                 sap.m.MessageBox.error(
                   JSON.parse(
                     JSON.parse(oError.responseText).error.message.value
                   ).error.message.value.split("]")[1]
                 );
                 this.getView().getModel().refresh();
-                this.getView().setBusy(false);
+                
               }.bind(this),
             });
         },
@@ -362,6 +369,7 @@ sap.ui.define(
             itsmUserId: oCreateUserData.itsmUserID,
             s4UserId: oCreateUserData.s4UserId,
             reportingTo: "",
+            masterRoleId: parseInt(oCreateUserData.roleID)
           };
         },
 

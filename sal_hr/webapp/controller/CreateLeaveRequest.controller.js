@@ -125,6 +125,7 @@ sap.ui.define([
 
             },
             fnGetLeaveRequestPayload: function () {
+                var sQtyHrs;
                 // validate leave application for other user Field
                 var oLeaveApplicationForINP = this.getView().byId("idLeaveApplicationForINP");
                 if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
@@ -144,8 +145,11 @@ sap.ui.define([
                 } else {
                     sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 }
+                var sLoginID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                
 
-                var sQtyHrs;
+                                
+
                 if (this.attachReq === true && this.isAttachment === false) {
                     sap.m.MessageBox.error("Please upload the attachments.");
                     this.bValid = false;
@@ -168,12 +172,7 @@ sap.ui.define([
                     sEndDate = oEndDate + "T00:00:00";
                     var sTimeType = this.getView().byId("idTimeType").getSelectedKey();
 
-                    // if(sTimeType === "460"){
-                    //     var sQtyHrs = this.getView().byId("TP1").getValue();
-                    //     sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                    // }else{
-
-                    // }
+                   
 
                     switch (sTimeType) {
                         case "460":
@@ -205,12 +204,8 @@ sap.ui.define([
                         sAttachmentFileContent = this.fileContent;
                         sAttahmentFileName = this.fileName;
                     } else {
-
-
                         sAttachmentFileContent = "on Leave";
                         sAttahmentFileName = "Leave.txt";
-
-
                     }
 
                     return {
@@ -234,7 +229,7 @@ sap.ui.define([
                         "isAttachmentNew": this.isAttachment,
                         "attachmentFileContent": sAttachmentFileContent,
                         "attachmentFileName": sAttahmentFileName,
-                        "attachmentUserId": sUserID,
+                        "attachmentUserId": sLoginID,
                         "fractionQuantity": sQtyHrs
 
                     };
@@ -242,25 +237,10 @@ sap.ui.define([
             },
 
             onLeaveStartDatChange: function (oEvent) {
-                var oneDay = 24 * 60 * 60 * 1000;
 
                 var sStartDate = oEvent.getSource().getValue();
                 this.getView().byId("idEndDate").setValue(sStartDate);
 
-
-
-
-                // if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
-                //     oEvent.getSource().setValueState("Error");
-                //     oEvent.getSource().setValueStateText("Start Date must not be later than End Date");
-                //     // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
-                // } else {
-                //     oEvent.getSource().setValueState();
-                //     oEvent.getSource().setValueStateText("");
-                //     this.getView().byId("idEndDate").setValueState();
-                //     this.getView().byId("idEndDate").setValueStateText("");
-
-                // }
             },
             onLeaveEndDateChange: function (oEvent) {
                 var oneDay = 24 * 60 * 60 * 1000;
@@ -598,6 +578,12 @@ sap.ui.define([
                                 }),
                                 new Filter({
                                     path: "firstName",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                }),
+                                new Filter({
+                                    path: "middleName",
                                     operator: "Contains",
                                     value1: sValue.trim(),
                                     caseSensitive: false

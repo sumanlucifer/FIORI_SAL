@@ -44,7 +44,7 @@ sap.ui.define([
                 this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
-
+                this.getView().setBusy(true);
                 var oComponentModel = this.getComponentModel(),
                     sKey = null,
                     sTicketCode = this.object.ticketCode,
@@ -59,7 +59,7 @@ sap.ui.define([
                     });
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
-                this.getView().setBusy(true);
+              
                 this.getView().bindElement({
                     path: sKey,
                     parameters: {

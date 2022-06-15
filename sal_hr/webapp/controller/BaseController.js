@@ -72,12 +72,14 @@ sap.ui.define([
             filter.push(idFILTER);
             var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
             var oComponentModel = this.getComponentModel();
+            this.getView().setBusy(true);
             oComponentModel.read("/Tickets", {
                 filters: [filter],
                 urlParameters: {
                     "IsUserManager": bIsUserManager
                 },
                 success: function (oData) {
+                    this.getView().setBusy(false);
                     this._bindView(oData);
                 }.bind(this),
                 error: function (oError) {

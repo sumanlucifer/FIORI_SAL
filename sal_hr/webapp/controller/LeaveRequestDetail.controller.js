@@ -28,6 +28,7 @@ sap.ui.define([
 
             },
 
+
             _onObjectMatched: function (oEvent) {
 
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
@@ -45,6 +46,15 @@ sap.ui.define([
                     this.byId("idFullScreenBTN").setIcon("sap-icon://exit-full-screen");
                     this._getTicketData(this.sChildID);
                 }
+
+                var sUploadAttachment = this.getView().byId("UploadSet").getVisible();
+                if (!sUploadAttachment) {
+                    this.attachReq = false;
+                    this.isAttachment === false;
+                } else {
+                    this.attachReq = true;
+                    this.isAttachment === true;
+                }
             },
 
             _bindView: function (data) {
@@ -54,113 +64,91 @@ sap.ui.define([
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
-                // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var that = this;
                 var sTicketCode = this.object.ticketCode;
                 var oAttachModel = new JSONModel();
                 that.getView().setModel(oAttachModel, "attachmentModel");
-                switch (this.sParentID) {
-                    // Leave Module
-                    case "1":
-                        sKey = oComponentModel.createKey("/SF_Leave", {
-                            externalCode: object.externalCode
-                        });
-                        var sTicketCode = this.object.ticketCode;
-                        var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
-                        this.getView().getModel().read("/SF_Leave('" + object.externalCode + "')", {
-                            urlParameters: {
-                                "$expand": "cust_attachmentNav, timeTypeNav,userIdNav",
-                                "recordStatus": object.status,
-                                "IsUserManager": bIsUserManager
-                            },
-                            success: function (oData) {
-                                var oAttachModel = new JSONModel(oData.cust_attachmentNav),
-                                    oTimeTypeModel = new JSONModel(oData.timeTypeNav),
-                                    oLeaveModel = new JSONModel(oData);
-                                that.getView().setModel(oAttachModel, "attachmentModel");
-                                that.getView().setModel(oTimeTypeModel, "timeTypeModel");
-                                that.getView().setModel(oLeaveModel, "leaveModel");
 
-                                switch (oData.timeType) {
-                                    // Leave Module
-                                    case "S110":
-                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                sKey = oComponentModel.createKey("/SF_Leave", {
+                    externalCode: object.externalCode
+                });
+                var sTicketCode = this.object.ticketCode;
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
-                                        break;
-                                    case "500":
-                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                this.getView().setBusy(true);
+                this.getView().getModel().read("/SF_Leave('" + object.externalCode + "')", {
+                    urlParameters: {
+                        "$expand": "cust_attachmentNav, timeTypeNav,userIdNav",
+                        "recordStatus": object.status,
+                        "IsUserManager": bIsUserManager
+                    },
+                    success: function (oData) {
+                        var oAttachModel = new JSONModel(oData.cust_attachmentNav),
+                            oTimeTypeModel = new JSONModel(oData.timeTypeNav),
+                            oLeaveModel = new JSONModel(oData);
+                        that.getView().setModel(oAttachModel, "attachmentModel");
+                        that.getView().setModel(oTimeTypeModel, "timeTypeModel");
+                        that.getView().setModel(oLeaveModel, "leaveModel");
 
-                                        break;
-                                    case "460":
-                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
-                                        break;
+                        switch (oData.timeType) {
+                            // Leave Module
+                            case "S110":
+                                that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                                that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
 
-                                    case "450":
-                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
-                                        break;
-                                    case "480":
-                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
-                                        break;
-                                    case "440":
-                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
-                                        break;
-                                    default:
-                                        that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                                        that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
-                                }
+                                break;
+                            case "500":
+                                that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                                that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
 
-                                that.onCallHistoryData(object.ticketCode);
-                            },
-                            error: function (oError) {
-                                if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
-                                    sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
-                                else {
-                                    sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-                                }
-                            }
-                        });
+                                break;
+                            case "460":
+                                that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+                                that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                break;
 
-                        this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
-                        // this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                        // this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                        // this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                        // this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
-                        this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
+                            case "450":
+                                that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                break;
+                            case "480":
+                                that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                break;
+                            case "440":
+                                that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                break;
+                            default:
+                                that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+                                that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                        }
 
-                        break;
-                }
+                        that.onCallHistoryData(object.ticketCode);
+                        this.getView().setBusy(false);
+                    },
+                    error: function (oError) {
+                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                        else {
+                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                        }
+                        this.getView().setBusy(false);
+                    }
+                });
+
+                this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
+                // this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
+                // this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
+                // this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
+                // this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
+                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
 
                 this.getView().getModel("LocalViewModel").refresh();
-                // if (this.sParentID !== "7") {
-                //     this.getView().bindElement({
-                //         path: sKey,
-                //         events: {
-                //             change: function (oEvent) {
-                //                 var oContextBinding = oEvent.getSource();
-                //                 oContextBinding.refresh(false);
-                //             }.bind(this),
-                //             dataRequested: function () {
-                //                 this.getView().setBusy(true);
-                //             }.bind(this),
-                //             dataReceived: function () {
-                //                 this.getView().setBusy(false);
-                //                 this.onCallHistoryData(object.ticketCode);
-                //             }.bind(this)
-                //         }
-                //     });
-                // }
+                this.getView().setBusy(false);
+
             },
 
             onCallHistoryData: function (sticketCode) {
@@ -235,23 +223,28 @@ sap.ui.define([
                 var sEntityPath = "/SF_Leave('" + this.object.externalCode + "')",
                     oPayloadObj = this.fnGetLeaveRequestPayload();
 
-                this.getView().setBusy(true);
-                this.getView().getModel().update(sEntityPath, oPayloadObj, {
-                    success: function (oResponse) {
-                        this.getView().setBusy(false);
-                        sap.m.MessageBox.success("Request Submitted successfully.");
-                        this.getView().getModel().refresh();
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getView().setBusy(false);
-                        if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
-                            sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
-                        else {
-                            sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
-                        }
-                        this.getView().getModel().refresh();
-                    }.bind(this)
-                });
+
+
+
+                if (this.bValid != false) {
+                    this.getView().setBusy(true);
+                    this.getView().getModel().update(sEntityPath, oPayloadObj, {
+                        success: function (oResponse) {
+                            this.getView().setBusy(false);
+                            sap.m.MessageBox.success("Request Submitted successfully.");
+                            this.getView().getModel().refresh();
+                        }.bind(this),
+                        error: function (oError) {
+                            this.getView().setBusy(false);
+                            if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                                sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            else {
+                                sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                            }
+                            this.getView().getModel().refresh();
+                        }.bind(this)
+                    });
+                }
             },
             onTimeTyeChange: function (oEvent) {
                 var sType = oEvent.getSource().getSelectedKey();
@@ -324,49 +317,117 @@ sap.ui.define([
             },
 
             fnGetLeaveRequestPayload: function () {
-                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-                var sType = this.getView().byId("idEditTimeType").getSelectedKey();
-
-                if (this.isAttachmentNew === true) {
-                    var sattachmentFileName = this.fileName;
-                    var sattachmentFileContent = this.fileContent;
-                    var sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
-                    var isAttachmentNew = true;
+                if (this.attachReq === true && this.isAttachment === false) {
+                    sap.m.MessageBox.error("Please upload the attachments.");
+                    this.bValid = false;
                 } else {
-                    sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
-                    sattachmentFileContent = this.getView().getModel("attachmentModel").getData().fileContent;
-                    sattachmentFileID = sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
-                    sattachmentFileContent = this.getView().getModel("attachmentModel").getData().fileContent;
-                    sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
+                    this.bValid = true;
+
+                    var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                    var sType = this.getView().byId("idEditTimeType").getSelectedKey();
+                    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
+                    var sQtyHrs;
+
+
+                    if (this.isAttachmentNew === true) {
+                        var sattachmentFileName = this.fileName;
+                        var sattachmentFileContent = this.fileContent;
+                        var sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
+                        var isAttachmentNew = true;
+                    } else {
+                        sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
+                        sattachmentFileContent = this.getView().getModel("attachmentModel").getData().fileContent;
+                        sattachmentFileID = sattachmentFileName = this.getView().getModel("attachmentModel").getData().fileName;
+                        sattachmentFileContent = this.getView().getModel("attachmentModel").getData().fileContent;
+                        sattachmentFileID = this.getView().getModel("attachmentModel").getData().attachmentId;
+                        isAttachmentNew = false;
+                    }
+                    
+                   if(this.isAttachmentRenamed === true){
+                    isAttachmentNew = true;
+                   }
+
+
+                    var sEndDate = this.getView().byId("idEditLeaveEndDatePicker").getDateValue();
+                    var oEndDate = dateFormat.format(new Date(sEndDate));
+                    sEndDate = oEndDate + "T00:00:00";
+
+
+                    var sStartDate = this.getView().byId("idStartLDatePicker").getDateValue();
+                    var oStartDate = dateFormat.format(new Date(sStartDate));
+                    sStartDate = oStartDate + "T00:00:00";
+
+
+
+
+                    switch (sType) {
+                        case "460":
+                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                            break;
+                        case "450":
+                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                            break;
+                        case "480":
+                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                        case "440":
+                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+
+                            break;
+                        case "HD1":
+                            sQtyHrs = "0.5";
+                            break;
+                        default:
+                            sQtyHrs = "0.0";
+                    }
+
+
+
+                    return {
+                        "endDate": sEndDate,
+                        "loaActualReturnDate": null,
+                        "timeType": sType,
+                        "loaExpectedReturnDate": null,
+                        "loaStartJobInfoId": null,
+                        "startDate": sStartDate,
+                        "cust_KronosPayCodeEditID": null,
+                        "startTime": null,
+                        "loaEndJobInfoId": null,
+                        "approvalStatus": null,
+                        "undeterminedEndDate": false,
+                        "userId": sUserID,
+                        "recurrenceGroup": null,
+                        "fractionQuantity": sQtyHrs,
+                        "endTime": null,
+                        "isAttachmentNew": isAttachmentNew,
+                        "attachmentId": sattachmentFileID,
+                        "attachmentFileContent": sattachmentFileContent,
+                        "attachmentFileName": sattachmentFileName,
+                        "attachmentUserId": sUserID
+                    }
                 }
+            },
 
-                var sEndDate = this.getView().byId("idEditLeaveEndDatePicker").getValue();
-                sEndDate = Date.parse(sEndDate);
-                var sStartDate = this.getView().byId("idStartLDatePicker").getValue();
-                sStartDate = Date.parse(sStartDate);
-                isAttachmentNew = false;
+            handleTimeChange: function (oEvent) {
+                var oTimePicker = this.byId("idEditRequestHrs"),
+                    oTP = oEvent.getSource(),
+                    sValue = oEvent.getParameter("value");
 
-                return {
-                    "endDate": "/Date(" + sEndDate + ")/",
-                    "loaActualReturnDate": null,
-                    "timeType": sType,
-                    "loaExpectedReturnDate": null,
-                    "loaStartJobInfoId": null,
-                    "startDate": "/Date(" + sStartDate + ")/",
-                    "cust_KronosPayCodeEditID": null,
-                    "startTime": null,
-                    "loaEndJobInfoId": null,
-                    "approvalStatus": null,
-                    "undeterminedEndDate": false,
-                    "userId": sUserID,
-                    "recurrenceGroup": null,
-                    "fractionQuantity": "1",
-                    "endTime": null,
-                    "isAttachmentNew": isAttachmentNew,
-                    "attachmentId": sattachmentFileID,
-                    "attachmentFileContent": sattachmentFileContent,
-                    "attachmentFileName": sattachmentFileName,
-                    "attachmentUserId": sUserID
+
+                if (sValue > "08:00") {
+                    oTimePicker.setValueState("Error");
+                    // oTimePicker.setValueText("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
+                    this.getView().byId("idSaveBTN").setEnabled(false);
+                    sap.m.MessageBox.error("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
+                } else {
+                    oTimePicker.setValueState();
+
+                    this.getView().byId("idSaveBTN").setEnabled(true);
                 }
             },
 
@@ -391,13 +452,15 @@ sap.ui.define([
                     a.dispatchEvent(new MouseEvent('click'));
                 }
                 else {
-                    sap.ui.core.util.File.save(fContent, fName, fileext, mimeType);
+                    var decodedContent = atob(fContent);
+                    sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
                 }
             },
 
             onFileDeleted: function (oEvent) {
                 var oUploadSet = this.byId("idEditUploadSet");
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
+                this.isAttachment = false;
             },
 
             onFileAdded: function (oEvent) {
@@ -418,6 +481,8 @@ sap.ui.define([
                 this.getView().getModel("attachmentModel").setProperty("/fileName", Filename);
                 this.getView().getModel("attachmentModel").setProperty("/mimeType", Filetype);
                 this.getView().getModel("attachmentModel").refresh();
+
+                this.isAttachment = true;
             },
 
             _getImageData: function (url, callback, fileName) {
@@ -439,7 +504,9 @@ sap.ui.define([
                 this.fileName = Filename;
                 this.isAttachmentNew = true;
             },
-
+            onFileRenamed: function (oEvent) {
+                this.isAttachmentRenamed = true;
+            },
             fnDeleteLeaveRequest: function () {
                 this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {
                     success: function (oData) {
@@ -475,6 +542,31 @@ sap.ui.define([
             onRejectPress: function () {
                 var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
                 this.onRejectRequest(swfRequestId);
-            }
+            },
+
+            onLeaveStartDatChange: function (oEvent) {
+
+                var sStartDate = oEvent.getSource().getValue();
+                this.getView().byId("idEditLeaveEndDatePicker").setValue(sStartDate);
+
+            },
+            onLeaveEndDateChange: function (oEvent) {
+               
+                var sStartDate = this.getView().byId("idStartLDatePicker").getDateValue();
+                var sEndDate = oEvent.getSource().getDateValue();
+
+                // if (sEndDate <= sStartDate) {
+                if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
+                    oEvent.getSource().setValueState("Error");
+                    oEvent.getSource().setValueStateText("End Date should be later than Start Date");
+                    
+                } else {
+                    oEvent.getSource().setValueState();
+                    oEvent.getSource().setValueStateText("");
+                    this.getView().byId("idStartLDatePicker").setValueState();
+                    this.getView().byId("idStartLDatePicker").setValueStateText("");
+                    
+                }
+            },
         });
     });

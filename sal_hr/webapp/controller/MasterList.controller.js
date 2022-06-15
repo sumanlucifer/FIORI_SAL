@@ -9,8 +9,10 @@ sap.ui.define([
 
     function (BaseController, Controller, formatter, Filter, FilterOperator, Sorter) {
         "use strict";
+       
 
         return BaseController.extend("com.sal.salhr.controller.MasterList", {
+           
             formatter: formatter,
             onInit: function () {
                 var oModel = this.getOwnerComponent().getModel("layoutModel");
@@ -34,6 +36,7 @@ sap.ui.define([
             },
             onUpdateMasterListBindingStart: function (oEvent) {
                 var sIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+            //    sIsUserManager = "true";
                 oEvent.getSource().getBinding("items").sCustomParams = "IsUserManager=" + sIsUserManager;
                 oEvent.getSource().getBinding("items").mCustomParams.IsUserManager = sIsUserManager;
             },
@@ -99,6 +102,11 @@ sap.ui.define([
                     },
 
                     success: function (oData) {
+                        if(oData.results.length === 0)
+                        {
+                            sap.m.MessageBox.error("You do not have permission to perform this action");
+                            return ;
+                        }
 
                         if (this.sManagerTile === false) {
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/createSelf", oData.results[0].createSelf);
@@ -115,6 +123,7 @@ sap.ui.define([
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateOther", oData.results[0].updateOther);
                         }
                         var sPath = oItem.getBindingContextPath()
+                        this.getView().getModel("EmpInfoModel").refresh(true);
                         this.getRouter().navTo("detail", {
                             parentMaterial: oItem.getModel().getProperty(sPath).ID,
                             layout: "TwoColumnsMidExpanded"

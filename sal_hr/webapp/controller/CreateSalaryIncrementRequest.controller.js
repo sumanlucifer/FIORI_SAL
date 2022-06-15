@@ -26,6 +26,7 @@ sap.ui.define([
                 var oLocalViewModel = new JSONModel({
                     busy: false,
                     currentDate: new Date(),
+                    minDate: new Date(),
                     jobInfoVisible: false,
                     componesationInfoVisible: false,
                     managerId: "12345"
@@ -34,6 +35,7 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
+                this.PRNFlag = false;
 
 
             },
@@ -45,7 +47,7 @@ sap.ui.define([
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
                 this.fnGetPayType();
-                this._bindView();
+                //this._bindView();
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
                 this.managerID = this.EmpInfoObj.userId;
 
@@ -73,16 +75,27 @@ sap.ui.define([
             },
 
             _bindView: function (data) {
-
+              var sUserID;
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
                 var oComponentModel = this.getComponentModel(),
-                 that = this,
+                 that = this;
 
+              
+                 if(this.PRNFlag)
+                 {
+               
+                    sUserID = this.prnID;
+                 }
+                 
+
+                 else{
+                    sUserID = this.EmpInfoObj.userId;
+                 }
                
 
-                    sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                        personIdExternal: this.EmpInfoObj.userId,
-                        userId: this.EmpInfoObj.userId
+                  var sKey = oComponentModel.createKey("/SF_EmpEmployment", {
+                        personIdExternal: sUserID,
+                        userId: sUserID
                     });
 
                 // this.getView().bindElement({
@@ -322,7 +335,7 @@ sap.ui.define([
                     oCompany = this.byId("idCompany"),
                     sDirectManager = this.getView().byId("idDirectManager"),
                     sJobCountry = this.byId("idJobCountry"),
-                    sNotes = this.byId("idNotes"),
+                    // sNotes = this.byId("idNotes"),
                     oProbationaryDate = this.byId("idProbationaryDate"),
                     // sJobTitle = this.byId("idJobTitle"),
                     sIKOOK = this.byId("idIKOOK"),
@@ -366,13 +379,13 @@ sap.ui.define([
                     }
 
                     // Validate Notes
-                    if (!sNotes.getValue()) {
-                        sNotes.setValueState("Error");
-                        sNotes.setValueStateText("Please enter Notes");
-                        sValidationErrorMsg = "Please fill the all required fields.";
-                    } else {
-                        sNotes.setValueState("None");
-                    }
+                    // if (!sNotes.getValue()) {
+                    //     sNotes.setValueState("Error");
+                    //     sNotes.setValueStateText("Please enter Notes");
+                    //     sValidationErrorMsg = "Please fill the all required fields.";
+                    // } else {
+                    //     sNotes.setValueState("None");
+                    // }
 
                     // validate Pay Group
                     if (!sPayGroup.getSelectedKey()) {
@@ -630,6 +643,10 @@ sap.ui.define([
                 var obj = oSelectedItem.getBindingContext().getObject();
                 this.byId("idSalIncPRN").setValue(obj["userId"]);
                 this.byId("idSalIncPRN").setValueState("None");
+
+                this.PRNFlag = true;
+                this.prnID = obj["userId"];
+                this._bindView();
             },
 
 

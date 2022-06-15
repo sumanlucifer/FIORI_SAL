@@ -57,7 +57,7 @@
                                     path : 'label_defaultValue' 
                                 },
                                 filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelTripCat'} ]
-                                       }">
+                                       }" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory}">
                         <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
                     </Select>
 
