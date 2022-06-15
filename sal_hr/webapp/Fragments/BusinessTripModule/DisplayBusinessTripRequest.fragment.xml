@@ -65,7 +65,7 @@
         <Text id="idDisplayTotalPErDiem" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalPerDiem}" />
     </form:SimpleForm>
 
-    <form:SimpleForm title="{i18n>FlightDeatils}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+    <form:SimpleForm title="{i18n>FlightDeatils}" layout="ColumnLayout" class="style-RemoveTitleHeight" visible="{= ${LocalViewModel>/businessCategory} === true ? true : false }" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>BusinessTravelDate}" />
         <Text id="idDisplayFlightTravelDate" text="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
 
@@ -87,6 +87,38 @@
         <Label text="{i18n>TicketAmount}"/>
         <Text id="idDisplayTicketAmt" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount} ? ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount} : '-'}"/>
     </form:SimpleForm>
+
+
+       <!-- # Trip Category Training form  -->
+                <form:SimpleForm title="{i18n>FlightDeatils}" layout="ColumnLayout" visible="{= ${LocalViewModel>/trainingCategory} === true ? true : false }" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" >
+                    <Label text="{i18n>TrainingTravelDate}" required="true"/>
+                    <Text id="idDisplyTrainingFlightTravelDate" text="{path:'DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"></Text>
+
+                    <!-- <Label text="Travel From"/>
+                    <Input id="idTrainingTravelFrom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelFrom}"/> -->
+
+                    <Label text="{i18n>TravelTo}"/>
+                    <Text id="idDisplyTrainingTravelTo" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelTo}"/>
+
+                    <Label text="{i18n>FlightNumber}" />
+                    <Text id="idDisplyTrainingFlightNum" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelFlightNum}" />
+
+                    <Label text="{i18n>DepartureTime}"/>
+                    <Text id="idDisplyTrainingDepTime" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelDepTime}"/>
+
+                    <Label text="{i18n>ArrivalTime}" />
+                    <Text id="idDisplyTrainingArrivalTime" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelArrTime}" />
+
+                    <Label text="{i18n>PayComponent}"/>
+                    <Text id="idDisplyTrainingPayCom" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_trainingTravelPayComp}" />
+
+                    <Label text="{i18n>TicketAmount}" />
+                    <Text id="idDisplyTrainingTicketAmt" text="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_ticketAmount}" />
+
+                </form:SimpleForm>
+
 
     <upload:UploadSet id="idDisplayAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? true : false}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" 
     instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">

@@ -150,6 +150,17 @@ sap.ui.define([
 
             _fnSetDisplayEditBusinessTripModel: function (oData) {
                 this.getView().setBusy(true);
+
+                var sBussinessTypeCheck =  oData.cust_toDutyTravelItem.results[0].cust_tripCategory;
+                if(sBussinessTypeCheck === "B")
+                {
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingCategory", false);
+                    this.getView().getModel("LocalViewModel").setProperty("/businessCategory", true);
+                }
+                else{
+                    this.getView().getModel("LocalViewModel").setProperty("/businessCategory", false);
+                    this.getView().getModel("LocalViewModel").setProperty("/trainingCategory", true);
+                }
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
                 var oTravelItemDetailsObj = oData.cust_toDutyTravelItem.results[0],
@@ -832,6 +843,15 @@ sap.ui.define([
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", true);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
                 }
+            },
+            fnCalculateTotalPerDiem: function () {
+                
+                var sTotalPerDiem = Number(this.byId("idEditPerDiem").getValue()) + Number(this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_ticketAmount")) + Number(this.byId("idEditVisaAmt").getValue());
+                //    sTotalPerDiem = String(sTotalPerDiem);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalPerDiem", sTotalPerDiem);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalAmount", sTotalPerDiem);
+
+
             },
             onApprovePress: function () {
                 var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");

@@ -579,6 +579,9 @@ sap.ui.define([
 
             onValueHelpSearch: function (oEvent) {
                 var sValue = oEvent.getParameter("value");
+                sValue =   sValue.replace(/\s+/g, '');
+
+               
                 if (sValue) {
                     var oFilter = new Filter(
                         [
@@ -597,6 +600,12 @@ sap.ui.define([
                                 }),
                                 new Filter({
                                     path: "firstName",
+                                    operator: "Contains",
+                                    value1: sValue.trim(),
+                                    caseSensitive: false
+                                }),
+                                new Filter({
+                                    path: "middleName",
                                     operator: "Contains",
                                     value1: sValue.trim(),
                                     caseSensitive: false
