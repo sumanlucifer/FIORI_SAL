@@ -30,6 +30,7 @@ sap.ui.define([
 
 
             _onObjectMatched: function (oEvent) {
+                this.getView().setBusy(true);
 
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
@@ -127,7 +128,8 @@ sap.ui.define([
                         }
 
                         that.onCallHistoryData(object.ticketCode);
-                        this.getView().setBusy(false);
+                        that.getView().setBusy(false);
+                        
                     },
                     error: function (oError) {
                         if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
@@ -233,6 +235,11 @@ sap.ui.define([
                             this.getView().setBusy(false);
                             sap.m.MessageBox.success("Request Submitted successfully.");
                             this.getView().getModel().refresh();
+                          
+                            this.oRouter.navTo("detail", {
+                                parentMaterial: this.sParentID,
+                                layout: "TwoColumnsMidExpanded"
+                            });
                         }.bind(this),
                         error: function (oError) {
                             this.getView().setBusy(false);

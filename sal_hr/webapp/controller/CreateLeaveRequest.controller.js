@@ -107,6 +107,7 @@ sap.ui.define([
                             sap.m.MessageBox.success("Request Submitted Successfully.");
                             this.getView().setBusy(false);
                             this.getView().getModel().refresh();
+                            this.onResetPress();
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
@@ -373,7 +374,7 @@ sap.ui.define([
 
             },
             onTimeTyeChange: function (oEvent) {
-                var sType = oEvent.getSource().getSelectedKey();
+                var sType = this.getView().byId("idTimeType").getSelectedKey();;
                 var that = this;
 
 
@@ -453,36 +454,46 @@ sap.ui.define([
 
 
             onCreateCancelPress: function () {
+                this.onResetPress();
                 this.oRouter.navTo("detail", {
                     parentMaterial: this.sParentID,
                     layout: "TwoColumnsMidExpanded"
 
-                });
+                }); 
+                
                 this.mainModel.refresh();
             },
             onResetPress: function () {
 
-                this.onCreateResetPress();
-
-
-
-            },
-
-            onCreateResetPress: function () {
                 var dataReset = {
                     startDate: new Date(),
                     endDate: new Date(),
-                    returnDate: this.sReturnDate,
-                    requestDay: this.sRequesting,
                     availBal: false,
-                    recurringAbs: false,
                     busy: false,
-                    uploadAttachment: true
+                    uploadAttachment: true,
+                    currentDate: new Date(),
+                    meetingType: false,
+                    availBal: false,
+                    halfDayType: false,
+                   
                 };
-                this.getView().byId("idRecCheckbox").setSelected(false);
-                this.getView().getModel("LocalViewModel").setData(dataReset);
-                this.getView().getModel("LocalViewModel").refresh();
+               
+                this.getView().getModel("LocalViewModel").setData(dataReset);    
+                this.getView().getModel("LocalViewModel").refresh(true);
+                this.getView().byId("idTimeType").setSelectedKey("700");
+                this.onTimeTyeChange();
+                this.getView().byId("UploadSet").removeAllItems();
+                this.getView().byId("TP1").setValue("");
+                this.getView().byId("TP1").setValueState("None");
+                this.getView().byId("idStartDate").setValueState("None");
+                this.getView().byId("idEndDate").setValueState("None");
+
+            
+
+
             },
+
+           
 
             fnGetLeaveBalance: function () {
                 var that = this,

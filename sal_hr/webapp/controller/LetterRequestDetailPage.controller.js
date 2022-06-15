@@ -169,6 +169,7 @@ sap.ui.define([
                         this.getView().setBusy(false);
                         sap.m.MessageBox.success("Request Submitted successfully.");
                         this.getView().getModel().refresh();
+                        
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
