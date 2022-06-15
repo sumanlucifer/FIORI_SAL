@@ -156,7 +156,7 @@ sap.ui.define([
                 var sSelectedViewKey = oEvent.getSource().getSelectedKey(),
                     oTableView = this.getView().byId("idTaskListTable"),
                     oChartView = this.getView().byId("idChartContainer"),
-                    oTableToolbar = this.getView().byId("idTableToolbar");
+                    oTableToolbar = this.getView().byId("idTableFilterbar");
 
                 if (sSelectedViewKey === "TableOnly") {
                     oTableView.setVisible(true);
@@ -228,6 +228,9 @@ sap.ui.define([
             },
 
             onModuleChange: function (sValue) {
+                
+                this.getView().getModel("LocalViewModel").setProperty("/SelectedPortletID", ""); 
+
                 var sPath = "";
                 if (typeof (sValue) !== "object")
                     sPath = "/MasterModules(" + sValue + ")/masterSubModule";
