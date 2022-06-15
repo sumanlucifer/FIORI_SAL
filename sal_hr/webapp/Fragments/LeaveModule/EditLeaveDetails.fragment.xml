@@ -12,7 +12,7 @@
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
-                                                }}" change="handleChange"/>
+                                                }}" change="onLeaveStartDatChange"/>
 
              <Label id="idEditLeaveTypeLBL" text="{i18n>Leave Type}" />
              <Select id="idEditTimeType" items="{ path: '/SF_Leave_TimeType',
@@ -46,7 +46,7 @@
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
-                                                }}" change="handleChange"/>
+                                                }}" change="onLeaveEndDateChange"/>
 
 
             
@@ -62,7 +62,7 @@
             <upload:UploadSet id="idEditUploadSet" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true"  maxFileNameLength="30" maxFileSize="200" mediaTypes="text/plain,application/msword,image/jpeg" 
             afterItemRemoved="onFileDeleted"
             afterItemAdded="onFileAdded" 
-            afterItemEdited="onFileEdited" 
+            fileRenamed="onFileRenamed" 
             attachFileRenamed="onFileEdited" 
             visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : false}">
                 <upload:toolbar>

@@ -33,15 +33,29 @@ sap.ui.define([
                         }
                     },
                     plotArea: {
-                        colorPalette: ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47", "#264478"],
-                        // gap: {
-                        //     innerGroupSpacing: 0,
-                        //     groupSpacing: 1.5
-                        // },
-                        // dataPointSize: {
-                        //     min: 30,
-                        //     max: 30
-                        // },
+                        
+                        dataPointStyle: {
+                            "rules":
+                            [
+                                {
+                                    "dataContext": {"SLA Compliance Score": {"min": 95} },
+                                    "properties": {
+                                        "color":"sapUiChartPaletteSemanticGood"
+                                    },
+                                    "displayName": "SLA Compliance Score > 95"
+                                   
+                                }
+                            ],
+                            "others":
+                            {
+                                "properties": {
+                                     "color": "sapUiChartPaletteSemanticBad"
+                                },
+                                "displayName": "SLA Compliance Score < 95"
+                                
+                            }
+                        },
+                      
                         dataLabel: {
                             visible: true
                         }
@@ -67,6 +81,11 @@ sap.ui.define([
                         this.getView().setBusy(false);
                         var oSLAComplianceDataModel = new JSONModel(oData.results);
                         // var oSLAComplianceDataModel = new JSONModel(this.fnGetSampleData());
+                        for(var i=0;i<oData.results.length;i++){
+                            if(oData.results[i].displayPercentage === "-1"){
+                                oData.results[i].displayPercentage = "NA";
+                            }
+                        }
                         this.getView().setModel(oSLAComplianceDataModel, "SLAComplianceDataModel");
                         this.fnInitializeChart();
                     }.bind(this),
@@ -108,7 +127,9 @@ sap.ui.define([
                 }
                 else if (sRatingState === "Information") {
                     return "GoodEmoji sapUiTinyMarginEnd";
-                } else {
+                } else if (sRatingState === "None") {
+                    return "NAEmoji sapUiTinyMarginEnd";
+                } else if (sRatingState === "Error") {
                     return "BadEmoji sapUiTinyMarginEnd";
                 }
             },
@@ -120,8 +141,10 @@ sap.ui.define([
                     sRatingText = "Excellent";
                 } else if (iSLAComplianceScore >= 95) {
                     sRatingText = "Good";
-                } else {
+                } else if (iSLAComplianceScore < 95 ) {
                     sRatingText = "Bad";
+                }else {
+                    sRatingText = "No Data Available";
                 }
                 return sRatingText;
             },
@@ -133,8 +156,10 @@ sap.ui.define([
                     sStateValue = "Success";
                 } else if (iSLAComplianceScore >= 95) {
                     sStateValue = "Information";
-                } else {
+                } else if (iSLAComplianceScore < 95) {
                     sStateValue = "Error";
+                }else {
+                    sStateValue = "None";
                 }
                 return sStateValue;
             },
