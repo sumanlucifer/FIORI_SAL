@@ -64,7 +64,7 @@
                         <Label text="{i18n>ID}" class="tblHeaderText"/>
                     </Column>
                     <Column width="18rem" importance="Low" popinDisplay="Inline">
-                        <Label text="External Id" class="tblHeaderText" />
+                        <Label text="External ID" class="tblHeaderText" />
                     </Column>
                     <Column importance="Low" popinDisplay="Inline">
                         <Label text="{i18n>EffectiveFrom}" class="tblHeaderText" />
