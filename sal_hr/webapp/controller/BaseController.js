@@ -107,8 +107,11 @@ sap.ui.define([
          
             var oComponentModel = this.getComponentModel();
             this.getView().setBusy(true);
-            oComponentModel.read("/SF_User", {
-                filters: [filter],
+            oComponentModel.read("/SF_User('"+sId+"')", {
+                urlParameters: {
+                    "$select": "userId,firstName,lastName,defaultFullName"
+                },
+                // filters: [filter],
                 success: function (oData) {
                     this.getView().setBusy(false);
                     this.getOwnerComponent().getModel("EmpInfoModel").setProperty("/EmpFullName", oData.results[0].defaultFullName)
@@ -122,6 +125,22 @@ sap.ui.define([
                     }
                 }
             });
+        },
+
+        fnDownloadAttachment:function(fileContent,mimeType,fName){
+
+            var decodedContent = atob(fileContent);
+            var byteArray = new Uint8Array(decodedContent.length)
+            for (var i = 0; i < decodedContent.length; i++) {
+                byteArray[i] = decodedContent.charCodeAt(i);
+            }
+            var blob = new Blob([byteArray.buffer], { type: mimeType });
+            var _url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = _url;
+            a.download = fName;
+            a.dispatchEvent(new MouseEvent('click'));
+
         },
          
         
