@@ -92,6 +92,36 @@ sap.ui.define([
                 }
             });
         },
+
+
+        _getSFUser: function (sId) {
+            var idFILTER = new sap.ui.model.Filter({
+                path: "userId",
+                operator: sap.ui.model.FilterOperator.EQ,
+                value1: sId
+            });
+
+            var filter = [];
+
+            filter.push(idFILTER);
+         
+            var oComponentModel = this.getComponentModel();
+            this.getView().setBusy(true);
+            oComponentModel.read("/SF_User", {
+                filters: [filter],
+                success: function (oData) {
+                    this.getView().setBusy(false);
+                    this.getOwnerComponent().getModel("EmpInfoModel").setProperty("/EmpFullName", oData.results[0].defaultFullName)
+                }.bind(this),
+                error: function (oError) {
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                }
+            });
+        },
          
         
        

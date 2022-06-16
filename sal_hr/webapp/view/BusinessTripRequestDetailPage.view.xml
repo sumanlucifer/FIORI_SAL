@@ -56,9 +56,9 @@
                         <ObjectAttribute title="{i18n>Status}"/>
                         <ObjectStatus text="{headerModel>/status}" state="{path:'headerModel>/status',formatter:'.formatter.ticketStatus'}"/>
                     </layout:VerticalLayout>
-                   <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <ObjectAttribute title="{i18n>Requested by}"/>
-                        <ObjectAttribute text="{headerModel>/externalCreatedBy}"/>
+                  <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                       <ObjectAttribute title="{i18n>Requested by}"/>
+         <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/>
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
                          <ObjectAttribute title="Requested For"/>
