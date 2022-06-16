@@ -6,6 +6,7 @@
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:commons="sap.suite.ui.commons"
     xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
     xmlns:uxap="sap.uxap">
     <Shell id="shell">
         <App id="app">
@@ -60,21 +61,34 @@
                             </commons:content>
                         </commons:ChartContainer>
 
-                        <OverflowToolbar id="idTableToolbar" style="Clear" class="sapUiTinyMarginTop sapUiTinyMarginBegin">
-                            <Label text="{i18n>Module}:" required="true"/>
-                            <ComboBox width="25%" items="{path: '/MasterModules', sorter: { path: 'name'}}" selectedKey="{LocalViewModel>/SelectedModuleID}" selectionChange="onModuleChange">
-                                <core:Item key="{ID}" text="{name}" />
-                            </ComboBox>
-                            <Label text="{i18n>Portlet}:"/>
-                            <ComboBox width="25%" items="{PortletModel>/}" selectedKey="{LocalViewModel>/SelectedPortletID}">
-                                <core:Item key="{PortletModel>ID}" text="{PortletModel>name}" />
-                            </ComboBox>
-                            <Label text="{i18n>Status}:"/>
-                            <ComboBox width="20%" items="{path: '/MasterReportStatus',sorter: { path: 'status'}}" selectedKey="{LocalViewModel>/SelectedStatus}">
-                                <core:Item key="{status}" text="{status}" />
-                            </ComboBox>
-                            <Button text="Go" press="onFilterTablePress" type="Emphasized"/>
-                        </OverflowToolbar>
+                        <fb:FilterBar id="idTableFilterbar" useToolbar="false" search="onFilterTablePress" reset="onReset" showRestoreButton="true" showClearButton="true"  showFilterConfiguration="false" showGoOnFB="true">
+                            <fb:filterGroupItems>
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="{i18n>Module}" mandatory="true"  partOfCurrentVariant="true" visibleInFilterBar="true">
+                                    <fb:control>
+                                        <ComboBox width="25%" items="{path: '/MasterModules', sorter: { path: 'name'}}" selectedKey="{LocalViewModel>/SelectedModuleID}" selectionChange="onModuleChange">
+                                            <core:Item key="{ID}" text="{name}" />
+                                        </ComboBox>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="{i18n>Portlet}"   partOfCurrentVariant="true" visibleInFilterBar="true">
+                                    <fb:control>
+                                        <ComboBox width="25%" items="{PortletModel>/}" selectedKey="{LocalViewModel>/SelectedPortletID}">
+                                            <core:Item key="{PortletModel>ID}" text="{PortletModel>name}" />
+                                        </ComboBox>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="C" label="{i18n>Status}"   partOfCurrentVariant="true" visibleInFilterBar="true">
+                                    <fb:control>
+                                        <ComboBox width="20%" items="{path: '/MasterReportStatus',sorter: { path: 'status'}}" selectedKey="{LocalViewModel>/SelectedStatus}">
+                                            <core:Item key="{status}" text="{status}" />
+                                        </ComboBox>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                            </fb:filterGroupItems>
+                        </fb:FilterBar>
+
                         <commons:ChartContainer id="idTaskListTable" showFullScreen="true" autoAdjustHeight="false" title="{i18n>TaskSummary}">
                             <commons:content>
                                 <commons:ChartContainerContent>
