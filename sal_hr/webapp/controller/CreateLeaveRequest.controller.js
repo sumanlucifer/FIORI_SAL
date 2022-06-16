@@ -483,6 +483,8 @@ sap.ui.define([
                 this.getView().byId("idTimeType").setSelectedKey("700");
                 this.onTimeTyeChange();
                 this.getView().byId("UploadSet").removeAllItems();
+                var oUploadSet = this.getView().byId("UploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(true);
                 this.getView().byId("TP1").setValue("");
                 this.getView().byId("TP1").setValueState("None");
                 this.getView().byId("idStartDate").setValueState("None");

@@ -114,6 +114,7 @@ sap.ui.define([
                     this.getOwnerComponent().getModel("EmpInfoModel").setProperty("/EmpFullName", oData.results[0].defaultFullName)
                 }.bind(this),
                 error: function (oError) {
+                    this.getView().setBusy(false);
                     if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
                         MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
                     else {
