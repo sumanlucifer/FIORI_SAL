@@ -245,8 +245,8 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="breachedDays"/>
-                            <PropertyValue Property="Label" String="{@i18n>BreachedDays}"/>
+                            <PropertyValue Property="Value" Path="breachedHours"/>
+                            <PropertyValue Property="Label" String="Breached Hours"/>
                             <!-- For Adding CSS property width to set width to table column -->
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
