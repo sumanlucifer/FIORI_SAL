@@ -243,7 +243,7 @@ sap.ui.define([], function () {
             return bApproveVisible;
         },
 
-        setRejectVisibility: function (sStatus, sWorkflowRequestId) {
+        setRejectVisibility: function (sStatus, sWorkflowRequestId,approverId) {
             var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
             var bRejectVisible = false;
 
