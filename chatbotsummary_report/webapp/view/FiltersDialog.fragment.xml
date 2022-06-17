@@ -8,6 +8,7 @@
         <footer>
             <OverflowToolbar>
                 <ToolbarSpacer/>
+                <Button id="idReset" text="{i18n>Reset}" type="Default" press="handleFiltersResetPress" />
                 <Button id="idOk" text="{i18n>Ok}" type="Emphasized" press="handleFiltersOkPress" />
             </OverflowToolbar>
         </footer>

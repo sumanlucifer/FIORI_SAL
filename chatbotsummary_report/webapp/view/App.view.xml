@@ -18,7 +18,8 @@
                         <VBox>
                             <Toolbar style="Clear">
                                 <ToolbarSpacer/>
-                                <Button icon="sap-icon://show" text="{i18n>Filters}" type="Transparent" press="handleFiltersPress"/>
+                                <Button icon="sap-icon://clear-filter" text="{i18n>Filters}" visible="{= ${LocalViewModel>/FromDate} !== null }" type="Emphasized" press="handleFiltersPress"/>
+                                <Button icon="sap-icon://filter" text="{i18n>Filters}" visible="{= ${LocalViewModel>/FromDate} === null }" type="Transparent" press="handleFiltersPress"/>
                             </Toolbar>
                             <form:SimpleForm id="idSummarySectionSimpleForm" width="100%" maxContainerCols="2" layout="ResponsiveGridLayout" labelSpanM="12" labelSpanS="12" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" class="customNoPaddingSimpleForm">
                                 <VBox width="100%">
@@ -28,7 +29,7 @@
                                                 <FlexBox width="100%" direction="Column" justifyContent="Center" alignItems="Center" wrap="Wrap">
                                                     <HBox width="100%" justifyContent="Center">
                                                         <Title titleStyle="H2" text="{ChatbotSummaryModel>/conversations}" class="sapUiTinyMarginEnd LabelBoldFont" />
-                                                        <ObjectNumber number="{ChatbotSummaryModel>/conversationIndicator}" state="{path: 'ChatbotSummaryModel>/conversationIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
+                                                        <ObjectNumber visible="{= ${ChatbotSummaryModel>/conversationIndicator} !== null }" number="{ChatbotSummaryModel>/conversationIndicator}" state="{path: 'ChatbotSummaryModel>/conversationIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
                                                     <Text textAlign="Center" text="{i18n>Conversations}"/>
                                                 </FlexBox>
@@ -39,7 +40,7 @@
                                                 <FlexBox width="100%" direction="Column" justifyContent="Center" alignItems="Center" wrap="Wrap">
                                                     <HBox width="100%" justifyContent="Center">
                                                         <Title titleStyle="H2" text="{ChatbotSummaryModel>/participants}" class="sapUiTinyMarginEnd LabelBoldFont" />
-                                                        <ObjectNumber number="{ChatbotSummaryModel>/participantsIndicator}" state="{path: 'ChatbotSummaryModel>/participantsIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
+                                                        <ObjectNumber visible="{= ${ChatbotSummaryModel>/participantsIndicator} !== null }" number="{ChatbotSummaryModel>/participantsIndicator}" state="{path: 'ChatbotSummaryModel>/participantsIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
                                                     <Text textAlign="Center" text="{i18n>Users}"/>
                                                 </FlexBox>
@@ -52,7 +53,7 @@
                                                 <FlexBox width="100%" direction="Column" justifyContent="Center" alignItems="Center" wrap="Wrap">
                                                     <HBox width="100%" justifyContent="Center">
                                                         <Title titleStyle="H2" text="{ChatbotSummaryModel>/messagesReceived}" class="sapUiTinyMarginEnd LabelBoldFont" />
-                                                        <ObjectNumber number="{ChatbotSummaryModel>/messagesReceivedIndicator}" state="{path: 'ChatbotSummaryModel>/messagesReceivedIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
+                                                        <ObjectNumber visible="{= ${ChatbotSummaryModel>/messagesReceivedIndicator} !== null }" number="{ChatbotSummaryModel>/messagesReceivedIndicator}" state="{path: 'ChatbotSummaryModel>/messagesReceivedIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
                                                     <Text textAlign="Center" text="{i18n>MessagesReceived}"/>
                                                 </FlexBox>
@@ -63,7 +64,7 @@
                                                 <FlexBox width="100%" direction="Column" justifyContent="Center" alignItems="Center" wrap="Wrap">
                                                     <HBox width="100%" justifyContent="Center">
                                                         <Title titleStyle="H2" text="{ChatbotSummaryModel>/MessagesPerConversation}" class="sapUiTinyMarginEnd LabelBoldFont" />
-                                                        <ObjectNumber number="{ChatbotSummaryModel>/MessagesPerConversationIndicator}" state="{path: 'ChatbotSummaryModel>/MessagesPerConversationIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
+                                                        <ObjectNumber visible="{= ${ChatbotSummaryModel>/MessagesPerConversationIndicator} !== null }" number="{ChatbotSummaryModel>/MessagesPerConversationIndicator}" state="{path: 'ChatbotSummaryModel>/MessagesPerConversationIndicator', formatter: '.fnSetIndicatorsState'}" inverted="true" class="sapUiTinyMarginTop" />
                                                     </HBox>
                                                     <Text textAlign="Center" text="{i18n>MessagesConversation}"/>
                                                 </FlexBox>
