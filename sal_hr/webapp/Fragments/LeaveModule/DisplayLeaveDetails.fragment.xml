@@ -7,7 +7,7 @@
             <Title id="idLeaveDisplayRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
 
             <Label text="Leave Application For" visible="{EmpInfoModel>/IsUserManager}"/>
-            <Text id="idLeaveApplicationForDisplay" text="{userId}" visible="{EmpInfoModel>/IsUserManager}"/>
+            <Text id="idLeaveApplicationForDisplay" text="{headerModel>/employeeName} ({headerModel>/employeeId})" visible="{EmpInfoModel>/IsUserManager}"/>
 
             <Label id="idDisplayLeaveTypeLBL" text="{i18n>Leave Type}" class="sapUiSmallMarginTop"/>
             <Text text="{timeTypeModel>/externalName_defaultValue}"/>
