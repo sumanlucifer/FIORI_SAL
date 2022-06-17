@@ -24,7 +24,7 @@
             <l:VerticalLayout class="sapUiNoMargin sapUiNoContentPadding">
                 <l:content>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <Label text="Job Title" required="true" />
+                        <Label text="Job Title" />
                         <Input editable="false" liveChange="onLiveChangeJobTitle" id="idCreateJobTitle" value="{CreateBusinessCardModel>/sJobTitle}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
@@ -44,7 +44,7 @@
 
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <Label text="Mobile" required="true" />
+                        <Label text="Mobile" />
                          <Input type="Number" editable="false" liveChange="onChangeMobile" id="idCreateMobile" value="{CreateBusinessCardModel>/sMobile}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
@@ -58,7 +58,7 @@
                         </Input>
                     </fm:SimpleForm>
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
-                        <Label text="Email" required="true" />
+                        <Label text="Email" />
                          <Input type="Email" editable="false" liveChange="onEmailChange" id="idCreateEmail" value="{CreateBusinessCardModel>/sEmail}">
                             <layoutData>
                                 <l:GridData span="XL2 L3 M4 S4" />
@@ -84,7 +84,7 @@
                             </layoutData>
                         </Input>
 
-                        <Label text="{i18n>whenWouldYouLiketoText}" required="true"/>
+                        <Label text="{i18n>whenWouldYouLiketoText}"/>
                         <DatePicker id="idIncidentStartDate" enabled="false" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" change="onLeaveStartDatChange"/>

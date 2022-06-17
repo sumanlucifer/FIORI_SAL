@@ -134,16 +134,16 @@ sap.ui.define([
 
 
 
-                if (this.byId("idCreateEmail").getValue() === "") {
-                    this.byId("idCreateEmail").setValueState("Error");
-                    this.byId("idCreateEmail").setValueStateText(
-                        "Please enter email"
-                    );
-                    bValid = false;
-                } else {
-                    this.byId("idCreateEmail").setValueState("None");
-                    this.byId("idCreateEmail").setValueStateText(null);
-                }
+                // if (this.byId("idCreateEmail").getValue() === "") {
+                //     this.byId("idCreateEmail").setValueState("Error");
+                //     this.byId("idCreateEmail").setValueStateText(
+                //         "Please enter email"
+                //     );
+                //     bValid = false;
+                // } else {
+                //     this.byId("idCreateEmail").setValueState("None");
+                //     this.byId("idCreateEmail").setValueStateText(null);
+                // }
 
                 // if (this.byId("idCreateMobile").getValue() === "") {
                 //     this.byId("idCreateMobile").setValueState("Error");
@@ -221,10 +221,10 @@ sap.ui.define([
             },
 
             onRaiseRequestPress: function () {
-                if (!this._validateMandatoryFields()) {
+                // if (!this._validateMandatoryFields()) {
 
-                    return;
-                }
+                //     return;
+                // }
 
                 var oPayload, sPath;
 
