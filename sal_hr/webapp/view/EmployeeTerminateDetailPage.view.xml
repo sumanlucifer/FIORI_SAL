@@ -33,8 +33,8 @@
 
                 <!--Approve and Reject visible for Manager Tile -->
                 <f:actions>
-                    <Button text="Approve" icon="sap-icon://accept" type="Accept" press="onApprovePress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}], formatter: '.formatter.setApproveRejectManagerActionVisibility'}"/>
-                    <Button text="Reject" icon="sap-icon://decline" type="Reject" press="onRejectPress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}], formatter: '.formatter.setApproveRejectManagerActionVisibility'}"/>
+                    <Button text="Approve" icon="sap-icon://accept" type="Accept" press="onApprovePress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}, {path:'headerModel>/approverId'}], formatter: '.formatter.setApproveRejectManagerActionVisibility'}"/>
+                    <Button text="Reject" icon="sap-icon://decline" type="Reject" press="onRejectPress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}, {path:'headerModel>/approverId'}], formatter: '.formatter.setApproveRejectManagerActionVisibility'}"/>
                 </f:actions>
 
                 <f:navigationActions>
@@ -54,8 +54,12 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                        <ObjectAttribute title="{i18n>Requested by}"/>
+<<<<<<< HEAD
+         <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/>
+=======
          <!-- <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/> -->
- <ObjectAttribute text="{headerModel>/externalCreatedByName}({headerModel>/externalCreatedBy})"/>
+ <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/>
+>>>>>>> feature/manasa
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
                          <ObjectAttribute title="Requested For"/>
