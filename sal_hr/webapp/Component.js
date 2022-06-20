@@ -51,6 +51,7 @@ sap.ui.define([
 
             fnGetLoggedInEmpInfo: function (bIsUserManager) {
                 BusyIndicator.show();
+                debugger;
                 this.getModel().read("/EmpInfo", {
                     urlParameters: {
                         "moreInfo": "true"

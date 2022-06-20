@@ -38,9 +38,22 @@
 
                         <Label id="idLblCreateType" required="true" text="{i18n>Type}" />
                         <Select id="idInpType" items="{ path: '/SF_FOPayComponent',
-                                                sorter : {
-                                                 path : 'name' 
-                                             }
+                                                            filters: [
+                                                                        {
+                                                                             path: 'toupper(name)',
+                                                                             operator: 'StartsWith',
+                                                                             value1: '\'MARRIAGE REWARD\''
+                                                                         },
+                                                                         {
+                                                                             path: 'toupper(name)',
+                                                                             operator: 'StartsWith',
+                                                                             value1: '\'NEW BORN\''
+                                                                         }
+                                                                     ],
+                                                            sorter:{
+                                                                 path : 'name' 
+                                                            }         
+                                               
                                                    }" change="onTimeTyeChange">
                             <core:Item key="{externalCode}" text="{name} ({externalCode})" />
                         </Select>

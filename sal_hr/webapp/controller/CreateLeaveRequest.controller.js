@@ -175,30 +175,46 @@ sap.ui.define([
 
                    
 
-                    switch (sTimeType) {
-                        case "460":
-                            sQtyHrs = this.getView().byId("TP1").getValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    // switch (sTimeType) {
+                    //     case "460":
+                    //         sQtyHrs = this.getView().byId("TP1").getValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "450":
-                            sQtyHrs = this.getView().byId("TP1").getValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //         break;
+                    //     case "450":
+                    //         sQtyHrs = this.getView().byId("TP1").getValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "480":
-                            sQtyHrs = this.getView().byId("TP1").getValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                        case "440":
-                            sQtyHrs = this.getView().byId("TP1").getValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //         break;
+                    //     case "480":
+                    //         sQtyHrs = this.getView().byId("TP1").getValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //     case "440":
+                    //         sQtyHrs = this.getView().byId("TP1").getValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "HD1":
-                            sQtyHrs = "0.5";
-                            break;
-                        default:
-                            sQtyHrs = "0.0";
+                    //         break;
+                    //     case "HD1":
+                    //         sQtyHrs = "0.5";
+                    //         break;
+                    //     default:
+                    //         sQtyHrs = "0.0";
+                    // }
+
+                    if(sTimeType === "460" || sTimeType === "450" || sTimeType === "480" || sTimeType === "440"){
+                        sQtyHrs = this.getView().byId("TP1").getValue();
+                        if(sQtyHrs){
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                        }else {
+                            sap.m.MessageBox.error("Please enter requesting hours.");
+                            this.bValid = false;
+                            return;
+                        }
+                            
+                    }else if(sTimeType === "HD1"){
+                        sQtyHrs = "0.5";
+                    }else {
+                        sQtyHrs = "0.0";
                     }
 
                     if (this.isAttachment === true) {
@@ -483,6 +499,10 @@ sap.ui.define([
                 this.getView().byId("idTimeType").setSelectedKey("700");
                 this.onTimeTyeChange();
                 this.getView().byId("UploadSet").removeAllItems();
+                var oUploadSet = this.getView().byId("UploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(true);
+                this.isAttachment = false;
+                this.attachReq = true;
                 this.getView().byId("TP1").setValue("");
                 this.getView().byId("TP1").setValueState("None");
                 this.getView().byId("idStartDate").setValueState("None");

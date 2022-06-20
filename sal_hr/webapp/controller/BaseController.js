@@ -107,20 +107,40 @@ sap.ui.define([
          
             var oComponentModel = this.getComponentModel();
             this.getView().setBusy(true);
-            oComponentModel.read("/SF_User", {
-                filters: [filter],
+            oComponentModel.read("/SF_User('"+sId+"')", {
+                urlParameters: {
+                    "$select": "userId,firstName,lastName,defaultFullName"
+                },
+                // filters: [filter],
                 success: function (oData) {
                     this.getView().setBusy(false);
                     this.getOwnerComponent().getModel("EmpInfoModel").setProperty("/EmpFullName", oData.results[0].defaultFullName)
                 }.bind(this),
                 error: function (oError) {
+                    this.getView().setBusy(false);
                     if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
                         MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
                     else {
                         MessageBox.error(JSON.parse(oError.responseText).error.message.value);
                     }
-                }
+                }.bind(this)
             });
+        },
+
+        fnDownloadAttachment:function(fileContent,mimeType,fName){
+
+            var decodedContent = atob(fileContent);
+            var byteArray = new Uint8Array(decodedContent.length)
+            for (var i = 0; i < decodedContent.length; i++) {
+                byteArray[i] = decodedContent.charCodeAt(i);
+            }
+            var blob = new Blob([byteArray.buffer], { type: mimeType });
+            var _url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = _url;
+            a.download = fName;
+            a.dispatchEvent(new MouseEvent('click'));
+
         },
          
         

@@ -444,23 +444,25 @@ sap.ui.define([
                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
                 fName = fName.split(".")[0];
                 debugger;
-                if (fileext === "pdf" || fileext === "png") {
-                    var decodedPdfContent = atob(fContent);
-                    var byteArray = new Uint8Array(decodedPdfContent.length)
-                    for (var i = 0; i < decodedPdfContent.length; i++) {
-                        byteArray[i] = decodedPdfContent.charCodeAt(i);
-                    }
-                    var blob = new Blob([byteArray.buffer], { type: mimeType });
-                    var _pdfurl = URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = _pdfurl;
-                    a.download = fName;
-                    a.dispatchEvent(new MouseEvent('click'));
-                }
-                else {
-                    var decodedContent = atob(fContent);
-                    sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
-                }
+                this.fnDownloadAttachment(fContent,mimeType,fName);
+
+                // if (fileext === "pdf" || fileext === "png") {
+                //     var decodedPdfContent = atob(fContent);
+                //     var byteArray = new Uint8Array(decodedPdfContent.length)
+                //     for (var i = 0; i < decodedPdfContent.length; i++) {
+                //         byteArray[i] = decodedPdfContent.charCodeAt(i);
+                //     }
+                //     var blob = new Blob([byteArray.buffer], { type: mimeType });
+                //     var _pdfurl = URL.createObjectURL(blob);
+                //     var a = document.createElement('a');
+                //     a.href = _pdfurl;
+                //     a.download = fName;
+                //     a.dispatchEvent(new MouseEvent('click'));
+                // }
+                // else {
+                //     var decodedContent = atob(fContent);
+                //     sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
+                // }
             },
 
             onFileDeleted: function (oEvent) {

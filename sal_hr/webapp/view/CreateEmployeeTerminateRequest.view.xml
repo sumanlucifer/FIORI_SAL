@@ -51,7 +51,23 @@
                         </Select> -->
 
 
-                        <ComboBox id="idTerminationReasonINP" items="{ path: '/SF_FOEventReason'}">
+                        <ComboBox id="idTerminationReasonINP" items="{ path: '/SF_FOEventReason',
+                                                            filters: [
+                                                                        {
+                                                                             path: 'externalCode',
+                                                                             operator: 'StartsWith',
+                                                                             value1: 'TER'
+                                                                         },
+                                                                          {
+                                                                             path: 'status',
+                                                                             operator: 'EQ',
+                                                                             value1: 'A'
+                                                                         }
+                                                                        
+                                                                     ],
+                                                         sorter : {
+                                                             path : 'name' 
+                                                        } }">
                             <core:Item key="{externalCode}" text="{name}"/>
                         </ComboBox>
 

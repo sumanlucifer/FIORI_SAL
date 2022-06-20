@@ -170,8 +170,8 @@ sap.ui.define([
         onPressTicketItem: function (oEvent) {
         var sStatus = oEvent.getSource().getBindingContext().getObject().status;
      var sExternalStatus = oEvent.getSource().getBindingContext().getObject().externalStatus;
-     var sExternalcreatedBy = oEvent.getSource().getBindingContext().getObject().externalCreatedBy;
-          this._getSFUser(sExternalcreatedBy);
+    //  var sExternalcreatedBy = oEvent.getSource().getBindingContext().getObject().externalCreatedBy;
+        //   this._getSFUser(sExternalcreatedBy);
 
                 if(sStatus==='CANCELLED'){
 

@@ -223,14 +223,16 @@ sap.ui.define([], function () {
             }
         },
 
-        setApproveVisibility: function (sStatus, sWorkflowRequestId) {
+        setApproveVisibility: function (sStatus, sWorkflowRequestId, approverId) {
             var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
             var bApproveVisible = false;
 
             if (bIsUserManager) {
                 if (sStatus === "PENDING" && sWorkflowRequestId !== null) {
                     var bApproveOther = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/approveOther");
-                    bApproveVisible = bApproveOther === true ? true : false;
+                    var empInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+                    var bUserIsApprover = approverId == empInfoObj.userId ? true : false;
+                    bApproveVisible = bApproveOther === true && bUserIsApprover ? true : false;
                 } else {
                     bApproveVisible = false;
                 }
@@ -241,14 +243,16 @@ sap.ui.define([], function () {
             return bApproveVisible;
         },
 
-        setRejectVisibility: function (sStatus, sWorkflowRequestId) {
+        setRejectVisibility: function (sStatus, sWorkflowRequestId,approverId) {
             var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
             var bRejectVisible = false;
 
             if (bIsUserManager) {
                 if (sStatus === "PENDING" && sWorkflowRequestId !== null) {
                     var bRejectOther = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/rejectOther");
-                    bRejectVisible = bRejectOther === true ? true : false;
+                    var empInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+                    var bUserIsApprover = approverId == empInfoObj.userId ? true : false;
+                    bRejectVisible = bRejectOther === true && bUserIsApprover ? true : false;
                 } else {
                     bRejectVisible = false;
                 }

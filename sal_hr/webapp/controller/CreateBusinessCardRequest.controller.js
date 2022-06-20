@@ -18,18 +18,6 @@ sap.ui.define([
                 this.mainModel.setSizeLimit(1000);
                 var that = this;
 
-                this.sReturnDate = new Date();
-                this.sRequesting = 0;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
-                if (this.sReturnDate.getDay() === 5) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-
-                } else if (this.sReturnDate.getDay() === 6) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-
-                } else {
-                    this.sRequesting = 1;
-                }
                 var oLocalViewModel = new JSONModel({
                     currentDate: new Date(),
                     busy: false,
@@ -146,27 +134,27 @@ sap.ui.define([
 
 
 
-                if (this.byId("idCreateEmail").getValue() === "") {
-                    this.byId("idCreateEmail").setValueState("Error");
-                    this.byId("idCreateEmail").setValueStateText(
-                        "Please enter email"
-                    );
-                    bValid = false;
-                } else {
-                    this.byId("idCreateEmail").setValueState("None");
-                    this.byId("idCreateEmail").setValueStateText(null);
-                }
+                // if (this.byId("idCreateEmail").getValue() === "") {
+                //     this.byId("idCreateEmail").setValueState("Error");
+                //     this.byId("idCreateEmail").setValueStateText(
+                //         "Please enter email"
+                //     );
+                //     bValid = false;
+                // } else {
+                //     this.byId("idCreateEmail").setValueState("None");
+                //     this.byId("idCreateEmail").setValueStateText(null);
+                // }
 
-                if (this.byId("idCreateMobile").getValue() === "") {
-                    this.byId("idCreateMobile").setValueState("Error");
-                    this.byId("idCreateMobile").setValueStateText(
-                        "Please enter Mobile Number"
-                    );
-                    bValid = false;
-                } else {
-                    this.byId("idCreateMobile").setValueState("None");
-                    this.byId("idCreateMobile").setValueStateText(null);
-                }
+                // if (this.byId("idCreateMobile").getValue() === "") {
+                //     this.byId("idCreateMobile").setValueState("Error");
+                //     this.byId("idCreateMobile").setValueStateText(
+                //         "Please enter Mobile Number"
+                //     );
+                //     bValid = false;
+                // } else {
+                //     this.byId("idCreateMobile").setValueState("None");
+                //     this.byId("idCreateMobile").setValueStateText(null);
+                // }
 
 
 
@@ -233,10 +221,10 @@ sap.ui.define([
             },
 
             onRaiseRequestPress: function () {
-                if (!this._validateMandatoryFields()) {
+                // if (!this._validateMandatoryFields()) {
 
-                    return;
-                }
+                //     return;
+                // }
 
                 var oPayload, sPath;
 
