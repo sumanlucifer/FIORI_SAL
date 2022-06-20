@@ -154,64 +154,61 @@ sap.ui.define([
 
             onValueHelpSearch: function (oEvent) {
                 var sValue = oEvent.getParameter("value");
-                if(sValue)
-                {
-                    var oFilter = new Filter(
-                        [
-                            new Filter({
-                                path: "manager/userId",
-                                operator: "EQ",
-                                value1: this.managerID
-                            }),
-
-                            new Filter([
-                                new Filter({
-                                    path: "userId",
-                                    operator: "Contains",
-                                    caseSensitive: false,
-                                    value1: sValue.trim()
-                                }),
-                                new Filter({
-                                    path: "firstName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                }),
-
-                                new Filter({
-                                    path: "middleName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                }),
-                                new Filter({
-                                    path: "lastName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                })
-
-                            ],  false),
-                        ],
-                        true
-                    );
-        
-                   
-                    oEvent.getSource().getBinding("items").filter(oFilter);
+                // sValue =   sValue.replace(/\s+/g, '');
+                if (sValue && sValue.length > 0 && sValue.indexOf(" ") > 0) {
+                  sValue = sValue.trim().split(" ");
+                } else if (sValue && sValue.length > 0) {
+                  sValue = [sValue.trim()];
                 }
-
-                else{
-                    var userId =    this.managerID;
-                    var sUserIDFilter = new sap.ui.model.Filter({
-                        path: "manager/userId",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: userId
-                    });
-                    
-                    oEvent.getSource().getBinding("items").filter([sUserIDFilter]);
+      
+                var onameFilter = [];
+      
+                for (var i = 0; i < sValue.length; i++) {
+                  var keyWord = sValue[i];
+                  onameFilter.push(
+                    new Filter({
+                      path: "userId",
+                      operator: "Contains",
+                      caseSensitive: false,
+                      value1: keyWord.trim(),
+                    })
+                  );
+      
+                  onameFilter.push(
+                    new Filter({
+                      path: "firstName",
+                      operator: "Contains",
+                      value1: keyWord.trim(),
+                      caseSensitive: false,
+                    })
+                  );
+      
+                  onameFilter.push(
+                    new Filter({
+                      path: "lastName",
+                      operator: "Contains",
+                      value1: keyWord.trim(),
+                      caseSensitive: false,
+                    })
+                  );
                 }
-               
-            },
+      
+                var commonFilter = [
+                  new Filter({
+                    path: "manager/userId",
+                    operator: "EQ",
+                    value1: this.managerID,
+                  }),
+                ];
+      
+                if (onameFilter.length > 0) {
+                  commonFilter.push(new Filter(onameFilter, false));
+                }
+      
+                var oFilter = new Filter(commonFilter, true);
+      
+                oEvent.getSource().getBinding("items").filter([oFilter]);
+              },
 
             onValueHelpClose: function (oEvent) {
                 var oSelectedItem = oEvent.getParameter("selectedItem");
