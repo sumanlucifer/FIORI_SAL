@@ -54,12 +54,8 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                        <ObjectAttribute title="{i18n>Requested by}"/>
-<<<<<<< HEAD
-         <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/>
-=======
          <!-- <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/> -->
  <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/>
->>>>>>> feature/manasa
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
                          <ObjectAttribute title="Requested For"/>
