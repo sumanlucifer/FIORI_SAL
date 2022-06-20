@@ -40,6 +40,7 @@ sap.ui.define(
             minDate: new Date(),
             jobInfoVisible: false,
             componesationInfoVisible: false,
+            checkBoxVisible: false,
             managerId: "12345",
           });
           this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -119,7 +120,7 @@ sap.ui.define(
             .getModel()
             .read(sKey, {
               urlParameters: {
-                $expand: "compInfoNav, jobInfoNav",
+                $expand: "compInfoNav, jobInfoNav,jobInfoNav/positionNav",
               },
               success: function (oData) {
                 var oCompensationModel = new JSONModel(
@@ -131,6 +132,7 @@ sap.ui.define(
                   .getView()
                   .setModel(oCompensationModel, "compensationModel");
                 that.getView().setModel(oJobModel, "jobModel");
+            
                 that.getView().setModel(oSalaryModel, "salaryModel");
               },
               error: function (oError) {
@@ -492,6 +494,9 @@ sap.ui.define(
           this.getView()
             .getModel("LocalViewModel")
             .setProperty("/componesationInfoVisible", false);
+            this.getView()
+            .getModel("LocalViewModel")
+            .setProperty("/checkBoxVisible", false);
           this.getView()
             .getModel("LocalViewModel")
             .setProperty("/jobInfoVisible", false);
@@ -513,6 +518,160 @@ sap.ui.define(
           this.getView().getModel("LocalViewModel").setData(dataReset);
           this.getView().getModel("LocalViewModel").refresh();
         },
+        onDirectMngrValueHelpRequest: function()
+        {
+            var oView = this.getView();
+            if (!this._directMngrDialog) {
+              this._directMngrDialog = Fragment.load({
+                id: oView.getId(),
+                name:
+                  "com.sal.salhr.Fragments.SalaryIncrementModule.DirectManagerValuehelp",
+                controller: this,
+              }).then(function (oDialog) {
+                oView.addDependent(oDialog);
+                if (Device.system.desktop) {
+                  oDialog.addStyleClass("sapUiSizeCompact");
+                }
+                return oDialog;
+              });
+            }
+            this._directMngrDialog.then(function (oDialog) {
+  
+              oDialog.open();
+          }.bind(this));
+
+        },
+
+        onDirectMngrConfirm: function(oEvent)
+        {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            oEvent.getSource().getBinding("items").filter([]);
+            if (!oSelectedItem) {
+              return;
+            }
+            var obj = oSelectedItem.getBindingContext().getObject();
+            
+       
+            this.getView().byId("idDirectManager").setValue(obj["userId"]);
+            // this.getView().getModel("jobModel").setProperty("/position", obj["code"]);
+          
+        },
+
+        onDirectMngrSearch : function(oEvent)
+        {
+
+            var sValue = oEvent.getParameter("value");
+            // sValue =   sValue.replace(/\s+/g, '');
+            if (sValue && sValue.length > 0 && sValue.indexOf(" ") > 0) {
+              sValue = sValue.trim().split(" ");
+            } else if (sValue && sValue.length > 0) {
+              sValue = [sValue.trim()];
+            }
+  
+            var onameFilter = [];
+  
+            for (var i = 0; i < sValue.length; i++) {
+              var keyWord = sValue[i];
+              onameFilter.push(
+                new Filter({
+                  path: "userId",
+                  operator: "Contains",
+                  caseSensitive: false,
+                  value1: keyWord.trim(),
+                })
+              );
+  
+              onameFilter.push(
+                new Filter({
+                  path: "firstName",
+                  operator: "Contains",
+                  value1: keyWord.trim(),
+                  caseSensitive: false,
+                })
+              );
+  
+              onameFilter.push(
+                new Filter({
+                  path: "lastName",
+                  operator: "Contains",
+                  value1: keyWord.trim(),
+                  caseSensitive: false,
+                })
+              );
+            }
+  
+            var commonFilter = [];
+  
+            if (onameFilter.length > 0) {
+              commonFilter.push(new Filter(onameFilter, false));
+            }
+  
+            var oFilter = new Filter(commonFilter, true);
+  
+            oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
+
+
+        onCostCenterRequest : function()
+        {
+            var oView = this.getView();
+            if (!this._costCenterDialog) {
+              this._costCenterDialog = Fragment.load({
+                id: oView.getId(),
+                name:
+                  "com.sal.salhr.Fragments.SalaryIncrementModule.CostCenterValuehelp",
+                controller: this,
+              }).then(function (oDialog) {
+                oView.addDependent(oDialog);
+                if (Device.system.desktop) {
+                  oDialog.addStyleClass("sapUiSizeCompact");
+                }
+                return oDialog;
+              });
+            }
+            this._costCenterDialog.then(function (oDialog) {
+  
+              oDialog.open();
+          }.bind(this));
+
+        },
+
+        onCostCenterConfirm: function(oEvent)
+        {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            oEvent.getSource().getBinding("items").filter([]);
+            if (!oSelectedItem) {
+              return;
+            }
+            var obj = oSelectedItem.getBindingContext().getObject();
+       
+            this.getView().getModel("jobModel").setProperty("/costCenter", obj["externalCode"]);
+            this.getView().getModel("jobModel").setProperty("/costCenterName", obj["name"]);
+          
+        },
+
+        onCostCenterValueHelpSearch : function(oEvent)
+        {
+            var sValue = oEvent.getParameter("value").trim();
+            var oFilter = new Filter(
+				[
+					new Filter({
+						path: "externalCode",
+						operator: "Contains",
+                        caseSensitive: false,
+						value1: sValue.trim()
+					}),
+                    new Filter({
+						path: "name",
+						operator: "Contains",
+						value1: sValue.trim()
+					})
+				],
+				false
+			);
+
+			oEvent.getSource().getBinding("items").filter([oFilter]);
+        },
         onPositionRequest: function (oEvent) {
           var oView = this.getView();
           if (!this._positionDialog) {
@@ -529,6 +688,48 @@ sap.ui.define(
               return oDialog;
             });
           }
+          this._positionDialog.then(function (oDialog) {
+
+            oDialog.open();
+        }.bind(this));
+        },
+
+
+        onPositionConfirm: function(oEvent)
+        {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            oEvent.getSource().getBinding("items").filter([]);
+            if (!oSelectedItem) {
+              return;
+            }
+            var obj = oSelectedItem.getBindingContext().getObject();
+       
+            this.getView().getModel("jobModel").setProperty("/positionNav/externalName_defaultValue", obj["externalName_defaultValue"]);
+            this.getView().getModel("jobModel").setProperty("/position", obj["code"]);
+          
+        },
+
+        onPositionValueHelpSearch : function(oEvent)
+        {
+            var sValue = oEvent.getParameter("value").trim();
+            var oFilter = new Filter(
+				[
+					new Filter({
+						path: "externalName_defaultValue",
+						operator: "Contains",
+                        caseSensitive: false,
+						value1: sValue.trim()
+					}),
+                    new Filter({
+						path: "code",
+						operator: "Contains",
+						value1: sValue.trim()
+					})
+				],
+				false
+			);
+
+			oEvent.getSource().getBinding("items").filter([oFilter]);
         },
         onValueHelpRequest: function (oEvent) {
           var oView = this.getView();
@@ -624,12 +825,16 @@ sap.ui.define(
           if (!oSelectedItem) {
             return;
           }
+          this._bindView();
+          this.getView()
+              .getModel("LocalViewModel")
+              .setProperty("/checkBoxVisible", true);
           var obj = oSelectedItem.getBindingContext().getObject();
           this.byId("idSalIncPRN").setValue(obj["userId"]);
           this.byId("idSalIncPRN").setValueState("None");
           this.PRNFlag = true;
           this.prnID = obj["userId"];
-          this._bindView();
+         
         },
         fnGetPayType: function () {
           var oFilter = new Filter(

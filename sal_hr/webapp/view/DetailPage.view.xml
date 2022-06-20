@@ -12,7 +12,7 @@
 
 
                 <f:navigationActions>
-                    <Button text="{i18n>RaiseRequest}" press="onPressRaiseRequest" type="Emphasized" visible="{parts:[{path: 'EmpInfoModel>/IsUserManager'}],formatter:'.formatter.fnSetRaiseRequestVisibilty'}"/>
+                  <Button text="{i18n>RaiseRequest}" press="onPressRaiseRequest" type="Emphasized" visible="{parts:[{path: 'EmpInfoModel>/IsUserManager'}],formatter:'.formatter.fnSetRaiseRequestVisibilty'}"/>
                     <Button id="idDetailFullScreenBTN" icon="sap-icon://full-screen" press="handleDetailFullScreen" type="Transparent" />
                     <Button id="idCloseButton" icon="sap-icon://decline" type="Transparent" press="handleDetailClose" />
                 </f:navigationActions>
