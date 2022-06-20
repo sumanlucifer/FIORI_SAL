@@ -28,8 +28,10 @@ sap.ui.define([
                 var sLayout = oEvent.getParameter("arguments").layout;
                 // this.getView().getModel().setProperty("/busy", false);
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
+               
+                
                 this._bindView();
-                // this._filterPCListTable(this.UserEmail);
+                
             },
 
             // This Function is used to set the custom parameter for Tickets table binding according to user type as Manager or not?
@@ -67,6 +69,8 @@ sap.ui.define([
                         }.bind(this)
                     }
                 });
+               
+               
             },
 
             onPressRaiseRequest: function () {
@@ -444,5 +448,9 @@ sap.ui.define([
                     //this.byId("idTicketTable").getBinding("items").filter(oFilterSearch, "Application");
                 }
             }
+
+
+             
+
         });
     });        

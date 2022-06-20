@@ -21,6 +21,12 @@ sap.ui.define([
                 //Router Object
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("master").attachPatternMatched(this._onObjectMatched, this);
+                var sManagerTile = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
+                var subModuleId = new sap.ui.core.routing.HashChanger().getHash().split("/")[2];
+                if(subModuleId){
+                    this.fnGetRoleAccess(sManagerTile, subModuleId);
+                }
+                
             },
 
             _onObjectMatched: function (oEvent) {
@@ -32,6 +38,14 @@ sap.ui.define([
                     this._navToDetail(subModuleId);
                 }
                 var sLayout = oEvent.getParameter("arguments").layout;
+                // var subModuleId = oEvent.getParameter("arguments").parentMaterial;
+                // var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
+                // if(subModuleId){
+                //     this.fnGetRoleAccess(sManagerTile, subModuleId);
+                // }
+                
+
+
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
             },
             onUpdateMasterListBindingStart: function (oEvent) {
@@ -66,7 +80,28 @@ sap.ui.define([
                 var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
                 var subModuleId = oItem.getBindingContext().getObject().ID;
                 this.fnGetRoleAccess(sManagerTile, subModuleId, oItem);
+                
             },
+
+
+            // _showObject: function (oItem) {
+            //     var that = this;
+            //     var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
+            //     var subModuleId = oItem.getBindingContext().getObject().ID;
+            //     this.fnGetRoleAccess(sManagerTile, subModuleId);
+
+            //     var sPath = oItem.getBindingContextPath()
+            //     this.getView().getModel("EmpInfoModel").refresh(true);
+            //     this.getRouter().navTo("detail", {
+            //         parentMaterial: oItem.getModel().getProperty(sPath).ID,
+            //         layout: "TwoColumnsMidExpanded"
+            //     },
+            //         false
+            //     );
+    
+                
+            // },  
+
             onSearch: function (oEvent) {
                 var aFilters = [];
                 var sQuery = oEvent.getSource().getValue();
@@ -122,19 +157,24 @@ sap.ui.define([
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/rejectOther", oData.results[0].rejectOther);
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateOther", oData.results[0].updateOther);
                         }
-                        var sPath = oItem.getBindingContextPath()
-                        this.getView().getModel("EmpInfoModel").refresh(true);
-                        this.getRouter().navTo("detail", {
-                            parentMaterial: oItem.getModel().getProperty(sPath).ID,
-                            layout: "TwoColumnsMidExpanded"
-                        },
-                            false
-                        );
+                        if(oItem){
+                            var sPath = oItem.getBindingContextPath()
+                            this.getView().getModel("EmpInfoModel").refresh(true);
+                            this.getRouter().navTo("detail", {
+                                parentMaterial: oItem.getModel().getProperty(sPath).ID,
+                                layout: "TwoColumnsMidExpanded"
+                            },
+                                false
+                            );
+                        }
+                        
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));
                     }.bind(this),
                 });
             }
+
+           
         });
     });

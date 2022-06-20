@@ -30,7 +30,7 @@ sap.ui.define([
 
 
             _onObjectMatched: function (oEvent) {
-                this.getView().setBusy(true);
+               
 
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
@@ -40,14 +40,16 @@ sap.ui.define([
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                    this.getView().setBusy(true);
                     this._getTicketData(this.sChildID);
                 }
                 if (sLayout === "EndColumnFullScreen" && this.byId("idFullScreenBTN").getIcon() == "sap-icon://full-screen") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://exit-full-screen");
+                    this.getView().setBusy(true);
                     this._getTicketData(this.sChildID);
                 }
-
+               
                 var sUploadAttachment = this.getView().byId("UploadSet").getVisible();
                 if (!sUploadAttachment) {
                     this.attachReq = false;
@@ -137,15 +139,12 @@ sap.ui.define([
                         else {
                             sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
                         }
-                        this.getView().setBusy(false);
+                        that.getView().setBusy(false);
                     }
                 });
 
                 this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
-                // this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                // this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                // this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                // this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
+               
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
 
                 this.getView().getModel("LocalViewModel").refresh();
