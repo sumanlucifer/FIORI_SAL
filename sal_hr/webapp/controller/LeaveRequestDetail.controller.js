@@ -351,6 +351,7 @@ sap.ui.define([
                     
                    if(this.isAttachmentRenamed === true){
                     isAttachmentNew = true;
+                    sattachmentFileID = null;
                    }
 
 
@@ -366,32 +367,48 @@ sap.ui.define([
 
 
 
-                    switch (sType) {
-                        case "460":
-                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    // switch (sType) {
+                    //     case "460":
+                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "450":
-                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //         break;
+                    //     case "450":
+                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "480":
-                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                        case "440":
-                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //         break;
+                    //     case "480":
+                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //     case "440":
+                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "HD1":
-                            sQtyHrs = "0.5";
-                            break;
-                        default:
-                            sQtyHrs = "0.0";
+                    //         break;
+                    //     case "HD1":
+                    //         sQtyHrs = "0.5";
+                    //         break;
+                    //     default:
+                    //         sQtyHrs = "0.0";
+                    // }
+                    
+
+                    if(sType === "460" || sType === "450" || sType === "480" || sType === "440"){
+                        sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                        if(sQtyHrs){
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                        }else {
+                            sap.m.MessageBox.error("Please enter requesting hours.");
+                            this.bValid = false;
+                            return;
+                        }
+                            
+                    }else if(sType === "HD1"){
+                        sQtyHrs = "0.5";
+                    }else {
+                        sQtyHrs = "0.0";
                     }
-
 
 
                     return {

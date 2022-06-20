@@ -114,7 +114,7 @@
             },
             "routes": [
                 {
-                    "pattern": "",
+                    "pattern": "masterView",
                     "name": "master",
                     "target": [
                         "master"

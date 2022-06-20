@@ -202,7 +202,7 @@ sap.ui.define([
                     // }
 
                     if(sTimeType === "460" || sTimeType === "450" || sTimeType === "480" || sTimeType === "440"){
-                        sQtyHrs = this.getView().byId("TP1").getValue();
+                        sQtyHrs = this.getView().byId("TP1").getDOMValue();
                         if(sQtyHrs){
                             sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
                         }else {
