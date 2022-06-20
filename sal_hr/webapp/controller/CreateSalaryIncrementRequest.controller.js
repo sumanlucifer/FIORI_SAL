@@ -529,6 +529,10 @@ sap.ui.define(
               return oDialog;
             });
           }
+          this._positionDialog.then(function (oDialog) {
+
+            oDialog.open();
+        }.bind(this));
         },
         onValueHelpRequest: function (oEvent) {
           var oView = this.getView();
