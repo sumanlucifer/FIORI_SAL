@@ -295,7 +295,7 @@ sap.ui.define([], function () {
             return bModifyVisible;
         },
 
-        fnSetWithdrawtVisibilty: function (bEditMode, bIsUserManager) {
+        fnSetWithdrawtVisibilty: function (bEditMode, bIsUserManager, sExternalStatus) {
             var bWithdrawVisible = false;
 
             if (bEditMode === false) {
@@ -304,8 +304,13 @@ sap.ui.define([], function () {
                     bWithdrawVisible = bDeleteOther === true ? true : false;
                 }
                 if (!bIsUserManager) {
-                    var bDeleteSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/deleteSelf");
-                    bWithdrawVisible = bDeleteSelf === true ? true : false;
+                    if(sExternalStatus === 'SENTBACK') {
+                        var bWithdrawSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/withdrawSelf");
+                        bWithdrawVisible = bWithdrawSelf === true ? true : false;
+                    } else {
+                        var bDeleteSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/deleteSelf");
+                        bWithdrawVisible = bDeleteSelf === true ? true : false;
+                    }
                 }
             } else {
                 bWithdrawVisible = false;
