@@ -58,6 +58,7 @@ sap.ui.define([
                     },
                     success: function (oData) {
                         BusyIndicator.hide();
+                        this.getRouter().navTo("master");
                         this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
                         this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
                     }.bind(this),

@@ -38,12 +38,15 @@
                     <Input id="idSalIncPRN" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
 
                 </fm:SimpleForm>
+                <VBox visible="{= ${LocalViewModel>/checkBoxVisible} ? true : false }">
+               
 
                 <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                     <Label text="Choose what you want to change"/>
                     <CheckBox id="idJobInfo" select="onSelectJobInfo" text="Job Information"></CheckBox>
                     <CheckBox id="idCompensationInfo" select="onSelectCompensation" text="Compensation Information"></CheckBox>
                 </fm:SimpleForm>
+                 </VBox>
 
                 <Panel visible="{= ${LocalViewModel>/jobInfoVisible} ? true : false }">
                     <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
@@ -56,7 +59,7 @@
                             <core:Item key="{code}" text="{externalName_defaultValue}"/>
                         </Select> -->
 
-                         <Input id="idPosition"  width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onPositionRequest" />
+                         <Input id="idPosition"  width="100%" valueHelpOnly="true" value="{jobModel>/positionNav/externalName_defaultValue} ({jobModel>/position})" showValueHelp="true" valueHelpRequest="onPositionRequest" />
 
                         <Label text="Time in Position" />
                         <Input value="" />
@@ -92,9 +95,11 @@
                         <Input value="{jobModel>/timezone}" />
 
                         <Label text="Cost Center" />
-                        <Select id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" selectedKey="{jobModel>/costCenter}">
+                        <!-- <Select id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" selectedKey="{jobModel>/costCenter}">
                             <core:Item key="{externalCode}" text="{name}"/>
-                        </Select>
+                        </Select> -->
+                         <Input id="idCostCenter"  width="100%" valueHelpOnly="true" value="{jobModel>/costCenterName} ({jobModel>/costCenter})" showValueHelp="true" valueHelpRequest="onCostCenterRequest" />
+
 
                         <Label text="Location Group" />
                         <Select id="idLocationGroup" items="{ path: '/SF_LocationGroup'}" selectedKey="{jobModel>/customString12}">
@@ -111,7 +116,9 @@
                     <fm:SimpleForm title="Job Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
 
                         <Label text="Direct Manager" required="true" />
-                        <Input id="idDirectManager" value="{jobInfoNav>/results/0/managerId}"/>
+                        <!-- <Input id="idDirectManager" value="{jobInfoNav>/results/0/managerId}"/> -->
+                         <Input id="idDirectManager" required="true" width="100%" valueHelpOnly="true" value="{jobModel>/managerId}" showValueHelp="true" valueHelpRequest="onDirectMngrValueHelpRequest" />
+
 
                         <Label text="Job Classification" />
                         <Select id="idJobclassification" items="{ path: '/SF_JobCode'}" selectedKey="{jobModel>/jobCode}">
@@ -152,8 +159,8 @@
                         </Select>
 
                         <Label text="Probationary Period End Date" required="true" />
-                        <DatePicker id="idProbationaryDate" value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date', formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                        <DatePicker id="idProbationaryDate" value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date',  formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
                                                 }}" minDate="{LocalViewModel>/currentDate}"/>
 
                         <Label text="Country" required="true" />
@@ -203,7 +210,9 @@
                         <Input value="{jobModel>/customString13}" />
 
                         <Label text="Contract End Date" />
-                        <Input value="{path:'jobModel>/contractEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true}}" minDate="{LocalViewModel>/currentDate}"/>
+                        <Input value="{path:'jobModel>/contractEndDate', type:'sap.ui.model.type.Date',  formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" minDate="{LocalViewModel>/currentDate}"/>
 
                         <Label text="Auto Renewal" />
                         <Input value="{jobModel>/customString11}" />

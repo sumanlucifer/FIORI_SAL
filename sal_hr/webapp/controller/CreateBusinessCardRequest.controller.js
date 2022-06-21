@@ -145,6 +145,9 @@ sap.ui.define([
                 //     this.byId("idCreateEmail").setValueStateText(null);
                 // }
 
+                
+               
+
                 // if (this.byId("idCreateMobile").getValue() === "") {
                 //     this.byId("idCreateMobile").setValueState("Error");
                 //     this.byId("idCreateMobile").setValueStateText(
@@ -311,12 +314,29 @@ sap.ui.define([
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                     sIncidentStartDate = dateFormat.format(new Date(sIncidentStartDate));
                 sIncidentStartDate = sIncidentStartDate + "T00:00:00";
+
+
                 var sCustOfficeNo = this.byId("idCreateOfficeNo").getValue();
+                if(sCustOfficeNo === "" || sCustOfficeNo === null || sCustOfficeNo === undefined){
+                    sCustOfficeNo = "NA";
+                }
+
                 var sCustEmail = this.byId("idCreateEmail").getValue();
+                if(sCustEmail === "" || sCustEmail === null || sCustEmail === undefined ){
+                    sCustEmail = "NA";
+                }
                 var sCustMobile = this.byId("idCreateMobile").getValue();
+                if(sCustMobile === "" || sCustMobile === null || sCustMobile === undefined){
+                    sCustMobile = "NA";
+                }
                 var sCustLocation = this.byId("idCreateLocation").getValue();
+                
                 var sCustPOBOX = this.byId("idCreatePOBOX").getValue();
+
                 var sCustJobTitle = this.byId("idCreateJobTitle").getValue();
+                if(sCustJobTitle === "" || sCustJobTitle === null || sCustJobTitle === undefined){
+                    sCustJobTitle = "NA";
+                }
 
                 return {
                     "User": sUserID,
