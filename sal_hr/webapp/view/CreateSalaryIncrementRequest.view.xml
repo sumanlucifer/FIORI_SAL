@@ -126,7 +126,14 @@
                         </Select>
 
                         <Label text="Job Level" />
-                        <Input value="{jobModel>/customString1}" />
+
+                         <Select id="idJobLevel" items="{ path: '/SF_PicklistOption'}" selectedKey="{jobModel>/customString1}">
+                            <core:Item key="{picklistLabels/0/optionId}" text="{picklistLabels/0/optionId}"/>
+                        </Select>
+                        <!-- <Input value="{jobModel>/customString1}" /> -->
+
+
+                        
 
                         <Label text="Job Title" required="false" />
                         <Input id="idJobTitle" value="{jobModel>/jobTitle}" />
@@ -170,9 +177,6 @@
                         </Select>
 
 
-
-
-
                         <Label text="Employee Class" />
                         <Input value="{jobModel>/employeeClass}" />
 
@@ -210,9 +214,11 @@
                         <Input value="{jobModel>/customString13}" />
 
                         <Label text="Contract End Date" />
-                        <Input value="{path:'jobModel>/contractEndDate', type:'sap.ui.model.type.Date',  formatOptions: {
+                        <DatePicker value="{path:'jobModel>/contractEndDate', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" minDate="{LocalViewModel>/currentDate}"/>
+
+                                               
 
                         <Label text="Auto Renewal" />
                         <Input value="{jobModel>/customString11}" />
@@ -221,7 +227,9 @@
                         <Input value="{jobModel>/jobGroup}" />
 
                         <Label text="Initial Entry" />
-                        <Input value="{jobModel>/initialEntryDate}" />
+                         <DatePicker  value="{path:'jobModel>/initialEntryDate', type:'sap.ui.model.type.Date',  formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}" minDate="{LocalViewModel>/currentDate}"/>
 
                         <Label text="Entry into Group" />
                         <Input value="{jobModel>/entryIntoGroup}" />

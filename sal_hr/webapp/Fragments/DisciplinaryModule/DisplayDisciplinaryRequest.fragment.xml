@@ -67,7 +67,7 @@
 				uploadEnabled="false"
 				maxFileNameLength="30"
 				maxFileSize="200"
-                visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : true}"				
+                visible="{= ${LocalViewModel>/uploadAttachmentVisible} === false ? false : true}"				
 				>
 				<upload:toolbar>
                 <OverflowToolbar>

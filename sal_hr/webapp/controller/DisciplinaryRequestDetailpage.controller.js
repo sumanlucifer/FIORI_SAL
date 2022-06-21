@@ -70,6 +70,13 @@ sap.ui.define([
                     success: function (oData) {
                         var oAttachModel = new JSONModel(oData.cust_attachmentNav);
                         this.getView().setModel(oAttachModel, "attachmentModel");
+                        if(this.getView().getModel("attachmentModel").getProperty("/fileContent") === undefined)
+                        {
+                            this.getView().getModel("LocalViewModel").setProperty("/uploadAttachmentVisible", false);
+                        }
+                        else{
+                            this.getView().getModel("LocalViewModel").setProperty("/uploadAttachmentVisible", true);
+                        }
                     }.bind(this),
                     error: function (oError) {
                     }.bind(this),

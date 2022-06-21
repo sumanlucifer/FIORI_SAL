@@ -275,6 +275,7 @@ sap.ui.define([], function () {
                 bRaiseRequestVisible = bCreateSelf === true ? true : false;
             }
             return bRaiseRequestVisible;
+         
         },
 
         fnSetModifyVisibilty: function (bEditMode, bIsUserManager) {
