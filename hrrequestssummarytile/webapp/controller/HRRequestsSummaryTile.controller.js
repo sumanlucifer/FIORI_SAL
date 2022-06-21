@@ -14,7 +14,11 @@ sap.ui.define([
 
             _bindView: function () {
                 this.getView().bindElement({
-                    path: "/MasterModules(1)"
+                    path: "/MasterModules(1)",
+                    parameters: {
+                        custom: {
+                            "IsUserManager": "true"
+                        }
                 });
             }
         });
