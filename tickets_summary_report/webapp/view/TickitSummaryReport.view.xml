@@ -22,9 +22,9 @@
                                                     </viz.data:dimensions>
                                                     <viz.data:measures>
                                                         <!-- Column chart Items -->
-                                                        <viz.data:MeasureDefinition group="1" name="Completed" value="{TicketsSummaryDataModel>completed}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Completed" value="{TicketsSummaryDataModel>totalApproved}"/>
                                                         <!-- <viz.data:MeasureDefinition group="1" name="Under Process" value="{TicketsSummaryDataModel>underProcess}"/> -->
-                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TicketsSummaryDataModel>pending}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TicketsSummaryDataModel>totalPending}"/>
                                                         <viz.data:MeasureDefinition group="1" name="Cancelled by End User" value="{TicketsSummaryDataModel>cancelledByEndUser}"/>
                                                         <!-- Line chart Items -->
                                                         <viz.data:MeasureDefinition group="2" name="Cancelled by Admin" value="{TicketsSummaryDataModel>cancelledByAdmin}"/>
@@ -83,9 +83,9 @@
                                                 <ColumnListItem vAlign="Middle">
                                                     <cells>
                                                         <Text text="{TicketsSummaryDataModel>name}"/>
-                                                        <Text text="{TicketsSummaryDataModel>completed}"/>
+                                                        <Text text="{TicketsSummaryDataModel>totalApproved}"/>
                                                         <!-- <Text text="{TicketsSummaryDataModel>underProcess}"/> -->
-                                                        <Text text="{TicketsSummaryDataModel>pending}"/>
+                                                        <Text text="{TicketsSummaryDataModel>totalPending}"/>
                                                         <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
                                                         <Text text="{TicketsSummaryDataModel>cancelledByAdmin}"/>
                                                         <!-- <Text text="{TicketsSummaryDataModel>reassigned}"/>
