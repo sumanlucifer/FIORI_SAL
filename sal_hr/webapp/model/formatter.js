@@ -274,7 +274,6 @@ sap.ui.define([], function () {
                 var bCreateSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/createSelf");
                 bRaiseRequestVisible = bCreateSelf === true ? true : false;
             }
-            return true;
             return bRaiseRequestVisible;
         },
 

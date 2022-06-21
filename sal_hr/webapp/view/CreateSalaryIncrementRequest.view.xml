@@ -59,7 +59,7 @@
                             <core:Item key="{code}" text="{externalName_defaultValue}"/>
                         </Select> -->
 
-                         <Input id="idPosition"  width="100%" valueHelpOnly="true" value="{jobModel>/positionNav/externalName_defaultValue} ({jobModel>/position})" showValueHelp="true" valueHelpRequest="onPositionRequest" />
+                         <Input id="idPosition"  width="100%" valueHelpOnly="true" value="{= ${jobModel>/position} !== null ? ${jobModel>/positionNav/externalName_defaultValue} (${jobModel>/position}) : null }" showValueHelp="true" valueHelpRequest="onPositionRequest" />
 
                         <Label text="Time in Position" />
                         <Input value="" />
@@ -98,7 +98,7 @@
                         <!-- <Select id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" selectedKey="{jobModel>/costCenter}">
                             <core:Item key="{externalCode}" text="{name}"/>
                         </Select> -->
-                         <Input id="idCostCenter"  width="100%" valueHelpOnly="true" value="{jobModel>/costCenterNav/name} ({jobModel>/costCenter})" showValueHelp="true" valueHelpRequest="onCostCenterRequest" />
+                         <Input id="idCostCenter"  width="100%" valueHelpOnly="true" value="{= ${jobModel>/costCenter} !== null ? ${jobModel>/costCenterNav/name} (${jobModel>/costCenter}) : null }" showValueHelp="true" valueHelpRequest="onCostCenterRequest" />
 
 
                         <Label text="Location Group" />
@@ -147,8 +147,9 @@
                         </Select>
 
                         <Label text="Is Full Time Employee" required="true" />
-                        <Select id="idFullTimeEmp" items="{ path: '/SF_PicklistOption', filters: [{ path: 'picklist/picklistId', operator: 'EQ', value1: 'yesNo' }] }" selectedKey="{jobModel>/isFulltimeEmployee}">
-                            <core:Item key="{id}" text="{localeLabel}"/>
+                        <Select id="idFullTimeEmp" selectedKey="{jobModel>/isFulltimeEmployee}">
+                            <core:Item key="true" text="Yes"/>
+                            <core:Item key="false" text="No"/>
                         </Select>
 
                         <Label text="Employment Type" required="true" />
@@ -210,7 +211,6 @@
                         </Select>
 
                         <Label text="Employee Notice Period" />
-                        <Input value="{jobModel>/employeeNoticePeriod}" />
                         <Select id="idEmployeeNoticePeriod" items="{ path: '/SF_PicklistOption', filters: [{ path: 'picklist/picklistId', operator: 'EQ', value1: 'EENoticePeriod' }] }" selectedKey="{jobModel>/employeeNoticePeriod}">
                             <core:Item key="{id}" text="{localeLabel}"/>
                         </Select>

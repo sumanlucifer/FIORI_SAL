@@ -139,21 +139,10 @@ sap.ui.define(
                 that.getView().setModel(oSalaryModel, "salaryModel");
               },
               error: function (oError) {
-                if (
-                  JSON.parse(oError.responseText).error.message.value.indexOf(
-                    "{"
-                  ) === 0
-                )
-                  sap.m.MessageBox.error(
-                    JSON.parse(
-                      JSON.parse(oError.responseText).error.message.value
-                    ).error.message.value.split("]")[1]
-                  );
-                else {
-                  sap.m.MessageBox.error(
-                    JSON.parse(oError.responseText).error.message.value
-                  );
-                }
+                that.getView().setModel(new JSONModel(), "compensationModel");
+                that.getView().setModel(new JSONModel(), "jobModel");
+                that.getView().setModel(new JSONModel(), "salaryModel");
+                sap.m.MessageBox.error(that.parseResponseError(oError.responseText));
               },
             });
         },
@@ -281,6 +270,11 @@ sap.ui.define(
           sStartDate = new Date(sStartDate);
           sStartDate.setHours(0, 0, 0, 0);
           sNewPayload.startDate = new Date(sStartDate);
+          if(sNewPayload.workingDaysPerWeek == undefined || sNewPayload.workingDaysPerWeek == null) {
+            sNewPayload.workingDaysPerWeek = 5;
+          } else if(sNewPayload.workingDaysPerWeek > 7) {
+            sNewPayload.workingDaysPerWeek = 7;
+          }
           return sNewPayload;
         },
         fnGetCompensationRequestPayload: function () {
@@ -341,7 +335,7 @@ sap.ui.define(
             // sJobTitle = this.byId("idJobTitle"),
             sIKOOK = this.byId("idIKOOK"),
             sFullTimeEmp = this.byId("idFullTimeEmp"),
-            sEmpType = this.byId("idEmpType"),
+            sEmpType = this.byId("idEmployeeType"),
             sPayGroup = this.byId("idPayGroup"),
             sCompCountry = this.byId("idCompCountry"),
             sCommision = this.byId("idCommision"),
@@ -407,7 +401,7 @@ sap.ui.define(
             //     sJobTitle.setValueState("None");
             // }
             // Validate IK/OOK
-            if (!sIKOOK.getValue()) {
+            if (!sIKOOK.getSelectedKey()) {
               sIKOOK.setValueState("Error");
               sIKOOK.setValueStateText("Please enter Job title");
               sValidationErrorMsg = "Please fill the all required fields.";
@@ -415,7 +409,7 @@ sap.ui.define(
               sIKOOK.setValueState("None");
             }
             // Validate Is Full Time Employee
-            if (!sFullTimeEmp.getValue()) {
+            if (!sFullTimeEmp.getSelectedKey()) {
               sFullTimeEmp.setValueState("Error");
               sFullTimeEmp.setValueStateText("Please enter Job title");
               sValidationErrorMsg = "Please fill the all required fields.";
@@ -431,7 +425,7 @@ sap.ui.define(
               sJobCountry.setValueState("None");
             }
             // Validate Employee Type
-            if (!sEmpType.getValue()) {
+            if (!sEmpType.getSelectedKey()) {
               sEmpType.setValueState("Error");
               sEmpType.setValueStateText("Please enter Job title");
               sValidationErrorMsg = "Please fill the all required fields.";
@@ -758,8 +752,7 @@ sap.ui.define(
               var sUserIDFilter = new sap.ui.model.Filter({
                 path: "manager/userId",
                 operator: sap.ui.model.FilterOperator.EQ,
-                // value1: userId,
-                value1: null
+                value1: userId
               });
               oList.getBinding("items").filter([sUserIDFilter]);
               oDialog.open();
@@ -829,7 +822,6 @@ sap.ui.define(
           if (!oSelectedItem) {
             return;
           }
-          this._bindView();
           this.getView()
               .getModel("LocalViewModel")
               .setProperty("/checkBoxVisible", true);
@@ -838,6 +830,7 @@ sap.ui.define(
           this.byId("idSalIncPRN").setValueState("None");
           this.PRNFlag = true;
           this.prnID = obj["userId"];
+          this._bindView();
          
         },
         fnGetPayType: function () {

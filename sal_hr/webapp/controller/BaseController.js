@@ -357,6 +357,21 @@ sap.ui.define([
                     this.getView().getModel().refresh();
                 }.bind(this)
             });
+        },
+        parseResponseError: function(responseText) {
+            try {
+                if(typeof responseText == 'object') {
+                    responseText = responseText.error.message.value;
+                    return this.parseResponseError(responseText);
+                } else if(typeof responseText == 'string' && responseText.indexOf("{") == 0) {
+                    responseText = JSON.parse(responseText).error.message.value;
+                    return this.parseResponseError(responseText);
+                }
+                return responseText.replace(/\[([^\[\]]*)\]/,"");
+            } catch (err) {
+                console.log(err);
+                return "Unknown error occured, Please try after sometime.";
+            }
         }
     });
 });
