@@ -84,6 +84,7 @@ sap.ui.define(
         },
         _bindView: function (data) {
           var sUserID;
+          this.getView().setBusy(true);
           this.EmpInfoObj = this.getOwnerComponent()
             .getModel("EmpInfoModel")
             .getData();
@@ -123,6 +124,7 @@ sap.ui.define(
                 $expand: "compInfoNav, jobInfoNav,jobInfoNav/positionNav",
               },
               success: function (oData) {
+                that.getView().setBusy(false);
                 var oCompensationModel = new JSONModel(
                     oData.compInfoNav.results[0]
                   ),
@@ -136,6 +138,7 @@ sap.ui.define(
                 that.getView().setModel(oSalaryModel, "salaryModel");
               },
               error: function (oError) {
+                that.getView().setBusy(false);
                 if (
                   JSON.parse(oError.responseText).error.message.value.indexOf(
                     "{"
