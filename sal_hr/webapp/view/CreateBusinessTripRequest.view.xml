@@ -26,9 +26,12 @@
                     <!-- <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}" minDate="{LocalViewModel>/currentDate}"/> -->
-                    <DatePicker enabled="false" id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
+                    <!-- <DatePicker enabled="false" id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>                
+                                                }}" minDate="{LocalViewModel>/currentDate}"/>                 -->
+                         <DatePicker enabled="false" id="idEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                                                    pattern: 'MM/dd/yyyy'
+                                                }}"/>                        
                 </form:SimpleForm>
                 <form:SimpleForm title="{i18n>BusinessTravelDetails}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                     <Label text="{i18n>RequestType}" required="true"/>
@@ -113,8 +116,7 @@
                     <TimePicker id="idAirlineTicket" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime'}" />
 
                     <Label text="{i18n>DestinationCountry}" required="true"/>
-                    <Select id="idDestCountry" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_destination}" items="{path: '/SF_Country',
-                                                            
+                    <Select id="idDestCountry" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_destination}" items="{path: '/SF_Country',                                          
                                                          sorter : {
                                                              path : 'externalName_defaultValue' 
                                                         } }" change="onDestCountryChange">
@@ -153,18 +155,22 @@
                     <Label text="{i18n>TotalPerDiem}" />
                     <Input id="idTotalPErDiem" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_totalPerDiem}" enabled="false" />
 
-
+              
 
                 </form:SimpleForm>
                 <!-- # Trip Category Business form  -->
+
+                <!-- Flight and Visa Details should be visible only for Return and Closure -->
+                   
+                  <VBox visible="{= ${LocalViewModel>/FlightVisaPanelShow} === true ? true : false }">
+
                 <form:SimpleForm title="{i18n>FlightDeatils}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" visible="{= ${LocalViewModel>/businessCategory} === true ? true : false }">
                     <Label text="{i18n>BusinessTravelDate}" />
                     <DatePicker id="idFlightTravelDate" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"></DatePicker>
 
-                    <!-- <Label text="Travel From"/>
-            <Input id="idTravelFrom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelFrom}"/> -->
+         
 
                     <Label text="{i18n>TravelTo}"/>
                     <Input id="idTravelTo" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_businessTravelTo}"/>
@@ -258,7 +264,8 @@
                     <upload:UploadSet id="UploadVisaCopy" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
                         <upload:toolbar>
                             <OverflowToolbar>
-                                <Label text="{i18n>Attachments}"/>
+                                <Label text="{i18n>Attachments}" required="{= ${LocalViewModel>/visaFee} === true ? true : false }"/>
+                                
                                 <core:Icon id="idInfoIconVisa" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
@@ -267,11 +274,12 @@
                     </upload:UploadSet>
                 </VBox>
                 <VBox>
-                    <Label text="{i18n>AttachEmbassyReceipt}" />
+                    <Label text="{i18n>AttachEmbassyReceipt}" class="sapUiTinyMarginTop"/>
                     <upload:UploadSet id="UploadEmbassy" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
                         <upload:toolbar>
                             <OverflowToolbar>
-                                <Label text="{i18n>Attachments}"/>
+                                <Label text="{i18n>Attachments}"  required="{= ${LocalViewModel>/visaFee} === true ? true : false }"/>
+                                
                                 <core:Icon id="idInfoIconEmbassy" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
                                 <ToolbarSpacer/>
                             </OverflowToolbar>
@@ -279,6 +287,10 @@
 
                     </upload:UploadSet>
                 </VBox>
+               
+               
+               </VBox> 
+               
                 <form:SimpleForm title="{i18n>EmployeeInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                     <Label text="{i18n>EmployeeName}" required="true" />
                     <Input id="idCustEmpName" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_empName}" enabled="false"></Input>

@@ -18,7 +18,9 @@ sap.ui.define([
                     businessTravel: false,
                     trainingTravel: false,
                     businessCategory: true,
-                    trianingCategory: false
+                    trianingCategory: false,
+                    FlightVisaPanelShow :false,
+                    visaFee :false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -263,7 +265,7 @@ sap.ui.define([
                         error: function (oError) {
                             this.getView().setBusy(false);
                             sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
-                            // this.getView().getModel().refresh();
+                            this.getView().getModel().refresh();
 
 
                         }.bind(this)
@@ -372,24 +374,24 @@ sap.ui.define([
                 //         return sValidationErrorMsg;
                 //     }
                 // }
+
+
                 //   # Visa Copy Mandatory check
-                // if (this.byId("idVisaType").getSelectedKey() === "V") {
-                //     if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isvisaCopyAttachNew")) {
-                //         sValidationErrorMsg = "Please upload Visa Copy.";
-                //         this.getView().setBusy(false);
-                //         return sValidationErrorMsg;
-                //     }
-                // }
+                if (this.byId("idVisaType").getSelectedKey() === "V") {
+                    // # Visa Copy Mandatory check
+                    if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isvisaCopyAttachNew")) {
+                        sValidationErrorMsg = "Please upload Visa Copy.";
+                        this.getView().setBusy(false);
+                        return sValidationErrorMsg;
+                    }
 
-                //   # Embassy Receipt Mandatory check
-                // if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isreceiptEmbassyAttachNew")) {
-                //     sValidationErrorMsg = "Please upload Embassy Receipt.";
-                //     this.getView().setBusy(false);
-                //     return sValidationErrorMsg;
-                // }
-
-
-
+                    // # Embassy Receipt Mandatory check
+                    if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isreceiptEmbassyAttachNew")) {
+                        sValidationErrorMsg = "Please upload Embassy Receipt.";
+                        this.getView().setBusy(false);
+                        return sValidationErrorMsg;
+                    }
+                }
 
                 this.getView().setBusy(false);
                 return sValidationErrorMsg;
@@ -421,8 +423,10 @@ sap.ui.define([
                 this.getView().byId("UploadVisaCopy").removeAllItems();
                 if (this.byId("idVisaType").getSelectedKey() === "N") {
                     this.getView().byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(false);
+                    this.getView().getModel("LocalViewModel").setProperty("/visaFee", false);
                 } else {
                     this.getView().byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(true);
+                    this.getView().getModel("LocalViewModel").setProperty("/visaFee", true);
                 }
 
 
@@ -457,6 +461,7 @@ sap.ui.define([
 
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
+                    this.getView().getModel("LocalViewModel").setProperty("/FlightVisaPanelShow", false);
 
                 } else {
                     this.byId("idHRBook").setEnabled(false);
@@ -472,6 +477,9 @@ sap.ui.define([
                     this.byId("idTotalPErDiem").setEnabled(false);
                     this.byId("idPayCompVisa").setEnabled(false);
                     this.byId("idPayCom").setEnabled(false);
+
+                    this.getView().getModel("LocalViewModel").setProperty("/FlightVisaPanelShow", true);
+
 
 
                     if (this.byId("idTripCategory").getSelectedKey() === "B") {
@@ -581,12 +589,14 @@ sap.ui.define([
                     isVisaAttachmentMandatory;
                 if (sValue === "N") {
                     this.byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(false);
+                    this.getView().getModel("LocalViewModel").setProperty("/visaFee", false);
                     isVisaAttachmentMandatory = false;
                     
                     this.byId("idPayCompVisa").setValue();
 
                 } else {
                     this.byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(true);
+                    this.getView().getModel("LocalViewModel").setProperty("/visaFee", true);
                     isVisaAttachmentMandatory = true;
 
                     this.byId("idPayCompVisa").setValue("Business Visa Cost (Off-Cycle)");
