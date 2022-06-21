@@ -10,6 +10,7 @@ sap.ui.define(
     "sap/ui/Device",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "com/sal/salhr/model/formatter",
   ],
   function (
     BaseController,
@@ -21,12 +22,14 @@ sap.ui.define(
     Fragment,
     Device,
     Filter,
-    FilterOperator
+    FilterOperator,
+    formatter
   ) {
     "use strict";
     return BaseController.extend(
       "com.sal.salhr.controller.CreateSalaryIncrementRequest",
       {
+        formatter: formatter,
         onInit: function () {
           this.oRouter = this.getRouter();
           this.oRouter
@@ -120,7 +123,7 @@ sap.ui.define(
             .getModel()
             .read(sKey, {
               urlParameters: {
-                $expand: "compInfoNav, jobInfoNav,jobInfoNav/positionNav",
+                $expand: "compInfoNav, jobInfoNav,jobInfoNav/positionNav, jobInfoNav/costCenterNav",
               },
               success: function (oData) {
                 var oCompensationModel = new JSONModel(
@@ -646,7 +649,7 @@ sap.ui.define(
             var obj = oSelectedItem.getBindingContext().getObject();
        
             this.getView().getModel("jobModel").setProperty("/costCenter", obj["externalCode"]);
-            this.getView().getModel("jobModel").setProperty("/costCenterName", obj["name"]);
+            this.getView().getModel("jobModel").setProperty("/costCenterNav/name", obj["name"]);
           
         },
 
@@ -755,7 +758,8 @@ sap.ui.define(
               var sUserIDFilter = new sap.ui.model.Filter({
                 path: "manager/userId",
                 operator: sap.ui.model.FilterOperator.EQ,
-                value1: userId,
+                // value1: userId,
+                value1: null
               });
               oList.getBinding("items").filter([sUserIDFilter]);
               oDialog.open();

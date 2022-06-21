@@ -274,6 +274,7 @@ sap.ui.define([], function () {
                 var bCreateSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/createSelf");
                 bRaiseRequestVisible = bCreateSelf === true ? true : false;
             }
+            return true;
             return bRaiseRequestVisible;
         },
 
@@ -326,6 +327,23 @@ sap.ui.define([], function () {
             } else {
                 return false;
             }
+        },
+
+        formatPicklistOptions: function(picklist, property) {
+            console.log(picklist, property);
+            var oComponentModel = this.getComponentModel();
+            var promise = new Promise(function (resolve, reject) {
+                oComponentModel.read("/" + picklist, {
+                    success: function(oData) {
+                        resolve(oData[property]);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                });
+            }.bind(this));
+            return promise;
         }
     };
 });
