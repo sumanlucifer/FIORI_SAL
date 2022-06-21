@@ -12,9 +12,10 @@ sap.ui.define([
        
 
         return BaseController.extend("com.sal.salhr.controller.MasterList", {
-           
+            
             formatter: formatter,
             onInit: function () {
+                this.getView().setBusy(true);
                 var oModel = this.getOwnerComponent().getModel("layoutModel");
                 oModel.setProperty("/layout", "OneColumn");
 
@@ -26,11 +27,11 @@ sap.ui.define([
                 if(subModuleId){
                     this.fnGetRoleAccess(sManagerTile, subModuleId);
                 }
-                
+                this.getView().setBusy(false);
             },
 
             _onObjectMatched: function (oEvent) {
-
+                this.getView().setBusy(true);
                 var params = new URLSearchParams(decodeURIComponent(window.parent.location.href)),
                     subModuleId = params.get("submoduleId"),
                     ticketId = params.get("ticketId");
@@ -47,12 +48,14 @@ sap.ui.define([
 
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
+                this.getView().setBusy(false);
             },
             onUpdateMasterListBindingStart: function (oEvent) {
                 var sIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
             //    sIsUserManager = "true";
                 oEvent.getSource().getBinding("items").sCustomParams = "IsUserManager=" + sIsUserManager;
                 oEvent.getSource().getBinding("items").mCustomParams.IsUserManager = sIsUserManager;
+                this.getView().setBusy(false);
             },
             _navToDetail: function (id) {
 
