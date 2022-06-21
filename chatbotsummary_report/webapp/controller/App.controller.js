@@ -70,7 +70,7 @@ sap.ui.define(
 
             fnGetSummaryDataFormatted: function (oSummaryData) {
                 // Format and set Mostly used and Never Used Skills Intents Data
-                var summary = {};
+                var summary = Object.assign({}, oSummaryData);
                 summary.MostUsedSkills = oSummaryData.skills.slice(0, 5);
                 summary.MostUsedIntents = oSummaryData.intents.slice(0, 10);
                 summary.NeverUsedSkills = this.fnGetNeverUsedItems(oSummaryData.skills);
