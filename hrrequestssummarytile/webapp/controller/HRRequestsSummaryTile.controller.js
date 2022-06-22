@@ -19,6 +19,7 @@ sap.ui.define([
                         custom: {
                             "IsUserManager": "true"
                         }
+                    }   
                 });
             }
         });
