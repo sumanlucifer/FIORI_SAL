@@ -23,7 +23,7 @@
 
                 <!--Withdraw not be visible for Manager Tile -->
                 <f:actions>
-                   <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}], formatter:'.formatter.fnSetWithdrawtVisibilty'}"/>
+                   <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}, {path: 'headerModel>/externalStatus'}], formatter:'.formatter.fnSetWithdrawtVisibilty'}"/>
                 </f:actions>
 
                 <!--Approve and Reject visible for Manager Tile -->

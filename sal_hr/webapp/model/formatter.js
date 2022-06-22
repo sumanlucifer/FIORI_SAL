@@ -296,7 +296,7 @@ sap.ui.define([], function () {
             return bModifyVisible;
         },
 
-        fnSetWithdrawtVisibilty: function (bEditMode, bIsUserManager) {
+        fnSetWithdrawtVisibilty: function (bEditMode, bIsUserManager, sExternalStatus) {
             var bWithdrawVisible = false;
 
             if (bEditMode === false) {
@@ -305,8 +305,13 @@ sap.ui.define([], function () {
                     bWithdrawVisible = bDeleteOther === true ? true : false;
                 }
                 if (!bIsUserManager) {
-                    var bDeleteSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/deleteSelf");
-                    bWithdrawVisible = bDeleteSelf === true ? true : false;
+                    if(sExternalStatus === 'SENTBACK') {
+                        var bWithdrawSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/withdrawSelf");
+                        bWithdrawVisible = bWithdrawSelf === true ? true : false;
+                    } else {
+                        var bDeleteSelf = this.getOwnerComponent().getModel("RoleInfoModel").getProperty("/deleteSelf");
+                        bWithdrawVisible = bDeleteSelf === true ? true : false;
+                    }
                 }
             } else {
                 bWithdrawVisible = false;
@@ -322,6 +327,23 @@ sap.ui.define([], function () {
             } else {
                 return false;
             }
+        },
+
+        formatPicklistOptions: function(picklist, property) {
+            console.log(picklist, property);
+            var oComponentModel = this.getComponentModel();
+            var promise = new Promise(function (resolve, reject) {
+                oComponentModel.read("/" + picklist, {
+                    success: function(oData) {
+                        resolve(oData[property]);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                });
+            }.bind(this));
+            return promise;
         }
     };
 });
