@@ -131,7 +131,7 @@ sap.ui.define(
                 var oCompensationModel = new JSONModel(
                     oData.compInfoNav.results[0]
                   ),
-                  oJobModel = new JSONModel(oData.jobInfoNav.results[0]),
+                  oJobModel = new JSONModel(oData.jobInfoNav.results.slice(-1)),
                   oSalaryModel = new JSONModel(oData);
                 that
                   .getView()
