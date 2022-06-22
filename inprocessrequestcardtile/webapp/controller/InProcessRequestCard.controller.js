@@ -20,7 +20,7 @@ sap.ui.define([
                             "type": "Analytical",
                             "header": {
                                 "type": "Numeric",
-                                "title": "Pending",
+                                "title": "My Pending Requests",
                                 "subTitle": "Total requests that are Pending",
                                 "data": {
                                     "json": {
