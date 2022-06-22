@@ -59,7 +59,7 @@
                             <core:Item key="{code}" text="{externalName_defaultValue}"/>
                         </Select> -->
 
-                         <Input id="idPosition"  width="100%" valueHelpOnly="true" value="{= ${jobModel>/position} !== null ? ${jobModel>/positionNav/externalName_defaultValue} (${jobModel>/position}) : null }" showValueHelp="true" valueHelpRequest="onPositionRequest" />
+                         <Input id="idPosition"  width="100%" valueHelpOnly="true" value="{ parts : [{ path: 'jobModel>/positionNav/externalName_defaultValue'}, {path: 'jobModel>/position'} ], formatter: '.formatter.formatLabel' }"   showValueHelp="true" valueHelpRequest="onPositionRequest" />
 
                         <Label text="Time in Position" />
                         <Input value="" />
@@ -98,7 +98,7 @@
                         <!-- <Select id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" selectedKey="{jobModel>/costCenter}">
                             <core:Item key="{externalCode}" text="{name}"/>
                         </Select> -->
-                         <Input id="idCostCenter"  width="100%" valueHelpOnly="true" value="{= ${jobModel>/costCenter} !== null ? ${jobModel>/costCenterNav/name} (${jobModel>/costCenter}) : null }" showValueHelp="true" valueHelpRequest="onCostCenterRequest" />
+                         <Input id="idCostCenter"  width="100%" valueHelpOnly="true" value="{ parts : [{ path: 'jobModel>/costCenterNav/name'}, {path: 'jobModel>/costCenter'} ], formatter: '.formatter.formatLabel' }"  showValueHelp="true" valueHelpRequest="onCostCenterRequest" />
 
 
                         <Label text="Location Group" />
@@ -121,14 +121,17 @@
 
 
                         <Label text="Job Classification" />
-                        <Select id="idJobclassification" items="{ path: '/SF_JobCode'}" selectedKey="{jobModel>/jobCode}">
+                        <!-- <Select id="idJobclassification" items="{ path: '/SF_JobCode'}" selectedKey="{jobModel>/jobCode}">
                             <core:Item key="{externalCode}" text="{name}"/>
-                        </Select>
+                        </Select> -->
+                         <Input id="idJobclassification" required="true" width="100%" valueHelpOnly="true" value="{ parts : [{ path: 'jobModel>/jobCodeNav/name'}, {path: 'jobModel>/jobCode'} ], formatter: '.formatter.formatLabel' }" showValueHelp="true" valueHelpRequest="onJobClasssificationValueHelpRequest" />
 
                         <Label text="Job Level" />
 
-                         <Select id="idJobLevel" items="{ path: '/SF_PicklistOption'}" selectedKey="{jobModel>/customString1}">
-                            <core:Item key="{picklistLabels/0/optionId}" text="{picklistLabels/0/optionId}"/>
+                         <Select id="idJobLevel" items="{ path: '/SF_PicklistOption',sorter : {
+            path : 'localeLabel' 
+         }, filters: [{ path: 'picklist/picklistId', operator: 'EQ', value1: 'JobLevel' }] }" selectedKey="{jobModel>/customString1}">
+                            <core:Item key="{id}" text="{localeLabel}"/>
                         </Select>
                         <!-- <Input value="{jobModel>/customString1}" /> -->
 

@@ -145,7 +145,7 @@ sap.ui.define(
                 that.getView().setModel(new JSONModel(), "compensationModel");
                 that.getView().setModel(new JSONModel(), "jobModel");
                 that.getView().setModel(new JSONModel(), "salaryModel");
-                sap.m.MessageBox.error(that.parseResponseError(oError.responseText));
+                // sap.m.MessageBox.error(that.parseResponseError(oError.responseText));
               },
             });
         },
@@ -611,6 +611,44 @@ sap.ui.define(
             oEvent.getSource().getBinding("items").filter([oFilter]);
         },
 
+        onJobClasssificationValueHelpRequest : function()
+
+        {
+            var oView = this.getView();
+            if (!this._JobClassificationDialog) {
+              this._JobClassificationDialog = Fragment.load({
+                id: oView.getId(),
+                name:
+                  "com.sal.salhr.Fragments.SalaryIncrementModule.JobClassification",
+                controller: this,
+              }).then(function (oDialog) {
+                oView.addDependent(oDialog);
+                if (Device.system.desktop) {
+                  oDialog.addStyleClass("sapUiSizeCompact");
+                }
+                return oDialog;
+              });
+            }
+            this._JobClassificationDialog.then(function (oDialog) {
+  
+              oDialog.open();
+          }.bind(this));
+        },
+
+        onJobClassificationConfirm: function(oEvent)
+        {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            oEvent.getSource().getBinding("items").filter([]);
+            if (!oSelectedItem) {
+              return;
+            }
+            var obj = oSelectedItem.getBindingContext().getObject();
+       
+            this.getView().getModel("jobModel").setProperty("/jobCode", obj["externalCode"]);
+            this.getView().getModel("jobModel").setProperty("/jobCodeNav", obj);
+          
+        },
+
 
         onCostCenterRequest : function()
         {
@@ -646,7 +684,7 @@ sap.ui.define(
             var obj = oSelectedItem.getBindingContext().getObject();
        
             this.getView().getModel("jobModel").setProperty("/costCenter", obj["externalCode"]);
-            this.getView().getModel("jobModel").setProperty("/costCenterNav/name", obj["name"]);
+            this.getView().getModel("jobModel").setProperty("/costCenterNav", obj);
           
         },
 
@@ -704,7 +742,7 @@ sap.ui.define(
             }
             var obj = oSelectedItem.getBindingContext().getObject();
        
-            this.getView().getModel("jobModel").setProperty("/positionNav/externalName_defaultValue", obj["externalName_defaultValue"]);
+            this.getView().getModel("jobModel").setProperty("/positionNav", obj);
             this.getView().getModel("jobModel").setProperty("/position", obj["code"]);
           
         },
@@ -755,7 +793,8 @@ sap.ui.define(
               var sUserIDFilter = new sap.ui.model.Filter({
                 path: "manager/userId",
                 operator: sap.ui.model.FilterOperator.EQ,
-                value1: userId
+                // value1: userId
+                value1: null
               });
               oList.getBinding("items").filter([sUserIDFilter]);
               oDialog.open();
