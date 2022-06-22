@@ -1,10 +1,11 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller) {
+    function (Controller,JSONModel) {
         "use strict";
 
         return Controller.extend("com.sal.salhr.controller.App", {
@@ -14,8 +15,8 @@ sap.ui.define([
                 this.oRouter = this.oOwnerComponent.getRouter();
                 this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 
-               var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").IsUserManager;
-                this.fnGetLoggedInEmpInfo(bIsUserManager);
+            //    var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").IsUserManager;
+                // this.fnGetLoggedInEmpInfo(bIsUserManager);
                 
                 // window.location.href= "https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de4a228034.cfapps.eu10.hana.ondemand.com/";
             },
@@ -39,25 +40,6 @@ sap.ui.define([
                 }
             },
 
-            fnGetLoggedInEmpInfo: function (bIsUserManager) {
-            
-                debugger;
-                this.getView().setBusy(true); 
-                this.getOwnerComponent().getModel().read("/EmpInfo", {
-                    urlParameters: {
-                        "moreInfo": "true"
-                    },
-                    success: function (oData) {        
-                        this.getView().setBusy(false);        
-                        this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
-                        this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
-                       
-                    }.bind(this),
-                    error: function (oError) {   
-                        this.getView().setBusy(false); 
-                        sap.m.MessageBox.error(JSON.stringify(oError));
-                    }.bind(this),
-                });
-            },
+           
         });
     });
