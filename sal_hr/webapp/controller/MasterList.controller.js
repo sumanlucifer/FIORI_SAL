@@ -151,6 +151,7 @@ sap.ui.define([
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/deleteSelf", oData.results[0].deleteSelf);
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/readSelf", oData.results[0].readSelf);
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateSelf", oData.results[0].updateSelf);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/withdrawSelf", oData.results[0].withdrawSelf);
                         } else {
 
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/approveOther", oData.results[0].approveOther);
