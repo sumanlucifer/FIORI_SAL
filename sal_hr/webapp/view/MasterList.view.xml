@@ -14,7 +14,7 @@
             </f:DynamicPageTitle>
         </f:title>	
         <f:content>
-              	<Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="10"
+              	<Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="20"
 		                    inset="false"
                             updateStarted="onUpdateMasterListBindingStart"
 		                    items="{path : '/MasterModules(1)/masterSubModule', parameters: { custom: {'IsUserManager': ''}}}" >
