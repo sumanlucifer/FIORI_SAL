@@ -67,6 +67,8 @@ sap.ui.define([
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
 
+                var oUploadSet = this.byId("idEditUploadSet");
+
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var that = this;
@@ -100,16 +102,24 @@ sap.ui.define([
                             case "S110":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                                that.getView().byId("idEditUploadSet").removeAllItems();
+                                
+                                oUploadSet.getDefaultFileUploader().setEnabled(true);
 
                                 break;
                             case "500":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                                that.getView().byId("idEditUploadSet").removeAllItems();
+
+                                oUploadSet.getDefaultFileUploader().setEnabled(true);
 
                                 break;
                             case "460":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                that.getView().byId("idEditUploadSet").removeAllItems();
+                                oUploadSet.getDefaultFileUploader().setEnabled(true);
                                 break;
 
                             case "450":

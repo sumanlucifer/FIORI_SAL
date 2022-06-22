@@ -45,7 +45,7 @@ sap.ui.define([
                 this.setModel(new JSONModel(), "RoleInfoModel");
 
                 // Set the user model
-                // this.fnGetLoggedInEmpInfo(bIsUserManager);
+                this.fnGetLoggedInEmpInfo(bIsUserManager);
                 
             },
 
@@ -67,7 +67,28 @@ sap.ui.define([
                     }
                 }
                 return this._sContentDensityClass;
-            }
+            },
+
+            fnGetLoggedInEmpInfo: function (bIsUserManager) {
+            
+                debugger;
+              
+                this.getModel().read("/EmpInfo", {
+                    urlParameters: {
+                        "moreInfo": "true"
+                    },
+                    success: function (oData) {        
+                        this.getRouter().navTo("master");       
+                        this.setModel(new JSONModel(oData.results[0]), "EmpInfoModel");
+                        this.getModel("EmpInfoModel").setProperty("/IsUserManager", bIsUserManager);
+                       
+                    }.bind(this),
+                    error: function (oError) {   
+                         
+                        sap.m.MessageBox.error(JSON.stringify(oError));
+                    }.bind(this),
+                });
+            },
 
         });
     }
