@@ -125,7 +125,7 @@ sap.ui.define(
                         controller: this
                     }).then(function (oPopover) {
                         var i18nModel = new sap.ui.model.resource.ResourceModel({
-                            bundleUrl : "../i18n/i18n.properties"
+                            bundleUrl : "./i18n/i18n.properties"
                         });
                         oPopover.setModel(i18nModel, "i18n"); 
                         return oPopover;
