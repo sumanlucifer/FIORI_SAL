@@ -86,9 +86,9 @@ sap.ui.define([
                 };
 
                 this.getOwnerComponent().getModel().read("/MasterModules", {
-                    urlParameters: {
-                        "IsUserManager": "true"
-                    },
+                    // urlParameters: {
+                    //     "IsUserManager": "true"
+                    // },
                     success: function (oData) {
                         var cardManifests = new JSONModel();
                         oCardData.donut["sap.card"].content.data.json.measures = oData.results;
