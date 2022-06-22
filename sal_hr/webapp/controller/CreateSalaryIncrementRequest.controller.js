@@ -793,8 +793,8 @@ sap.ui.define(
               var sUserIDFilter = new sap.ui.model.Filter({
                 path: "manager/userId",
                 operator: sap.ui.model.FilterOperator.EQ,
-                // value1: userId
-                value1: null
+                value1: userId
+               
               });
               oList.getBinding("items").filter([sUserIDFilter]);
               oDialog.open();

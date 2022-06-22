@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<SelectDialog resizable="false" contentHeight="40%" contentWidth="30%" id="positionSelectDialog" title="Select Job Classification" growing="true" growingThreshold="15"
+	<SelectDialog resizable="false" contentHeight="40%" contentWidth="30%" id="jobClassificationSelectDialog" title="Select Job Classification" growing="true" growingThreshold="15"
 		 items="{path: '/SF_JobCode', 
          sorter : {
             path : 'name' 
