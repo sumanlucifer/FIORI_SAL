@@ -164,6 +164,9 @@ sap.ui.define([
                 });
             },
 
+            onWithdrawPress: function () {
+                this.fnDeleteIDReplacement();
+            },
 
             fnDeleteIDReplacement: function () {
                 this.mainModel = this.getOwnerComponent().getModel();
