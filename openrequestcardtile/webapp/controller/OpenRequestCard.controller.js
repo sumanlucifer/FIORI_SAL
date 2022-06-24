@@ -35,13 +35,13 @@ sap.ui.define([
                                     "unit": "{Unit}",
                                     "trend": "{Trend}",
                                     "state": "{TrendColor}"
-                                },
-                                "actions": [
-                                    {
-                                        "type": "Navigation",
-                                        "parameters": {}
-                                    }
-                                ]
+                                }
+                                // "actions": [
+                                //     {
+                                //         "type": "Navigation",
+                                //         "parameters": {}
+                                //     }
+                                // ]
                             },
                             "content": {
                                 "chartType": "Donut",
