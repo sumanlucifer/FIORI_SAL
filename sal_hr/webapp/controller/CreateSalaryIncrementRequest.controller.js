@@ -749,6 +749,8 @@ sap.ui.define(
 
         onPositionValueHelpSearch : function(oEvent)
         {
+
+
             var sValue = oEvent.getParameter("value").trim();
             var oFilter = new Filter(
 				[

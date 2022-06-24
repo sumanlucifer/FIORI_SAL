@@ -355,6 +355,7 @@ sap.ui.define([
                 }else{
                     sAttachmentFileContent = null;
                     sAttahmentFileName = null;
+                    this.isAttachment = false;
                  }
               
                 return{
@@ -369,7 +370,7 @@ sap.ui.define([
                     "externalName": null,
                     "attachmentFileContent":sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
-                    "isAttachmentNew": false,
+                    "isAttachmentNew": this.isAttachment,
                     "attachmentUserId": sUserID,
                     "cust_letterIssued": "Y"
                      
