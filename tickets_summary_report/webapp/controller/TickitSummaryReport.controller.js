@@ -52,11 +52,12 @@ sap.ui.define([
 
             fnReadTickitsSummaryData: function () {
                 this.getView().setBusy(true);
+                var isManager = this.getOwnerComponent().getModel("EmpInfoModel").getData().IsUserManager.toString();
                 var oFilter = new Filter("isHidden", FilterOperator.EQ, false);
                 this.getView().getModel().read("/MasterModules", {
                     filters: [oFilter],
                     urlParameters: {
-                        "IsUserManager": "true"
+                        "IsUserManager": isManager
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);
@@ -68,6 +69,10 @@ sap.ui.define([
                         this.getView().setBusy(false);
                     }.bind(this)
                 });
+            },
+
+            onSelectionChange:function(){
+                this.fnReadTickitsSummaryData();
             }
         });
     });
