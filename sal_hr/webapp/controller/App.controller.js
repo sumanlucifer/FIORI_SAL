@@ -13,6 +13,7 @@ sap.ui.define([
                 this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
                 this.oOwnerComponent = this.getOwnerComponent();
                 this.oRouter = this.oOwnerComponent.getRouter();
+                this.getView().setBusy(true);
                 this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 
             //    var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").IsUserManager;
@@ -22,22 +23,29 @@ sap.ui.define([
             },
             
             onRouteMatched: function (oEvent) {
+                this.getView().setBusy(false);
                 var sRouteName = oEvent.getParameter("name"),
                     oArguments = oEvent.getParameter("arguments");
                 // Save the current route name
                 this.currentRouteName = sRouteName;
                 this.currentParent = oArguments.parentMaterial;
                 this.currentChild = oArguments.childModule;
+
+               
             },
             
             onStateChanged: function (oEvent) {
                 var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
                     sLayout = oEvent.getParameter("layout");
+                    // this.getView().setBusy(true);
     
                 // Replace the URL with the new layout if a navigation arrow was used
                 if (bIsNavigationArrow) {
                     this.oRouter.navTo(this.currentRouteName, {layout: sLayout, parentMaterial: this.currentParent,childModule: this.currentChild }, true);
+
+                    // this.getView().setBusy(false);
                 }
+                
             },
 
            

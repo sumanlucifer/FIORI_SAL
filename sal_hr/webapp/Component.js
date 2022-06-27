@@ -71,7 +71,7 @@ sap.ui.define([
 
             fnGetLoggedInEmpInfo: function (bIsUserManager) {
             
-                debugger;
+                
               
                 this.getModel().read("/EmpInfo", {
                     urlParameters: {
