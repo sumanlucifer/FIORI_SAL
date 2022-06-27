@@ -75,7 +75,7 @@ sap.ui.define([
             onSelectionChange:function(oEvent){
                 var isManager = "";
                 var requestFor = oEvent.getSource().getSelectedKey();
-                if(requestFor === "MySelf"){
+                if(requestFor === "Myself"){
                      isManager = "false";
                 }else {
                     isManager = "true";
