@@ -15,8 +15,8 @@
                     <VBox class="sapUiTinyMarginTop">
                         <OverflowToolbar style="Clear">
                         <HBox>
-                            <Label text="Choose the Report you want to see :" design="Bold" class="sapUiTinyMarginTop" />
-                            <Select id="idRequestType"  change="onSelectionChange" class="sapUiTinyMarginBegin">
+                            <Label text="Choose the Report you want to see :" design="Bold" class="sapUiTinyMarginTop sapUiTinyMarginBegin" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }"/>
+                            <Select id="idRequestType"  change="onSelectionChange" class="sapUiTinyMarginBegin" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }">
                                 <core:Item key="Myself" text="Myself" />
                                 <core:Item key="MyTeam" text="MyTeam" />
 
