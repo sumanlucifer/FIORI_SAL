@@ -13,7 +13,9 @@ sap.ui.define([
                 this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
                 this.oOwnerComponent = this.getOwnerComponent();
                 this.oRouter = this.oOwnerComponent.getRouter();
+
                 this.getView().setBusy(true);
+
                 this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 
             //    var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").IsUserManager;

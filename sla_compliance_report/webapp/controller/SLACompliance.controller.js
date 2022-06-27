@@ -13,7 +13,8 @@ sap.ui.define([
 
         return Controller.extend("com.sal.reports.slacompliancereport.controller.SLACompliance", {
             onInit: function () {
-                this.fnReadTickitsSummaryData();
+                var requestForTeamReports = "false";
+                this.fnReadTickitsSummaryData(requestForTeamReports);
             },
 
             fnInitializeChart: function () {
@@ -77,13 +78,13 @@ sap.ui.define([
                 });
             },
 
-            fnReadTickitsSummaryData: function () {
+            fnReadTickitsSummaryData: function (requestForTeamReports) {
                 this.getView().setBusy(true);
                 var oFilter = new Filter("isHidden", FilterOperator.EQ, false);
                 this.getView().getModel().read("/MasterModules", {
                     filters: [oFilter],
                     urlParameters: {
-                        "IsUserManager": "true"
+                        "IsUserManager": requestForTeamReports
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);
@@ -172,7 +173,18 @@ sap.ui.define([
                 return sStateValue;
             },
 
+            onSelectionChange:function(){
+                var requestForTeamReports = "";
+                var requestFor = this.getView().byId("idRequestType").getSelectedKey();
+                if(requestFor === "Myself"){
+                    requestForTeamReports = "false";
+                }else {
+                    requestForTeamReports = "true";
+                }
 
+                this.fnReadTickitsSummaryData(requestForTeamReports);
+                
+            },
             fnGetSampleData: function () {
                 return [{
                     "ID": 1,
