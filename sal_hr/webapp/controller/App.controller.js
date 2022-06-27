@@ -13,6 +13,9 @@ sap.ui.define([
                 this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
                 this.oOwnerComponent = this.getOwnerComponent();
                 this.oRouter = this.oOwnerComponent.getRouter();
+
+                this.getView().setBusy(true);
+
                 this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 
             //    var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").IsUserManager;
@@ -22,6 +25,7 @@ sap.ui.define([
             },
             
             onRouteMatched: function (oEvent) {
+                this.getView().setBusy(false);
                 var sRouteName = oEvent.getParameter("name"),
                     oArguments = oEvent.getParameter("arguments");
                 // Save the current route name

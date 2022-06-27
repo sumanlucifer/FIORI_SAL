@@ -82,5 +82,17 @@ sap.ui.define([
                 }
                 this.fnReadTickitsSummaryData(isManager);
             }
+            // onMenuAction:function(oEvent){
+             
+            //     var isManager = "";
+            //     var requestFor = oEvent.getParameters("item").item.getProperty("text");
+            //     if(requestFor === "Myself"){
+            //          isManager = "false";
+            //     }else {
+            //         isManager = "true";
+            //     }
+            //     this.fnReadTickitsSummaryData(isManager);
+               
+            // }
         });
     });
