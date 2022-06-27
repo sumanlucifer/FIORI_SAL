@@ -31,7 +31,7 @@ sap.ui.define([
                  //this will return the semantic object and action alongwith the routing params
                  var oHashObjectPath = new sap.ui.core.routing.HashChanger().getHash(),
                  bIsUserManager = false;
-                if (oHashObjectPath.indexOf("Manage") > 5 && oHashObjectPath.indexOf("Manage") < 20) {
+                if (oHashObjectPath.indexOf("Manage") > 5 && oHashObjectPath.indexOf("Manage") <= 20) {
                  bIsUserManager = true;
                  }
 
