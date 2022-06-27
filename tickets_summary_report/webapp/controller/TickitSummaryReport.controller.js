@@ -12,7 +12,8 @@ sap.ui.define([
 
         return Controller.extend("com.sal.reports.ticketssummaryreport.controller.TickitSummaryReport", {
             onInit: function () {
-                this.fnReadTickitsSummaryData();
+                var isManager = "false";
+                this.fnReadTickitsSummaryData(isManager);
             },
 
             fnInitializeChart: function () {
@@ -50,13 +51,14 @@ sap.ui.define([
                 });
             },
 
-            fnReadTickitsSummaryData: function () {
+            fnReadTickitsSummaryData: function (isManager) {
                 this.getView().setBusy(true);
+                // var isManager = this.getOwnerComponent().getModel("EmpInfoModel").getData().IsUserManager.toString();
                 var oFilter = new Filter("isHidden", FilterOperator.EQ, false);
                 this.getView().getModel().read("/MasterModules", {
                     filters: [oFilter],
                     urlParameters: {
-                        "IsUserManager": "true"
+                        "IsUserManager": isManager
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);
@@ -68,6 +70,17 @@ sap.ui.define([
                         this.getView().setBusy(false);
                     }.bind(this)
                 });
+            },
+
+            onSelectionChange:function(oEvent){
+                var isManager = "";
+                var requestFor = oEvent.getSource().getSelectedKey();
+                if(requestFor === "Myself"){
+                     isManager = "false";
+                }else {
+                    isManager = "true";
+                }
+                this.fnReadTickitsSummaryData(isManager);
             }
         });
     });
