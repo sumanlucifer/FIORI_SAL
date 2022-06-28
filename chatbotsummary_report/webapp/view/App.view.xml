@@ -81,7 +81,7 @@
                                                     <items>
                                                         <HBox class="sapUiTinyMarginEnd">
                                                             <Text text="@" class="sapUiTinyMarginBegin"/>
-                                                            <Link text="{ChatbotSummaryModel>name}"/>
+                                                            <ObjectStatus text="{ChatbotSummaryModel>name}" state="Indication05" />
                                                         </HBox>
                                                     </items>
                                                 </FlexBox>
@@ -138,7 +138,7 @@
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/items'}">
                                                                     <viz.data:dimensions>
-                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>date}"/>
+                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>displayDate}"/>
                                                                     </viz.data:dimensions>
                                                                     <viz.data:measures>
                                                                         <viz.data:MeasureDefinition group="1" name="Conversations" value="{ChatbotSummaryModel>conversations}"/>
@@ -166,7 +166,7 @@
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/items'}">
                                                                     <viz.data:dimensions>
-                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>date}"/>
+                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>displayDate}"/>
                                                                     </viz.data:dimensions>
                                                                     <viz.data:measures>
                                                                         <viz.data:MeasureDefinition group="1" name="Users" value="{ChatbotSummaryModel>participants}"/>
@@ -194,7 +194,7 @@
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/items'}">
                                                                     <viz.data:dimensions>
-                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>date}"/>
+                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>displayDate}"/>
                                                                     </viz.data:dimensions>
                                                                     <viz.data:measures>
                                                                         <viz.data:MeasureDefinition group="1" name="Messages received" value="{ChatbotSummaryModel>messagesReceived}"/>
@@ -222,7 +222,7 @@
                                                             <viz:dataset>
                                                                 <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/items'}">
                                                                     <viz.data:dimensions>
-                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>date}"/>
+                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>displayDate}"/>
                                                                     </viz.data:dimensions>
                                                                     <viz.data:measures>
                                                                         <viz.data:MeasureDefinition group="1" name="Average messages by conversation" value="{ChatbotSummaryModel>messagesPerConversation}"/>
@@ -294,7 +294,7 @@
                                                 <items>
                                                     <HBox class="sapUiTinyMarginEnd">
                                                         <Text text="@" class="sapUiTinyMarginBegin"/>
-                                                        <Link text="{ChatbotSummaryModel>name}"/>
+                                                        <ObjectStatus text="{ChatbotSummaryModel>name}" state="Indication05" />
                                                     </HBox>
                                                 </items>
                                             </FlexBox>
@@ -356,7 +356,7 @@
                                                 <items>
                                                     <HBox class="sapUiTinyMarginEnd">
                                                         <Text text="@" class="sapUiTinyMarginBegin"/>
-                                                        <Link text="{ChatbotSummaryModel>name}"/>
+                                                        <ObjectStatus text="{ChatbotSummaryModel>name}" state="Indication05" />
                                                     </HBox>
                                                 </items>
                                             </FlexBox>

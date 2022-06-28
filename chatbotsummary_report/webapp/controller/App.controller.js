@@ -77,26 +77,34 @@ sap.ui.define(
                 summary.NeverUsedIntents = this.fnGetNeverUsedItems(oSummaryData.intents);
 
                 // Format and Set values for Overview fields
-                summary.MessagesPerConversation = oSummaryData.messagesReceived > 0 ? (oSummaryData.messagesReceived / oSummaryData.conversations).toFixed(2) : 0;
                 summary.conversations = oSummaryData.conversations > 999 ? ((oSummaryData.conversations / 1000).toFixed(2)) + "k" : oSummaryData.conversations;
                 summary.participants = oSummaryData.participants > 999 ? ((oSummaryData.participants / 1000).toFixed(2)) + "k" : oSummaryData.participants;
                 summary.messagesReceived = oSummaryData.messagesReceived > 999 ? ((oSummaryData.messagesReceived / 1000).toFixed(2)) + "k" : oSummaryData.messagesReceived;
+                summary.MessagesPerConversation = oSummaryData.messagesPerConversation.toFixed(2);
 
                 // Set overview fields counts and Status indicators
                 summary.conversationIndicator = this.formatDiffData(oSummaryData.conversationsDiff);
                 summary.participantsIndicator = this.formatDiffData(oSummaryData.participantsDiff);
                 summary.messagesReceivedIndicator = this.formatDiffData(oSummaryData.messagesReceivedDiff);
-                var messagesPerConversationDiff = (oSummaryData.messagesReceived / oSummaryData.conversations) - ((oSummaryData.messagesReceived - oSummaryData.messagesReceivedDiff) / (oSummaryData.conversations - oSummaryData.conversationsDiff));
-                summary.MessagesPerConversationIndicator = this.formatDiffData(messagesPerConversationDiff);
+                summary.MessagesPerConversationIndicator = this.formatDiffData(oSummaryData.messagesPerConversationDiff);
+
+                for(var i = 0; i < summary.items.length; i++) {
+                    var item = summary.items[i];
+                    var date = new Date(item.date);
+                    var month = date.getMonth() + 1;
+                    var day = date.getDate();
+                    var year = date.getFullYear();
+                    item.displayDate = `${month}/${day}/${year}`; 
+                }
                 
                 return summary;
             },
 
             formatDiffData: function(number) {
                 if(number > 0) {
-                    return "+" + number.toFixed(0);
+                    return "+" + (number % 1 == 0 ? number.toFixed(0) : number.toFixed(2));
                 } else if(number < 0) {
-                    return number.toFixed(2);
+                    return (number % 1 == 0 ? number.toFixed(0) : number.toFixed(2));
                 } else {
                     return null;
                 }
