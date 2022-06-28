@@ -95,7 +95,7 @@
 
 
 .ListIcon {
-    color : #8A2BE2;
+    color : #6c1332;
     }
 
 .redColor {
@@ -107,4 +107,13 @@
 
 .buttonInfo{
     width: 2px;
+}
+
+.sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected .sapMITBText {
+    color: #6c1332;
+    font-weight: 500;
+}
+
+.sapMITBSelected .sapMITBContentArrow::after {
+    background: #6c1332;
 }
