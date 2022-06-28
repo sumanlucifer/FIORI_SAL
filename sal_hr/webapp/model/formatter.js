@@ -284,6 +284,7 @@ sap.ui.define([], function () {
       }
        return bRaiseRequestVisible;
      
+     
     },
 
     fnSetModifyVisibilty: function (bEditMode, bIsUserManager) {
