@@ -241,7 +241,7 @@ sap.ui.define([
                     var sTrainingTravelDate = this.getView().byId("idTrainingFlightTravelDate").getDateValue(),
                     oTrainingTravelDate = dateFormat.format(new Date(sTrainingTravelDate));
                     sTrainingTravelDate = oTrainingTravelDate + "T00:00:00";
-                    oPayload.cust_toDutyTravelItem[0].cust_businessTravelDate = sTrainingTravelDate;
+                    oPayload.cust_toDutyTravelItem[0].cust_trainingTravelDate = sTrainingTravelDate;
                     
                     
                 // Convert selcted time to specific time format as "PT0H31M30S"
