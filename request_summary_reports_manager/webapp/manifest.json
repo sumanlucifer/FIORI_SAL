@@ -47,7 +47,7 @@
                     "semanticObject": "Requests_Manager_semantic",
                     "action": "display",
                     "title": "{{flpTitle}}",
-                    "subTitle": "",
+                    "subTitle": "{{flpSubtitle}}",
                     "icon": "sap-icon://manager-insight"
                 }
             }
