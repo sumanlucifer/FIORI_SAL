@@ -68,7 +68,7 @@
           </fm:SimpleForm>
             <HBox>
         <Text text="Attachments" class="sapUiSmallMarginTop" />
-        <Text text="*" class="sapUiMediumMarginBottom redColor" />
+       
         </HBox>
             <upload:UploadSet
 				id="idEditUploadSet"
