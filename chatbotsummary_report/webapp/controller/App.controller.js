@@ -42,7 +42,7 @@ sap.ui.define(
                         oStartDate = dateFormat.format(new Date(oFromDate)),
                         oEndDate = dateFormat.format(new Date(oToDate)),
                         sStartDate = oStartDate + "T00:00:00.000Z",
-                        sEndDate = oEndDate + "T00:00:00.000Z";
+                        sEndDate = oEndDate + "T23:59:59.000Z";
 
                         //set from and to date filters.
                         urlParameters.from = sStartDate;

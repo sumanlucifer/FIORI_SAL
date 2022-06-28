@@ -136,18 +136,18 @@
                                                     <commons:content>
                                                         <viz:VizFrame id="idVizFrame" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#F6A209'}, title: {visible: false}}">
                                                             <viz:dataset>
-                                                                <viz.data:FlattenedDataset data="{path: '/Products'}">
+                                                                <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/items'}">
                                                                     <viz.data:dimensions>
-                                                                        <viz.data:DimensionDefinition name="Name" value="{Products>ProductName}"/>
+                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>date}"/>
                                                                     </viz.data:dimensions>
                                                                     <viz.data:measures>
-                                                                        <viz.data:MeasureDefinition group="1" name="UnitsOnOrder" value="{Products>UnitsOnOrder}"/>
+                                                                        <viz.data:MeasureDefinition group="1" name="Conversations" value="{ChatbotSummaryModel>conversations}"/>
                                                                     </viz.data:measures>
                                                                 </viz.data:FlattenedDataset>
                                                             </viz:dataset>
                                                             <viz:feeds>
-                                                                <viz.feeds:FeedItem id="valueAxisFeed6" uid="valueAxis" type="Measure" values="UnitsOnOrder"/>
-                                                                <viz.feeds:FeedItem id="categoryAxisFeed" uid="categoryAxis" type="Dimension" values="Name"/>
+                                                                <viz.feeds:FeedItem id="valueAxisFeed6" uid="valueAxis" type="Measure" values="Conversations"/>
+                                                                <viz.feeds:FeedItem id="categoryAxisFeed" uid="categoryAxis" type="Dimension" values="Date"/>
                                                             </viz:feeds>
                                                         </viz:VizFrame>
                                                     </commons:content>
@@ -164,18 +164,18 @@
                                                     <commons:content>
                                                         <viz:VizFrame id="idVizFrame1" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#2AD9E8'}, title: {visible: false}}">
                                                             <viz:dataset>
-                                                                <viz.data:FlattenedDataset data="{path: '/Products'}">
+                                                                <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/items'}">
                                                                     <viz.data:dimensions>
-                                                                        <viz.data:DimensionDefinition name="Name" value="{Products>ProductName}"/>
+                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>date}"/>
                                                                     </viz.data:dimensions>
                                                                     <viz.data:measures>
-                                                                        <viz.data:MeasureDefinition group="1" name="UnitsOnOrder" value="{Products>UnitsOnOrder}"/>
+                                                                        <viz.data:MeasureDefinition group="1" name="Users" value="{ChatbotSummaryModel>participants}"/>
                                                                     </viz.data:measures>
                                                                 </viz.data:FlattenedDataset>
                                                             </viz:dataset>
                                                             <viz:feeds>
-                                                                <viz.feeds:FeedItem id="valueAxisFeed1" uid="valueAxis" type="Measure" values="UnitsOnOrder"/>
-                                                                <viz.feeds:FeedItem id="categoryAxisFeed1" uid="categoryAxis" type="Dimension" values="Name"/>
+                                                                <viz.feeds:FeedItem id="valueAxisFeed1" uid="valueAxis" type="Measure" values="Users"/>
+                                                                <viz.feeds:FeedItem id="categoryAxisFee1" uid="categoryAxis" type="Dimension" values="Date"/>
                                                             </viz:feeds>
                                                         </viz:VizFrame>
                                                     </commons:content>
@@ -192,18 +192,18 @@
                                                     <commons:content>
                                                         <viz:VizFrame id="idVizFrame2" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#0975F6'}, title: {visible: false}}">
                                                             <viz:dataset>
-                                                                <viz.data:FlattenedDataset data="{path: '/Products'}">
+                                                                <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/items'}">
                                                                     <viz.data:dimensions>
-                                                                        <viz.data:DimensionDefinition name="Name" value="{Products>ProductName}"/>
+                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>date}"/>
                                                                     </viz.data:dimensions>
                                                                     <viz.data:measures>
-                                                                        <viz.data:MeasureDefinition group="1" name="UnitsOnOrder" value="{Products>UnitsOnOrder}"/>
+                                                                        <viz.data:MeasureDefinition group="1" name="Messages received" value="{ChatbotSummaryModel>messagesReceived}"/>
                                                                     </viz.data:measures>
                                                                 </viz.data:FlattenedDataset>
                                                             </viz:dataset>
                                                             <viz:feeds>
-                                                                <viz.feeds:FeedItem id="valueAxisFeed2" uid="valueAxis" type="Measure" values="UnitsOnOrder"/>
-                                                                <viz.feeds:FeedItem id="categoryAxisFeed2" uid="categoryAxis" type="Dimension" values="Name"/>
+                                                                <viz.feeds:FeedItem id="valueAxisFeed2" uid="valueAxis" type="Measure" values="Messages received"/>
+                                                                <viz.feeds:FeedItem id="categoryAxisFee2" uid="categoryAxis" type="Dimension" values="Date"/>
                                                             </viz:feeds>
                                                         </viz:VizFrame>
                                                     </commons:content>
@@ -220,18 +220,18 @@
                                                     <commons:content>
                                                         <viz:VizFrame id="idVizFrame3" height="300px" width="100%" vizType='line' vizProperties="{plotArea: {colorPalette: '#F6A209'}, title: {visible: false}}">
                                                             <viz:dataset>
-                                                                <viz.data:FlattenedDataset data="{path: '/Products'}">
+                                                                <viz.data:FlattenedDataset data="{path: 'ChatbotSummaryModel>/items'}">
                                                                     <viz.data:dimensions>
-                                                                        <viz.data:DimensionDefinition name="Name" value="{Products>ProductName}"/>
+                                                                        <viz.data:DimensionDefinition name="Date" value="{ChatbotSummaryModel>date}"/>
                                                                     </viz.data:dimensions>
                                                                     <viz.data:measures>
-                                                                        <viz.data:MeasureDefinition group="1" name="UnitsOnOrder" value="{Products>UnitsOnOrder}"/>
+                                                                        <viz.data:MeasureDefinition group="1" name="Average messages by conversation" value="{ChatbotSummaryModel>messagesPerConversation}"/>
                                                                     </viz.data:measures>
                                                                 </viz.data:FlattenedDataset>
                                                             </viz:dataset>
                                                             <viz:feeds>
-                                                                <viz.feeds:FeedItem id="valueAxisFeed3" uid="valueAxis" type="Measure" values="UnitsOnOrder"/>
-                                                                <viz.feeds:FeedItem id="categoryAxisFeed4" uid="categoryAxis" type="Dimension" values="Name"/>
+                                                                <viz.feeds:FeedItem id="valueAxisFeed3" uid="valueAxis" type="Measure" values="Average messages by conversation"/>
+                                                                <viz.feeds:FeedItem id="categoryAxisFee3" uid="categoryAxis" type="Dimension" values="Date"/>
                                                             </viz:feeds>
                                                         </viz:VizFrame>
                                                     </commons:content>
