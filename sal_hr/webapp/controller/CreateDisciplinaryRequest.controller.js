@@ -218,6 +218,7 @@ sap.ui.define([
                 }
                 var obj = oSelectedItem.getBindingContext().getObject();
                 this.byId("idPRN").setValue(obj["userId"]);
+                this.prnID = obj["userId"];
     
             },
     
@@ -262,6 +263,7 @@ sap.ui.define([
               
                 this.mainModel.create(sPath, oPayload, {
                     success: function (oData, oResponse) {
+                        this.prnID = null;
                         sap.m.MessageBox.success("Request Submitted Successfully.");
                         this.getView().setBusy(false);
                         this.getView().getModel().refresh();
@@ -273,6 +275,7 @@ sap.ui.define([
                         });
                     }.bind(this),
                     error: function (oError) {
+                        this.prnID = null;
                         sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);  
                         this.getView().getModel().refresh();
                         this.getView().setBusy(false);
@@ -332,12 +335,13 @@ sap.ui.define([
             },
             getDisciplinaryCreatePayload:function(){
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-               // var sUserID = this.byId("idPRN").getValue();
+                var sPRNID;
+          
 
-               if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
-                sUserID =   this.byId("idPRN").getValue();
+               if (this.prnID) {
+                sPRNID =   this.prnID;
             } else {
-                sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                sPRNID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
             }
 
                 var sAttachmentFileContent, sAttahmentFileName;
@@ -373,18 +377,16 @@ sap.ui.define([
                     "cust_Severity": sSeverity,
                     "cust_warningType": sWarningType,
                     "effectiveStartDate": sEffectiveStartDate,
-                    "externalCode": sUserID,
+                    "externalCode": sPRNID,
                     "externalName": null,
                     "attachmentFileContent":sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
                     "isAttachmentNew": this.isAttachment,
                     "attachmentUserId": sUserID,
                     "cust_letterIssued": "Y"
-                     
-                    
+  
                 };
             },
-
          
             onLeaveEndDateChange:function(oEvent){
                 var oneDay = 24 * 60 * 60 * 1000;
