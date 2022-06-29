@@ -134,6 +134,14 @@ modules:
       - comsaltasksummaryreport.zip
       name: comsaltasksummaryreport
       target-path: resources/
+    - artifacts:
+      - comsalrequestsummaryreportsmanager.zip
+      name: comsalrequestsummaryreportsmanager
+      target-path: resources/
+    - artifacts:
+      - comsalsummarytileshrrequestssummarymanagertile.zip
+      name: comsalsummarytileshrrequestssummarymanagertile
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -357,6 +365,26 @@ modules:
 - name: comsaltasksummaryreport
   type: html5
   path: task_summary_report
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalrequestsummaryreportsmanager
+  type: html5
+  path: request_summary_reports_manager
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalsummarytileshrrequestssummarymanagertile
+  type: html5
+  path: hrrequestssummarymanagertile
   build-parameters:
     build-result: dist
     builder: custom
