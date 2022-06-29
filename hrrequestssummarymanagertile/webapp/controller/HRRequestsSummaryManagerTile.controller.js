@@ -7,18 +7,18 @@ sap.ui.define([
     function (Controller) {
         "use strict";
 
-        return Controller.extend("com.sal.summarytiles.hrrequestssummarytile.controller.HRRequestsSummaryTile", {
+        return Controller.extend("com.sal.summarytiles.hrrequestssummarymanagertile.controller.View1", {
             onInit: function () {
                 this._bindView();
             },
 
             _bindView: function () {
-             
+               
                 this.getView().bindElement({
                     path: "/MasterModules(1)",
                     parameters: {
                         custom: {
-                            "IsUserManager": "flase"
+                            "IsUserManager": "true"
                         }
                     }   
                 });
