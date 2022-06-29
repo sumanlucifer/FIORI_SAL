@@ -72,13 +72,12 @@ sap.ui.define([
                 sTemplate = "Salary";
               }
                 return {
-                    
-    
+     
                         "language" : "EN",
                         "country" : "India",
                          "userId" : sUserID,
                          "template" : sTemplate,
-                         "asOfDate" : sDate
+                         "asOfDate" : new Date(sDate)
                      
                   
                 };

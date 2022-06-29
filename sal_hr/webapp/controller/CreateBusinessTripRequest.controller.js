@@ -20,7 +20,10 @@ sap.ui.define([
                     businessCategory: true,
                     trianingCategory: false,
                     FlightVisaPanelShow :false,
-                    visaFee :false
+                    visaFee :false,
+                    cityVisible: false,
+                    otherCityVisible:false,
+                    cityOtherCountry : true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -274,6 +277,7 @@ sap.ui.define([
                     sap.m.MessageBox.error(sValidationErrorMsg);
                 }
             },
+     
             onHotelBookChange:function(evt){
 
                 var sValue = JSON.parse(evt.getSource().getSelectedKey());
@@ -632,8 +636,13 @@ sap.ui.define([
 
             },
             onDestCountryChange: function (oEvent) {
+               
                 var sDestCountry = oEvent.getSource().getSelectedKey(),
                     sPayGrade = this.EmpInfoObj.payGrade;
+
+                    var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
+
+                    var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
 
                 this.getView().getModel().read("/SF_DutyTravel_PerDiem",
                     {
@@ -649,6 +658,16 @@ sap.ui.define([
                         }.bind(this),
                     });
 
+
+            },
+            onCitySaudiChange : function(oEvent)
+
+            {
+                debugger;
+                var sCitySaudi = oEvent.getSource().getSelectedKey();
+            
+
+                var sCitySaudiVisibleSet = sCitySaudi === "OTH" ? this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", false);
 
             },
             fnCalculateTotalPerDiem: function () {
