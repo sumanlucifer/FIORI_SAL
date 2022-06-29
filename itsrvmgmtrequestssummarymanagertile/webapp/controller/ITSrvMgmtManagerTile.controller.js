@@ -7,7 +7,7 @@ sap.ui.define([
     function (Controller) {
         "use strict";
 
-        return Controller.extend("com.sal.itsrvmgmtrequestssummarytile.controller.ITSrvMgmtTile", {
+        return Controller.extend("com.sal.itsrvmgmtrequestssummarymanagertile.controller.View1", {
             onInit: function () {
                 this._bindView();
             },
@@ -17,7 +17,7 @@ sap.ui.define([
                     path: "/MasterModules(4)",
                     parameters: {
                         custom: {
-                            "IsUserManager": "false"
+                            "IsUserManager": "true"
                         }
                     }   
                 });

@@ -142,6 +142,10 @@ modules:
       - comsalsummarytileshrrequestssummarymanagertile.zip
       name: comsalsummarytileshrrequestssummarymanagertile
       target-path: resources/
+    - artifacts:
+      - comsalitsrvmgmtrequestssummarymanagertile.zip
+      name: comsalitsrvmgmtrequestssummarymanagertile
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -385,6 +389,16 @@ modules:
 - name: comsalsummarytileshrrequestssummarymanagertile
   type: html5
   path: hrrequestssummarymanagertile
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalitsrvmgmtrequestssummarymanagertile
+  type: html5
+  path: itsrvmgmtrequestssummarymanagertile
   build-parameters:
     build-result: dist
     builder: custom
