@@ -255,7 +255,7 @@
                             </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
-                            <PropertyValue Property="Value" Path="creationDate"/>
+                            <PropertyValue Property="Value" Path="creationDateDisplay"/>
                             <PropertyValue Property="Label" String="{@i18n>CreationDate}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
