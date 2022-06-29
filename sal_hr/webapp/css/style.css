@@ -125,11 +125,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-
     .sapMListUl {
-
         max-width: 380px !important;
-
     }
-
   }

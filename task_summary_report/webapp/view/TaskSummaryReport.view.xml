@@ -14,7 +14,7 @@
                 <Page id="page" showHeader="false" title="{i18n>title}">
                     <VBox class="sapUiTinyMarginTop">
                         <OverflowToolbar style="Clear">
-                        <HBox class="reportsTeamViewSwitch">
+                        <HBox>
                             <Label text="Choose the Report you want to see :" design="Bold" class="sapUiTinyMarginTop sapUiTinyMarginBegin" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }"/>
                             <Select id="idRequestType"  change="onSelectionChange" class="sapUiTinyMarginBegin" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }">
                                 <core:Item key="Myself" text="Myself" />
