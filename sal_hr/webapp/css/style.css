@@ -117,3 +117,9 @@
 .sapMITBSelected .sapMITBContentArrow::after {
     background: #6c1332;
 }
+
+.sapMUSProgressBox {
+   min-width: 50px;
+   padding-left: 0px;
+
+}
