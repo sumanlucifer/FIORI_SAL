@@ -11,7 +11,7 @@
             <pages>
                 <Page id="page" title="{i18n>title}" showHeader="false">
                     <VBox>
-                        <HBox>
+                        <HBox class="reportsManagerView">
                             <Label text="Choose the Report you want to see :" class="sapUiTinyMarginTop sapUiTinyMarginBegin" design="Bold" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }" />
                             <Select change="onSelectionChange" class="sapUiTinyMarginBegin" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }">
                                 <core:Item key="Myself" text="Myself" />
