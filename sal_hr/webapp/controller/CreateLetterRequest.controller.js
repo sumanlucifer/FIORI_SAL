@@ -11,26 +11,24 @@ sap.ui.define([
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateLetterRequest", {
             onInit: function () {
-                debugger;
+                
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("LetterRequest").attachPatternMatched(this._onObjectMatched, this);
-
                 this.mainModel = this.getOwnerComponent().getModel();
-           
-                var oLocalViewModel = new JSONModel({                 
-                    busy: false,               
-                    currentDate: new Date(),                 
-                });
-
-                this.getView().setModel(oLocalViewModel, "LocalViewModel");
-              
             },
 
             _onObjectMatched: function (oEvent) {
-                debugger;
+                
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
+                var oLocalViewModel = new JSONModel({                 
+                    busy: false,               
+                    currentDate: new Date()            
+                });
+                this.byId("idLetterTemplate").setSelectedKey(1);
+
+                this.getView().setModel(oLocalViewModel, "LocalViewModel");
             },
          
             onRaiseRequestPress: function () {
