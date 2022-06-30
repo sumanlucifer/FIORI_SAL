@@ -31,8 +31,8 @@
                         pattern: 'MM/dd/yyyy'
                             }}" minDate="{LocalViewModel>/minDate}"/>
 
-                    <Label visible="{EmpInfoModel>/IsUserManager}" text="PRN" required="true" />
-                    <Input id="idSalIncPRN" visible="{EmpInfoModel>/IsUserManager}" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
+                    <Label text="PRN" required="true" />
+                    <Input id="idSalIncPRN" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
 
                 </fm:SimpleForm>
                 <VBox visible="{= ${LocalViewModel>/checkBoxVisible} ? true : false }">
@@ -173,7 +173,7 @@
                         <Label text="Probationary Period End Date" />
                         <DatePicker id="idProbationaryDate" value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
                         <Label text="Country" />
                         <ComboBox enabled="false" id="idJobCountry" items="{ path: '/SF_Country', sorter : {
@@ -249,7 +249,7 @@
                         <Label text="Contract End Date" />
                         <DatePicker value="{path:'jobModel>/contractEndDate', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
                                                
 
@@ -266,12 +266,12 @@
                         <Label text="Initial Entry" />
                         <DatePicker  value="{path:'jobModel>/initialEntryDate', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
                         <Label text="Entry into Group" />
                         <DatePicker value="{path:'jobModel>/entryIntoGroup', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
 
                     </fm:SimpleForm>
@@ -315,7 +315,7 @@
                         <Label text="Scheme Change Date" />
                         <DatePicker value="{path:'compensationModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: {
                                                   pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
                         <Label text="Change from Commision to Variable" required="true" />
                         <Input id="idCommision" value="{compensationModel>/customString3}"/>
@@ -381,7 +381,7 @@
                 <ToolbarSpacer id="idToolbarSpacer"/>
                 <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
                 <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
-                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
+                <Button id="idRaiseRequestBTN" enabled="{= ${LocalViewModel>/jobInfoVisible} ? true : ${LocalViewModel>/componesationInfoVisible} ? true : false }" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>
