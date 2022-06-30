@@ -282,8 +282,8 @@ sap.ui.define([], function () {
           .getProperty("/createSelf");
         bRaiseRequestVisible = bCreateSelf === true ? true : false;
       }
-       return bRaiseRequestVisible;
-     
+    //    return bRaiseRequestVisible;
+     return true;
      
     },
 
@@ -387,5 +387,19 @@ sap.ui.define([], function () {
       );
       return promise;
     },
+
+    formatTimeInPosition: function(date) {
+        var diff = Date.now() - new Date(date);
+        var days    = Math.ceil(diff / 86400000),
+            months  = Math.floor(days / 30),
+            years   = Math.floor(days / 365);
+        
+        days %= 30;
+        months %= 12;
+        // console.log("Years:", years);
+        // console.log("Months:", months);
+        // console.log("Days:", days);
+        return `${years} Years ${months} Months ${days} Days`;
+    }
   };
 });

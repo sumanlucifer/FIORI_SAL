@@ -4,6 +4,6 @@
                 expand : 'manager',
                 select : 'defaultFullName,firstName,middleName,lastName,userId,manager/userId'
             }}" liveChange="onLiveChange1" search=".onValueHelpSearch" confirm=".onValueHelpClose" cancel=".onValueHelpClose1">
-		<StandardListItem title="{firstName} {middleName} {lastName}" description="{userId}"/>
+		<StandardListItem title="{defaultFullName}" description="{userId}"/>
 	</SelectDialog>
 </core:FragmentDefinition>

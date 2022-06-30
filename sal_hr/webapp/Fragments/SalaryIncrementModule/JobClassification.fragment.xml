@@ -5,7 +5,7 @@
             path : 'name' 
          }, parameters : {
                 select : 'name,externalCode'
-            }}" liveChange="onLiveChange1" search=".onPositionValueHelpSearch" confirm=".onJobClassificationConfirm" cancel=".onValueHelpClose1">
+            }}" liveChange="onLiveChange1" search=".onJobClassificationValueHelpSearch" confirm=".onJobClassificationConfirm" cancel=".onValueHelpClose1">
 		<StandardListItem title="{name} ({externalCode})" description="{userId}"/>
 	</SelectDialog>
 </core:FragmentDefinition>

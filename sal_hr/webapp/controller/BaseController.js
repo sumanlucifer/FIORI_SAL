@@ -372,6 +372,16 @@ sap.ui.define([
                 console.log(err);
                 return "Unknown error occured, Please try after sometime.";
             }
+        },
+        getFormattedDateValue(idDate) {
+            if(!idDate) {
+                return null;
+            }
+            var date = this.getView().byId(idDate).getDateValue();
+            var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+            date = dateFormat.format(new Date(date));
+            date += "T00:00:00";
+            return date;
         }
     });
 });
