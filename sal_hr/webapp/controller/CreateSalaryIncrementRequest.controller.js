@@ -168,10 +168,8 @@ sap.ui.define(
                 },
                 fnGetJobRequestPayload: function () {
                     var sJobData = this.getView().getModel("jobModel").getData(),
-                        sStartDate = this.getView().byId("idStartDate").getDateValue(),
                         sNewPayload = $.extend(true, {}, sJobData);
-                    // this.getView().getModel("jobModel").setProperty("/startDate", sStartDate);
-                    // this.getView().getModel("jobModel").refresh();
+                        
                     sNewPayload.startDate = this.getFormattedDateValue("idStartDate");
 
                     if (sNewPayload.workingDaysPerWeek == undefined || sNewPayload.workingDaysPerWeek == null) {
@@ -252,7 +250,7 @@ sap.ui.define(
                     // this.getView().getModel("compensationModel").setProperty("/startDate", sStartDate);
                     // this.getView().getModel("compensationModel").refresh();
 
-                    sNewPayload.startDate = this.getFormattedDateVaue("idStartDate");
+                    sNewPayload.startDate = this.getFormattedDateValue("idStartDate");
 
                     delete sNewPayload.__metadata;
                     delete sNewPayload.customString4;
