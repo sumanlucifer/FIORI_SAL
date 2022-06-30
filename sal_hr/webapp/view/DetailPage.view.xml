@@ -60,10 +60,10 @@
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
-                    <Column width="10rem" importance="High">
+                    <Column width="18rem" importance="High">
                         <Label text="{i18n>ID}" class="tblHeaderText"/>
                     </Column>
-                    <Column width="18rem" importance="Low" popinDisplay="Inline">
+                    <Column width="12rem" importance="High" popinDisplay="Inline">
                         <Label text="External ID" class="tblHeaderText" />
                     </Column>
                     <Column importance="Low" popinDisplay="Inline">
