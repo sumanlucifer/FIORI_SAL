@@ -64,7 +64,7 @@ sap.ui.define(
                     this.EmpInfoObj = this.getOwnerComponent()
                         .getModel("EmpInfoModel")
                         .getData();
-                    this.managerID = '12000843';//this.EmpInfoObj.userId;
+                    this.managerID = this.EmpInfoObj.userId;
                 },
                 onSelectCompensation: function (oEve) {
                     if (oEve.getSource().getSelected()) {
@@ -128,9 +128,6 @@ sap.ui.define(
                         });
                 },
                 onRaiseRequestPress: function () {
-                    this.getOwnerComponent()
-                                .getModel("EmpInfoModel")
-                                .setProperty("/IsUserManager", true);
                     var sjobInfo = this.getView().byId("idJobInfo").getSelected(),
                         sValidationErrorMsg = this.fnValidateSalaryIncPayload(),
                         sCompensationInfo = this.getView()

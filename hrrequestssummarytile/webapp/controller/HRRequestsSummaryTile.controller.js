@@ -13,12 +13,12 @@ sap.ui.define([
             },
 
             _bindView: function () {
-                var requestForTeam = this.getOwnerComponent().getModel("EmpInfoModel").getData().IsUserManager.toString();
+             
                 this.getView().bindElement({
                     path: "/MasterModules(1)",
                     parameters: {
                         custom: {
-                            "IsUserManager": requestForTeam
+                            "IsUserManager": "flase"
                         }
                     }   
                 });

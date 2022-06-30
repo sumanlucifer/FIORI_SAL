@@ -30,12 +30,9 @@
                     <DatePicker id="idStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
                         pattern: 'MM/dd/yyyy'
                             }}" minDate="{LocalViewModel>/minDate}"/>
-                    <Label text="PRN" required="true" />
-                    
-                    <!-- passing hardcode PRN value to test salary increment issue -->
-                    <!-- <Input id="idSalIncPRN" value="12002425" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" /> -->
 
-                    <Input id="idSalIncPRN" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
+                    <Label visible="{EmpInfoModel>/IsUserManager}" text="PRN" required="true" />
+                    <Input id="idSalIncPRN" visible="{EmpInfoModel>/IsUserManager}" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
 
                 </fm:SimpleForm>
                 <VBox visible="{= ${LocalViewModel>/checkBoxVisible} ? true : false }">

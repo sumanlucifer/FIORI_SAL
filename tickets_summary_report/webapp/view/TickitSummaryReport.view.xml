@@ -13,7 +13,7 @@
                     <VBox>
                         <HBox>
                             <Label text="Choose the Report you want to see :" class="sapUiTinyMarginTop sapUiTinyMarginBegin" design="Bold" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }" />
-                            <Select visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }" change="onSelectionChange" class="sapUiTinyMarginBegin">
+                            <Select change="onSelectionChange" class="sapUiTinyMarginBegin" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }">
                                 <core:Item key="Myself" text="Myself" />
                                 <core:Item key="MyTeam" text="MyTeam" />
 
