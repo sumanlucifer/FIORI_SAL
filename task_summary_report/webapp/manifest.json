@@ -36,7 +36,7 @@
                     "semanticObject": "TaskSummary_Report",
                     "action": "Display",
                     "title": "{{flpTitle}}",
-                    "subTitle": "",
+                    "subTitle": "Myself",
                     "icon": "sap-icon://activity-2"
                 }
             }

@@ -73,7 +73,7 @@
                         <Input id="idHafDay" value="0.5 days" editable="false"/>
                     </fm:SimpleForm>
 
-                    <upload:UploadSet id="UploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                    <upload:UploadSet id="UploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted"  fileRenamed="onFileRenamed"  afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
                         <upload:toolbar>
                             <OverflowToolbar>
                                 <Label text="Attachments" required="true"/>

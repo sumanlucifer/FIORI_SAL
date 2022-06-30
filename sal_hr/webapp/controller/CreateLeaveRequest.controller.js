@@ -260,24 +260,21 @@ sap.ui.define([
 
             },
             onLeaveEndDateChange: function (oEvent) {
-                var oneDay = 24 * 60 * 60 * 1000;
+               
                 var sStartDate = this.getView().byId("idStartDate").getDateValue();
                 var sEndDate = oEvent.getSource().getDateValue();
 
-                // if (sEndDate <= sStartDate) {
+              
                 if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("End Date should be later than Start Date");
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
+                   
                 } else {
                     oEvent.getSource().setValueState();
                     oEvent.getSource().setValueStateText("");
                     this.getView().byId("idStartDate").setValueState();
                     this.getView().byId("idStartDate").setValueStateText("");
-                    // this.sRequestDay = Math.round(Math.abs((sEndDate - new Date(sStartDate)) / oneDay)) + 1 ;
-                    // this.sRequestDay = this.dateDifference(sStartDate, sEndDate, oEvent);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                    // this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
+                   
                 }
             },
             onSelectRecurringAbsc: function (oEvent) {
@@ -388,6 +385,9 @@ sap.ui.define([
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
                 this.isAttachment = false;
 
+            },
+            onFileRenamed: function (oEvent) {
+                this.onFileAdded(oEvent);
             },
             onTimeTyeChange: function (oEvent) {
                 var sType = this.getView().byId("idTimeType").getSelectedKey();;

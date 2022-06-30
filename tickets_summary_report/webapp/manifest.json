@@ -30,7 +30,7 @@
                     "semanticObject": "Reports_semantic",
                     "action": "display",
                     "title": "Ticket Summary Report",
-                    "subTitle": "{{flpSubtitle}}",
+                    "subTitle": "Myself",
                     "icon": "sap-icon://manager-insight"
                 }
             }
