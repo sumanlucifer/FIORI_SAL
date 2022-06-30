@@ -1,13 +1,27 @@
 <mvc:View
 	controllerName="com.sal.salhr.controller.MasterList"
 	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
 	xmlns:core="sap.ui.core"
 	xmlns="sap.m">
+
+     <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false" class="page">
+        <f:title>
+            <f:DynamicPageTitle backgroundDesign="Transparent" class="sapUiNoContentPadding" stickySubheaderProvider="Table">
+                <f:heading>
+                    <Title text="Human Resource"/>
+                </f:heading>
+
+            </f:DynamicPageTitle>
+        </f:title>
+
+
+        <f:content>
     
-	            <Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="20"
-		            inset="false"
-        updateStarted="onUpdateMasterListBindingStart"
-		items="{path : '/MasterModules(1)/masterSubModule', parameters: { custom: {'IsUserManager': ''}}}" >
+	           <Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="20"
+                inset="false"
+               updateStarted="onUpdateMasterListBindingStart"
+                  items="{path : '/MasterModules(1)/masterSubModule', parameters: { custom: {'IsUserManager': ''}}}" >
 		<headerToolbar>
 			<OverflowToolbar>
 				<content>
@@ -50,6 +64,11 @@
 				</cells>
 			</ColumnListItem>
 		</items>
-	</Table>
+	    </Table>
     
+        </f:content>
+
+
+
+    </f:DynamicPage>
 </mvc:View>

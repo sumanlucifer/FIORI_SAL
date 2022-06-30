@@ -84,46 +84,49 @@
                         <TextArea id="idPurposeofPermitInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_permitPurpose}"/>
                     </fm:SimpleForm>
 
-                    <upload:UploadSet id="UploadSetPersonalID" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
-                        <upload:toolbar>
-                            <OverflowToolbar>
-                                <Label text="{i18n>PersonalIDCopy}" required="true"/>
-                                <core:Icon id="idInfoIconPersId" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
-                                <ToolbarSpacer/>
-                            </OverflowToolbar>
-                        </upload:toolbar>
-                    </upload:UploadSet>
-
-                    <upload:UploadSet id="UploadSetPersonalPhoto" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
-                        <upload:toolbar>
-                            <OverflowToolbar>
-                                <Label text="{i18n>PersonalPhoto}" required="true"/>
-                                <core:Icon id="idInfoIconPersonal" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
-                                <ToolbarSpacer/>
-                            </OverflowToolbar>
-                        </upload:toolbar>
-                    </upload:UploadSet>
+                    <VBox class="uploadBox sapUiSmallMarginBeginEnd">
+                        <upload:UploadSet id="UploadSetPersonalID" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
+                            <upload:toolbar>
+                                <OverflowToolbar>
+                                    <Label text="{i18n>PersonalIDCopy}" required="true"/>
+                                    <core:Icon id="idInfoIconPersId" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
+                                    <ToolbarSpacer/>
+                                </OverflowToolbar>
+                            </upload:toolbar>
+                        </upload:UploadSet>
 
 
-                    <upload:UploadSet id="UploadSetnonnationals" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed" >
-                        <upload:toolbar>
-                            <OverflowToolbar>
-                                <Label text="{i18n>PassportCopyfornonnationals}" required="false"/>
-                                <core:Icon id="idInfoIconPassport" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
-                                <ToolbarSpacer/>
-                            </OverflowToolbar>
-                        </upload:toolbar>
-                    </upload:UploadSet>
+                        <upload:UploadSet id="UploadSetPersonalPhoto" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
+                            <upload:toolbar>
+                                <OverflowToolbar>
+                                    <Label text="{i18n>PersonalPhoto}" required="true"/>
+                                    <core:Icon id="idInfoIconPersonal" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
+                                    <ToolbarSpacer/>
+                                </OverflowToolbar>
+                            </upload:toolbar>
+                        </upload:UploadSet>
 
-                    <upload:UploadSet id="UploadSetCompanyIDCopy" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
-                        <upload:toolbar>
-                            <OverflowToolbar>
-                                <Label text="{i18n>CompanyIDCopy}" required="true"/>
-                                <core:Icon id="idInfoIconCompany" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
-                                <ToolbarSpacer/>
-                            </OverflowToolbar>
-                        </upload:toolbar>
-                    </upload:UploadSet>
+
+                        <upload:UploadSet id="UploadSetnonnationals" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
+                            <upload:toolbar>
+                                <OverflowToolbar>
+                                    <Label text="{i18n>PassportCopyfornonnationals}" required="false"/>
+                                    <core:Icon id="idInfoIconPassport" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
+                                    <ToolbarSpacer/>
+                                </OverflowToolbar>
+                            </upload:toolbar>
+                        </upload:UploadSet>
+
+                        <upload:UploadSet id="UploadSetCompanyIDCopy" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" afterItemRemoved="onFileDeleted" mode="None" afterItemAdded="onFileAdded" fileRenamed="onFileRenamed">
+                            <upload:toolbar>
+                                <OverflowToolbar>
+                                    <Label text="{i18n>CompanyIDCopy}" required="true"/>
+                                    <core:Icon id="idInfoIconCompany" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
+                                    <ToolbarSpacer/>
+                                </OverflowToolbar>
+                            </upload:toolbar>
+                        </upload:UploadSet>
+                    </VBox>
 
                     <fm:SimpleForm id="idAcknowledgeTextForm" layout="ColumnLayout" columnsM="1" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                         <Label text="{i18n>AcknowledgeText1}" required="true" />
