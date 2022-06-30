@@ -4,10 +4,11 @@ sap.ui.define([
     "com/sal/salhr/model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    'sap/ui/model/Sorter'
+    'sap/ui/model/Sorter',
+    "com/sal/salhr/utils/const",
 ],
 
-    function (BaseController, Controller, formatter, Filter, FilterOperator, Sorter) {
+    function (BaseController, Controller, formatter, Filter, FilterOperator, Sorter, Const) {
         "use strict";
        
 
@@ -133,6 +134,7 @@ sap.ui.define([
 
             fnGetRoleAccess: function (sManagerTile, subModuleId, oItem) {
                 this.sManagerTile = sManagerTile;
+                var sURL = Const.LINKS.SFSF;
                 var oComponentModel = this.getComponentModel();
                 oComponentModel.read("/MasterRolePermission", {
                     urlParameters: {
@@ -164,12 +166,18 @@ sap.ui.define([
                         if(oItem){
                             var sPath = oItem.getBindingContextPath()
                             this.getView().getModel("EmpInfoModel").refresh(true);
-                            this.getRouter().navTo("detail", {
-                                parentMaterial: oItem.getModel().getProperty(sPath).ID,
-                                layout: "TwoColumnsMidExpanded"
-                            },
-                                false
-                            );
+                            if(subModuleId === 8 || subModuleId === 18 || subModuleId === 4 || subModuleId === 9){
+                                sap.m.MessageToast.show("Redirecting to SuccessFactors");
+                              window.open(sURL);
+                            }else{
+                                this.getRouter().navTo("detail", {
+                                    parentMaterial: oItem.getModel().getProperty(sPath).ID,
+                                    layout: "TwoColumnsMidExpanded"
+                                },
+                                    false
+                                );
+                            }
+                            
                         }
                         
                     }.bind(this),
