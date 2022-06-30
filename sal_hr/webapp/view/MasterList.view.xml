@@ -1,61 +1,52 @@
-<mvc:View xmlns:core="sap.ui.core"
-    controllerName="com.sal.salhr.controller.MasterList"
-    xmlns="sap.m"
-	xmlns:f="sap.f"
+<mvc:View
+	controllerName="com.sal.salhr.controller.MasterList"
 	xmlns:mvc="sap.ui.core.mvc"
-    xmlns:ui="sap.ui.table"
->
-   <f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false" class="page" >
-        <f:title>
-            <f:DynamicPageTitle id="dynamicPageTitle" backgroundDesign="Transparent" class="sapUiNoContentPadding" >
-                <f:heading>
-                    <Title id="idTitleHuman" text="{i18n>humanResource}"/>
-                </f:heading>         
-            </f:DynamicPageTitle>
-        </f:title>	
-        <f:content>
-              	<Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="20"
-		                    inset="false"
-                            updateStarted="onUpdateMasterListBindingStart"
-		                    items="{path : '/MasterModules(1)/masterSubModule', parameters: { custom: {'IsUserManager': ''}}}" >
-		                     <headerToolbar>
-			                    <OverflowToolbar id="idMasterOverFlow">
-                                    <content>
-                                    
-                                    <ToolbarSpacer id="idMasterToolBar"/>
-                                    <SearchField id="idMasterListSearch" width="30%" placeholder="Search for Type" search=".onSearch" ></SearchField>
-                                    <Button id="idMasterButtonSort" icon="sap-icon://sort" press="onSort"/>
-                                </content>
-                                    </OverflowToolbar>
-                                </headerToolbar>
-                                
-                                <columns>
-                                
-                                <Column id="idMasterType" width="3rem">
-                                    <Label id="idTextType" text="{i18n>type}" class="tblHeaderText"/>
-                                </Column>
-                                 <Column id="idMasterCol2" hAlign="Begin"  width="20rem">
-                                    
-                                </Column>
-                                 <Column id="idMasterCol3" minScreenWidth="Small" demandPopin="false" >
-                                       <Label id="idDescType" text="Description" class="tblHeaderText"/>
-                                </Column>
-                                
-                                <Column id="idMasterCount" hAlign="End" importance="Low" popinDisplay="Inline">
-                                    <Label id="idTextCount" text="{i18n>count}" class="tblHeaderText" />
-                                </Column>
-                            </columns>
-                                <items>
-                                    <ColumnListItem id="idMasterColumnList" type="Navigation" press="onMasterListPress">
-                                      <cells>
-                                            <core:Icon id="idMasterIcon" src="{path:'ID',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem" class="ListIcon"></core:Icon>        
-                                            <Text id="idMasterNameTxt" text="{name}" />
-                                             <Text id="idMasterDescText" text="{description}" wrapping="true" />
-                                            <Text id="idTotalReq" text="{totalRequests}" class="infoColor"/>     
-                                       </cells> 
-                                    </ColumnListItem>
-                                </items>
-	                </Table>
-        </f:content>
-	</f:DynamicPage>
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+	<Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="20"
+		inset="false"
+        updateStarted="onUpdateMasterListBindingStart"
+		items="{path : '/MasterModules(1)/masterSubModule', parameters: { custom: {'IsUserManager': ''}}}" >
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+				
+					<ToolbarSpacer />
+					<SearchField id="idMasterListSearch" placeholder="Search for Type" width="30%" search=".onSearch" ></SearchField>
+					
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		
+		<columns>
+			<Column
+				width="4em">
+				<Text text="Type" />
+			</Column>
+			<Column>
+		
+			</Column>
+			
+			<Column
+				minScreenWidth="Desktop"
+				demandPopin="false"
+				hAlign="Begin">
+				<Text text="Description" />
+			</Column>
+			<Column
+				hAlign="End">
+				<Text text="Count" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle" id="idMasterColumnList" type="Navigation" press="onMasterListPress">
+				<cells>
+					 <core:Icon id="idMasterIcon" src="{path:'ID',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem" class="ListIcon"></core:Icon> 
+					<Text id="idMasterNameTxt" text="{name}" />
+                                             <Text id="idMasterDescText" text="{description}" />
+                                            <Text id="idTotalReq" text="{totalRequests}" class="infoColor"/>   
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
 </mvc:View>
