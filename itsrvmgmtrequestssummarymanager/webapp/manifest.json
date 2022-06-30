@@ -126,7 +126,7 @@
     },
     
     "sap.cloud.portal": {
-        "itsrvmgmt_reqsummary-manage": {
+        "itsrvmgmt_reqsummary_manager-manage": {
             "vizType": "com.sal.itsrvmgmtrequestssummarymanagertile"
         }
     }

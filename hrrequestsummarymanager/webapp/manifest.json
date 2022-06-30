@@ -125,7 +125,7 @@
         }
     },
     "sap.cloud.portal": {
-        "hrreq_summary-manage": {
+        "hrreq_summary_manager-manage": {
             "vizType": "com.sal.summarytiles.hrrequestssummarymanagertile"
         }
     }
