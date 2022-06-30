@@ -3,8 +3,9 @@
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
 	xmlns="sap.m">
-	<Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="20"
-		inset="false"
+    
+	            <Table id="idMasterTable" growing="true" growingScrollToLoad="true" growingThreshold="20"
+		            inset="false"
         updateStarted="onUpdateMasterListBindingStart"
 		items="{path : '/MasterModules(1)/masterSubModule', parameters: { custom: {'IsUserManager': ''}}}" >
 		<headerToolbar>
@@ -50,4 +51,5 @@
 			</ColumnListItem>
 		</items>
 	</Table>
+    
 </mvc:View>
