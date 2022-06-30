@@ -117,3 +117,15 @@
 .sapMITBSelected .sapMITBContentArrow::after {
     background: #6c1332;
 }
+
+.sapMUSProgressBox {
+   min-width: 50px;
+   padding-left: 0px;
+
+}
+
+@media only screen and (max-width: 600px) {
+    .sapMListUl {
+        max-width: 380px !important;
+    }
+  }

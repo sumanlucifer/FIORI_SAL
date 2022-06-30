@@ -541,6 +541,7 @@ sap.ui.define([
             },
             onFileRenamed: function (oEvent) {
                 this.isAttachmentRenamed = true;
+                this.oFileAdded(oEvent);
             },
             fnDeleteLeaveRequest: function () {
                 this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {

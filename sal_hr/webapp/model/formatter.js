@@ -282,8 +282,7 @@ sap.ui.define([], function () {
           .getProperty("/createSelf");
         bRaiseRequestVisible = bCreateSelf === true ? true : false;
       }
-    //    return bRaiseRequestVisible;
-     return true;
+       return bRaiseRequestVisible;
      
     },
 

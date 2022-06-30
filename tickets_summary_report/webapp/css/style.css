@@ -1,1 +1,7 @@
 /* Enter your custom styles here */
+
+.reportsTeamViewSwitch {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
+}

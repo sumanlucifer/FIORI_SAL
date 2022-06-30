@@ -66,14 +66,17 @@ sap.ui.define([
               var sTemplate = this.byId("idLetterTemplate").getSelectedKey();
               var sDate = this.byId("idLetterEffectDatePicker").getDateValue();
               var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+
+              var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+              sDate = dateFormat.format(new Date(sDate));
+              sDate = sDate + "T00:00:00";
               if(sTemplate === "1"){
                   sTemplate = "Introduction";
               }else {
                 sTemplate = "Salary";
               }
                 return {
-                    
-    
+     
                         "language" : "EN",
                         "country" : "India",
                          "userId" : sUserID,
