@@ -226,7 +226,7 @@
 
 
 
-                <VBox >
+                <VBox class="uploadBox sapUiSmallMarginBeginEnd">
                     <Label text="{i18n>AttachBoardingPass}" />
                     <upload:UploadSet id="UploadBoardingPass" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
                         <upload:toolbar>
@@ -261,7 +261,7 @@
 
 
                 </form:SimpleForm>
-                <VBox>
+                <VBox class="uploadBox sapUiSmallMarginBeginEnd">
                     <Label text="{i18n>AttachVisaCopy}" />
                     <upload:UploadSet id="UploadVisaCopy" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
                         <upload:toolbar>
@@ -275,7 +275,7 @@
 
                     </upload:UploadSet>
                 </VBox>
-                <VBox>
+                <VBox class="uploadBox sapUiSmallMarginBeginEnd">
                     <Label text="{i18n>AttachEmbassyReceipt}" class="sapUiTinyMarginTop"/>
                     <upload:UploadSet id="UploadEmbassy" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
                         <upload:toolbar>

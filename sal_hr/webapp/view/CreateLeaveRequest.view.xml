@@ -73,15 +73,17 @@
                         <Input id="idHafDay" value="0.5 days" editable="false"/>
                     </fm:SimpleForm>
 
-                    <upload:UploadSet id="UploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted"  fileRenamed="onFileRenamed"  afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
-                        <upload:toolbar>
-                            <OverflowToolbar>
-                                <Label text="Attachments" required="true"/>
-                                <core:Icon id="idInfoIconLeave" src="sap-icon://message-information" size="1rem" height="3rem" class="sapUiTinyMarginBegin" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
-                                <ToolbarSpacer/>
-                            </OverflowToolbar>
-                        </upload:toolbar>
-                    </upload:UploadSet>
+                    <VBox class="uploadBox sapUiSmallMarginBeginEnd">
+                        <upload:UploadSet id="UploadSet" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" fileRenamed="onFileRenamed" afterItemAdded="onFileAdded" visible="{LocalViewModel>/uploadAttachment}">
+                            <upload:toolbar>
+                                <OverflowToolbar>
+                                    <Label text="Attachments" required="true"/>
+                                    <core:Icon id="idInfoIconLeave" src="sap-icon://message-information" size="1rem" height="3rem" tooltip="Please Upload File types (.png, .txt, pdf, docs and xls) and File size upto 250 MB"></core:Icon>
+                                    <ToolbarSpacer/>
+                                </OverflowToolbar>
+                            </upload:toolbar>
+                        </upload:UploadSet>
+                    </VBox>
                 </l:content>
             </l:VerticalLayout>
         </f:content>

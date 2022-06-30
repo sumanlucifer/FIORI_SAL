@@ -17,8 +17,7 @@ sap.ui.define([
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
                 this.attachReq = true;
-                this.isAttachment = false
-idSalIncPRN
+                this.isAttachment = false;
                 this.sReturnDate = new Date();
                 this.sRequesting = 1;
                 this.sReturnDate.setDate(new Date().getDate() + 1);

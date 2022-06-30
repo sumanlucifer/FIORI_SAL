@@ -55,13 +55,14 @@
         <Text text="*" class="sapUiMediumMarginBottom redColor" />
         </HBox> -->
 
-    <form:SimpleForm id="idDisplayattachmentForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <form:content>
+    <!-- <form:SimpleForm id="idDisplayattachmentForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
+        <form:content> -->
 
-      
+    <VBox id="idDisplayattachmentForm" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
 
     <upload:UploadSet 
 				id="UploadSet"
+                 class="uploadDetailPage"
 				instantUpload="false"
 				showIcons="false"
 				uploadEnabled="false"
@@ -101,8 +102,9 @@
 				</upload:UploadSetItem>
 			</upload:items>
 		</upload:UploadSet> 
-         </form:content>
-    </form:SimpleForm>
+        </VBox>
+         <!-- </form:content>
+    </form:SimpleForm> -->
 
 
 
