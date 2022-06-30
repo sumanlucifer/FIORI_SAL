@@ -13,6 +13,7 @@
 				
 					<ToolbarSpacer />
 					<SearchField id="idMasterListSearch" placeholder="Search for Type" width="30%" search=".onSearch" ></SearchField>
+                     <Button id="idMasterButtonSort" icon="sap-icon://sort" press="onSort"/>
 					
 				</content>
 			</OverflowToolbar>
@@ -43,8 +44,8 @@
 				<cells>
 					 <core:Icon id="idMasterIcon" src="{path:'ID',formatter:'.formatter.changeIcon'}" size="1.2rem" height="3rem" class="ListIcon"></core:Icon> 
 					<Text id="idMasterNameTxt" text="{name}" />
-                                             <Text id="idMasterDescText" text="{description}" />
-                                            <Text id="idTotalReq" visible="{= ${isRedirection} ? false : true }" text="{totalRequests}" class="infoColor"/>   
+                    <Text id="idMasterDescText" text="{description}" />
+                    <Text id="idTotalReq" visible="{= ${isRedirection} ? false : true }" text="{totalRequests}" class="infoColor"/>   
 				</cells>
 			</ColumnListItem>
 		</items>
