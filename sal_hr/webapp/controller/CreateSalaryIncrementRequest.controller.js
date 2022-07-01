@@ -68,7 +68,7 @@ sap.ui.define(
                     if(!this.EmpInfoObj.IsUserManager) {
                         // not authorized
                         if(!this.PRNFlag) {
-                            MessageBox.error("You are not authorized to perform this action.");
+                            MessageBox.error("You do not have permission to perform this action");
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded",
