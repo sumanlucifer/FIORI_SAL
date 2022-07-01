@@ -104,12 +104,12 @@
                     <Label text="{i18n>TravelDate}" required="true"/>
                     <DatePicker id="idTravelDate" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignStartDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}"></DatePicker>
+                                                }}" change="onTravelDateChange"></DatePicker>
 
                     <Label text="{i18n>ReturnDate}" required="true"/>
                     <DatePicker id="idReturnDate" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignEndDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}"></DatePicker>
+                                                }}" change="onReturnDateChange"></DatePicker>
 
                     <Label text="{i18n>DesiredAirlineTicketTravelTime}"/>
                     <!-- <TimePicker id="idAirlineTicket" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"></TimePicker> -->
