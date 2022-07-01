@@ -134,7 +134,7 @@ sap.ui.define([
 
             fnGetRoleAccess: function (sManagerTile, subModuleId, oItem) {
                 this.sManagerTile = sManagerTile;
-                var sURL = Const.LINKS.SFSF;
+                var sURL = "";
                 var oComponentModel = this.getComponentModel();
                 oComponentModel.read("/MasterRolePermission", {
                     urlParameters: {
@@ -164,26 +164,48 @@ sap.ui.define([
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateOther", oData.results[0].updateOther);
                         }
                         if(oItem){
-                            var sPath = oItem.getBindingContextPath()
+                            var sPath = oItem.getBindingContextPath();
                             this.getView().getModel("EmpInfoModel").refresh(true);
-                            if(subModuleId === 8 || subModuleId === 18 || subModuleId === 4 || subModuleId === 9){
-                                sap.m.MessageToast.show("Redirecting to SuccessFactors");
-                              window.open(sURL);
-                            }else{
-                                this.getRouter().navTo("detail", {
-                                    parentMaterial: oItem.getModel().getProperty(sPath).ID,
-                                    layout: "TwoColumnsMidExpanded"
-                                },
-                                    false
-                                );
-                            }
+
+                             switch (subModuleId) {
+                                case 8:
+                                    sURL = Const.LINKS.Vacancy;
+                                    this.openSucessFatcors(sURL);
+                                break;
+                                case 18:
+                                    sURL = Const.LINKS.Learning;
+                                    this.openSucessFatcors(sURL);
+                                break;
+                                case 4:
+                                    sURL = Const.LINKS.Loan;
+                                    this.openSucessFatcors(sURL);
+                                break;
+                                case 9:
+                                    sURL = Const.LINKS.Performance;
+                                    this.openSucessFatcors(sURL);
+                                break;
+                                default:
+                                    this.getRouter().navTo("detail", {
+                                        parentMaterial: oItem.getModel().getProperty(sPath).ID,
+                                        layout: "TwoColumnsMidExpanded"
+                                    },
+                                        false
+                                    );
+                                }
+                        } 
                             
-                        }
                         
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));
                     }.bind(this),
+                });
+            },
+
+            openSucessFatcors:function(sUrl){
+                sap.m.MessageToast.show("Redirecting to SuccessFactors");
+                jQuery.sap.delayedCall(500, this, function () {
+                   window.open(sUrl);
                 });
             }
 
