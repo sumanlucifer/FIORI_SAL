@@ -678,7 +678,29 @@ sap.ui.define([
                 this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalAmount", sTotalPerDiem);
 
 
+            },
+            onTravelDateChange: function(oEvent) {
+                var sTravelDate = oEvent.getSource().getValue();
+                this.getView().byId("idReturnDate").setValue(sTravelDate);
+            },
+            onReturnDateChange: function(oEvent){
+                var sTravelDate = this.getView().byId("idTravelDate").getDateValue();
+                var sReturnDate = oEvent.getSource().getDateValue();
+
+              
+                if (new Date(sReturnDate).getTime() < new Date(sTravelDate).getTime()) {
+                    oEvent.getSource().setValueState("Error");
+                    oEvent.getSource().setValueStateText("Return Date should be later than Travel Date");
+                   
+                } else {
+                    oEvent.getSource().setValueState();
+                    oEvent.getSource().setValueStateText("");
+                    this.getView().byId("idTravelDate").setValueState();
+                    this.getView().byId("idTravelDate").setValueStateText("");
+                   
+                }
             }
+
 
         });
     });      
