@@ -167,9 +167,49 @@ sap.ui.define(
         },
         fnGetSelectedSliceData:function(selectedSlice){
             if(selectedSlice === "Human Resource"){
+                var sStatusFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "PENDING"
+                });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "1"
+                });
+                var filter = [];
+                filter.push(sStatusFilter,sModuleFilter);
                 this.getOwnerComponent().getModel().read("/Tickets",
                 {
-                  
+                    filters: [filter],
+                    success:function(oData){
+                        var oFragmetModel = new JSONModel(oData.results);
+			            this._oLabelAPDialog.setModel(oFragmetModel, "FragmetModel");
+                        this._oLabelAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+			            this._oLabelAPDialog.open();
+                    }.bind(this),
+                    error:function(){
+
+                    }
+                })
+            }
+
+            else  if(selectedSlice === "IT Service Management"){
+                var sStatusFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "PENDING"
+                });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "3"
+                });
+                var filter = [];
+                filter.push(sStatusFilter,sModuleFilter);
+                this.getOwnerComponent().getModel().read("/Tickets",
+                {
+                    filters: [filter],
                     success:function(oData){
                         var oFragmetModel = new JSONModel(oData.results);
 			            this._oLabelAPDialog.setModel(oFragmetModel, "FragmetModel");

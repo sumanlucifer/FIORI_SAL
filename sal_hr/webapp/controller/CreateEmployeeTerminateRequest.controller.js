@@ -108,7 +108,7 @@ sap.ui.define([
                     }.bind(this),
                     error: function (oError) {
                         this.getView().setBusy(false);
-                        sap.m.MessageBox.error(that.parseResponseError(oError.responseText));
+                        sap.m.MessageBox.error(this.parseResponseError(oError.responseText));
                         this.getView().getModel().refresh();
 
 
