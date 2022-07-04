@@ -128,7 +128,7 @@ sap.ui.define([
                 var that = this;
                
                 if (!this._oDoneAPIialog) {
-                    this._oDoneAPIialog = sap.ui.xmlfragment("idLabelAvailPickDialog", "com.sal.donerequestcardtile.donerequestcardtile.Fragments.QuickView", this);
+                    this._oDoneAPIialog = sap.ui.xmlfragment("idDoneDialog", "com.sal.donerequestcardtile.donerequestcardtile.Fragments.QuickView", this);
                     that.getView().addDependent(this._oDoneAPIialog);
                 }
                 this.fnGetSelectedSliceData(selectedSlice);
@@ -140,7 +140,7 @@ sap.ui.define([
                     var sStatusFilter = new sap.ui.model.Filter({
                         path: "status",
                         operator: sap.ui.model.FilterOperator.EQ,
-                        value1: "PENDING"
+                        value1: "APPROVED"
                     });
                     var sModuleFilter = new sap.ui.model.Filter({
                         path: "moduleId",
@@ -168,7 +168,7 @@ sap.ui.define([
                 var sStatusFilter = new sap.ui.model.Filter({
                     path: "status",
                     operator: sap.ui.model.FilterOperator.EQ,
-                    value1: "PENDING"
+                    value1: "APPROVED"
                 });
                 var sModuleFilter = new sap.ui.model.Filter({
                     path: "moduleId",
