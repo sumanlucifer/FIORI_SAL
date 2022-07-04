@@ -16,7 +16,7 @@
             <Label text="Mobile" />
             <Text text="{cust_mobile}"/>
             <Label text="Office Number" />
-            <Text text="{= ${CreateBusinessCardModel>/sOfficeNo}.length > 0 ? ${CreateBusinessCardModel>/sOfficeNo}:'NA'}"/>
+            <Text text="{path:'CreateBusinessCardModel>/sOfficeNo', formatter:'.formatter.handleNoData'}"/>
             <Label text="P.O BOX" />
             <Text text="{cust_poBox}"/>
             <!-- <core:Title id="idEmptyTitle" text=" "/> -->
