@@ -167,14 +167,14 @@ sap.ui.define([
                     });
                     var filter = [];
                     filter.push(sTicketFilter);
-                    this.getOwnerComponent().getModel().read("/Tickets",
+                    this.getOwnerComponent().getModel().read("/tickets",
                     {
                         filters: [filter],
                         success:function(oData){
                             var oFragmetModel = new JSONModel(oData.results);
-                            this._oLabelAPDialog.setModel(oFragmetModel, "FragmetModel");
-                            this._oLabelAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
-                            this._oLabelAPDialog.open();
+                            this._oDoneAPIialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oDoneAPIialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+                            this._oDoneAPIialog.open();
                         }.bind(this),
                         error:function(){
     

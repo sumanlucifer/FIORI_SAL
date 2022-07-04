@@ -197,7 +197,7 @@ sap.ui.define(
                 });
                 var filter = [];
                 filter.push(sTicketFilter);
-                this.getOwnerComponent().getModel().read("/Tickets",
+                this.getOwnerComponent().getModel().read("/tickets",
                 {
                     filters: [filter],
                     success:function(oData){
