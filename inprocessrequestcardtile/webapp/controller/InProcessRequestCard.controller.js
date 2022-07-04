@@ -167,13 +167,18 @@ sap.ui.define(
         },
         fnGetSelectedSliceData:function(selectedSlice){
             if(selectedSlice === "Human Resource"){
-                var sTicketFilter = new sap.ui.model.Filter({
+                var sStatusFilter = new sap.ui.model.Filter({
                     path: "status",
                     operator: sap.ui.model.FilterOperator.EQ,
                     value1: "PENDING"
                 });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "1"
+                });
                 var filter = [];
-                filter.push(sTicketFilter);
+                filter.push(sStatusFilter,sModuleFilter);
                 this.getOwnerComponent().getModel().read("/Tickets",
                 {
                     filters: [filter],
@@ -190,14 +195,19 @@ sap.ui.define(
             }
 
             else  if(selectedSlice === "IT Service Management"){
-                var sTicketFilter = new sap.ui.model.Filter({
+                var sStatusFilter = new sap.ui.model.Filter({
                     path: "status",
                     operator: sap.ui.model.FilterOperator.EQ,
                     value1: "PENDING"
                 });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "3"
+                });
                 var filter = [];
-                filter.push(sTicketFilter);
-                this.getOwnerComponent().getModel().read("/tickets",
+                filter.push(sStatusFilter,sModuleFilter);
+                this.getOwnerComponent().getModel().read("/Tickets",
                 {
                     filters: [filter],
                     success:function(oData){
