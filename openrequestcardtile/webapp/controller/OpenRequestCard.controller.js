@@ -1,11 +1,12 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, Fragment) {
         "use strict";
 
         return Controller.extend("com.sal.openrequestcardtile.openrequestcardtile.controller.OpenRequestCard", {
@@ -72,13 +73,15 @@ sap.ui.define([
                                 "dimensions": [
                                     {
                                         "label": "Measure Name",
-                                        "value": "{name}"
+                                        "value": "{name}",
+                                        "tootip":"{name}"
                                     }
                                 ],
                                 "measures": [
                                     {
                                         "label": "Value",
-                                        "value": "{totalRejected}"
+                                        "value": "{totalRejected}",
+                                        "tootip":"{name}"
                                     }
                                 ],
                                 "actionableArea": "Chart",
@@ -86,7 +89,7 @@ sap.ui.define([
                                     {
                                         "type": "Navigation",
                                         "parameters": {
-                                           "text":"Hello"
+                                           "text":"{name}"
                                         }
                                         
                                     }
@@ -120,22 +123,81 @@ sap.ui.define([
                 });
             },
 
-            onAction: function () {
-                debugger;
-                sap.m.MessageBox.show("welcome");
-                var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
-                var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
-                    target: {
-                        semanticObject: "myreqopen",
-                        action: "manage"
-                    },
-                    params: {}
-                })) || "";
-                oCrossAppNavigator.toExternal({
-                    target: {
-                        shellHash: hash
-                    }
-                });
+            // onAction: function () {
+            //     debugger;
+            //     sap.m.MessageBox.show("welcome");
+            //     var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
+            //     var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+            //         target: {
+            //             semanticObject: "myreqopen",
+            //             action: "manage"
+            //         },
+            //         params: {}
+            //     })) || "";
+            //     oCrossAppNavigator.toExternal({
+            //         target: {
+            //             shellHash: hash
+            //         }
+            //     });
+            // }
+
+            onAction: function (oEvent) {
+                var selectedSlice = oEvent.getParameters().manifestParameters.text;
+                var that = this;
+               
+                if (!this._oOpenAPDialog) {
+                    this._oOpenAPDialog = sap.ui.xmlfragment("idLabelAvailPickDialog", "com.sal.openrequestcardtile.openrequestcardtile.Fragments.QuickView", this);
+                    that.getView().addDependent(this._oOpenAPDialog);
+                }
+                this.fnGetSelectedSliceData(selectedSlice);
+                
+    
+            },
+            fnGetSelectedSliceData:function(selectedSlice){
+                if(selectedSlice === "Human Resource"){
+                    var sTicketFilter = new sap.ui.model.Filter({
+                        path: "status",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: "REJECTED"
+                    });
+                    var filter = [];
+                    filter.push(sTicketFilter);
+                    this.getOwnerComponent().getModel().read("/Tickets",
+                    {
+                        filters: [filter],
+                        success:function(oData){
+                            var oFragmetModel = new JSONModel(oData.results);
+                            this._oOpenAPDialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oOpenAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+                            this._oOpenAPDialog.open();
+                        }.bind(this),
+                        error:function(){
+    
+                        }
+                    })
+                }
+                else  if(selectedSlice === "IT Service Management"){
+                    var sTicketFilter = new sap.ui.model.Filter({
+                        path: "status",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: "PENDING"
+                    });
+                    var filter = [];
+                    filter.push(sTicketFilter);
+                    this.getOwnerComponent().getModel().read("/Tickets",
+                    {
+                        filters: [filter],
+                        success:function(oData){
+                            var oFragmetModel = new JSONModel(oData.results);
+                            this._oOpenAPDialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oOpenAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+                            this._oOpenAPDialog.open();
+                        }.bind(this),
+                        error:function(){
+    
+                        }
+                    })
+                }
             }
         });
     });

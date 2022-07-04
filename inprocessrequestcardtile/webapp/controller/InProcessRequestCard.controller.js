@@ -167,9 +167,39 @@ sap.ui.define(
         },
         fnGetSelectedSliceData:function(selectedSlice){
             if(selectedSlice === "Human Resource"){
+                var sTicketFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "PENDING"
+                });
+                var filter = [];
+                filter.push(sTicketFilter);
                 this.getOwnerComponent().getModel().read("/Tickets",
                 {
-                  
+                    filters: [filter],
+                    success:function(oData){
+                        var oFragmetModel = new JSONModel(oData.results);
+			            this._oLabelAPDialog.setModel(oFragmetModel, "FragmetModel");
+                        this._oLabelAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+			            this._oLabelAPDialog.open();
+                    }.bind(this),
+                    error:function(){
+
+                    }
+                })
+            }
+
+            else  if(selectedSlice === "IT Service Management"){
+                var sTicketFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "PENDING"
+                });
+                var filter = [];
+                filter.push(sTicketFilter);
+                this.getOwnerComponent().getModel().read("/Tickets",
+                {
+                    filters: [filter],
                     success:function(oData){
                         var oFragmetModel = new JSONModel(oData.results);
 			            this._oLabelAPDialog.setModel(oFragmetModel, "FragmetModel");
