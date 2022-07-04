@@ -203,7 +203,7 @@ sap.ui.define(
                 var sModuleFilter = new sap.ui.model.Filter({
                     path: "moduleId",
                     operator: sap.ui.model.FilterOperator.EQ,
-                    value1: "3"
+                    value1: "4"
                 });
                 var filter = [];
                 filter.push(sStatusFilter,sModuleFilter);
