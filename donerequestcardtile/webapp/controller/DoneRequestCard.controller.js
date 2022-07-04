@@ -80,6 +80,16 @@ sap.ui.define([
                                         "label": "Value",
                                         "value": "{totalApproved}"
                                     }
+                                ],
+                                "actionableArea": "Chart",
+                                "actions": [
+                                    {
+                                        "type": "Navigation",
+                                        "parameters": {
+                                           "text":"Hello"
+                                        }
+                                        
+                                    }
                                 ]
                             }
                         }
@@ -94,9 +104,10 @@ sap.ui.define([
                         var cardManifests = new JSONModel();
                         oCardData.donut["sap.card"].content.data.json.measures = oData.results;
                         oCardData.donut["sap.card"].content.data.path = "/measures";
-
-                        // Set Values for Header
-                        oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalApproved + oData.results[1].totalApproved + oData.results[2].totalApproved + oData.results[3].totalApproved;
+                        
+                         // Set Values for Header
+                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalApproved + oData.results[1].totalApproved + oData.results[2].totalApproved + oData.results[3].totalApproved;
+                        // oCardData.donut["sap.card"].content.data.json.NumberCount =  "0";
                         // oCardData.donut["sap.card"].content.data.json.Unit = "";
                         // oCardData.donut["sap.card"].content.data.json.Trend= "";
                         // oCardData.donut["sap.card"].content.data.json.TrendColor= "Good";
@@ -108,22 +119,26 @@ sap.ui.define([
                     }
                 });
             },
-            onAction: function () {
+
+            onAction: function (oEvent) {
+                debugger;
+                var selectedColor = oEvent;
                 sap.m.MessageBox.show("welcome");
-                var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
-                var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
-                    target: {
-                        semanticObject: "myreq_done",
-                        action: "manage"
-                    },
-                    params: {}
-                })) || "";
-                oCrossAppNavigator.toExternal({
-                    target: {
-                        shellHash: hash
-                    }
-                });
+                // var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
+                // var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                //     target: {
+                //         semanticObject: "myreqopen",
+                //         action: "manage"
+                //     },
+                //     params: {}
+                // })) || "";
+                // oCrossAppNavigator.toExternal({
+                //     target: {
+                //         shellHash: hash
+                //     }
+                // });
             }
         });
     });
+
 
