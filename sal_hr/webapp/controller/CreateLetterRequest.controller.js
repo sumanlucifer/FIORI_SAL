@@ -11,7 +11,6 @@ sap.ui.define([
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateLetterRequest", {
             onInit: function () {
-                debugger;
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("LetterRequest").attachPatternMatched(this._onObjectMatched, this);
 
@@ -27,7 +26,6 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
-                debugger;
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
