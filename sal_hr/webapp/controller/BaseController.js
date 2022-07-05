@@ -127,7 +127,7 @@ sap.ui.define([
             });
         },
 
-        fnDownloadAttachment:function(fileContent,mimeType,fName){
+        fnDownloadAttachment:function(fileContent,mimeType,fName, fileext){
 
             var decodedContent = atob(fileContent);
             var byteArray = new Uint8Array(decodedContent.length)
@@ -138,7 +138,7 @@ sap.ui.define([
             var _url = URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = _url;
-            a.download = fName;
+            a.download = fName + "." + fileext;
             a.dispatchEvent(new MouseEvent('click'));
 
         },
