@@ -194,14 +194,33 @@ sap.ui.define(
                 raiseRequest: function(sEntityPath, oPayload, resolve) {
                     var sValidationErrorMsg = this.fnValidateSalaryIncPayload();
                     if (sValidationErrorMsg === "") {
-                        this.mainModel.create(sEntityPath, oPayload, {
-                            success: resolve.bind(this),
-                            error: function (oError) {
-                                this.getView().setBusy(false);
-                                sap.m.MessageBox.error(this.parseResponseError(oError.responseText));
-                                this.getView().getModel().refresh();
-                            }.bind(this),
-                        });
+                        var newKey = sEntityPath + `(seqNumber=${oPayload.seqNumber}L,startDate=datetime'${oPayload.startDate}',userId='${oPayload.userId}')`;
+                        newKey = newKey.replace(/:/g, "%3A");
+                        var oldKey = sEntityPath;
+                        if(oPayload.__metadata) {
+                            oldKey = sEntityPath + oPayload.__metadata.uri.split(sEntityPath)[1];
+                        }
+                        if(oldKey == newKey) {
+                            // update scenario
+                            this.mainModel.update(oldKey, oPayload, {
+                                success: resolve.bind(this),
+                                error: function (oError) {
+                                    this.getView().setBusy(false);
+                                    sap.m.MessageBox.error(this.parseResponseError(oError.responseText));
+                                    this.getView().getModel().refresh();
+                                }.bind(this),
+                            });
+                        } else {
+                            // create scenario
+                            this.mainModel.create(sEntityPath, oPayload, {
+                                success: resolve.bind(this),
+                                error: function (oError) {
+                                    this.getView().setBusy(false);
+                                    sap.m.MessageBox.error(this.parseResponseError(oError.responseText));
+                                    this.getView().getModel().refresh();
+                                }.bind(this),
+                            });
+                        }
                     } else {
                         this.getView().setBusy(false);
                         sap.m.MessageBox.error(sValidationErrorMsg);
@@ -220,7 +239,6 @@ sap.ui.define(
                         sNewPayload.workingDaysPerWeek = 7;
                     }
 
-                    delete sNewPayload.__metadata;
                     delete sNewPayload.assessmentStatusNav;
                     delete sNewPayload.businessUnitNav;
                     delete sNewPayload.codeOfJobForEldpNav;
@@ -293,8 +311,8 @@ sap.ui.define(
                     // this.getView().getModel("compensationModel").refresh();
 
                     sNewPayload.startDate = this.getFormattedDateValue("idStartDate");
+                    sNewPayload.customDate1 = this.getFormattedDateValue("idSchemeChangeDate");
 
-                    delete sNewPayload.__metadata;
                     delete sNewPayload.customString4;
                     delete sNewPayload.createdBy;
                     delete sNewPayload.createdDateTime;
@@ -1316,6 +1334,8 @@ sap.ui.define(
                     this.getView().setModel(oCompensationModel, "compensationModel");
 
                     var payGroup = oCompensationModel.getProperty("/payGroup");
+                    oCompensationModel.setProperty("/customDate1", new Date());
+                    
                     var company = this.oJobModel.getProperty("/company");
                     if(!company) {
                         company = "3000";
