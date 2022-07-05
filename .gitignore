@@ -4,6 +4,8 @@ package-lock.json
 /.vscode/
 /mta_archives/
 /resources/
+*.mta
+mta-*/
 
 *.zip
 *.env
