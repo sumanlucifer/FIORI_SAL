@@ -22,6 +22,9 @@ sap.ui.define([
                         }
                     }   
                 });
+            },
+            onSelectionChange:function(oEvent){
+              var sSelect
             }
         });
     });

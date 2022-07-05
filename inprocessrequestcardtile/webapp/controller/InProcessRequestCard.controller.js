@@ -122,6 +122,11 @@ sap.ui.define(
                 // oCardData.donut["sap.card"].content.data.json.Unit = "";
                 // oCardData.donut["sap.card"].content.data.json.Trend= "";
                 // oCardData.donut["sap.card"].content.data.json.TrendColor= "Good";
+ 
+                oData.results[0].name = "HR";
+                oData.results[1].name = "Procurement";
+                oData.results[2].name = "PM";
+                oData.results[3].name = "ITSM";
 
                 cardManifests.setData(oCardData);
                 this.getView().setModel(cardManifests, "manifests");
@@ -166,7 +171,7 @@ sap.ui.define(
 
         },
         fnGetSelectedSliceData:function(selectedSlice){
-            if(selectedSlice === "Human Resource"){
+            if(selectedSlice === "HR"){
                 var sStatusFilter = new sap.ui.model.Filter({
                     path: "status",
                     operator: sap.ui.model.FilterOperator.EQ,
@@ -194,7 +199,7 @@ sap.ui.define(
                 })
             }
 
-            else  if(selectedSlice === "IT Service Management"){
+            else  if(selectedSlice === "ITSM"){
                 var sStatusFilter = new sap.ui.model.Filter({
                     path: "status",
                     operator: sap.ui.model.FilterOperator.EQ,
