@@ -11,10 +11,10 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New Salary Increment Request" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="New Job and Compensation Information Request" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Salary Increment Request" class="sapUiSmallMarginBegin">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Job and Compensation Information Request" class="sapUiSmallMarginBegin">
                         <Link id="idSalaryLink" text="{i18n>HumanResource}" press="onCreateCancelPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -286,7 +286,7 @@
 
 
                         <Label text="is Eligible for Car" />
-                        <ComboBox id="idEligibleForCar" selectedKey="{compensationModel>/isEligibleForCar}">
+                        <ComboBox id="idEligibleForCar" enabled="false" selectedKey="{compensationModel>/isEligibleForCar}">
                             <core:Item key="true" text="Yes"/>
                             <core:Item key="false" text="No"/>
                         </ComboBox>
