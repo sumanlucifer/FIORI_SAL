@@ -6,8 +6,8 @@
 	
 		title="{FragmetModel>/titleName}"
 		search=".onSearch"
-		confirm=".onDialogClose"
-		cancel=".onDialogClose"
+		confirm=".onConfirmOpenRequest"
+		cancel=".onDialogClose1"
         items="{path: 'FragmetModel>/'}"
 		>
 		<StandardListItem

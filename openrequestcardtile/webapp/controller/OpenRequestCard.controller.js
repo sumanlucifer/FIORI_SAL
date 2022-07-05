@@ -122,24 +122,35 @@ sap.ui.define([
                     }
                 });
             },
+            onConfirmOpenRequest : function(oEvent)
+            {
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
+                this.triggerCrossApp(obj.subModuleId, obj.ID);
+            },
 
-            // onAction: function () {
-            //     debugger;
-            //     sap.m.MessageBox.show("welcome");
-            //     var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
-            //     var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
-            //         target: {
-            //             semanticObject: "myreqopen",
-            //             action: "manage"
-            //         },
-            //         params: {}
-            //     })) || "";
-            //     oCrossAppNavigator.toExternal({
-            //         target: {
-            //             shellHash: hash
-            //         }
-            //     });
-            // }
+            triggerCrossApp: function (sSubModuleID, sTicketID) {
+                debugger;
+           
+                var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
+                var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                    target: {
+                        semanticObject: "HR_semantic",
+                        action: "display"
+                    },
+                    params: {
+
+                        "submoduleId" : sSubModuleID, 
+                        "ticketId" : sTicketID 
+
+                    }
+                })) || "";
+                oCrossAppNavigator.toExternal({
+                    target: {
+                        shellHash: hash
+                    }
+                });
+            },
 
             onAction: function (oEvent) {
                 var selectedSlice = oEvent.getParameters().manifestParameters.text;
