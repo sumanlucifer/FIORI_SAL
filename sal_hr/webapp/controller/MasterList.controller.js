@@ -72,7 +72,7 @@ sap.ui.define([
             _navToDetail: function (submoduleId, ticketId) {
 
                 if(ticketId) {
-                    this.navToDetailDetail(submoduleId, ticketId);
+                    this.navToDetailDetail(submoduleId, ticketId, "EndColumnFullScreen");
 
                 } else {
                     this.getRouter().navTo("detail", {

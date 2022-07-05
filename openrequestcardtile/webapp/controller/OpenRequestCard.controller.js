@@ -171,6 +171,9 @@ sap.ui.define([
             },
             fnGetSelectedSliceData:function(selectedSlice){
                 if(selectedSlice === "HR"){
+                    this.semanticObject = "HR_semantic";
+                    this.action = "display";
+
                     var sStatusFilter = new sap.ui.model.Filter({
                         path: "status",
                         operator: sap.ui.model.FilterOperator.EQ,
@@ -198,6 +201,9 @@ sap.ui.define([
                     })
                 }
                 else  if(selectedSlice === "ITSM"){
+                    this.semanticObject = "itsm_semantic";
+                    this.action = "display";
+
                     var sStatusFilter = new sap.ui.model.Filter({
                         path: "status",
                         operator: sap.ui.model.FilterOperator.EQ,

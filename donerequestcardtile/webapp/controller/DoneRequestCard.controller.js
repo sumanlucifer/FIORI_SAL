@@ -128,6 +128,37 @@ sap.ui.define([
                 });
             },
 
+
+            onConfirmDoneRequest : function(oEvent)
+            {
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
+                this.triggerCrossApp(obj.subModuleId, obj.ID);
+            },
+
+            triggerCrossApp: function (sSubModuleID, sTicketID) {
+                debugger;
+           
+                var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
+                var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                    target: {
+                        semanticObject:  this.semanticObject,
+                        action:  this.action
+                    },
+                    params: {
+
+                        "submoduleId" : sSubModuleID, 
+                        "ticketId" : sTicketID 
+
+                    }
+                })) || "";
+                oCrossAppNavigator.toExternal({
+                    target: {
+                        shellHash: hash
+                    }
+                });
+            },
+
             onAction: function (oEvent) {
                 var selectedSlice = oEvent.getParameters().manifestParameters.text;
                 var that = this;

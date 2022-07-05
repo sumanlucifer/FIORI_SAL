@@ -383,8 +383,8 @@ sap.ui.define([
             date += "T00:00:00";
             return date;
         },
-        navToDetailDetail: function(parentId, childId) {
-            switch (parentId) {
+        navToDetailDetail: function(parentId, childId, layout) {
+               switch (parentId) {
            
                     
                 // Leave Request Module
@@ -392,7 +392,7 @@ sap.ui.define([
                     this.oRouter.navTo("LeaveRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
                 // Health Insurance Request Module
@@ -400,7 +400,7 @@ sap.ui.define([
                     this.oRouter.navTo("HealthInsuranceRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
 
@@ -409,7 +409,7 @@ sap.ui.define([
                     this.oRouter.navTo("AdditionalPaymentRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
 
@@ -418,7 +418,7 @@ sap.ui.define([
                     this.oRouter.navTo("BusinessRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
 
                     break;
@@ -428,7 +428,7 @@ sap.ui.define([
                     this.oRouter.navTo("BusinessTripRequestDetailPage", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
 
@@ -439,7 +439,7 @@ sap.ui.define([
                     this.oRouter.navTo("AirportPassRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
                 // ID Card Request Module
@@ -447,7 +447,7 @@ sap.ui.define([
                     this.oRouter.navTo("IDCardRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
                 // Letter Request Module
@@ -455,7 +455,7 @@ sap.ui.define([
                     this.oRouter.navTo("LetterRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     });
                     break;
 
@@ -464,7 +464,7 @@ sap.ui.define([
                     this.oRouter.navTo("DisciplinaryRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     });
                     break;
 
@@ -473,7 +473,7 @@ sap.ui.define([
                     this.oRouter.navTo("BankAccChangeDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
 
@@ -482,7 +482,7 @@ sap.ui.define([
                     this.oRouter.navTo("EmployeeTerminateDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
 
@@ -491,7 +491,7 @@ sap.ui.define([
                     this.oRouter.navTo("SalaryIncRequestDetail", {
                         parentMaterial: parentId,
                         childModule: childId,
-                        layout: "ThreeColumnsMidExpanded"
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
             }

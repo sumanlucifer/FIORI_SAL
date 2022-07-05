@@ -157,6 +157,35 @@ sap.ui.define(
         //     .byId("idCardInprocessRequest"));
         //   });
         // },
+        onConfirmPendingRequest : function(oEvent)
+        {
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+            var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
+            this.triggerCrossApp(obj.subModuleId, obj.ID);
+        },
+
+        triggerCrossApp: function (sSubModuleID, sTicketID) {
+            debugger;
+       
+            var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
+            var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                target: {
+                    semanticObject:  this.semanticObject,
+                    action:  this.action
+                },
+                params: {
+
+                    "submoduleId" : sSubModuleID, 
+                    "ticketId" : sTicketID 
+
+                }
+            })) || "";
+            oCrossAppNavigator.toExternal({
+                target: {
+                    shellHash: hash
+                }
+            });
+        },
 
         onAction: function (oEvent) {
             var selectedSlice = oEvent.getParameters().manifestParameters.text;
@@ -172,6 +201,9 @@ sap.ui.define(
         },
         fnGetSelectedSliceData:function(selectedSlice){
             if(selectedSlice === "HR"){
+                this.semanticObject = "HR_semantic";
+                this.action = "display";
+
                 var sStatusFilter = new sap.ui.model.Filter({
                     path: "status",
                     operator: sap.ui.model.FilterOperator.EQ,
@@ -200,6 +232,9 @@ sap.ui.define(
             }
 
             else  if(selectedSlice === "ITSM"){
+                this.semanticObject = "itsm_semantic";
+                this.action = "display";
+
                 var sStatusFilter = new sap.ui.model.Filter({
                     path: "status",
                     operator: sap.ui.model.FilterOperator.EQ,
