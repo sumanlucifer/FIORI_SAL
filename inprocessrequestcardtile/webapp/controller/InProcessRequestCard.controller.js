@@ -10,9 +10,7 @@ sap.ui.define(
       "com.sal.cards.inprocessrequestcardtile.controller.InProcessRequestCard",
       {
         onInit: function () {
-          this.getView()
-            .byId("idCardInprocessRequest")
-            .attachBrowserEvent("click", this.openQuickView.bind(this));
+        
 
           var oCardData = {
             donut: {
@@ -77,17 +75,29 @@ sap.ui.define(
                     {
                       label: "Measure Name",
                       value: "{name}",
+                      tooltip:"{name}"
                     },
                   ],
                   measures: [
                     {
                       label: "Value",
                       value: "{totalPending}",
+                      tootip:"{name}"
                     },
                   ],
-                },
-              },
-            },
+                  "actionableArea": "Chart",
+                  "actions": [
+                      {
+                          "type": "Navigation",
+                          "parameters": {
+                             "text":"{name}"
+                          }
+                          
+                      }
+                  ]
+                }
+              }
+            }
           };
 
           this.getOwnerComponent()
@@ -103,15 +113,20 @@ sap.ui.define(
                 oCardData.donut["sap.card"].content.data.path = "/measures";
 
                 // Set Values for Header
-                // oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].underProcess + oData.results[1].underProcess + oData.results[2].underProcess + oData.results[3].underProcess;
-                oCardData.donut["sap.card"].header.data.json.NumberCount =
-                  oData.results[0].totalPending +
-                  oData.results[1].totalPending +
-                  oData.results[2].totalPending +
-                  oData.results[3].totalPending;
+                oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalPending + oData.results[1].totalPending + oData.results[2].totalPending + oData.results[3].totalPending;
+                // oCardData.donut["sap.card"].header.data.json.NumberCount =
+                //   oData.results[0].totalPending +
+                //   oData.results[1].totalPending +
+                //   oData.results[2].totalPending +
+                //   oData.results[3].totalPending;
                 // oCardData.donut["sap.card"].content.data.json.Unit = "";
                 // oCardData.donut["sap.card"].content.data.json.Trend= "";
                 // oCardData.donut["sap.card"].content.data.json.TrendColor= "Good";
+ 
+                oData.results[0].name = "HR";
+                oData.results[1].name = "Procurement";
+                oData.results[2].name = "PM";
+                oData.results[3].name = "ITSM";
 
                 cardManifests.setData(oCardData);
                 this.getView().setModel(cardManifests, "manifests");
@@ -121,48 +136,97 @@ sap.ui.define(
         },
 
       
-        openQuickView: function (oEvent, oModel) {
-            var oButton = oEvent,
-            that = this,
-            oView = this.getView();
+        // openQuickView: function (oEvent, oModel) {
+        //     var oButton = oEvent,
+        //     that = this,
+        //     oView = this.getView();
 
-          if (!this._pQuickView) {
-            this._pQuickView = Fragment.load({
-              id: oView.getId(),
-              name: "com.sal.cards.inprocessrequestcardtile.Fragments.QuickView",
-              controller: this,
-            }).then(function (oQuickView) {
-              oView.addDependent(oQuickView);
-              return oQuickView;
-            });
-          }
-          this._pQuickView.then(function (oQuickView) {
-            oQuickView.setModel(oModel);
-            oQuickView.openBy( that.getView()
-            .byId("idCardInprocessRequest"));
-          });
-        },
+        //   if (!this._pQuickView) {
+        //     this._pQuickView = Fragment.load({
+        //       id: oView.getId(),
+        //       name: "com.sal.cards.inprocessrequestcardtile.Fragments.QuickView",
+        //       controller: this,
+        //     }).then(function (oQuickView) {
+        //       oView.addDependent(oQuickView);
+        //       return oQuickView;
+        //     });
+        //   }
+        //   this._pQuickView.then(function (oQuickView) {
+        //     oQuickView.setModel(oModel);
+        //     oQuickView.openBy( that.getView()
+        //     .byId("idCardInprocessRequest"));
+        //   });
+        // },
 
-        onAction: function () {
-          var oCrossAppNavigator = sap.ushell.Container.getService(
-            "CrossApplicationNavigation"
-          ); // get a handle on the global XAppNav service
-          var hash =
-            (oCrossAppNavigator &&
-              oCrossAppNavigator.hrefForExternal({
-                target: {
-                  semanticObject: "myreq_inprocess",
-                  action: "manage",
-                },
-                params: {},
-              })) ||
-            "";
-          oCrossAppNavigator.toExternal({
-            target: {
-              shellHash: hash,
-            },
-          });
+        onAction: function (oEvent) {
+            var selectedSlice = oEvent.getParameters().manifestParameters.text;
+            var that = this;
+           
+            if (!this._oLabelAPDialog) {
+				this._oLabelAPDialog = sap.ui.xmlfragment("idLabelAvailPickDialog", "com.sal.cards.inprocessrequestcardtile.Fragments.QuickView", this);
+				that.getView().addDependent(this._oLabelAPDialog);
+			}
+            this.fnGetSelectedSliceData(selectedSlice);
+            
+
         },
+        fnGetSelectedSliceData:function(selectedSlice){
+            if(selectedSlice === "HR"){
+                var sStatusFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "PENDING"
+                });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "1"
+                });
+                var filter = [];
+                filter.push(sStatusFilter,sModuleFilter);
+                this.getOwnerComponent().getModel().read("/Tickets",
+                {
+                    filters: [filter],
+                    success:function(oData){
+                        var oFragmetModel = new JSONModel(oData.results);
+			            this._oLabelAPDialog.setModel(oFragmetModel, "FragmetModel");
+                        this._oLabelAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+			            this._oLabelAPDialog.open();
+                    }.bind(this),
+                    error:function(){
+
+                    }
+                })
+            }
+
+            else  if(selectedSlice === "ITSM"){
+                var sStatusFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "PENDING"
+                });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "4"
+                });
+                var filter = [];
+                filter.push(sStatusFilter,sModuleFilter);
+                this.getOwnerComponent().getModel().read("/Tickets",
+                {
+                    filters: [filter],
+                    success:function(oData){
+                        var oFragmetModel = new JSONModel(oData.results);
+			            this._oLabelAPDialog.setModel(oFragmetModel, "FragmetModel");
+                        this._oLabelAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+			            this._oLabelAPDialog.open();
+                    }.bind(this),
+                    error:function(){
+
+                    }
+                })
+            }
+        }
       }
     );
   }

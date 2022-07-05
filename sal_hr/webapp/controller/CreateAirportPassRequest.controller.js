@@ -79,7 +79,8 @@ sap.ui.define([
                     oCreateAirpoPassModel = new JSONModel(oCreateAirpassObj);
 
                 this.getView().setModel(oCreateAirpoPassModel, "CreateAirpoPassModel");
-
+                
+                
                 this._fnRemoveFileUploaderItems();
             },
 

@@ -1,11 +1,12 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, Fragment) {
         "use strict";
 
         return Controller.extend("com.sal.donerequestcardtile.donerequestcardtile.controller.DoneRequestCard", {
@@ -72,13 +73,25 @@ sap.ui.define([
                                 "dimensions": [
                                     {
                                         "label": "Measure Name",
-                                        "value": "{name}"
+                                        "value": "{name}",
+                                        "tooltip":"{name}"
                                     }
                                 ],
                                 "measures": [
                                     {
                                         "label": "Value",
-                                        "value": "{totalApproved}"
+                                        "value": "{totalApproved}",
+                                        "tooltip":"{name}"
+                                    }
+                                ],
+                                "actionableArea": "Chart",
+                                "actions": [
+                                    {
+                                        "type": "Navigation",
+                                        "parameters": {
+                                           "text":"{name}"
+                                        }
+                                        
                                     }
                                 ]
                             }
@@ -94,12 +107,18 @@ sap.ui.define([
                         var cardManifests = new JSONModel();
                         oCardData.donut["sap.card"].content.data.json.measures = oData.results;
                         oCardData.donut["sap.card"].content.data.path = "/measures";
-
-                        // Set Values for Header
-                        oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalApproved + oData.results[1].totalApproved + oData.results[2].totalApproved + oData.results[3].totalApproved;
+                        
+                         // Set Values for Header
+                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalApproved + oData.results[1].totalApproved + oData.results[2].totalApproved + oData.results[3].totalApproved;
+                        // oCardData.donut["sap.card"].content.data.json.NumberCount =  "0";
                         // oCardData.donut["sap.card"].content.data.json.Unit = "";
                         // oCardData.donut["sap.card"].content.data.json.Trend= "";
                         // oCardData.donut["sap.card"].content.data.json.TrendColor= "Good";
+
+                        oData.results[0].name = "HR";
+                        oData.results[1].name = "Procurement";
+                        oData.results[2].name = "PM";
+                        oData.results[3].name = "ITSM";
 
                         cardManifests.setData(oCardData);
                         this.getView().setModel(cardManifests, "manifests");
@@ -108,22 +127,77 @@ sap.ui.define([
                     }
                 });
             },
-            onAction: function () {
-                sap.m.MessageBox.show("welcome");
-                var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
-                var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
-                    target: {
-                        semanticObject: "myreq_done",
-                        action: "manage"
-                    },
-                    params: {}
-                })) || "";
-                oCrossAppNavigator.toExternal({
-                    target: {
-                        shellHash: hash
-                    }
+
+            onAction: function (oEvent) {
+                var selectedSlice = oEvent.getParameters().manifestParameters.text;
+                var that = this;
+               
+                if (!this._oDoneAPIialog) {
+                    this._oDoneAPIialog = sap.ui.xmlfragment("idDoneDialog", "com.sal.donerequestcardtile.donerequestcardtile.Fragments.QuickView", this);
+                    that.getView().addDependent(this._oDoneAPIialog);
+                }
+                this.fnGetSelectedSliceData(selectedSlice);
+                
+    
+            },
+            fnGetSelectedSliceData:function(selectedSlice){
+                if(selectedSlice === "HR"){
+                    var sStatusFilter = new sap.ui.model.Filter({
+                        path: "status",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: "APPROVED"
+                    });
+                    var sModuleFilter = new sap.ui.model.Filter({
+                        path: "moduleId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: "1"
+                    });
+                    var filter = [];
+                    filter.push(sStatusFilter,sModuleFilter);
+                    this.getOwnerComponent().getModel().read("/Tickets",
+                    {
+                        filters: [filter],
+                        success:function(oData){
+                            var oFragmetModel = new JSONModel(oData.results);
+                            this._oDoneAPIialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oDoneAPIialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+                            this._oDoneAPIialog.open();
+                        }.bind(this),
+                        error:function(){
+    
+                        }
+                    })
+                }
+
+              else  if(selectedSlice === "ITSM"){
+                var sStatusFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "APPROVED"
                 });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "4"
+                });
+                var filter = [];
+                filter.push(sStatusFilter,sModuleFilter);
+                    this.getOwnerComponent().getModel().read("/tickets",
+                    {
+                        filters: [filter],
+                        success:function(oData){
+                            var oFragmetModel = new JSONModel(oData.results);
+                            this._oDoneAPIialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oDoneAPIialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+                            this._oDoneAPIialog.open();
+                        }.bind(this),
+                        error:function(){
+    
+                        }
+                    })
+                }
             }
         });
     });
+
 

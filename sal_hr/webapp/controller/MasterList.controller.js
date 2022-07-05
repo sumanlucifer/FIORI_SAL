@@ -32,14 +32,11 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
+                debugger;
                 this.getView().setBusy(true);
-                var params = new URLSearchParams(decodeURIComponent(window.parent.location.href)),
-                    subModuleId = params.get("submoduleId"),
-                    ticketId = params.get("ticketId");
-                if (subModuleId && ticketId) {
-                    this._navToDetail(subModuleId);
-                }
+
                 var sLayout = oEvent.getParameter("arguments").layout;
+               
                 // var subModuleId = oEvent.getParameter("arguments").parentMaterial;
                 // var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
                 // if(subModuleId){
@@ -49,7 +46,21 @@ sap.ui.define([
 
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
+                
                 this.getView().setBusy(false);
+
+                var params = new URLSearchParams(decodeURIComponent(window.location.href));
+
+                if(!params.has("submoduleId")) {
+                    params = new URLSearchParams(decodeURIComponent(window.parent.location.href))
+                }
+
+                var subModuleId = params.get("submoduleId"),
+                    ticketId = params.get("ticketId");
+                if (subModuleId) {
+                    this._navToDetail(subModuleId, ticketId);
+                    
+                }
             },
             onUpdateMasterListBindingStart: function (oEvent) {
                 var sIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
@@ -58,14 +69,21 @@ sap.ui.define([
                 oEvent.getSource().getBinding("items").mCustomParams.IsUserManager = sIsUserManager;
                 this.getView().setBusy(false);
             },
-            _navToDetail: function (id) {
+            _navToDetail: function (submoduleId, ticketId) {
 
-                this.getRouter().navTo("detail", {
-                    parentMaterial: id,
-                    layout: "TwoColumnsMidExpanded"
-                },
-                    false
-                );
+                if(ticketId) {
+                    this.navToDetailDetail(submoduleId, ticketId);
+
+                } else {
+                    this.getRouter().navTo("detail", {
+                        parentMaterial: id,
+                        layout: "TwoColumnsMidExpanded"
+                    },
+                        false
+                    );
+
+                }
+
 
 
 

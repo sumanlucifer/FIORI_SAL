@@ -141,15 +141,20 @@
                     "list": true,
                     "settings": {
                         "condensedTableLayout": true,
-                        "smartVariantManagement": true,
-                        "enableTableFilterInPageVariant": true,
+                        
+                        "smartVariantManagement": false,
+                        "enableTableFilterInPageVariant": false,
                         "filterSettings": {
                             "dateSettings": {
                                 "useDateRange": true
                             }
                         },
                         "tableSettings": {
-                            "type": "ResponsiveTable"
+                            "type": "ResponsiveTable",
+                            "personalization":{
+                                "useTablePersonalisation":false
+                            }
+                            
                         },
                         "dataLoadSettings": {
                             "loadDataOnAppLaunch": "always"

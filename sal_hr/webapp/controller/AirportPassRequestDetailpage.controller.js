@@ -613,7 +613,7 @@ sap.ui.define([
                         break;
                 }
 
-                this.fnDownloadAttachment(sFileContent,sMimeType,sFileName);
+                this.fnDownloadAttachment(sFileContent,sMimeType,sFileName,sFileext);
 
                 // if (sFileext === "pdf" || sFileext === "png") {
                 //     var decodedPdfContent = atob(sFileContent);

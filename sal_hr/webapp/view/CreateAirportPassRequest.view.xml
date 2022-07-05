@@ -52,14 +52,14 @@
                         <Input id="idMobileNumberInp" value="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_mobileNumber}" enabled= "false"/>
 
                         <Label text="{i18n>Nationality}" required="true" />
-                        <Select id="idNationalityInp" showSecondaryValues="true" selectedKey="{DisplayEditAirpassModel>/cust_toAirportPassItem/cust_nationality}" items="{ path: '/SF_Country', 
+                        <Select id="idNationalityInp" showSecondaryValues="true" selectedKey="{CreateAirpoPassModel>/cust_toAirportPassItem/cust_nationality}" items="{ path: '/SF_Country', 
                             parameters:{select:'code,externalName_defaultValue,currency'},
                             sorter: { path: 'externalName_defaultValue', descending: false },
                             filters : [{
                                 path : 'externalName_defaultValue', operator : 'NE', value1 : null
                             }]
                             }" change="onTimeTyeChange">
-                            <core:ListItem key="{externalName_defaultValue}" text="{externalName_defaultValue}"/>
+                            <core:ListItem key="{code}" text="{externalName_defaultValue}"/>
                         </Select>
 
                         <Label text="{i18n>AirportLocation}" required="true" />

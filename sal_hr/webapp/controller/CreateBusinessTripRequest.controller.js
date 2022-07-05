@@ -19,11 +19,11 @@ sap.ui.define([
                     trainingTravel: false,
                     businessCategory: true,
                     trianingCategory: false,
-                    FlightVisaPanelShow :false,
-                    visaFee :false,
+                    FlightVisaPanelShow: false,
+                    visaFee: false,
                     cityVisible: false,
-                    otherCityVisible:false,
-                    cityOtherCountry : true
+                    otherCityVisible: false,
+                    cityOtherCountry: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -91,7 +91,7 @@ sap.ui.define([
                             "cust_assignStartDate": new Date(),
                             "cust_assignEndDate": new Date(),
                             "cust_travelTime": null,
-                            "cust_destination": "IND",
+                            "cust_destination": "SAU",
                             "cust_city": null,
                             "cust_SAUotherCity": null,
                             "cust_cityAll": null,
@@ -209,50 +209,52 @@ sap.ui.define([
 
 
             onRaiseRequestPress: function () {
+                debugger;
                 var sPath = "/SF_DutyTravelMain",
                     sValidationErrorMsg = this.fnValidateBusinessTripPayload(),
                     oPayload = this.getView().getModel("CreateBusinessTripModel").getData(),
                     dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" });
 
+                debugger;
 
                 if (sValidationErrorMsg === "") {
                     this.getView().setBusy(true);
-                    
-                    
+
+
                     var sStartDate = this.getView().byId("idEffectDatePicker").getDateValue(),
-                    oStartDate = dateFormat.format(new Date(sStartDate));
+                        oStartDate = dateFormat.format(new Date(sStartDate));
                     sStartDate = oStartDate + "T00:00:00";
                     oPayload.effectiveStartDate = sStartDate;
-                    
+
                     var sTravelDate = this.getView().byId("idTravelDate").getDateValue(),
-                    oTravelDate = dateFormat.format(new Date(sTravelDate));
+                        oTravelDate = dateFormat.format(new Date(sTravelDate));
                     sTravelDate = oTravelDate + "T00:00:00";
                     oPayload.cust_toDutyTravelItem[0].cust_assignStartDate = sTravelDate;
 
 
                     var sReturnDate = this.getView().byId("idReturnDate").getDateValue(),
-                    oReturnDate = dateFormat.format(new Date(sReturnDate));
+                        oReturnDate = dateFormat.format(new Date(sReturnDate));
                     sReturnDate = oReturnDate + "T00:00:00";
                     oPayload.cust_toDutyTravelItem[0].cust_assignEndDate = sReturnDate;
-                    
+
 
                     var sBusinessTravelDate = this.getView().byId("idFlightTravelDate").getDateValue(),
-                    oBusinessTravelDate = dateFormat.format(new Date(sBusinessTravelDate));
+                        oBusinessTravelDate = dateFormat.format(new Date(sBusinessTravelDate));
                     sBusinessTravelDate = oBusinessTravelDate + "T00:00:00";
                     oPayload.cust_toDutyTravelItem[0].cust_businessTravelDate = sBusinessTravelDate;
 
                     var sTrainingTravelDate = this.getView().byId("idTrainingFlightTravelDate").getDateValue(),
-                    oTrainingTravelDate = dateFormat.format(new Date(sTrainingTravelDate));
+                        oTrainingTravelDate = dateFormat.format(new Date(sTrainingTravelDate));
                     sTrainingTravelDate = oTrainingTravelDate + "T00:00:00";
                     oPayload.cust_toDutyTravelItem[0].cust_trainingTravelDate = sTrainingTravelDate;
-                    
-                    
-                // Convert selcted time to specific time format as "PT0H31M30S"
-                if (oPayload.cust_toDutyTravelItem[0].cust_travelTime) {
-                    oPayload.cust_toDutyTravelItem[0].cust_travelTime = "PT" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[0] + "H" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[1] + "M00S";
-                }
 
-                   
+
+                    // Convert selcted time to specific time format as "PT0H31M30S"
+                    if (oPayload.cust_toDutyTravelItem[0].cust_travelTime) {
+                        oPayload.cust_toDutyTravelItem[0].cust_travelTime = "PT" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[0] + "H" + oPayload.cust_toDutyTravelItem[0].cust_travelTime.split(":")[1] + "M00S";
+                    }
+
+
 
                     this.mainModel.create(sPath, oPayload, {
                         success: function (oData, oResponse) {
@@ -277,13 +279,13 @@ sap.ui.define([
                     sap.m.MessageBox.error(sValidationErrorMsg);
                 }
             },
-     
-            onHotelBookChange:function(evt){
+
+            onHotelBookChange: function (evt) {
 
                 var sValue = JSON.parse(evt.getSource().getSelectedKey());
                 this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_hotelBooking");
 
-                
+
             },
             fnValidateBusinessTripPayload: function () {
                 this.getView().setBusy(true);
@@ -295,8 +297,9 @@ sap.ui.define([
                     sDestinationCountry = this.getView().byId("idDestCountry"),
                     // oFlightTravelDatePicker = this.byId("idFlightTravelDate"),
                     sTravelJustification = this.byId("idTravelJustification");
-                    //sOtherCity = this.byId("idCityCountry");
+                //sOtherCity = this.byId("idCityCountry");
 
+                debugger;
                 // Validate Business Trip Effective Start Date
                 if (!oEffectStartDatePicker.getValue()) {
                     oEffectStartDatePicker.setValueState("Error");
@@ -321,8 +324,15 @@ sap.ui.define([
                     oReturnDatePicker.setValueStateText("Please select Return Date");
                     sValidationErrorMsg = "Please fill the all required fields.";
                 } else {
-                    oReturnDatePicker.setValueState("None");
+                    if (oReturnDatePicker.getValue() < oTravelDatePicker.getValue()) {
+                        oReturnDatePicker.setValueState("Error");
+                        oReturnDatePicker.setValueStateText("Return Date should be later than Travel Date");
+                        sValidationErrorMsg = "Please select Return Date later than Travel Date";
+                    } else {
+                        oReturnDatePicker.setValueState("None");
+                    }
                 }
+
 
                 // validate Destination Country Field
 
@@ -595,7 +605,7 @@ sap.ui.define([
                     this.byId("UploadVisaCopy").getDefaultFileUploader().setEnabled(false);
                     this.getView().getModel("LocalViewModel").setProperty("/visaFee", false);
                     isVisaAttachmentMandatory = false;
-                    
+
                     this.byId("idPayCompVisa").setValue();
 
                 } else {
@@ -636,13 +646,13 @@ sap.ui.define([
 
             },
             onDestCountryChange: function (oEvent) {
-               
+
                 var sDestCountry = oEvent.getSource().getSelectedKey(),
                     sPayGrade = this.EmpInfoObj.payGrade;
 
-                    var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
+                var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
 
-                    var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
+                var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
 
                 this.getView().getModel().read("/SF_DutyTravel_PerDiem",
                     {
@@ -660,12 +670,10 @@ sap.ui.define([
 
 
             },
-            onCitySaudiChange : function(oEvent)
-
-            {
+            onCitySaudiChange: function (oEvent) {
                 debugger;
                 var sCitySaudi = oEvent.getSource().getSelectedKey();
-            
+
 
                 var sCitySaudiVisibleSet = sCitySaudi === "OTH" ? this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", false);
 
@@ -679,25 +687,25 @@ sap.ui.define([
 
 
             },
-            onTravelDateChange: function(oEvent) {
+            onTravelDateChange: function (oEvent) {
                 var sTravelDate = oEvent.getSource().getValue();
                 this.getView().byId("idReturnDate").setValue(sTravelDate);
             },
-            onReturnDateChange: function(oEvent){
+            onReturnDateChange: function (oEvent) {
                 var sTravelDate = this.getView().byId("idTravelDate").getDateValue();
                 var sReturnDate = oEvent.getSource().getDateValue();
 
-              
+
                 if (new Date(sReturnDate).getTime() < new Date(sTravelDate).getTime()) {
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("Return Date should be later than Travel Date");
-                   
+
                 } else {
                     oEvent.getSource().setValueState();
                     oEvent.getSource().setValueStateText("");
                     this.getView().byId("idTravelDate").setValueState();
                     this.getView().byId("idTravelDate").setValueStateText("");
-                   
+
                 }
             }
 

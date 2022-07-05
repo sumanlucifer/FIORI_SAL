@@ -120,7 +120,6 @@
                                                          sorter : {
                                                              path : 'externalName_defaultValue' 
                                                         } }" change="onDestCountryChange">
-
                         <core:Item key="{code}" text="{externalName_defaultValue}" />
                     </Select>
 
