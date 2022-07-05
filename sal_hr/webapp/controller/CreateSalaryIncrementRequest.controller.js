@@ -135,8 +135,15 @@ sap.ui.define(
                             },
                             error: function (oError) {
                                 that.getView().setBusy(false);
-                                that.oJobModel = null;
-                                that.oCompensationModel = null;
+                                // initialize new model
+                                that.oJobModel = new JSONModel({
+                                    countryOfCompany: "SAU"
+                                });
+
+                                // initialize new model
+                                that.oCompensationModel = new JSONModel({
+                                    customString2: "SAU"
+                                });
                                 // sap.m.MessageBox.error(that.parseResponseError(oError.responseText));
                             },
                         });
@@ -1254,12 +1261,6 @@ sap.ui.define(
                 },
 
                 setJobModel: function(oJobModel) {
-                    if(!oJobModel) {
-                        // initialize new model
-                        oJobModel = new JSONModel({
-                            countryOfCompany: "SAU"
-                        });
-                    }
                     this.getView().setModel(oJobModel, "jobModel");
 
                     var businessUnit = oJobModel.getProperty("/businessUnit");
@@ -1302,11 +1303,6 @@ sap.ui.define(
                         }.bind(this));
                     }
                     
-                    var company = this.oJobModel.getProperty("/company");
-                    if(!company) {
-                        company = "3000";
-                    }
-
                     this.getView().byId("idCompany").setSelectedKey(company);
                     this.onSelectCompany(company, function() {
                         if(payGroup) {
@@ -1317,15 +1313,13 @@ sap.ui.define(
                 },
 
                 setCompensationModel: function(oCompensationModel) {
-                    if(!oCompensationModel) {
-                        // initialize new model
-                        oCompensationModel = new JSONModel({
-                            customString2: "SAU"
-                        });
-                    }
                     this.getView().setModel(oCompensationModel, "compensationModel");
 
                     var payGroup = oCompensationModel.getProperty("/payGroup");
+                    var company = this.oJobModel.getProperty("/company");
+                    if(!company) {
+                        company = "3000";
+                    }
 
                     if(company) {
                         this.getView().byId("idCompany").setSelectedKey(company);
