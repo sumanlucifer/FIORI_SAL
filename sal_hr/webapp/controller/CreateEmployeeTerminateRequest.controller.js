@@ -14,7 +14,6 @@ sap.ui.define([
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateEmployeeTerminateRequest", {
             onInit: function () {
-                debugger;
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("EmployeeTerminateRequest").attachPatternMatched(this._onObjectMatched, this);
                 // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
@@ -84,10 +83,10 @@ sap.ui.define([
 
 
             onRaiseRequestPress: function () {
-                // if (!this._validateMandatoryFields()) {
+                if (!this._validateMandatoryFields()) {
 
-                //     return;
-                // }
+                    return;
+                }
                 var oPayloadObj = this.fnGetEmployeeTerminatePayload(),
                     sEntityPath = "/SF_EmpEmploymentTermination";
 
@@ -157,48 +156,46 @@ sap.ui.define([
             },
 
             _validateMandatoryFields: function () {
-
+                var bValid = true;
                 // validate leave application for other user Field
+                var sValidationErrorMsg = "";
                 var oEmployeeNameINP = this.getView().byId("idEmployeeNameTerrminateRequestINP");
                 if (this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager") === true) {
                     if (!oEmployeeNameINP.getValue()) {
                         oEmployeeNameINP.setValueState("Error");
-                        oEmployeeNameINP.setValueStateText("Please select user for which leave application will be created.");
+                        oEmployeeNameINP.setValueStateText("Please select the employee to terminate.");
                         sValidationErrorMsg = "Please fill the all required fields.";
-                        return;
+                        bValid = false;
                     } else {
                         oEmployeeNameINP.setValueState("None");
                     }
                 }
 
-                var bValid = true;
-                if (this.byId("idValueINP").getValue() === "") {
-                    this.byId("idValueINP").setValueState("Error");
-                    this.byId("idValueINP").setValueStateText(
-                        "Please enter Value"
+                var sEndDate = this.getView().byId("idTerminationDate");
+                // Validate Effective Start Date
+                if (!sEndDate.getValue()) {
+                    sEndDate.setValueState("Error");
+                    sEndDate.setValueStateText(
+                        "Please select termination date."
+                    );
+                    sValidationErrorMsg = "Please fill the all required fields.";
+                    bValid = false;
+                } else {
+                    sEndDate.setValueState("None");
+                }
+
+                if (this.byId("idTerminationReasonINP").getValue() === "") {
+                    this.byId("idTerminationReasonINP").setValueState("Error");
+                    this.byId("idTerminationReasonINP").setValueStateText(
+                        "Please select termination reason."
                     );
                     bValid = false;
                 } else {
-                    this.byId("idValueINP").setValueState("None");
-                    this.byId("idValueINP").setValueStateText(null);
+                    this.byId("idTerminationReasonINP").setValueState("None");
+                    this.byId("idTerminationReasonINP").setValueStateText(null);
                 }
 
                 return bValid;
-            },
-            OnLiveChangeValue: function (oEve) {
-                var sValue = oEve.getSource().getValue();
-                var bValid = true;
-                if (sValue === "") {
-                    this.byId("idValueINP").setValueState("Error");
-                    this.byId("idValueINP").setValueStateText(
-                        "Please enter Value"
-                    );
-                    bValid = false;
-                } else {
-                    this.byId("idValueINP").setValueState("None");
-                    this.byId("idValueINP").setValueStateText(null);
-                }
-
             },
 
             onCreateCancelPress: function () {

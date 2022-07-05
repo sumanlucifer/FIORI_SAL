@@ -44,13 +44,6 @@
 
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label required="true" id="idBValueLBL" text="{i18n>TerminationReason}"/>
-                        <!-- <Input type="Text" liveChange="OnLiveChangeValue" /> -->
-
-                        <!-- <Select id="idTerminationReasonINP" items="{ path: '/SF_FOEventReason'}">
-                        <core:Item key="{externalCode}" text="{name}" />
-                        </Select> -->
-
-
                         <ComboBox id="idTerminationReasonINP" items="{ path: '/SF_FOEventReason',
                                                             filters: [
                                                                         {
@@ -68,7 +61,7 @@
                                                          sorter : {
                                                              path : 'name' 
                                                         } }">
-                            <core:Item key="{externalCode}" text="{name}"/>
+                            <core:Item key="{externalCode}" text="{name} ({externalCode})"/>
                         </ComboBox>
 
                         <Label required="false" id="idCurrencyCodeLBL" text="{i18n>OKTORetire}"/>

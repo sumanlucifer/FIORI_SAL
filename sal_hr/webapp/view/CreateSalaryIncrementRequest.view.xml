@@ -11,10 +11,10 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="New Salary Increment Request" class="sapUiSmallMarginBegin"/>
+                    <Title id="idPageTitle" text="New Job and Compensation Information Request" class="sapUiSmallMarginBegin"/>
                 </f:heading>
                 <f:breadcrumbs>
-                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Salary Increment Request" class="sapUiSmallMarginBegin">
+                    <Breadcrumbs id="idBreadcrumbs" currentLocationText="New Job and Compensation Information Request" class="sapUiSmallMarginBegin">
                         <Link id="idSalaryLink" text="{i18n>HumanResource}" press="onCreateCancelPress"/>
                     </Breadcrumbs>
                 </f:breadcrumbs>
@@ -31,8 +31,8 @@
                         pattern: 'MM/dd/yyyy'
                             }}" minDate="{LocalViewModel>/minDate}"/>
 
-                    <Label visible="{EmpInfoModel>/IsUserManager}" text="PRN" required="true" />
-                    <Input id="idSalIncPRN" visible="{EmpInfoModel>/IsUserManager}" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
+                    <Label text="PRN" required="true" />
+                    <Input id="idSalIncPRN" required="true" width="100%" valueHelpOnly="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest" />
 
                 </fm:SimpleForm>
                 <VBox visible="{= ${LocalViewModel>/checkBoxVisible} ? true : false }">
@@ -173,7 +173,7 @@
                         <Label text="Probationary Period End Date" />
                         <DatePicker id="idProbationaryDate" value="{path:'jobModel>/probationPeriodEndDate', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
                         <Label text="Country" />
                         <ComboBox enabled="false" id="idJobCountry" items="{ path: '/SF_Country', sorter : {
@@ -249,7 +249,7 @@
                         <Label text="Contract End Date" />
                         <DatePicker value="{path:'jobModel>/contractEndDate', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
                                                
 
@@ -266,19 +266,20 @@
                         <Label text="Initial Entry" />
                         <DatePicker  value="{path:'jobModel>/initialEntryDate', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
                         <Label text="Entry into Group" />
                         <DatePicker value="{path:'jobModel>/entryIntoGroup', type:'sap.ui.model.type.Date',  formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
 
                     </fm:SimpleForm>
                 </Panel>
                 <Panel visible="{= ${LocalViewModel>/componesationInfoVisible} ? true : false }">
                     <fm:SimpleForm title="Compensation Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-
+                        <Label text="Company" required="true" />
+                        
                         <Label text="Pay Group" required="true" />
                         <ComboBox id="idCompPayGroup" enabled="{= ${LocalViewModel>/payGroupEnabled} ? true : false }" items="{PayGroupModel>/}" selectedKey="{compensationModel>/payGroup}">
                             <core:Item key="{PayGroupModel>externalCode}" text="{PayGroupModel>name} ({PayGroupModel>externalCode})"/>
@@ -286,7 +287,7 @@
 
 
                         <Label text="is Eligible for Car" />
-                        <ComboBox id="idEligibleForCar" selectedKey="{compensationModel>/isEligibleForCar}">
+                        <ComboBox id="idEligibleForCar" enabled="false" selectedKey="{compensationModel>/isEligibleForCar}">
                             <core:Item key="true" text="Yes"/>
                             <core:Item key="false" text="No"/>
                         </ComboBox>
@@ -315,7 +316,7 @@
                         <Label text="Scheme Change Date" />
                         <DatePicker value="{path:'compensationModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: {
                                                   pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>
+                                                }}" />
 
                         <Label text="Change from Commision to Variable" required="true" />
                         <Input id="idCommision" value="{compensationModel>/customString3}"/>
@@ -381,7 +382,7 @@
                 <ToolbarSpacer id="idToolbarSpacer"/>
                 <Button id="idResetBTN" text="{i18n>Reset}" type="Ghost" press="onResetPress"/>
                 <Button id="idCancelBTN" text="{i18n>Cancel}" type="Ghost" press="onCreateCancelPress"/>
-                <Button id="idRaiseRequestBTN" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
+                <Button id="idRaiseRequestBTN" enabled="{= ${LocalViewModel>/jobInfoVisible} ? true : ${LocalViewModel>/componesationInfoVisible} ? true : false }" text="{i18n>RaiseRequest}" press="onRaiseRequestPress" class="RaiseRequestButton"/>
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>
