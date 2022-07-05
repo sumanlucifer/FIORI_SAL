@@ -471,7 +471,7 @@ sap.ui.define([
                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
                 fName = fName.split(".")[0];
                 debugger;
-                this.fnDownloadAttachment(fContent,mimeType,fName);
+                this.fnDownloadAttachment(fContent,mimeType,fName,fileext);
 
                 // if (fileext === "pdf" || fileext === "png") {
                 //     var decodedPdfContent = atob(fContent);
