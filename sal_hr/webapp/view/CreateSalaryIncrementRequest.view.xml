@@ -278,7 +278,8 @@
                 </Panel>
                 <Panel visible="{= ${LocalViewModel>/componesationInfoVisible} ? true : false }">
                     <fm:SimpleForm title="Compensation Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-
+                        <Label text="Company" required="true" />
+                        
                         <Label text="Pay Group" required="true" />
                         <ComboBox id="idCompPayGroup" enabled="{= ${LocalViewModel>/payGroupEnabled} ? true : false }" items="{PayGroupModel>/}" selectedKey="{compensationModel>/payGroup}">
                             <core:Item key="{PayGroupModel>externalCode}" text="{PayGroupModel>name} ({PayGroupModel>externalCode})"/>

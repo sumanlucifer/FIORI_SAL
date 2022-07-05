@@ -1302,14 +1302,17 @@ sap.ui.define(
                         }.bind(this));
                     }
                     
-                    if(company) {
-                        this.getView().byId("idCompany").setSelectedKey(company);
-                        this.onSelectCompany(company, function() {
-                            if(payGroup) {
-                                this.getView().byId("idPayGroup").setSelectedKey(payGroup);
-                            }
-                        }.bind(this));
+                    var company = this.oJobModel.getProperty("/company");
+                    if(!company) {
+                        company = "3000";
                     }
+
+                    this.getView().byId("idCompany").setSelectedKey(company);
+                    this.onSelectCompany(company, function() {
+                        if(payGroup) {
+                            this.getView().byId("idPayGroup").setSelectedKey(payGroup);
+                        }
+                    }.bind(this));
                     
                 },
 
@@ -1323,8 +1326,14 @@ sap.ui.define(
                     this.getView().setModel(oCompensationModel, "compensationModel");
 
                     var payGroup = oCompensationModel.getProperty("/payGroup");
-                    if(payGroup) {
-                        this.getView().byId("idCompPayGroup").setSelectedKey(payGroup); 
+
+                    if(company) {
+                        this.getView().byId("idCompany").setSelectedKey(company);
+                        this.onSelectCompany(company, function() {
+                            if(payGroup) {
+                                this.getView().byId("idCompPayGroup").setSelectedKey(payGroup); 
+                            }
+                        }.bind(this));
                     }
                 }
 
