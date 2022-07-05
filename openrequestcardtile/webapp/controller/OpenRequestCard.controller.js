@@ -135,8 +135,8 @@ sap.ui.define([
                 var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
                 var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
                     target: {
-                        semanticObject: "HR_semantic",
-                        action: "display"
+                        semanticObject:  this.semanticObject,
+                        action:  this.action
                     },
                     params: {
 
@@ -166,6 +166,8 @@ sap.ui.define([
             },
             fnGetSelectedSliceData:function(selectedSlice){
                 if(selectedSlice === "Human Resource"){
+                    this.semanticObject = "HR_semantic";
+                    this.action = "display";
                     var sStatusFilter = new sap.ui.model.Filter({
                         path: "status",
                         operator: sap.ui.model.FilterOperator.EQ,
@@ -193,6 +195,8 @@ sap.ui.define([
                     })
                 }
                 else  if(selectedSlice === "IT Service Management"){
+                    this.semanticObject = "itsm_semantic";
+                    this.action = "display";
                     var sStatusFilter = new sap.ui.model.Filter({
                         path: "status",
                         operator: sap.ui.model.FilterOperator.EQ,
