@@ -50,7 +50,6 @@ sap.ui.define(
                     oTimezonesModel.setSizeLimit(500);
                     this.getView().setModel(oTimezonesModel, "TimezonesModel");
                     this.initDropdowns();
-                    this.onResetPress();
                 },
                 _onObjectMatched: function (oEvent) {
                     this.sParentID = oEvent.getParameter("arguments").parentMaterial;
@@ -64,7 +63,7 @@ sap.ui.define(
                         .getModel("EmpInfoModel")
                         .getData();
                     
-                        
+                    
                     if(!this.EmpInfoObj.IsUserManager) {
                         // not authorized
                         if(!this.PRNFlag) {
@@ -76,6 +75,8 @@ sap.ui.define(
                             return;
                         }
                     }
+                    
+                    this.onResetPress();
                     this.managerID = this.EmpInfoObj.userId;
                 },
                 onSelectCompensation: function (oEve) {
