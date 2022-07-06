@@ -140,16 +140,17 @@
                     "name": "sap.suite.ui.generic.template.ListReport",
                     "list": true,
                     "settings": {
-                        "condensedTableLayout": true,
-                        "smartVariantManagement": true,
-                        "enableTableFilterInPageVariant": true,
+                        "condensedTableLayout": false,
+                        "smartVariantManagement": false,
+                        "enableTableFilterInPageVariant": false,
                         "filterSettings": {
                             "dateSettings": {
-                                "useDateRange": true
+                                "useDateRange": false
                             }
                         },
                         "tableSettings": {
-                            "type": "ResponsiveTable"
+                            "type": "ResponsiveTable",
+                            "personalization": { "column" : false, "sort" : false, "filter" : false, "group": false} 
                         },
                         "dataLoadSettings": {
                             "loadDataOnAppLaunch": "always"

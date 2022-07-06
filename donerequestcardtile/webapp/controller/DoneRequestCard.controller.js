@@ -197,7 +197,7 @@ sap.ui.define([
                         error:function(){
     
                         }
-                    })
+                    });
                 }
 
               else  if(selectedSlice === "ITSM"){
