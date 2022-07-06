@@ -25,7 +25,7 @@ sap.ui.define([
                 });
             },
             pressBar:function(oEvent){
-
+                debugger;
                 var selectedSlice = oEvent.getSource().getProperty("title").toUpperCase();
                 var that = this;
                
