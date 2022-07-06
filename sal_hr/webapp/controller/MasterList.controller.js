@@ -48,19 +48,29 @@ sap.ui.define([
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
                 
                 this.getView().setBusy(false);
+                var startupParams = this.getOwnerComponent().getComponentData().startupParameters;
+                // get Startup params from Owner Component
+                if (startupParams.submoduleId[0]) {
 
-                var params = new URLSearchParams(decodeURIComponent(window.location.href));
+                    this._navToDetail(startupParams.submoduleId[0], startupParams.ticketId[0]);
 
-                if(!params.has("submoduleId")) {
-                    params = new URLSearchParams(decodeURIComponent(window.parent.location.href))
+                 
                 }
+                else{
+                    var params = new URLSearchParams(decodeURIComponent(window.location.href));
 
-                var subModuleId = params.get("submoduleId"),
-                    ticketId = params.get("ticketId");
-                if (subModuleId) {
-                    this._navToDetail(subModuleId, ticketId);
-                    
+                    if(!params.has("submoduleId")) {
+                        params = new URLSearchParams(decodeURIComponent(window.parent.location.href))
+                    }
+    
+                    var subModuleId = params.get("submoduleId"),
+                        ticketId = params.get("ticketId");
+                    if (subModuleId) {
+                        this._navToDetail(subModuleId, ticketId);
+                        
+                    }
                 }
+                
             },
             onUpdateMasterListBindingStart: function (oEvent) {
                 var sIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
