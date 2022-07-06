@@ -35,19 +35,18 @@ sap.ui.define([
                 
 
 
-                    
-                     var sStatusFilter = new sap.ui.model.Filter({
-                        path: "status",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: selectedSlice
-                    });
-                    var sModuleFilter = new sap.ui.model.Filter({
-                        path: "moduleId",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: "1"
-                    });
-                    var filter = [];
-                    filter.push(sStatusFilter,sModuleFilter);
+                var sStatusFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: selectedSlice
+                });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "4"
+                });
+                var filter = [];
+                filter.push(sStatusFilter,sModuleFilter);
                     this.getOwnerComponent().getModel().read("/Tickets",
                     {
                         filters: [filter],
@@ -60,7 +59,8 @@ sap.ui.define([
                         error:function(){
     
                         }
-                    });
+                    })
+                
             }
         });
     });
