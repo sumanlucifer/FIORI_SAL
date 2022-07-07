@@ -18,7 +18,11 @@
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "2.0"
                 }
-            }
+            },
+            "ds_timezones": {
+				"uri": "model/timezones.json",
+				"type": "JSON"
+			}
         },
         "crossNavigation": {
             "inbounds": {
@@ -92,6 +96,11 @@
                 },
                 "dataSource": "mainService",
                 "preload": true
+            },
+            "timezonesData": {
+                "type": "sap.ui.model.json.JSONModel",
+				"dataSource": "ds_timezones",
+                "preload": true
             }
         },
         "resources": {
@@ -114,7 +123,7 @@
             },
             "routes": [
                 {
-                    "pattern": "",
+                    "pattern": "masterView",
                     "name": "master",
                     "target": [
                         "master"

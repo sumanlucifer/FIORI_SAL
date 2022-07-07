@@ -2,6 +2,7 @@
     xmlns="sap.m"
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:commons="sap.suite.ui.commons">
@@ -10,10 +11,35 @@
             <pages>
                 <Page id="page" title="{i18n>title}" showHeader="false">
                     <VBox>
+                        <HBox class="reportsManagerView">
+                            <Label text="Choose the Report you want to see :" class="sapUiTinyMarginTop sapUiTinyMarginBegin" design="Bold" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }" />
+                            <Select change="onSelectionChange" class="sapUiTinyMarginBegin" visible="{= ${EmpInfoModel>/IsUserManager} === true ? true : false }">
+                                <core:Item key="Myself" text="Myself" />
+                                <core:Item key="MyTeam" text="MyTeam" />
+
+                            </Select>
+                            <!-- <MenuButton text="Myself" class="sapUiTinyMarginBegin">
+			<menu>
+				<Menu itemSelected="onMenuAction">
+					<MenuItem text="Myself" icon="sap-icon://employee" />
+					<MenuItem text="MyTeam" icon="sap-icon://group" />
+					
+				</Menu>
+			</menu>
+		</MenuButton> -->
+                        </HBox>
+
+
+
                         <commons:ChartContainer showFullScreen="true" showZoom="true">
+
                             <commons:content>
+
+
                                 <commons:ChartContainerContent id="idChartContainerContent">
+
                                     <commons:content>
+
                                         <viz:VizFrame id="idTaskVizFrame" height="300px" width="100%" vizType='combination' >
                                             <viz:dataset>
                                                 <viz.data:FlattenedDataset data="{path: 'TicketsSummaryDataModel>/'}">
@@ -22,9 +48,9 @@
                                                     </viz.data:dimensions>
                                                     <viz.data:measures>
                                                         <!-- Column chart Items -->
-                                                        <viz.data:MeasureDefinition group="1" name="Completed" value="{TicketsSummaryDataModel>completed}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Completed" value="{TicketsSummaryDataModel>totalApproved}"/>
                                                         <!-- <viz.data:MeasureDefinition group="1" name="Under Process" value="{TicketsSummaryDataModel>underProcess}"/> -->
-                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TicketsSummaryDataModel>pending}"/>
+                                                        <viz.data:MeasureDefinition group="1" name="Pending" value="{TicketsSummaryDataModel>totalPending}"/>
                                                         <viz.data:MeasureDefinition group="1" name="Cancelled by End User" value="{TicketsSummaryDataModel>cancelledByEndUser}"/>
                                                         <!-- Line chart Items -->
                                                         <viz.data:MeasureDefinition group="2" name="Cancelled by Admin" value="{TicketsSummaryDataModel>cancelledByAdmin}"/>
@@ -83,9 +109,9 @@
                                                 <ColumnListItem vAlign="Middle">
                                                     <cells>
                                                         <Text text="{TicketsSummaryDataModel>name}"/>
-                                                        <Text text="{TicketsSummaryDataModel>completed}"/>
+                                                        <Text text="{TicketsSummaryDataModel>totalApproved}"/>
                                                         <!-- <Text text="{TicketsSummaryDataModel>underProcess}"/> -->
-                                                        <Text text="{TicketsSummaryDataModel>pending}"/>
+                                                        <Text text="{TicketsSummaryDataModel>totalPending}"/>
                                                         <Text text="{TicketsSummaryDataModel>cancelledByEndUser}"/>
                                                         <Text text="{TicketsSummaryDataModel>cancelledByAdmin}"/>
                                                         <!-- <Text text="{TicketsSummaryDataModel>reassigned}"/>

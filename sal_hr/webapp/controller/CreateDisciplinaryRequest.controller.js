@@ -154,64 +154,61 @@ sap.ui.define([
 
             onValueHelpSearch: function (oEvent) {
                 var sValue = oEvent.getParameter("value");
-                if(sValue)
-                {
-                    var oFilter = new Filter(
-                        [
-                            new Filter({
-                                path: "manager/userId",
-                                operator: "EQ",
-                                value1: this.managerID
-                            }),
-
-                            new Filter([
-                                new Filter({
-                                    path: "userId",
-                                    operator: "Contains",
-                                    caseSensitive: false,
-                                    value1: sValue.trim()
-                                }),
-                                new Filter({
-                                    path: "firstName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                }),
-
-                                new Filter({
-                                    path: "middleName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                }),
-                                new Filter({
-                                    path: "lastName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                })
-
-                            ],  false),
-                        ],
-                        true
-                    );
-        
-                   
-                    oEvent.getSource().getBinding("items").filter(oFilter);
+                // sValue =   sValue.replace(/\s+/g, '');
+                if (sValue && sValue.length > 0 && sValue.indexOf(" ") > 0) {
+                  sValue = sValue.trim().split(" ");
+                } else if (sValue && sValue.length > 0) {
+                  sValue = [sValue.trim()];
                 }
-
-                else{
-                    var userId =    this.managerID;
-                    var sUserIDFilter = new sap.ui.model.Filter({
-                        path: "manager/userId",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: userId
-                    });
-                    
-                    oEvent.getSource().getBinding("items").filter([sUserIDFilter]);
+      
+                var onameFilter = [];
+      
+                for (var i = 0; i < sValue.length; i++) {
+                  var keyWord = sValue[i];
+                  onameFilter.push(
+                    new Filter({
+                      path: "userId",
+                      operator: "Contains",
+                      caseSensitive: false,
+                      value1: keyWord.trim(),
+                    })
+                  );
+      
+                  onameFilter.push(
+                    new Filter({
+                      path: "firstName",
+                      operator: "Contains",
+                      value1: keyWord.trim(),
+                      caseSensitive: false,
+                    })
+                  );
+      
+                  onameFilter.push(
+                    new Filter({
+                      path: "lastName",
+                      operator: "Contains",
+                      value1: keyWord.trim(),
+                      caseSensitive: false,
+                    })
+                  );
                 }
-               
-            },
+      
+                var commonFilter = [
+                  new Filter({
+                    path: "manager/userId",
+                    operator: "EQ",
+                    value1: this.managerID,
+                  }),
+                ];
+      
+                if (onameFilter.length > 0) {
+                  commonFilter.push(new Filter(onameFilter, false));
+                }
+      
+                var oFilter = new Filter(commonFilter, true);
+      
+                oEvent.getSource().getBinding("items").filter([oFilter]);
+              },
 
             onValueHelpClose: function (oEvent) {
                 var oSelectedItem = oEvent.getParameter("selectedItem");
@@ -221,6 +218,7 @@ sap.ui.define([
                 }
                 var obj = oSelectedItem.getBindingContext().getObject();
                 this.byId("idPRN").setValue(obj["userId"]);
+                this.prnID = obj["userId"];
     
             },
     
@@ -265,6 +263,7 @@ sap.ui.define([
               
                 this.mainModel.create(sPath, oPayload, {
                     success: function (oData, oResponse) {
+                        this.prnID = null;
                         sap.m.MessageBox.success("Request Submitted Successfully.");
                         this.getView().setBusy(false);
                         this.getView().getModel().refresh();
@@ -276,6 +275,7 @@ sap.ui.define([
                         });
                     }.bind(this),
                     error: function (oError) {
+                        this.prnID = null;
                         sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);  
                         this.getView().getModel().refresh();
                         this.getView().setBusy(false);
@@ -334,8 +334,16 @@ sap.ui.define([
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
             },
             getDisciplinaryCreatePayload:function(){
-                // var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-                var sUserID = this.byId("idPRN").getValue();
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                var sPRNID;
+          
+
+               if (this.prnID) {
+                sPRNID =   this.prnID;
+            } else {
+                sPRNID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+            }
+
                 var sAttachmentFileContent, sAttahmentFileName;
                 var sIncidentStartDate = this.byId("idIncidentStartDate").getDateValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
@@ -358,6 +366,7 @@ sap.ui.define([
                 }else{
                     sAttachmentFileContent = null;
                     sAttahmentFileName = null;
+                    this.isAttachment = false;
                  }
               
                 return{
@@ -368,18 +377,16 @@ sap.ui.define([
                     "cust_Severity": sSeverity,
                     "cust_warningType": sWarningType,
                     "effectiveStartDate": sEffectiveStartDate,
-                    "externalCode": sUserID,
+                    "externalCode": sPRNID,
                     "externalName": null,
                     "attachmentFileContent":sAttachmentFileContent,
                     "attachmentFileName": sAttahmentFileName,
-                    "isAttachmentNew": false,
+                    "isAttachmentNew": this.isAttachment,
                     "attachmentUserId": sUserID,
                     "cust_letterIssued": "Y"
-                     
-                    
+  
                 };
             },
-
          
             onLeaveEndDateChange:function(oEvent){
                 var oneDay = 24 * 60 * 60 * 1000;

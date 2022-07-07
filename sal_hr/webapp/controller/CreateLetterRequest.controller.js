@@ -11,26 +11,22 @@ sap.ui.define([
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.CreateLetterRequest", {
             onInit: function () {
-                debugger;
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("LetterRequest").attachPatternMatched(this._onObjectMatched, this);
-
                 this.mainModel = this.getOwnerComponent().getModel();
-           
-                var oLocalViewModel = new JSONModel({                 
-                    busy: false,               
-                    currentDate: new Date(),                 
-                });
-
-                this.getView().setModel(oLocalViewModel, "LocalViewModel");
-              
             },
 
             _onObjectMatched: function (oEvent) {
-                debugger;
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
+                var oLocalViewModel = new JSONModel({                 
+                    busy: false,               
+                    currentDate: new Date()            
+                });
+                this.byId("idLetterTemplate").setSelectedKey(1);
+
+                this.getView().setModel(oLocalViewModel, "LocalViewModel");
             },
          
             onRaiseRequestPress: function () {
@@ -66,14 +62,17 @@ sap.ui.define([
               var sTemplate = this.byId("idLetterTemplate").getSelectedKey();
               var sDate = this.byId("idLetterEffectDatePicker").getDateValue();
               var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+
+              var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+              sDate = dateFormat.format(new Date(sDate));
+              sDate = sDate + "T00:00:00";
               if(sTemplate === "1"){
                   sTemplate = "Introduction";
               }else {
                 sTemplate = "Salary";
               }
                 return {
-                    
-    
+     
                         "language" : "EN",
                         "country" : "India",
                          "userId" : sUserID,

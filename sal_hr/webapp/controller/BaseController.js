@@ -83,6 +83,7 @@ sap.ui.define([
                     this._bindView(oData);
                 }.bind(this),
                 error: function (oError) {
+                    this.getView().setBusy(false);
                     if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
                         MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
                     else {
@@ -90,6 +91,56 @@ sap.ui.define([
                     }
                 }
             });
+        },
+
+
+        _getSFUser: function (sId) {
+            var idFILTER = new sap.ui.model.Filter({
+                path: "userId",
+                operator: sap.ui.model.FilterOperator.EQ,
+                value1: sId
+            });
+
+            var filter = [];
+
+            filter.push(idFILTER);
+         
+            var oComponentModel = this.getComponentModel();
+            this.getView().setBusy(true);
+            oComponentModel.read("/SF_User('"+sId+"')", {
+                urlParameters: {
+                    "$select": "userId,firstName,lastName,defaultFullName"
+                },
+                // filters: [filter],
+                success: function (oData) {
+                    this.getView().setBusy(false);
+                    this.getOwnerComponent().getModel("EmpInfoModel").setProperty("/EmpFullName", oData.results[0].defaultFullName)
+                }.bind(this),
+                error: function (oError) {
+                    this.getView().setBusy(false);
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                }.bind(this)
+            });
+        },
+
+        fnDownloadAttachment:function(fileContent,mimeType,fName,fileext){
+
+            var decodedContent = atob(fileContent);
+            var byteArray = new Uint8Array(decodedContent.length)
+            for (var i = 0; i < decodedContent.length; i++) {
+                byteArray[i] = decodedContent.charCodeAt(i);
+            }
+            var blob = new Blob([byteArray.buffer], { type: mimeType });
+            var _url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = _url;
+            a.download = fName + "." + fileext;
+            a.dispatchEvent(new MouseEvent('click'));
+
         },
          
         
@@ -306,6 +357,144 @@ sap.ui.define([
                     this.getView().getModel().refresh();
                 }.bind(this)
             });
+        },
+        parseResponseError: function(responseText) {
+            try {
+                if(typeof responseText == 'object') {
+                    responseText = responseText.error.message.value;
+                    return this.parseResponseError(responseText);
+                } else if(typeof responseText == 'string' && responseText.indexOf("{") == 0) {
+                    responseText = JSON.parse(responseText).error.message.value;
+                    return this.parseResponseError(responseText);
+                }
+                return responseText.replace(/\[([^\[\]]*)\]/,"");
+            } catch (err) {
+                console.log(err);
+                return "Unknown error occured, Please try after sometime.";
+            }
+        },
+        getFormattedDateValue:  function(idDate) {
+            if(!idDate) {
+                return null;
+            }
+            var date = this.getView().byId(idDate).getDateValue();
+            var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+            date = dateFormat.format(new Date(date));
+            date += "T00:00:00";
+            return date;
+        },
+        navToDetailDetail: function(parentId, childId, layout) {
+               switch (parentId) {
+           
+                    
+                // Leave Request Module
+                case "1":
+                    this.oRouter.navTo("LeaveRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+                // Health Insurance Request Module
+                case "3":
+                    this.oRouter.navTo("HealthInsuranceRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+
+                // Additional Payment Request Module
+                case "10":
+                    this.oRouter.navTo("AdditionalPaymentRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+
+                // Business Card Module
+                case "5":
+                    this.oRouter.navTo("BusinessRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+
+                    break;
+
+                // Business Trip Request Module
+                case "2":
+                    this.oRouter.navTo("BusinessTripRequestDetailPage", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+
+
+
+                // Airport Travel Pass Request Module
+                case "6":
+                    this.oRouter.navTo("AirportPassRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+                // ID Card Request Module
+                case "7":
+                    this.oRouter.navTo("IDCardRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+                // Letter Request Module
+                case "11":
+                    this.oRouter.navTo("LetterRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    });
+                    break;
+
+                // Disciplinary Request Module
+                case "12":
+                    this.oRouter.navTo("DisciplinaryRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    });
+                    break;
+
+                //  Bank Account Change Request Module 
+                case "13":
+                    this.oRouter.navTo("BankAccChangeDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+
+                //  Employee Terminate Request Module 
+                case "17":
+                    this.oRouter.navTo("EmployeeTerminateDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+
+                      //  Salary Increment Request Module 
+                case "15":
+                    this.oRouter.navTo("SalaryIncRequestDetail", {
+                        parentMaterial: parentId,
+                        childModule: childId,
+                        layout: layout? layout : "ThreeColumnsMidExpanded"
+                    })
+                    break;
+            }
         }
     });
 });

@@ -12,6 +12,7 @@ sap.ui.define([
         return Controller.extend("com.sal.tasksummaryreport.controller.TaskSummaryReport", {
             formatter: formatter,
             onInit: function () {
+                var requestForTeamReports = "false";
                 var oCurrentDate = new Date(),
                     oFromDate = oCurrentDate.getDate() - 7;
 
@@ -28,12 +29,12 @@ sap.ui.define([
                 });
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
 
-                this.fnReadTaskChartData(1);
-                this.fnReadTaskSummaryTableDataFirst(1);
-                this.onModuleChange(1);
+                this.fnReadTaskChartData(1,requestForTeamReports);
+                this.fnReadTaskSummaryTableDataFirst(1,requestForTeamReports);
+                this.onModuleChange(1,requestForTeamReports);
             },
 
-            fnReadTaskChartData: function (iModuleID) {
+            fnReadTaskChartData: function (iModuleID,requestForTeamReports) {
                 var oFromDate = this.getView().getModel("LocalViewModel").getProperty("/FromDate"),
                     oToDate = this.getView().getModel("LocalViewModel").getProperty("/ToDate"),
                     dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
@@ -47,7 +48,7 @@ sap.ui.define([
                 this.getView().getModel().read(sPath, {
                     urlParameters: {
                         "taskSummaryReport": "true",
-                        "IsUserManager": "true",
+                        "IsUserManager": requestForTeamReports,
                         "from": sStartDate,
                         "to": sEndDate
                     },
@@ -62,7 +63,7 @@ sap.ui.define([
                 });
             },
 
-            fnReadTaskSummaryTableData: function (iModuleID) {
+            fnReadTaskSummaryTableData: function (iModuleID,requestForTeamReports) {
                 this.getView().setBusy(true);
 
                 var oFromDate = this.getView().getModel("LocalViewModel").getProperty("/FromDate"),
@@ -98,7 +99,7 @@ sap.ui.define([
                     filters: aFilters,
                     urlParameters: {
                         "taskSummaryReport": "true",
-                        "IsUserManager": "true",
+                        "IsUserManager": requestForTeamReports,
                         "from": sStartDate,
                         "to": sEndDate,
                         "$expand": "module,subModule"
@@ -115,7 +116,7 @@ sap.ui.define([
                 });
             },
 
-            fnReadTaskSummaryTableDataFirst: function (iModuleID) {
+            fnReadTaskSummaryTableDataFirst: function (iModuleID,requestForTeamReports) {
                 var oFromDate = this.getView().getModel("LocalViewModel").getProperty("/FromDate"),
                     oToDate = this.getView().getModel("LocalViewModel").getProperty("/ToDate"),
                     dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
@@ -134,7 +135,7 @@ sap.ui.define([
                     filters: [oModuleIdFilter],
                     urlParameters: {
                         "taskSummaryReport": "true",
-                        "IsUserManager": "true",
+                        "IsUserManager": requestForTeamReports,
                         "from": sStartDate,
                         "to": sEndDate,
                         "$expand": "module,subModule",
@@ -175,9 +176,12 @@ sap.ui.define([
             },
 
             onSegmentBTNSelect: function (oEvent) {
+
                 var oSelectedKey = oEvent.getSource().getProperty("selectedKey"),
                     iModuleID = "",
                     sSegmentTitle = "";
+
+                var requestForTeamReports = this.fnGetRequestForType();    
 
                 switch (oSelectedKey) {
                     case "HR":
@@ -211,9 +215,9 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/SelectedStatus", "");
                 
                 this.getView().byId("idChartContainer").setTitle(sSegmentTitle);
-                this.fnReadTaskChartData(iModuleID);
-                this.fnReadTaskSummaryTableData(iModuleID);
-                this.onModuleChange(iModuleID);
+                this.fnReadTaskChartData(iModuleID,requestForTeamReports);
+                this.fnReadTaskSummaryTableData(iModuleID,requestForTeamReports);
+                this.onModuleChange(iModuleID,requestForTeamReports);
             },
 
             onFilterDateChange: function (oEvent) {
@@ -221,10 +225,12 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/ToDate", oEvent.getSource().getSecondDateValue());
                 this.getView().getModel("LocalViewModel").refresh();
 
+                var requestForTeamReports = this.fnGetRequestForType();    
+
                 var iModuleID = this.getView().getModel("LocalViewModel").getProperty("/SelectedModuleID");
-                this.fnReadTaskChartData(iModuleID);
-                this.fnReadTaskSummaryTableData(iModuleID);
-                this.onModuleChange(iModuleID);
+                this.fnReadTaskChartData(iModuleID,requestForTeamReports);
+                this.fnReadTaskSummaryTableData(iModuleID,requestForTeamReports);
+                this.onModuleChange(iModuleID,requestForTeamReports);
             },
 
             onModuleChange: function (sValue) {
@@ -253,6 +259,24 @@ sap.ui.define([
             onFilterTablePress: function () {
                 var iModuleID = this.getView().getModel("LocalViewModel").getProperty("/SelectedModuleID");
                 this.fnReadTaskSummaryTableData(iModuleID);
+            },
+            fnGetRequestForType:function(){
+                var requestForTeamReports = "";
+                var requestFor = this.getView().byId("idRequestType").getSelectedKey();
+                if(requestFor === "Myself"){
+                    requestForTeamReports = "false";
+                }else {
+                    requestForTeamReports = "true";
+                }
+                return requestForTeamReports;
+            },
+            onSelectionChange:function(){
+                var requestForTeamReports = this.fnGetRequestForType();
+                var iModuleID = this.getView().getModel("LocalViewModel").getProperty("/SelectedModuleID");
+                this.fnReadTaskChartData(iModuleID,requestForTeamReports);
+                this.fnReadTaskSummaryTableData(iModuleID,requestForTeamReports);
+                this.onModuleChange(iModuleID,requestForTeamReports);
+
             }
         });
     });

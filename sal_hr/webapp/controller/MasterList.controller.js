@@ -4,50 +4,86 @@ sap.ui.define([
     "com/sal/salhr/model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    'sap/ui/model/Sorter'
+    'sap/ui/model/Sorter',
+    "com/sal/salhr/utils/const",
 ],
 
-    function (BaseController, Controller, formatter, Filter, FilterOperator, Sorter) {
+    function (BaseController, Controller, formatter, Filter, FilterOperator, Sorter, Const) {
         "use strict";
        
 
         return BaseController.extend("com.sal.salhr.controller.MasterList", {
-           
+            
             formatter: formatter,
             onInit: function () {
+                this.getView().setBusy(true);
                 var oModel = this.getOwnerComponent().getModel("layoutModel");
                 oModel.setProperty("/layout", "OneColumn");
 
                 //Router Object
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("master").attachPatternMatched(this._onObjectMatched, this);
+                var sManagerTile = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager");
+                var subModuleId = new sap.ui.core.routing.HashChanger().getHash().split("/")[2];
+                if(subModuleId){
+                    this.fnGetRoleAccess(sManagerTile, subModuleId);
+                }
+                this.getView().setBusy(false);
             },
 
             _onObjectMatched: function (oEvent) {
+                debugger;
+                this.getView().setBusy(true);
 
-                var params = new URLSearchParams(decodeURIComponent(window.parent.location.href)),
-                    subModuleId = params.get("submoduleId"),
-                    ticketId = params.get("ticketId");
-                if (subModuleId && ticketId) {
-                    this._navToDetail(subModuleId);
-                }
                 var sLayout = oEvent.getParameter("arguments").layout;
+               
+                // var subModuleId = oEvent.getParameter("arguments").parentMaterial;
+                // var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
+                // if(subModuleId){
+                //     this.fnGetRoleAccess(sManagerTile, subModuleId);
+                // }
+                
+
+
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
+                
+                this.getView().setBusy(false);
+
+                var params = new URLSearchParams(decodeURIComponent(window.location.href));
+
+                if(!params.has("submoduleId")) {
+                    params = new URLSearchParams(decodeURIComponent(window.parent.location.href))
+                }
+
+                var subModuleId = params.get("submoduleId"),
+                    ticketId = params.get("ticketId");
+                if (subModuleId) {
+                    this._navToDetail(subModuleId, ticketId);
+                    
+                }
             },
             onUpdateMasterListBindingStart: function (oEvent) {
                 var sIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
             //    sIsUserManager = "true";
                 oEvent.getSource().getBinding("items").sCustomParams = "IsUserManager=" + sIsUserManager;
                 oEvent.getSource().getBinding("items").mCustomParams.IsUserManager = sIsUserManager;
+                this.getView().setBusy(false);
             },
-            _navToDetail: function (id) {
+            _navToDetail: function (submoduleId, ticketId) {
 
-                this.getRouter().navTo("detail", {
-                    parentMaterial: id,
-                    layout: "TwoColumnsMidExpanded"
-                },
-                    false
-                );
+                if(ticketId) {
+                    this.navToDetailDetail(submoduleId, ticketId, "EndColumnFullScreen");
+
+                } else {
+                    this.getRouter().navTo("detail", {
+                        parentMaterial: id,
+                        layout: "TwoColumnsMidExpanded"
+                    },
+                        false
+                    );
+
+                }
+
 
 
 
@@ -66,7 +102,28 @@ sap.ui.define([
                 var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
                 var subModuleId = oItem.getBindingContext().getObject().ID;
                 this.fnGetRoleAccess(sManagerTile, subModuleId, oItem);
+                
             },
+
+
+            // _showObject: function (oItem) {
+            //     var that = this;
+            //     var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
+            //     var subModuleId = oItem.getBindingContext().getObject().ID;
+            //     this.fnGetRoleAccess(sManagerTile, subModuleId);
+
+            //     var sPath = oItem.getBindingContextPath()
+            //     this.getView().getModel("EmpInfoModel").refresh(true);
+            //     this.getRouter().navTo("detail", {
+            //         parentMaterial: oItem.getModel().getProperty(sPath).ID,
+            //         layout: "TwoColumnsMidExpanded"
+            //     },
+            //         false
+            //     );
+    
+                
+            // },  
+
             onSearch: function (oEvent) {
                 var aFilters = [];
                 var sQuery = oEvent.getSource().getValue();
@@ -95,6 +152,7 @@ sap.ui.define([
 
             fnGetRoleAccess: function (sManagerTile, subModuleId, oItem) {
                 this.sManagerTile = sManagerTile;
+                var sURL = "";
                 var oComponentModel = this.getComponentModel();
                 oComponentModel.read("/MasterRolePermission", {
                     urlParameters: {
@@ -113,6 +171,7 @@ sap.ui.define([
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/deleteSelf", oData.results[0].deleteSelf);
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/readSelf", oData.results[0].readSelf);
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateSelf", oData.results[0].updateSelf);
+                            this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/withdrawSelf", oData.results[0].withdrawSelf);
                         } else {
 
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/approveOther", oData.results[0].approveOther);
@@ -122,19 +181,52 @@ sap.ui.define([
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/rejectOther", oData.results[0].rejectOther);
                             this.getOwnerComponent().getModel("RoleInfoModel").setProperty("/updateOther", oData.results[0].updateOther);
                         }
-                        var sPath = oItem.getBindingContextPath()
-                        this.getView().getModel("EmpInfoModel").refresh(true);
-                        this.getRouter().navTo("detail", {
-                            parentMaterial: oItem.getModel().getProperty(sPath).ID,
-                            layout: "TwoColumnsMidExpanded"
-                        },
-                            false
-                        );
+                        if(oItem){
+                            var sPath = oItem.getBindingContextPath();
+                            this.getView().getModel("EmpInfoModel").refresh(true);
+
+                             switch (subModuleId) {
+                                case 8:
+                                    sURL = Const.LINKS.Vacancy;
+                                    this.openSucessFatcors(sURL);
+                                break;
+                                case 18:
+                                    sURL = Const.LINKS.Learning;
+                                    this.openSucessFatcors(sURL);
+                                break;
+                                case 4:
+                                    sURL = Const.LINKS.Loan;
+                                    this.openSucessFatcors(sURL);
+                                break;
+                                case 9:
+                                    sURL = Const.LINKS.Performance;
+                                    this.openSucessFatcors(sURL);
+                                break;
+                                default:
+                                    this.getRouter().navTo("detail", {
+                                        parentMaterial: oItem.getModel().getProperty(sPath).ID,
+                                        layout: "TwoColumnsMidExpanded"
+                                    },
+                                        false
+                                    );
+                                }
+                        } 
+                            
+                        
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));
                     }.bind(this),
                 });
+            },
+
+            openSucessFatcors:function(sUrl){
+                sap.m.MessageToast.show("Redirecting to SuccessFactors");
+                jQuery.sap.delayedCall(500, this, function () {
+                   window.open(sUrl);
+                });
             }
+
+           
         });
     });

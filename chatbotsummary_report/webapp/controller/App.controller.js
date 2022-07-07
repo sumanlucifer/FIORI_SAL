@@ -16,31 +16,42 @@ sap.ui.define(
 
                 oFromDate = new Date(oCurrentDate.setDate(oFromDate));
 
+                // var oLocalViewModel = new JSONModel({
+                //     FromDate: oFromDate,
+                //     ToDate: new Date()
+                // });
+
                 var oLocalViewModel = new JSONModel({
-                    FromDate: oFromDate,
-                    ToDate: new Date()
+                    FromDate: null,
+                    ToDate: null
                 });
+
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
 
                 this.fnGetChatBotData();
             },
 
             fnGetChatBotData: function () {
+                var urlParameters = {
+                    "IsUserManager": "true"
+                };
                 var oFromDate = this.getView().getModel("LocalViewModel").getProperty("/FromDate"),
-                    oToDate = this.getView().getModel("LocalViewModel").getProperty("/ToDate"),
-                    dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
-                    oStartDate = dateFormat.format(new Date(oFromDate)),
-                    oEndDate = dateFormat.format(new Date(oToDate)),
-                    sStartDate = oStartDate + "T00:00:00.000Z",
-                    sEndDate = oEndDate + "T00:00:00.000Z";
+                    oToDate = this.getView().getModel("LocalViewModel").getProperty("/ToDate");
+                    if(oFromDate) {
+                        var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                        oStartDate = dateFormat.format(new Date(oFromDate)),
+                        oEndDate = dateFormat.format(new Date(oToDate)),
+                        sStartDate = oStartDate + "T00:00:00.000Z",
+                        sEndDate = oEndDate + "T23:59:59.000Z";
+
+                        //set from and to date filters.
+                        urlParameters.from = sStartDate;
+                        urlParameters.to = sEndDate;
+                    }
 
                 this.getView().setBusy(true);
                 this.getOwnerComponent().getModel().read("/chatBotUsageSummary", {
-                    urlParameters: {
-                        "IsUserManager": "true",
-                        "from": sStartDate,
-                        "to": sEndDate
-                    },
+                    urlParameters: urlParameters,
                     success: function (oData) {
                         if (oData.chatBotUsageSummary.length > 2) {
                             var oSummaryData = JSON.parse(oData.chatBotUsageSummary);
@@ -59,24 +70,44 @@ sap.ui.define(
 
             fnGetSummaryDataFormatted: function (oSummaryData) {
                 // Format and set Mostly used and Never Used Skills Intents Data
-                oSummaryData.MostUsedSkills = oSummaryData.skills.slice(0, 5);
-                oSummaryData.MostUsedIntents = oSummaryData.intents.slice(0, 10);
-                oSummaryData.NeverUsedSkills = this.fnGetNeverUsedItems(oSummaryData.skills);
-                oSummaryData.NeverUsedIntents = this.fnGetNeverUsedItems(oSummaryData.intents);
+                var summary = Object.assign({}, oSummaryData);
+                summary.MostUsedSkills = oSummaryData.skills.slice(0, 5);
+                summary.MostUsedIntents = oSummaryData.intents.slice(0, 10);
+                summary.NeverUsedSkills = this.fnGetNeverUsedItems(oSummaryData.skills);
+                summary.NeverUsedIntents = this.fnGetNeverUsedItems(oSummaryData.intents);
 
                 // Format and Set values for Overview fields
-                oSummaryData.MessagesPerConversation = (oSummaryData.messagesReceived / oSummaryData.conversations).toFixed(2);
-                oSummaryData.conversations = oSummaryData.conversations > 999 ? ((oSummaryData.conversations / 1000).toFixed(2)) + "k" : oSummaryData.conversations;
-                oSummaryData.participants = oSummaryData.participants > 999 ? ((oSummaryData.participants / 1000).toFixed(2)) + "k" : oSummaryData.participants;
-                oSummaryData.messagesReceived = oSummaryData.messagesReceived > 999 ? ((oSummaryData.messagesReceived / 1000).toFixed(2)) + "k" : oSummaryData.messagesReceived;
+                summary.conversations = oSummaryData.conversations > 999 ? ((oSummaryData.conversations / 1000).toFixed(2)) + "k" : oSummaryData.conversations;
+                summary.participants = oSummaryData.participants > 999 ? ((oSummaryData.participants / 1000).toFixed(2)) + "k" : oSummaryData.participants;
+                summary.messagesReceived = oSummaryData.messagesReceived > 999 ? ((oSummaryData.messagesReceived / 1000).toFixed(2)) + "k" : oSummaryData.messagesReceived;
+                summary.MessagesPerConversation = oSummaryData.messagesPerConversation.toFixed(2);
 
                 // Set overview fields counts and Status indicators
-                oSummaryData.conversationIndicator = -10;
-                oSummaryData.participantsIndicator = "+" + 23;
-                oSummaryData.messagesReceivedIndicator = "+" + 125;
-                oSummaryData.MessagesPerConversationIndicator = -123;
+                summary.conversationIndicator = this.formatDiffData(oSummaryData.conversationsDiff);
+                summary.participantsIndicator = this.formatDiffData(oSummaryData.participantsDiff);
+                summary.messagesReceivedIndicator = this.formatDiffData(oSummaryData.messagesReceivedDiff);
+                summary.MessagesPerConversationIndicator = this.formatDiffData(oSummaryData.messagesPerConversationDiff);
 
-                return oSummaryData;
+                for(var i = 0; i < summary.items.length; i++) {
+                    var item = summary.items[i];
+                    var date = new Date(item.date);
+                    var month = date.getMonth() + 1;
+                    var day = date.getDate();
+                    var year = date.getFullYear();
+                    item.displayDate = `${month}/${day}/${year}`; 
+                }
+                
+                return summary;
+            },
+
+            formatDiffData: function(number) {
+                if(number > 0) {
+                    return "+" + (number % 1 == 0 ? number.toFixed(0) : number.toFixed(2));
+                } else if(number < 0) {
+                    return (number % 1 == 0 ? number.toFixed(0) : number.toFixed(2));
+                } else {
+                    return null;
+                }
             },
 
             fnGetNeverUsedItems: function (aData) {
@@ -101,8 +132,13 @@ sap.ui.define(
                         name: "com.sal.chatbotsummaryreport.view.FiltersDialog",
                         controller: this
                     }).then(function (oPopover) {
+                        var i18nModel = new sap.ui.model.resource.ResourceModel({
+                            bundleUrl : "./i18n/i18n.properties"
+                        });
+                        oPopover.setModel(i18nModel, "i18n"); 
                         return oPopover;
                     });
+                    
                 }
 
                 this.oDateRangeFilterDialog.then(function (oPopover) {
@@ -116,6 +152,16 @@ sap.ui.define(
 
                 this.getView().getModel("LocalViewModel").setProperty("/FromDate", oFromDate);
                 this.getView().getModel("LocalViewModel").setProperty("/ToDate", oToDate);
+                this.getView().getModel("LocalViewModel").refresh();
+
+                this.fnGetChatBotData();
+            },
+
+            handleFiltersResetPress: function (oEvent) {
+                debugger;
+                this.getView().byId("idDateRangeSelector").setValue(null);
+                this.getView().getModel("LocalViewModel").setProperty("/FromDate", null);
+                this.getView().getModel("LocalViewModel").setProperty("/ToDate", null);
                 this.getView().getModel("LocalViewModel").refresh();
 
                 this.fnGetChatBotData();

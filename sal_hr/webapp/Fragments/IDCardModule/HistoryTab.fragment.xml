@@ -15,7 +15,7 @@
                     <Label text="{i18n>Time}" required="false" />
                 </Column>
                 <Column demandPopin="true" minScreenWidth="Tablet">
-                    <Label text="{i18n>Event}" required="false" />
+                    <Label text="{i18n>Summary}" required="false" />
                 </Column>
                 <Column demandPopin="true" minScreenWidth="Tablet">
                     <Label text="{i18n>ActionPerformedby}" required="false" />
@@ -25,20 +25,20 @@
             <items>
                 <ColumnListItem >
                     <cells>
-                        <Text text="{path:'HistoryData>effectiveStartDate',
+                        <Text text="{path:'HistoryData>externalModifiedAt',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
                         <Text text="{
-                                            path: 'HistoryData>createdAt',
+                                            path: 'HistoryData>externalModifiedAt',
                                             type: 'sap.ui.model.type.DateTime',
                                             formatOptions: {
                                                 pattern: 'HH:mm'
                                             }
                                         }" />
                     <Text text="{HistoryData>summary}"/>
-                        <Text text="{HistoryData>modifiedBy}"/>
+                        <Text text="{HistoryData>externalModifiedBy}"/>
                       
                     </cells>
                 </ColumnListItem>

@@ -31,7 +31,7 @@
                     "semanticObject": "slacomliance_report",
                     "action": "display",
                     "title": "SLA Compliance Report",
-                    "subTitle": "",
+                    "subTitle": "Myself",
                     "icon": "sap-icon://commission-check"
                 }
             }

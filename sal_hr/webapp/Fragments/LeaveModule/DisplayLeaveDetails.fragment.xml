@@ -7,7 +7,9 @@
             <Title id="idLeaveDisplayRequestDetailsTTL" text="{i18n>Request Details}" titleStyle="H5" level="H5"/>
 
             <Label text="Leave Application For" visible="{EmpInfoModel>/IsUserManager}"/>
-            <Text id="idLeaveApplicationForDisplay" text="{userId}" visible="{EmpInfoModel>/IsUserManager}"/>
+            <Text id="idLeaveApplicationForDisplay" text="{path:'headerModel>/employeeName', formatter:'.formatter.handleNoData'} ({headerModel>/employeeId})" visible="{EmpInfoModel>/IsUserManager}"/>
+
+        
 
             <Label id="idDisplayLeaveTypeLBL" text="{i18n>Leave Type}" class="sapUiSmallMarginTop"/>
             <Text text="{timeTypeModel>/externalName_defaultValue}"/>
@@ -57,7 +59,7 @@
                     <ObjectAttribute title="Uploaded On" text="{path:'attachmentModel>/lastModifiedDateTime',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
-                                                    pattern: 'MMMM dd, yyyy'
+                                                    pattern: 'MM/dd/yyyy'
                                                 }}" />
                 </upload:attributes>
                 <upload:attributes>

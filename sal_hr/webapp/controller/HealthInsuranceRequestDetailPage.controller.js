@@ -26,6 +26,13 @@ sap.ui.define([
 
             },
 
+            onWithdrawPress: function () {
+                var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
+                if(swfRequestId) {
+                    this.onWithdrawRequest(swfRequestId);
+                }
+            },
+
             _onObjectMatched: function (oEvent) {
 
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;

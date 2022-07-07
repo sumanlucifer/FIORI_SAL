@@ -17,8 +17,7 @@ sap.ui.define([
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
                 this.attachReq = true;
-                this.isAttachment = false
-
+                this.isAttachment = false;
                 this.sReturnDate = new Date();
                 this.sRequesting = 1;
                 this.sReturnDate.setDate(new Date().getDate() + 1);
@@ -175,30 +174,46 @@ sap.ui.define([
 
                    
 
-                    switch (sTimeType) {
-                        case "460":
-                            sQtyHrs = this.getView().byId("TP1").getValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    // switch (sTimeType) {
+                    //     case "460":
+                    //         sQtyHrs = this.getView().byId("TP1").getValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "450":
-                            sQtyHrs = this.getView().byId("TP1").getValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //         break;
+                    //     case "450":
+                    //         sQtyHrs = this.getView().byId("TP1").getValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "480":
-                            sQtyHrs = this.getView().byId("TP1").getValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                        case "440":
-                            sQtyHrs = this.getView().byId("TP1").getValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //         break;
+                    //     case "480":
+                    //         sQtyHrs = this.getView().byId("TP1").getValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //     case "440":
+                    //         sQtyHrs = this.getView().byId("TP1").getValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "HD1":
-                            sQtyHrs = "0.5";
-                            break;
-                        default:
-                            sQtyHrs = "0.0";
+                    //         break;
+                    //     case "HD1":
+                    //         sQtyHrs = "0.5";
+                    //         break;
+                    //     default:
+                    //         sQtyHrs = "0.0";
+                    // }
+
+                    if(sTimeType === "460" || sTimeType === "450" || sTimeType === "480" || sTimeType === "440"){
+                        sQtyHrs = this.getView().byId("TP1").getDOMValue();
+                        if(sQtyHrs){
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                        }else {
+                            sap.m.MessageBox.error("Please enter requesting hours.");
+                            this.bValid = false;
+                            return;
+                        }
+                            
+                    }else if(sTimeType === "HD1"){
+                        sQtyHrs = "0.5";
+                    }else {
+                        sQtyHrs = "0.0";
                     }
 
                     if (this.isAttachment === true) {
@@ -244,24 +259,21 @@ sap.ui.define([
 
             },
             onLeaveEndDateChange: function (oEvent) {
-                var oneDay = 24 * 60 * 60 * 1000;
+               
                 var sStartDate = this.getView().byId("idStartDate").getDateValue();
                 var sEndDate = oEvent.getSource().getDateValue();
 
-                // if (sEndDate <= sStartDate) {
+              
                 if (new Date(sEndDate).getTime() < new Date(sStartDate).getTime()) {
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("End Date should be later than Start Date");
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
+                   
                 } else {
                     oEvent.getSource().setValueState();
                     oEvent.getSource().setValueStateText("");
                     this.getView().byId("idStartDate").setValueState();
                     this.getView().byId("idStartDate").setValueStateText("");
-                    // this.sRequestDay = Math.round(Math.abs((sEndDate - new Date(sStartDate)) / oneDay)) + 1 ;
-                    // this.sRequestDay = this.dateDifference(sStartDate, sEndDate, oEvent);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                    // this.getView().getModel("LocalViewModel").setProperty("/requestDay", this.sRequestDay);
+                   
                 }
             },
             onSelectRecurringAbsc: function (oEvent) {
@@ -373,6 +385,9 @@ sap.ui.define([
                 this.isAttachment = false;
 
             },
+            onFileRenamed: function (oEvent) {
+                this.onFileAdded(oEvent);
+            },
             onTimeTyeChange: function (oEvent) {
                 var sType = this.getView().byId("idTimeType").getSelectedKey();;
                 var that = this;
@@ -483,6 +498,10 @@ sap.ui.define([
                 this.getView().byId("idTimeType").setSelectedKey("700");
                 this.onTimeTyeChange();
                 this.getView().byId("UploadSet").removeAllItems();
+                var oUploadSet = this.getView().byId("UploadSet");
+                oUploadSet.getDefaultFileUploader().setEnabled(true);
+                this.isAttachment = false;
+                this.attachReq = true;
                 this.getView().byId("TP1").setValue("");
                 this.getView().byId("TP1").setValueState("None");
                 this.getView().byId("idStartDate").setValueState("None");
@@ -571,57 +590,61 @@ sap.ui.define([
 
             onValueHelpSearch: function (oEvent) {
                 var sValue = oEvent.getParameter("value");
-                if (sValue) {
-                    var oFilter = new Filter(
-                        [
-                            new Filter({
-                                path: "manager/userId",
-                                operator: "EQ",
-                                value1: this.managerID
-                            }),
-
-                            new Filter([
-                                new Filter({
-                                    path: "userId",
-                                    operator: "Contains",
-                                    caseSensitive: false,
-                                    value1: sValue.trim()
-                                }),
-                                new Filter({
-                                    path: "firstName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                }),
-                                new Filter({
-                                    path: "middleName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                }),
-                                new Filter({
-                                    path: "lastName",
-                                    operator: "Contains",
-                                    value1: sValue.trim(),
-                                    caseSensitive: false
-                                })
-                            ], false),
-                        ],
-                        true
-                    );
-                    oEvent.getSource().getBinding("items").filter(oFilter);
+                // sValue =   sValue.replace(/\s+/g, '');
+                if (sValue && sValue.length > 0 && sValue.indexOf(" ") > 0) {
+                  sValue = sValue.trim().split(" ");
+                } else if (sValue && sValue.length > 0) {
+                  sValue = [sValue.trim()];
                 }
-                else {
-                    var userId = this.managerID;
-                    var sUserIDFilter = new sap.ui.model.Filter({
-                        path: "manager/userId",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: userId
-                    });
-
-                    oEvent.getSource().getBinding("items").filter([sUserIDFilter]);
+      
+                var onameFilter = [];
+      
+                for (var i = 0; i < sValue.length; i++) {
+                  var keyWord = sValue[i];
+                  onameFilter.push(
+                    new Filter({
+                      path: "userId",
+                      operator: "Contains",
+                      caseSensitive: false,
+                      value1: keyWord.trim(),
+                    })
+                  );
+      
+                  onameFilter.push(
+                    new Filter({
+                      path: "firstName",
+                      operator: "Contains",
+                      value1: keyWord.trim(),
+                      caseSensitive: false,
+                    })
+                  );
+      
+                  onameFilter.push(
+                    new Filter({
+                      path: "lastName",
+                      operator: "Contains",
+                      value1: keyWord.trim(),
+                      caseSensitive: false,
+                    })
+                  );
                 }
-            },
+      
+                var commonFilter = [
+                  new Filter({
+                    path: "manager/userId",
+                    operator: "EQ",
+                    value1: this.managerID,
+                  }),
+                ];
+      
+                if (onameFilter.length > 0) {
+                  commonFilter.push(new Filter(onameFilter, false));
+                }
+      
+                var oFilter = new Filter(commonFilter, true);
+      
+                oEvent.getSource().getBinding("items").filter([oFilter]);
+              },
 
             onValueHelpClose: function (oEvent) {
                 var oSelectedItem = oEvent.getParameter("selectedItem");

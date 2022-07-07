@@ -44,6 +44,7 @@ sap.ui.define([
                 this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
+            
                 this.getView().setBusy(true);
                 var oComponentModel = this.getComponentModel(),
                     sKey = null,
@@ -60,28 +61,46 @@ sap.ui.define([
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
               
-                this.getView().bindElement({
-                    path: sKey,
-                    parameters: {
-                        expand: "cust_idReplacementDetails, UserNav",
-                        custom: {
-                            "recordStatus": object.status,
-                            "IsUserManager": bIsUserManager
-                        }
+                // this.getView().bindElement({
+                //     path: sKey,
+                //     parameters: {
+                //         expand: "cust_idReplacementDetails, UserNav",
+                //         custom: {
+                //             "recordStatus": object.status,
+                //             "IsUserManager": bIsUserManager
+                //         }
+                //     },
+                //     events: {
+                //         change: function (oEvent) {
+                //             oEvent.getSource().refresh(false);
+                //             this.getView().setBusy(false);
+                //         }.bind(this),
+                //         dataRequested: function () {
+                //         }.bind(this),
+                //         dataReceived: function (oData) {
+                //             this._fnSetUserName(oData.getParameter("data"));
+                          
+                //             this.getView().setBusy(false);
+                //         }.bind(this)
+                //     }
+                // });
+
+
+                this.getView().getModel().read(`/EmpInfo('${object.externalCode}')`, {
+                    urlParameters: {
+                        "moreInfo": "true"
                     },
-                    events: {
-                        change: function (oEvent) {
-                            oEvent.getSource().refresh(false);
-                            this.getView().setBusy(false);
-                        }.bind(this),
-                        dataRequested: function () {
-                        }.bind(this),
-                        dataReceived: function (oData) {
-                            this._fnSetUserName(oData.getParameter("data"));
-                            this.onCallHistoryData(object.ticketCode);
-                            this.getView().setBusy(false);
-                        }.bind(this)
-                    }
+                    success: function (oData) {
+                        this.onCallHistoryData(object.ticketCode);
+                        this.getView().setBusy(false);
+                        var oIdCardDetailModel = new JSONModel(oData);
+                        this.getView().setModel(oIdCardDetailModel, "cust_idReplacementDetailsModel");
+                        debugger;
+                      
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getView().setBusy(false);
+                    }.bind(this),
                 });
                 this.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
                 this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", true);
@@ -164,6 +183,9 @@ sap.ui.define([
                 });
             },
 
+            onWithdrawPress: function () {
+                this.fnDeleteIDReplacement();
+            },
 
             fnDeleteIDReplacement: function () {
                 this.mainModel = this.getOwnerComponent().getModel();

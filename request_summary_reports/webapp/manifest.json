@@ -47,7 +47,7 @@
                     "semanticObject": "Requests_semantic",
                     "action": "display",
                     "title": "{{flpTitle}}",
-                    "subTitle": "",
+                    "subTitle": "{{flpSubtitle}}",
                     "icon": "sap-icon://manager-insight"
                 }
             }
@@ -136,20 +136,23 @@
         "pages": {
             "ListReport|Tickets": {
                 "entitySet": "Report",
+
                 "component": {
                     "name": "sap.suite.ui.generic.template.ListReport",
                     "list": true,
                     "settings": {
-                        "condensedTableLayout": true,
-                        "smartVariantManagement": true,
-                        "enableTableFilterInPageVariant": true,
+                        "condensedTableLayout": false,
+                        "variantManagement": "Control",
+                        "smartVariantManagement": false,
+                        "enableTableFilterInPageVariant": false,
                         "filterSettings": {
                             "dateSettings": {
-                                "useDateRange": true
+                                "useDateRange": false
                             }
                         },
                         "tableSettings": {
-                            "type": "ResponsiveTable"
+                            "type": "ResponsiveTable",
+                            "personalization": { "column" : false, "sort" : false, "filter" : false, "group": false} 
                         },
                         "dataLoadSettings": {
                             "loadDataOnAppLaunch": "always"

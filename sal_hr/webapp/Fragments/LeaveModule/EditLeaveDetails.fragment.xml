@@ -59,7 +59,7 @@
 
              
          
-            <upload:UploadSet id="idEditUploadSet" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true"  maxFileNameLength="30" maxFileSize="200" mediaTypes="text/plain,application/msword,image/jpeg" 
+            <upload:UploadSet id="idEditUploadSet" class="uploadDetailPage" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true"  maxFileNameLength="30" maxFileSize="200" mediaTypes="text/plain,application/msword,image/jpeg" 
             afterItemRemoved="onFileDeleted"
             afterItemAdded="onFileAdded" 
             fileRenamed="onFileRenamed" 

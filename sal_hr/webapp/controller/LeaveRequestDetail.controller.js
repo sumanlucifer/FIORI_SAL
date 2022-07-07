@@ -30,7 +30,7 @@ sap.ui.define([
 
 
             _onObjectMatched: function (oEvent) {
-                this.getView().setBusy(true);
+               
 
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
@@ -40,14 +40,16 @@ sap.ui.define([
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
+                    this.getView().setBusy(true);
                     this._getTicketData(this.sChildID);
                 }
                 if (sLayout === "EndColumnFullScreen" && this.byId("idFullScreenBTN").getIcon() == "sap-icon://full-screen") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://exit-full-screen");
+                    this.getView().setBusy(true);
                     this._getTicketData(this.sChildID);
                 }
-
+               
                 var sUploadAttachment = this.getView().byId("UploadSet").getVisible();
                 if (!sUploadAttachment) {
                     this.attachReq = false;
@@ -64,6 +66,8 @@ sap.ui.define([
 
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
+
+                var oUploadSet = this.byId("idEditUploadSet");
 
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
@@ -98,16 +102,24 @@ sap.ui.define([
                             case "S110":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                                that.getView().byId("idEditUploadSet").removeAllItems();
+                                
+                                oUploadSet.getDefaultFileUploader().setEnabled(true);
 
                                 break;
                             case "500":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+                                that.getView().byId("idEditUploadSet").removeAllItems();
+
+                                oUploadSet.getDefaultFileUploader().setEnabled(true);
 
                                 break;
                             case "460":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                that.getView().byId("idEditUploadSet").removeAllItems();
+                                oUploadSet.getDefaultFileUploader().setEnabled(true);
                                 break;
 
                             case "450":
@@ -137,15 +149,12 @@ sap.ui.define([
                         else {
                             sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
                         }
-                        this.getView().setBusy(false);
+                        that.getView().setBusy(false);
                     }
                 });
 
                 this.getView().getModel("LocalViewModel").setProperty("/LeaveModule", true);
-                // this.getView().getModel("LocalViewModel").setProperty("/BusineesTripModule", false);
-                // this.getView().getModel("LocalViewModel").setProperty("/HealthModule", false);
-                // this.getView().getModel("LocalViewModel").setProperty("/BankRequestModel", false);
-                // this.getView().getModel("LocalViewModel").setProperty("/IDCardModule", false);
+               
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Leave Request");
 
                 this.getView().getModel("LocalViewModel").refresh();
@@ -352,6 +361,7 @@ sap.ui.define([
                     
                    if(this.isAttachmentRenamed === true){
                     isAttachmentNew = true;
+                    sattachmentFileID = null;
                    }
 
 
@@ -367,32 +377,48 @@ sap.ui.define([
 
 
 
-                    switch (sType) {
-                        case "460":
-                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    // switch (sType) {
+                    //     case "460":
+                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "450":
-                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //         break;
+                    //     case "450":
+                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "480":
-                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                        case "440":
-                            sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //         break;
+                    //     case "480":
+                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                    //     case "440":
+                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
 
-                            break;
-                        case "HD1":
-                            sQtyHrs = "0.5";
-                            break;
-                        default:
-                            sQtyHrs = "0.0";
+                    //         break;
+                    //     case "HD1":
+                    //         sQtyHrs = "0.5";
+                    //         break;
+                    //     default:
+                    //         sQtyHrs = "0.0";
+                    // }
+                    
+
+                    if(sType === "460" || sType === "450" || sType === "480" || sType === "440"){
+                        sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
+                        if(sQtyHrs){
+                            sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
+                        }else {
+                            sap.m.MessageBox.error("Please enter requesting hours.");
+                            this.bValid = false;
+                            return;
+                        }
+                            
+                    }else if(sType === "HD1"){
+                        sQtyHrs = "0.5";
+                    }else {
+                        sQtyHrs = "0.0";
                     }
-
 
 
                     return {
@@ -445,23 +471,25 @@ sap.ui.define([
                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
                 fName = fName.split(".")[0];
                 debugger;
-                if (fileext === "pdf" || fileext === "png") {
-                    var decodedPdfContent = atob(fContent);
-                    var byteArray = new Uint8Array(decodedPdfContent.length)
-                    for (var i = 0; i < decodedPdfContent.length; i++) {
-                        byteArray[i] = decodedPdfContent.charCodeAt(i);
-                    }
-                    var blob = new Blob([byteArray.buffer], { type: mimeType });
-                    var _pdfurl = URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = _pdfurl;
-                    a.download = fName;
-                    a.dispatchEvent(new MouseEvent('click'));
-                }
-                else {
-                    var decodedContent = atob(fContent);
-                    sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
-                }
+                this.fnDownloadAttachment(fContent,mimeType,fName,fileext);
+
+                // if (fileext === "pdf" || fileext === "png") {
+                //     var decodedPdfContent = atob(fContent);
+                //     var byteArray = new Uint8Array(decodedPdfContent.length)
+                //     for (var i = 0; i < decodedPdfContent.length; i++) {
+                //         byteArray[i] = decodedPdfContent.charCodeAt(i);
+                //     }
+                //     var blob = new Blob([byteArray.buffer], { type: mimeType });
+                //     var _pdfurl = URL.createObjectURL(blob);
+                //     var a = document.createElement('a');
+                //     a.href = _pdfurl;
+                //     a.download = fName;
+                //     a.dispatchEvent(new MouseEvent('click'));
+                // }
+                // else {
+                //     var decodedContent = atob(fContent);
+                //     sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
+                // }
             },
 
             onFileDeleted: function (oEvent) {
@@ -513,6 +541,7 @@ sap.ui.define([
             },
             onFileRenamed: function (oEvent) {
                 this.isAttachmentRenamed = true;
+                this.oFileAdded(oEvent);
             },
             fnDeleteLeaveRequest: function () {
                 this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {

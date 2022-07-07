@@ -1,11 +1,12 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, Fragment) {
         "use strict";
 
         return Controller.extend("com.sal.openrequestcardtile.openrequestcardtile.controller.OpenRequestCard", {
@@ -20,7 +21,7 @@ sap.ui.define([
                             "type": "Analytical",
                             "header": {
                                 "type": "Numeric",
-                                "title": "Rejected",
+                                "title": "My Rejected Requests",
                                 "subTitle": "Total requests that are Rejected",
                                 "data": {
                                     "json": {
@@ -39,7 +40,8 @@ sap.ui.define([
                                 "actions": [
                                     {
                                         "type": "Navigation",
-                                        "parameters": {}
+                                        "parameters": {},
+                                        "enabled": false
                                     }
                                 ]
                             },
@@ -71,13 +73,25 @@ sap.ui.define([
                                 "dimensions": [
                                     {
                                         "label": "Measure Name",
-                                        "value": "{name}"
+                                        "value": "{name}",
+                                        "tootip":"{name}"
                                     }
                                 ],
                                 "measures": [
                                     {
                                         "label": "Value",
-                                        "value": "{totalRejected}"
+                                        "value": "{totalRejected}",
+                                        "tootip":"{name}"
+                                    }
+                                ],
+                                "actionableArea": "Chart",
+                                "actions": [
+                                    {
+                                        "type": "Navigation",
+                                        "parameters": {
+                                           "text":"{name}"
+                                        }
+                                        
                                     }
                                 ]
                             }
@@ -86,17 +100,25 @@ sap.ui.define([
                 };
 
                 this.getOwnerComponent().getModel().read("/MasterModules", {
+                    // urlParameters: {
+                    //     "IsUserManager": "true"
+                    // },
                     success: function (oData) {
                         var cardManifests = new JSONModel();
                         oCardData.donut["sap.card"].content.data.json.measures = oData.results;
                         oCardData.donut["sap.card"].content.data.path = "/measures";
                         
                          // Set Values for Header
-                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].pending + oData.results[1].pending + oData.results[2].pending + oData.results[3].pending;
+                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalRejected + oData.results[1].totalRejected + oData.results[2].totalRejected + oData.results[3].totalRejected;
                         // oCardData.donut["sap.card"].content.data.json.NumberCount =  "0";
                         // oCardData.donut["sap.card"].content.data.json.Unit = "";
                         // oCardData.donut["sap.card"].content.data.json.Trend= "";
                         // oCardData.donut["sap.card"].content.data.json.TrendColor= "Good";
+                        oData.results[0].name = "HR";
+                        oData.results[1].name = "Procurement";
+                        oData.results[2].name = "PM";
+                        oData.results[3].name = "ITSM";    
+
 
                         cardManifests.setData(oCardData);
                         this.getView().setModel(cardManifests, "manifests");
@@ -105,22 +127,107 @@ sap.ui.define([
                     }
                 });
             },
+            onConfirmOpenRequest : function(oEvent)
+            {
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
+                this.triggerCrossApp(obj.subModuleId, obj.ID);
+            },
 
-            onAction: function () {
-                sap.m.MessageBox.show("welcome");
+            triggerCrossApp: function (sSubModuleID, sTicketID) {
+                debugger;
+           
                 var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
                 var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
                     target: {
-                        semanticObject: "myreqopen",
-                        action: "manage"
+                        semanticObject:  this.semanticObject,
+                        action:  this.action
                     },
-                    params: {}
+                    params: {
+
+                        "submoduleId" : sSubModuleID, 
+                        "ticketId" : sTicketID 
+
+                    }
                 })) || "";
                 oCrossAppNavigator.toExternal({
                     target: {
                         shellHash: hash
                     }
                 });
+            },
+
+            onAction: function (oEvent) {
+                var selectedSlice = oEvent.getParameters().manifestParameters.text;
+                var that = this;
+               
+                if (!this._oOpenAPDialog) {
+                    this._oOpenAPDialog = sap.ui.xmlfragment("idOpenDialog", "com.sal.openrequestcardtile.openrequestcardtile.Fragments.QuickView", this);
+                    that.getView().addDependent(this._oOpenAPDialog);
+                }
+                this.fnGetSelectedSliceData(selectedSlice);
+                
+    
+            },
+            fnGetSelectedSliceData:function(selectedSlice){
+                if(selectedSlice === "HR"){
+                    this.semanticObject = "HR_semantic";
+                    this.action = "display";
+                    var sStatusFilter = new sap.ui.model.Filter({
+                        path: "status",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: "REJECTED"
+                    });
+                    var sModuleFilter = new sap.ui.model.Filter({
+                        path: "moduleId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: "1"
+                    });
+                    var filter = [];
+                    filter.push(sStatusFilter,sModuleFilter);
+                    this.getOwnerComponent().getModel().read("/Tickets",
+                    {
+                        filters: [filter],
+                        success:function(oData){
+                            var oFragmetModel = new JSONModel(oData.results);
+                            this._oOpenAPDialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oOpenAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+                            this._oOpenAPDialog.open();
+                        }.bind(this),
+                        error:function(){
+    
+                        }
+                    })
+                }
+                else  if(selectedSlice === "ITSM"){
+                    this.semanticObject = "itsm_semantic";
+                    this.action = "display";
+                    var sStatusFilter = new sap.ui.model.Filter({
+                        path: "status",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: "REJECTED"
+                    });
+                    var sModuleFilter = new sap.ui.model.Filter({
+                        path: "moduleId",
+                        operator: sap.ui.model.FilterOperator.EQ,
+                        value1: "4"
+                    });
+                    var filter = [];
+                    filter.push(sStatusFilter,sModuleFilter);
+                    this.getOwnerComponent().getModel().read("/tickets",
+                    {
+                        filters: [filter],
+                        success:function(oData){
+                            var oFragmetModel = new JSONModel(oData.results);
+                            this._oOpenAPDialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oOpenAPDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+                            this._oOpenAPDialog.open();
+                        }.bind(this),
+                        error:function(){
+    
+                        }
+                    })
+                }
             }
         });
     });

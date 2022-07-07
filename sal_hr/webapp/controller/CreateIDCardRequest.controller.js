@@ -13,13 +13,7 @@ sap.ui.define([
                 this.sRequesting = 1;
                 this.sReturnDate.setDate(new Date().getDate() + 1);
 
-                if (this.sReturnDate.getDay() === 5) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-                } else if (this.sReturnDate.getDay() === 6) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-                } else {
-                    this.sRequesting = 1;
-                }
+               
 
                 var oLocalViewModel = new JSONModel({
                     startDate: new Date(),
@@ -79,6 +73,8 @@ sap.ui.define([
                     oeffectiveStartDate = dateFormat.format(new Date(oPayloadObj.effectiveStartDate));
 
                 oeffectiveStartDate = oeffectiveStartDate + "T00:00:00";
+
+                oPayloadObj.effectiveStartDate = oeffectiveStartDate;
 
                 this.getView().setBusy(true);
                 this.mainModel.create(sEntityPath, oPayloadObj, {

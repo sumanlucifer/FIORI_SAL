@@ -28,8 +28,10 @@ sap.ui.define([
                 var sLayout = oEvent.getParameter("arguments").layout;
                 // this.getView().getModel().setProperty("/busy", false);
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
+               
+                
                 this._bindView();
-                // this._filterPCListTable(this.UserEmail);
+                
             },
 
             // This Function is used to set the custom parameter for Tickets table binding according to user type as Manager or not?
@@ -67,6 +69,8 @@ sap.ui.define([
                         }.bind(this)
                     }
                 });
+               
+               
             },
 
             onPressRaiseRequest: function () {
@@ -163,9 +167,11 @@ sap.ui.define([
                
             },
 
-            onPressTicketItem: function (oEvent) {
-                var sStatus = oEvent.getSource().getBindingContext().getObject().status;
-                var sExternalStatus = oEvent.getSource().getBindingContext().getObject().externalStatus;
+        onPressTicketItem: function (oEvent) {
+        var sStatus = oEvent.getSource().getBindingContext().getObject().status;
+     var sExternalStatus = oEvent.getSource().getBindingContext().getObject().externalStatus;
+    //  var sExternalcreatedBy = oEvent.getSource().getBindingContext().getObject().externalCreatedBy;
+        //   this._getSFUser(sExternalcreatedBy);
 
                 if(sStatus==='CANCELLED'){
 
@@ -179,124 +185,7 @@ sap.ui.define([
                     return;
                 }
 
-               
-                    switch (this.sParentID) {
-           
-                    
-                        // Leave Request Module
-                        case "1":
-                            this.oRouter.navTo("LeaveRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-                        // Health Insurance Request Module
-                        case "3":
-                            this.oRouter.navTo("HealthInsuranceRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-    
-                        // Additional Payment Request Module
-                        case "10":
-                            this.oRouter.navTo("AdditionalPaymentRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-    
-                        // Business Card Module
-                        case "5":
-                            this.oRouter.navTo("BusinessRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-    
-                            break;
-    
-                        // Business Trip Request Module
-                        case "2":
-                            this.oRouter.navTo("BusinessTripRequestDetailPage", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-    
-    
-    
-                        // Airport Travel Pass Request Module
-                        case "6":
-                            this.oRouter.navTo("AirportPassRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-                        // ID Card Request Module
-                        case "7":
-                            this.oRouter.navTo("IDCardRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-                        // Letter Request Module
-                        case "11":
-                            this.oRouter.navTo("LetterRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            });
-                            break;
-    
-                        // Disciplinary Request Module
-                        case "12":
-                            this.oRouter.navTo("DisciplinaryRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            });
-                            break;
-    
-                        //  Bank Account Change Request Module 
-                        case "13":
-                            this.oRouter.navTo("BankAccChangeDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-    
-                        //  Employee Terminate Request Module 
-                        case "17":
-                            this.oRouter.navTo("EmployeeTerminateDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-    
-                              //  Salary Increment Request Module 
-                        case "15":
-                            this.oRouter.navTo("SalaryIncRequestDetail", {
-                                parentMaterial: this.sParentID,
-                                childModule: oEvent.getSource().getBindingContext().getObject().ID,
-                                layout: "ThreeColumnsMidExpanded"
-                            })
-                            break;
-                    }
-                
-               
-                    
-           
-
-
+                this.navToDetailDetail(this.sParentID, oEvent.getSource().getBindingContext().getObject().ID);
             },
 
             onSearch: function (oEvent) {
@@ -442,5 +331,9 @@ sap.ui.define([
                     //this.byId("idTicketTable").getBinding("items").filter(oFilterSearch, "Application");
                 }
             }
+
+
+             
+
         });
     });        
