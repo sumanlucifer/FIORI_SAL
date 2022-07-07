@@ -101,7 +101,9 @@ sap.ui.define([
                             // Leave Module
                             case "S110":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+
                                 that.getView().byId("idEditUploadSet").removeAllItems();
                                 
                                 oUploadSet.getDefaultFileUploader().setEnabled(true);
@@ -109,7 +111,9 @@ sap.ui.define([
                                 break;
                             case "500":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
+
                                 that.getView().byId("idEditUploadSet").removeAllItems();
 
                                 oUploadSet.getDefaultFileUploader().setEnabled(true);
@@ -117,29 +121,40 @@ sap.ui.define([
                                 break;
                             case "460":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
+
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+
                                 that.getView().byId("idEditUploadSet").removeAllItems();
+
                                 oUploadSet.getDefaultFileUploader().setEnabled(true);
                                 break;
 
                             case "450":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+                                
                                 break;
                             case "480":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+
                                 break;
                             case "440":
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', true);
+
                                 break;
                             default:
                                 that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
+
                                 that.getView().getModel("LocalViewModel").setProperty('/meetingType', false);
                         }
 
                         that.onCallHistoryData(object.ticketCode);
+
                         that.getView().setBusy(false);
                         
                     },
@@ -188,6 +203,7 @@ sap.ui.define([
 
             onEditPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
+                // this.getView().getModel("attachmentModel").refresh();
             },
 
             onCancelPress: function () {
