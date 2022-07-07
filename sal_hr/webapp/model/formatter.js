@@ -399,6 +399,19 @@ sap.ui.define([], function () {
         // console.log("Months:", months);
         // console.log("Days:", days);
         return `${years} Years ${months} Months ${days} Days`;
+    },
+
+    formatEvent: function (requestEvent) {
+        if(requestEvent == 'CREATED') {
+            return 'Create Request';
+        } else if(requestEvent == 'MODIFIED') {
+            return 'Update Request';
+        } else if(requestEvent == 'DELETED') {
+            return 'Delete Request';
+        } else if(requestEvent == 'CANCELLED') {
+            return 'Cancel Request';
+        }
+        return '';
     }
   };
 });

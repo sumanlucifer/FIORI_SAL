@@ -165,6 +165,9 @@ sap.ui.define([
 
                 this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oResponse) {
                         this.getView().setBusy(false);
                         sap.m.MessageBox.success("Request Submitted successfully.");
@@ -310,6 +313,9 @@ sap.ui.define([
             },
             fnDeleteLeaveRequest: function () {
                 this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
                             this.getView().setBusy(false);
