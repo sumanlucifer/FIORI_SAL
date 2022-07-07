@@ -25,13 +25,13 @@ sap.ui.define([
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("LeaveRequestDetail").attachPatternMatched(this._onObjectMatched, this);
+                debugger;
 
             },
 
 
             _onObjectMatched: function (oEvent) {
                
-
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -191,6 +191,7 @@ sap.ui.define([
             },
 
             onCancelPress: function () {
+                debugger;
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
@@ -493,12 +494,14 @@ sap.ui.define([
             },
 
             onFileDeleted: function (oEvent) {
+                debugger;
                 var oUploadSet = this.byId("idEditUploadSet");
                 oUploadSet.getDefaultFileUploader().setEnabled(true);
                 this.isAttachment = false;
             },
 
             onFileAdded: function (oEvent) {
+                debugger;
                 var that = this;
                 var file = oEvent.getParameter("item");
                 var Filename = file.getFileName(),
@@ -540,6 +543,7 @@ sap.ui.define([
                 this.isAttachmentNew = true;
             },
             onFileRenamed: function (oEvent) {
+                debugger;
                 this.isAttachmentRenamed = true;
                 this.oFileAdded(oEvent);
             },
