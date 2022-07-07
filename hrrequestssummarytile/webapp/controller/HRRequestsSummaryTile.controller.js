@@ -5,7 +5,7 @@ sap.ui.define([
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller,JSONModel) {
+    function (Controller, JSONModel) {
         "use strict";
 
         return Controller.extend("com.sal.summarytiles.hrrequestssummarytile.controller.HRRequestsSummaryTile", {
@@ -14,52 +14,78 @@ sap.ui.define([
             },
 
             _bindView: function () {
-             
+
                 this.getView().bindElement({
                     path: "/MasterModules(1)",
                     parameters: {
                         custom: {
                             "IsUserManager": "flase"
                         }
-                    }   
+                    }
                 });
             },
-            pressBar:function(oEvent){
+            onConfirmHrsRequest: function (oEvent) {
+                debugger;
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
+                this.triggerCrossApp(obj.subModuleId, obj.ID);
+            },
+
+            triggerCrossApp: function (sSubModuleID, sTicketID) {
+                debugger;
+
+                var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
+                var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                    target: {
+                        semanticObject: "HR_semantic",
+                        action: "display"
+                    },
+                    params: {
+
+                        "submoduleId": sSubModuleID,
+                        "ticketId": sTicketID
+
+                    }
+                })) || "";
+                oCrossAppNavigator.toExternal({
+                    target: {
+                        shellHash: hash
+                    }
+                });
+            },
+            pressBar: function (oEvent) {
                 debugger;
                 var selectedSlice = oEvent.getSource().getProperty("title").toUpperCase();
                 var that = this;
-               
-                if (!this._oDoneAPIialog) {
-                    this._oDoneAPIialog = sap.ui.xmlfragment("idDoneDialog", "com.sal.summarytiles.hrrequestssummarytile.Fragments.QuickView", this);
-                    that.getView().addDependent(this._oDoneAPIialog);
+
+                if (!this._oDoneHrDialog) {
+                    this._oDoneHrDialog = sap.ui.xmlfragment("idDoneHrDialog", "com.sal.summarytiles.hrrequestssummarytile.Fragments.QuickView", this);
+                    that.getView().addDependent(this._oDoneHrDialog);
                 }
-                
 
-
-                    
-                     var sStatusFilter = new sap.ui.model.Filter({
-                        path: "status",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: selectedSlice
-                    });
-                    var sModuleFilter = new sap.ui.model.Filter({
-                        path: "moduleId",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: "1"
-                    });
-                    var filter = [];
-                    filter.push(sStatusFilter,sModuleFilter);
-                    this.getOwnerComponent().getModel().read("/Tickets",
+                var sStatusFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: selectedSlice
+                });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "1"
+                });
+                var filter = [];
+                filter.push(sStatusFilter, sModuleFilter);
+                this.getOwnerComponent().getModel().read("/Tickets",
                     {
                         filters: [filter],
-                        success:function(oData){
+                        success: function (oData) {
                             var oFragmetModel = new JSONModel(oData.results);
-                            this._oDoneAPIialog.setModel(oFragmetModel, "FragmetModel");
-                            this._oDoneAPIialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
-                            this._oDoneAPIialog.open();
+                            this._oDoneHrDialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oDoneHrDialog.getModel("FragmetModel").setProperty("/titleName", selectedSlice);
+                            this._oDoneHrDialog.open();
                         }.bind(this),
-                        error:function(){
-    
+                        error: function () {
+
                         }
                     });
             }

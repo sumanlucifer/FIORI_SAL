@@ -20,11 +20,10 @@ sap.ui.define([
                         custom: {
                             "IsUserManager": "false"
                         }
-                    }   
+                    }
                 });
             },
-            onConfirmItsmRequest : function(oEvent)
-            {
+            onConfirmItsmRequest: function (oEvent) {
                 var oSelectedItem = oEvent.getParameter("selectedItem");
                 var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
                 this.triggerCrossApp(obj.subModuleId, obj.ID);
@@ -32,17 +31,17 @@ sap.ui.define([
 
             triggerCrossApp: function (sSubModuleID, sTicketID) {
                 debugger;
-           
+
                 var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
                 var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
                     target: {
-                        semanticObject:  this.semanticObject,
-                        action:  this.action
+                        semanticObject: "itsm_semantic",
+                        action: "display"
                     },
                     params: {
 
-                        "submoduleId" : sSubModuleID, 
-                        "ticketId" : sTicketID 
+                        "submoduleId": sSubModuleID,
+                        "ticketId": sTicketID
 
                     }
                 })) || "";
@@ -52,17 +51,15 @@ sap.ui.define([
                     }
                 });
             },
-            pressBar:function(oEvent){
+            pressBar: function (oEvent) {
                 debugger;
                 var selectedSlice = oEvent.getSource().getProperty("title").toUpperCase();
                 var that = this;
-               
-                if (!this._oITSMDialog) {
-                    this._oITSMDialog = sap.ui.xmlfragment("idITSMDialog", "com.sal.itsrvmgmtrequestssummarytile.Fragments.QuickView", this);
-                    that.getView().addDependent(this._oITSMDialog);
-                }
-                
 
+                if (!this._oItsmDialog) {
+                    this._oItsmDialog = sap.ui.xmlfragment("idItsmDialog", "com.sal.itsrvmgmtrequestssummarytile.Fragments.QuickView", this);
+                    that.getView().addDependent(this._oItsmDialog);
+                }
 
                 var sStatusFilter = new sap.ui.model.Filter({
                     path: "status",
@@ -75,21 +72,21 @@ sap.ui.define([
                     value1: "4"
                 });
                 var filter = [];
-                filter.push(sStatusFilter,sModuleFilter);
-                    this.getOwnerComponent().getModel().read("/Tickets",
+                filter.push(sStatusFilter, sModuleFilter);
+                this.getOwnerComponent().getModel().read("/Tickets",
                     {
                         filters: [filter],
-                        success:function(oData){
+                        success: function (oData) {
                             var oFragmetModel = new JSONModel(oData.results);
-                            this._oITSMDialog.setModel(oFragmetModel, "FragmetModel");
-                            this._oITSMDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
-                            this._oITSMDialog.open();
+                            this._oItsmDialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oItsmDialog.getModel("FragmetModel").setProperty("/titleName", selectedSlice);
+                            this._oItsmDialog.open();
                         }.bind(this),
-                        error:function(){
-    
+                        error: function () {
+
                         }
                     })
-                
+
             }
         });
     });
