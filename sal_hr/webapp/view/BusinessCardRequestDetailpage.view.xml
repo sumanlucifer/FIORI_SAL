@@ -23,7 +23,7 @@
                 <!--Modify and Withdraw not be visible for Manager Tile -->
                <f:actions>
                     <HBox visible="{= ${headerModel>/status} === 'PENDING' ? false : ${headerModel>/status} === 'APPROVED' ? true : ${headerModel>/status} === 'CANCELLED' ? true: ${headerModel>/status} === 'REJECTED' ? true : false }">
-                        <Button text="Modify" type="Emphasized" press="onEditPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}], formatter:'.formatter.fnSetModifyVisibilty'}"/>
+                        <Button text="Modify" type="Emphasized" press="onEditPress" />
                     </HBox>
 
                     <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}, {path: 'headerModel>/externalStatus'}], formatter:'.formatter.fnSetWithdrawtVisibilty'}"/>

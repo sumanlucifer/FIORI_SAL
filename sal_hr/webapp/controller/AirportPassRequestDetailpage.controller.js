@@ -257,6 +257,9 @@ sap.ui.define([
                         externalCode: this.object.externalCode
                     });
                 oComponentModel.remove(sKey, {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oData) {
                         this.getView().setBusy(false);
                         if (oData !== "" || oData !== undefined) {
@@ -293,7 +296,7 @@ sap.ui.define([
 
                     this._fnUpdateAttachmentData();
 
-                    var sTicketID = this.getView().getModel("headerModel").getProperty("/ticketCode"),
+                    var sTicketID = this.getView().getModel("headerModel").getProperty("/ID"),
                         oPayloadObj = this.getView().getModel("DisplayEditAirpassModel").getProperty("/");
                     oPayloadObj.cust_toAirportPassItem.cust_domStationName = oPayloadObj.cust_toAirportPassItem.cust_airportLoc === "Loc05" ? oPayloadObj.cust_toAirportPassItem.cust_domStationName : null;
                     oPayloadObj.cust_toAirportPassItem.cust_acknowledge1 = this.getView().byId("idEditAcknowledgeTextFirstSLT").getSelectedKey() === "true" ? true : false;
@@ -301,7 +304,7 @@ sap.ui.define([
 
                     this.getView().getModel().update(sKey, oPayloadObj, {
                         urlParameters: {
-                            "ticketId": sTicketID
+                            "ticketId": this.sChildID
                         },
                         success: function (oResponse) {
                             this.getView().setBusy(false);
