@@ -6,9 +6,10 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     'sap/ui/model/Sorter',
     "com/sal/salhr/utils/const",
+    "sap/ui/core/routing/History"
 ],
 
-    function (BaseController, Controller, formatter, Filter, FilterOperator, Sorter, Const) {
+    function (BaseController, Controller, formatter, Filter, FilterOperator, Sorter, Const, History) {
         "use strict";
        
 
@@ -31,6 +32,16 @@ sap.ui.define([
                 this.getView().setBusy(false);
             },
 
+            onNavBack: function () {
+                var oHistory = History.getInstance();
+                var sPreviousHash = oHistory.getPreviousHash();
+                if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+            } 
+                else {var oRouter = this.getOwnerComponent().getRouter();
+				oRouter.navTo("overview", {}, true);
+            }
+        },
             _onObjectMatched: function (oEvent) {
                 debugger;
                 this.getView().setBusy(true);
@@ -81,18 +92,19 @@ sap.ui.define([
             },
             _navToDetail: function (submoduleId, ticketId) {
 
-                if(ticketId) {
-                    this.navToDetailDetail(submoduleId, ticketId, "EndColumnFullScreen");
+                // if(ticketId) {
+                //     this.navToDetailDetail(submoduleId, ticketId, "EndColumnFullScreen");
 
-                } else {
+                // } else {
+                    
                     this.getRouter().navTo("detail", {
-                        parentMaterial: id,
+                        parentMaterial: submoduleId,
                         layout: "TwoColumnsMidExpanded"
                     },
                         false
                     );
 
-                }
+                // }
 
 
 
