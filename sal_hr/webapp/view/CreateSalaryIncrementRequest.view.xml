@@ -25,7 +25,7 @@
                 <l:content>  -->
             <VBox>
 
-                <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12" class="style-RemoveTitleHeight">
                     <Label text="When would you like your changes to take effect? " required="true" />
                     <DatePicker id="idStartDate" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
                         pattern: 'MM/dd/yyyy'
@@ -39,7 +39,7 @@
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                         <Label text="Choose what you want to change"/>
                         <CheckBox id="idJobInfo" select="onSelectJobInfo" text="Job Information"></CheckBox>
-                        <CheckBox id="idCompensationInfo" width="210px" select="onSelectCompensation" text="Compensation Information"></CheckBox>
+                        <CheckBox width="20rem" id="idCompensationInfo" select="onSelectCompensation" text="Compensation Information"></CheckBox>
                     </fm:SimpleForm>
                  </VBox>
 

@@ -23,14 +23,42 @@ sap.ui.define([
                     }
                 });
             },
+            onConfirmItsmMgrRequest: function (oEvent) {
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
+                this.triggerCrossApp(obj.subModuleId, obj.ID);
+            },
+
+            triggerCrossApp: function (sSubModuleID, sTicketID) {
+                debugger;
+
+                var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
+                var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                    target: {
+                        semanticObject: "itsm_semantic",
+                        action: "display"
+                    },
+                    params: {
+
+                        "submoduleId": sSubModuleID,
+                        "ticketId": sTicketID
+
+                    }
+                })) || "";
+                oCrossAppNavigator.toExternal({
+                    target: {
+                        shellHash: hash
+                    }
+                });
+            },
             pressBar:function(oEvent){
                 debugger;
                 var selectedSlice = oEvent.getSource().getProperty("title").toUpperCase();
                 var that = this;
                
-                if (!this._oDoneAPIialog) {
-                    this._oDoneAPIialog = sap.ui.xmlfragment("idDoneDialog", "com.sal.itsrvmgmtrequestssummarymanagertile.Fragments.QuickView", this);
-                    that.getView().addDependent(this._oDoneAPIialog);
+                if (!this._oItsmMgrDialog) {
+                    this._oItsmMgrDialog = sap.ui.xmlfragment("idItsmMgrDialog", "com.sal.itsrvmgmtrequestssummarymanagertile.Fragments.QuickView", this);
+                    that.getView().addDependent(this._oItsmMgrDialog);
                 }
                 
 
@@ -52,9 +80,9 @@ sap.ui.define([
                         filters: [filter],
                         success:function(oData){
                             var oFragmetModel = new JSONModel(oData.results);
-                            this._oDoneAPIialog.setModel(oFragmetModel, "FragmetModel");
-                            this._oDoneAPIialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
-                            this._oDoneAPIialog.open();
+                            this._oItsmMgrDialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oItsmMgrDialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
+                            this._oItsmMgrDialog.open();
                         }.bind(this),
                         error:function(){
     

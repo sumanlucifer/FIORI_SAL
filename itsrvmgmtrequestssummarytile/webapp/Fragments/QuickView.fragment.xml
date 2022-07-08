@@ -6,7 +6,7 @@
 	
 		title="{FragmetModel>/titleName}"
 		search=".onSearch"
-		confirm=".onConfirmDoneRequest"
+		confirm=".onConfirmItsmRequest"
 		cancel=".onDialogClose1"
         items="{path: 'FragmetModel>/'}"
 		>

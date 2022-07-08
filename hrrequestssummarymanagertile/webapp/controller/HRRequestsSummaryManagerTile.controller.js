@@ -14,55 +14,81 @@ sap.ui.define([
             },
 
             _bindView: function () {
-               
+
                 this.getView().bindElement({
                     path: "/MasterModules(1)",
                     parameters: {
                         custom: {
                             "IsUserManager": "true"
                         }
-                    }   
+                    }
                 });
             },
-            onSelectionChange:function(oEvent){
-              var sSelect
+            onSelectionChange: function (oEvent) {
+                var sSelect
             },
-            pressBar:function(oEvent){
+            onConfirmHrManagerRequest: function (oEvent) {
+                debugger;
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
+                this.triggerCrossApp(obj.subModuleId, obj.ID);
+            },
+
+            triggerCrossApp: function (sSubModuleID, sTicketID) {
+                debugger;
+
+                var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
+                var hash = (oCrossAppNavigator && oCrossAppNavigator.hrefForExternal({
+                    target: {
+                        semanticObject: "HR_semantic",
+                        action: "display"
+                    },
+                    params: {
+
+                        "submoduleId": sSubModuleID,
+                        "ticketId": sTicketID
+
+                    }
+                })) || "";
+                oCrossAppNavigator.toExternal({
+                    target: {
+                        shellHash: hash
+                    }
+                });
+            },
+            pressBar: function (oEvent) {
                 debugger;
                 var selectedSlice = oEvent.getSource().getProperty("title").toUpperCase();
                 var that = this;
-               
-                if (!this._oDoneAPIialog) {
-                    this._oDoneAPIialog = sap.ui.xmlfragment("idDoneDialog", "com.sal.summarytiles.hrrequestssummarymanagertile.Fragments.QuickView", this);
-                    that.getView().addDependent(this._oDoneAPIialog);
+
+                if (!this._oDoneHrMgrDialog) {
+                    this._oDoneHrMgrDialog = sap.ui.xmlfragment("idDoneHrMgrDialog", "com.sal.summarytiles.hrrequestssummarymanagertile.Fragments.QuickView", this);
+                    that.getView().addDependent(this._oDoneHrMgrDialog);
                 }
-                
 
-
-                    
-                     var sStatusFilter = new sap.ui.model.Filter({
-                        path: "status",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: selectedSlice
-                    });
-                    var sModuleFilter = new sap.ui.model.Filter({
-                        path: "moduleId",
-                        operator: sap.ui.model.FilterOperator.EQ,
-                        value1: "1"
-                    });
-                    var filter = [];
-                    filter.push(sStatusFilter,sModuleFilter);
-                    this.getOwnerComponent().getModel().read("/Tickets",
+                var sStatusFilter = new sap.ui.model.Filter({
+                    path: "status",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: selectedSlice
+                });
+                var sModuleFilter = new sap.ui.model.Filter({
+                    path: "moduleId",
+                    operator: sap.ui.model.FilterOperator.EQ,
+                    value1: "1"
+                });
+                var filter = [];
+                filter.push(sStatusFilter, sModuleFilter);
+                this.getOwnerComponent().getModel().read("/Tickets",
                     {
                         filters: [filter],
-                        success:function(oData){
+                        success: function (oData) {
                             var oFragmetModel = new JSONModel(oData.results);
-                            this._oDoneAPIialog.setModel(oFragmetModel, "FragmetModel");
-                            this._oDoneAPIialog.getModel("FragmetModel").setProperty("/titleName",selectedSlice);
-                            this._oDoneAPIialog.open();
+                            this._oDoneHrMgrDialog.setModel(oFragmetModel, "FragmetModel");
+                            this._oDoneHrMgrDialog.getModel("FragmetModel").setProperty("/titleName", selectedSlice);
+                            this._oDoneHrMgrDialog.open();
                         }.bind(this),
-                        error:function(){
-    
+                        error: function () {
+
                         }
                     });
             }

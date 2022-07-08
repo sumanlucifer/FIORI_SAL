@@ -12,7 +12,7 @@
         <f:title>
             <f:DynamicPageTitle id="idDynamicPageTitle">
                 <f:heading>
-                    <Title id="idPageTitle" text="Salary Increment Request"/>
+                    <Title id="idPageTitle" text="{LocalViewModel>/PageTitle}"/>
                 </f:heading>
                 <f:breadcrumbs>
                     <Breadcrumbs id="idBreadcrumbs" currentLocationText="Request {headerModel>/ticketCode}">
@@ -23,8 +23,8 @@
                     <Label text="{i18n>RequestID} {headerModel>/ticketCode}"/>
                 </f:expandedContent>
 
-                <!--Modify and Withdraw not be visible for Manager Tile -->
-                <f:actions>
+                <!--Modify and Withdraw not be visible for Manager Tile ???? -->
+                <!-- <f:actions>
 
                 <HBox visible="{= ${LocalViewModel>/componesationInfoVisible} ? true : false }" >
                 
@@ -32,7 +32,7 @@
                         <Button text="Modify" type="Emphasized" press="onEditPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}], formatter:'.formatter.fnSetModifyVisibilty'}"/>
                     </HBox>
                    </HBox>
-                </f:actions>
+                </f:actions> -->
 
 
                 <!--Approve and Reject visible for Manager Tile -->
