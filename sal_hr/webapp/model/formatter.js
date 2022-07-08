@@ -282,8 +282,7 @@ sap.ui.define([], function () {
           .getProperty("/createSelf");
         bRaiseRequestVisible = bCreateSelf === true ? true : false;
       }
-       return bRaiseRequestVisible;
-     
+      return bRaiseRequestVisible;
     },
 
     fnSetModifyVisibilty: function (bEditMode, bIsUserManager) {
@@ -306,6 +305,25 @@ sap.ui.define([], function () {
         bModifyVisible = false;
       }
       return bModifyVisible;
+    },
+
+    formatExternalCode: function (
+      subModuleId,
+      employeeId,
+      externalCode,
+      externalCode2
+    ) {
+      if (subModuleId === 1) {
+        return externalCode2;
+      } 
+      else if (subModuleId === 14 || subModuleId === 15) {
+        return employeeId;
+      }
+     
+      
+      else {
+        return externalCode;
+      }
     },
 
     fnSetWithdrawtVisibilty: function (
@@ -387,18 +405,18 @@ sap.ui.define([], function () {
       return promise;
     },
 
-    formatTimeInPosition: function(date) {
-        var diff = Date.now() - new Date(date);
-        var days    = Math.ceil(diff / 86400000),
-            months  = Math.floor(days / 30),
-            years   = Math.floor(days / 365);
-        
-        days %= 30;
-        months %= 12;
-        // console.log("Years:", years);
-        // console.log("Months:", months);
-        // console.log("Days:", days);
-        return `${years} Years ${months} Months ${days} Days`;
-    }
+    formatTimeInPosition: function (date) {
+      var diff = Date.now() - new Date(date);
+      var days = Math.ceil(diff / 86400000),
+        months = Math.floor(days / 30),
+        years = Math.floor(days / 365);
+
+      days %= 30;
+      months %= 12;
+      // console.log("Years:", years);
+      // console.log("Months:", months);
+      // console.log("Days:", days);
+      return `${years} Years ${months} Months ${days} Days`;
+    },
   };
 });
