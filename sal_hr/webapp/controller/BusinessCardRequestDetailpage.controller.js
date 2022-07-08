@@ -179,6 +179,9 @@ sap.ui.define([
 
                     });
                 this.getView().getModel().remove(sKey, {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
                             sap.m.MessageBox.success("Record Deleted successfully.");
@@ -260,6 +263,9 @@ sap.ui.define([
                 oPayloadObj = this.fnGetBusinessCardRequestPayload();
                 this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oResponse) {
                         this.getView().setBusy(false);
 
