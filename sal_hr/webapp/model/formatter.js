@@ -405,18 +405,31 @@ sap.ui.define([], function () {
       return promise;
     },
 
-    formatTimeInPosition: function (date) {
-      var diff = Date.now() - new Date(date);
-      var days = Math.ceil(diff / 86400000),
-        months = Math.floor(days / 30),
-        years = Math.floor(days / 365);
-
-      days %= 30;
-      months %= 12;
-      // console.log("Years:", years);
-      // console.log("Months:", months);
-      // console.log("Days:", days);
-      return `${years} Years ${months} Months ${days} Days`;
+    formatTimeInPosition: function(date) {
+        var diff = Date.now() - new Date(date);
+        var days    = Math.ceil(diff / 86400000),
+            months  = Math.floor(days / 30),
+            years   = Math.floor(days / 365);
+        
+        days %= 30;
+        months %= 12;
+        // console.log("Years:", years);
+        // console.log("Months:", months);
+        // console.log("Days:", days);
+        return `${years} Years ${months} Months ${days} Days`;
     },
+
+    formatEvent: function (requestEvent) {
+        if(requestEvent == 'CREATED') {
+            return 'Create Request';
+        } else if(requestEvent == 'MODIFIED') {
+            return 'Update Request';
+        } else if(requestEvent == 'DELETED') {
+            return 'Delete Request';
+        } else if(requestEvent == 'CANCELLED') {
+            return 'Cancel Request';
+        }
+        return '';
+    }
   };
 });
