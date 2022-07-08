@@ -148,6 +148,9 @@ sap.ui.define([
                         externalCode: this.externalCode
                     });
                 this.getView().getModel().remove(sKey, {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
                             sap.m.MessageBox.success("Record Deleted successfully.");
@@ -295,6 +298,9 @@ sap.ui.define([
                 oPayloadObj = this.fnGetDisciplinaryRequestPayload();
                 this.getView().setBusy(true);
                 this.getView().getModel().update(sEntityPath, oPayloadObj, {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oResponse) {
                         this.getView().setBusy(false);
                         sap.m.MessageBox.success("Request Submitted successfully.");

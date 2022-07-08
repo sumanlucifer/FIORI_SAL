@@ -365,6 +365,9 @@ sap.ui.define([
                         externalCode: this.object.externalCode
                     });
                 oComponentModel.remove(sKey, {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oData) {
                         this.getView().setBusy(false);
                         if (oData !== "" || oData !== undefined) {
@@ -410,6 +413,9 @@ sap.ui.define([
                     }
 
                     this.getView().getModel().update(sKey, oPayloadObj, {
+                        urlParameters: {
+                            ticketId: this.sChildID
+                        },
                         success: function (oResponse) {
                             this.getView().setBusy(false);
                             MessageBox.success("Requested changes updated successfully.");

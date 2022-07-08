@@ -208,6 +208,9 @@ sap.ui.define([
                         effectiveStartDate: sEffectiveStartDate
                     });
                 this.getView().getModel().remove(sPath, {
+                    urlParameters: {
+                        ticketId: this.sChildID
+                    },
                     success: function (oData) {
                         if (oData !== "" || oData !== undefined) {
                             this.getView().setBusy(false);
