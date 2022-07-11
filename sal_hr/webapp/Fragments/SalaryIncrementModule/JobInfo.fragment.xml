@@ -5,9 +5,7 @@
      
           <fm:SimpleForm title="Position Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
           
-           <Label text="Incumbent of Parent Position" required="false" />
-            <Text text="{DisplayJobInfoModel>/incumbent}"/>
-           
+          
             <Label text="Position" />
          <Select editable="false" selectedKey="{DisplayJobInfoModel>/position}" id="idPosition" items="{ path: '/SF_Position'}" >
                 <core:Item key="{externalCode}" text="{externalName_defaultValue}"/>
@@ -37,29 +35,36 @@
             <Select editable="false" selectedKey="{DisplayJobInfoModel>/department}" id="idDepartment" items="{ path: '/SF_Department'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
-
-            <Label text="Location" />
-            <Select editable="false" selectedKey="{DisplayJobInfoModel>/location}" id="idLocation" items="{ path: '/SF_Location'}" >
+            <Label text="Section" />
+              <Select editable="false" selectedKey="{DisplayJobInfoModel>/customString10}" id="idSection" items="{ path: '/SF_Section'}" >
+                <core:Item key="{externalCode}" text="{externalName}"/>
+            </Select>
+            
+              <Label text="Location Group" />
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/customString12}" id="idLocationGroup" items="{ path: '/SF_LocationGroup'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
             
             <Label text="Time Zone" />
-             <Text text="{DisplayJobInfoModel>/timezone}"  />
-
+             <!-- <Text text="{DisplayJobInfoModel>/timezone}"  /> -->
+              <ComboBox id="idDisplayTimezone" enabled="false" items="{TimezonesModel>/}" selectedKey="{DisplayJobInfoModel>/timezone}">
+                            <core:Item key="{TimezonesModel>value}" text="{TimezonesModel>label}"/>
+                        </ComboBox>
+                        
+            <Label text="Location" />
+            <Select editable="false" selectedKey="{DisplayJobInfoModel>/location}" id="idLocation" items="{ path: '/SF_Location'}" >
+                <core:Item key="{externalCode}" text="{name}"/>
+            </Select>
+           
+           
+            
+             
             <Label text="Cost Center" />
              <Select editable="false" selectedKey="{DisplayJobInfoModel>/costCenter}" id="idCostCenter" items="{ path: '/SF_FOCostCenter'}" >
                 <core:Item key="{externalCode}" text="{name}"/>
             </Select>
-            
-              <Label text="Location Group" />
-        <Select editable="false" selectedKey="{DisplayJobInfoModel>/customString12}" id="idLocationGroup" items="{ path: '/SF_LocationGroup'}" >
-                <core:Item key="{externalCode}" text="{name}"/>
-            </Select>
-            
-              <Label text="Section" />
-              <Select editable="false" selectedKey="{DisplayJobInfoModel>/customString10}" id="idSection" items="{ path: '/SF_Section'}" >
-                <core:Item key="{externalCode}" text="{externalName}"/>
-            </Select>
+
+           
          </fm:SimpleForm> 
 
 

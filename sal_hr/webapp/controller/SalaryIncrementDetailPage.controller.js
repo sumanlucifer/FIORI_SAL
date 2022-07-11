@@ -23,11 +23,27 @@ sap.ui.define([
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("SalaryIncRequestDetail").attachPatternMatched(this._onObjectMatched, this);
+                var oTimezonesModel = this.getOwnerComponent().getModel("timezonesData");
+                oTimezonesModel.setSizeLimit(500);
+                this.getView().setModel(oTimezonesModel, "TimezonesModel");
+                this.initDropdowns();
 
             },
 
-            _onObjectMatched: function (oEvent) {
+            initDropdowns: function() {
+                function filter(sTerm, oItem) {
+                    // A case-insensitive 'string contains' filter
+                    return oItem.getText().match(new RegExp(sTerm, "i")) || oItem.getKey().match(new RegExp(sTerm, "i"));
+                }
+;
+              
+                this.getView().byId("idDisplayTimezone").setFilterFunction(filter);
+            
+            },
 
+
+            _onObjectMatched: function (oEvent) {
+                this.initDropdowns();
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
