@@ -49,7 +49,8 @@ sap.ui.define([
                     this.getView().setBusy(true);
                     this._getTicketData(this.sChildID);
                 }
-               
+                
+                this.getView().byId("idEditUploadSet").removeAllItems();
                 var sUploadAttachment = this.getView().byId("UploadSet").getVisible();
                 if (!sUploadAttachment) {
                     this.attachReq = false;
@@ -202,6 +203,16 @@ sap.ui.define([
             },
 
             onEditPress: function () {
+                var oItem = this.byId("idEditUploadSet").getItems()[0];
+                var oModel = this.getView().getModel("attachmentModel").getData();
+                debugger;
+                if(!oItem) {
+                    this.byId("idEditUploadSet").addItem(new sap.m.upload.UploadSetItem(
+                        {
+                            fileName:oModel.fileName,
+                            mediaType:oModel.mimeType
+                        }));
+                }
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
                 // this.getView().getModel("attachmentModel").refresh();
             },
