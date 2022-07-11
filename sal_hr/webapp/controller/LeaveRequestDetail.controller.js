@@ -58,6 +58,7 @@ sap.ui.define([
                 } else {
                     this.attachReq = true;
                     this.isAttachment === true;
+                   
                 }
             },
 

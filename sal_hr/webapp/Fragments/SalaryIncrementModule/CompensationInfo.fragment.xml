@@ -6,10 +6,7 @@
              <fm:SimpleForm title="Compensation Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         
             <Label text="Pay Group" required="false" />
-            <!-- <Select editable="false" id="idCompPayGroup" selectedKey="{DisplayCompInfoModel>payGroup}" items="{ path: '/SF_PayScaleGroup'}" >
-                            <core:Item key="{externalCode}" text="{externalName_defaultValue}"/>
-            </Select> -->
-              <Text text="{DisplayCompInfoModel>/payGroup}" />
+            <Text text="{DisplayCompInfoModel>/payGroup}" />
 
           
             <Label text="is Eligible for Car" />
@@ -27,7 +24,7 @@
                <Label text="Country" required="false" />
                <Text text="{DisplayCompInfoModel>/country}" />
                <Label text="Pay Type" />
-               <Text text="{DisplayCompInfoModel>/payType}"/>
+               <Text text="{DisplayCompInfoModel>/payType}" />
                <Label text="Scheme Change Date" />
               <Text text="{path:'DisplayCompInfoModel>/customDate1', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'

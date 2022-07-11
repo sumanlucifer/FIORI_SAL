@@ -175,7 +175,7 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="subModuleName"/>
-                            <PropertyValue Property="Label" String="{@i18n>Portel/Intent}"/>
+                            <PropertyValue Property="Label" String="{@i18n>Portal/Intent}"/>
                             <Annotation Term="com.sap.vocabularies.HTML5.v1.CssDefaults">
                                 <Record Type="HTML5.CssDefaultsType">
                                     <PropertyValue Property="width" String="14rem"/>
