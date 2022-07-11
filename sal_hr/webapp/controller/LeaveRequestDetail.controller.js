@@ -204,6 +204,11 @@ sap.ui.define([
 
             onEditPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
+                var sItem = this.getView().byId("idEditUploadSet").getItems()[0];
+                if(!sItem){
+                    this.getView().byId("idEditUploadSet").addItem(new sap.m.upload.UploadSetItem({fileName:"Manasa",mediaType:"XLSX"}));
+                }       
+
                 // this.getView().getModel("attachmentModel").refresh();
             },
 
