@@ -92,10 +92,10 @@
                 </Annotation>
             </Annotations>
 
-            <!-- To hide any field -->
-            <!-- <Annotations Target="HumanResourceService.Report/subModuleId">
-                <Annotation Term="UI.Hidden" Bool="true"/>
-            </Annotations> -->
+            <!-- To hide any field in filter bar -->
+            <Annotations Target="HumanResourceService.Report/creationDateDisplay">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+            </Annotations>
 
             <!-- Annotations for Report Entity Restrictions-->
             <Annotations Target="HumanResourceService.EntityContainer/ManagerReport">

@@ -53,6 +53,7 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
 
                 if (object.category === "JOB_INFO") {
+                    this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Job Information Request");
                     this.getView().getModel("LocalViewModel").setProperty("/jobInfoVisible", true);
                     this.getView().getModel("LocalViewModel").setProperty("/componesationInfoVisible", false);
 
@@ -85,6 +86,8 @@ sap.ui.define([
 
 
                 } else if (object.category === "COMP_INFO") {
+
+                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Compensation Information Request");
                     this.getView().getModel("LocalViewModel").setProperty("/componesationInfoVisible", true);
                     this.getView().getModel("LocalViewModel").setProperty("/jobInfoVisible", false);
 
@@ -121,7 +124,6 @@ sap.ui.define([
 
 
 
-                this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Salary Increment Request");
                 this.getView().getModel("LocalViewModel").refresh();
 
             },
@@ -279,13 +281,14 @@ sap.ui.define([
 
 
                 var oDisplayCompInfoObj = {
-                    "payGroup": oData.payGroup,
+                    "payGroup": oData.payGroupNav.name_defaultValue,
                     "isEligibleForCar": oData.isEligibleForCar,
                     "customDouble1": oData.customDouble1,
                     "customString2": oData.customString2,
-                    "payType": oData.payType,
+                    "payType": oData.payTypeNav.localeLabel,
                     "customDate1": oData.customDate1,
                     "customString3": oData.customString3,
+                    "country":oData.userNav.country,
                     "componesationDetails": oData.empPayCompRecurringNav.results
                 },
                     oDisplayCompInfoModel = new JSONModel(oDisplayCompInfoObj);

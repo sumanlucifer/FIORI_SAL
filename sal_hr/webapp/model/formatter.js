@@ -282,8 +282,7 @@ sap.ui.define([], function () {
           .getProperty("/createSelf");
         bRaiseRequestVisible = bCreateSelf === true ? true : false;
       }
-       return bRaiseRequestVisible;
-     
+      return bRaiseRequestVisible;
     },
 
     fnSetModifyVisibilty: function (bEditMode, bIsUserManager) {
@@ -306,6 +305,25 @@ sap.ui.define([], function () {
         bModifyVisible = false;
       }
       return bModifyVisible;
+    },
+
+    formatExternalCode: function (
+      subModuleId,
+      employeeId,
+      externalCode,
+      externalCode2
+    ) {
+      if (subModuleId === 1) {
+        return externalCode2;
+      } 
+      else if (subModuleId === 14 || subModuleId === 15) {
+        return employeeId;
+      }
+     
+      
+      else {
+        return externalCode;
+      }
     },
 
     fnSetWithdrawtVisibilty: function (

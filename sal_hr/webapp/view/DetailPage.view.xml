@@ -89,7 +89,9 @@
                     <ColumnListItem press="onPressTicketItem" vAlign="Middle" type="Navigation">
                         <cells>
                             <Text text="{ticketCode}" />
-                            <Text text="{= ${subModuleId} === 1 ? ${externalCode2} : ${externalCode} }" />
+                            <!-- <Text text="{= ${subModuleId} === 1 ? ${externalCode2} : ${externalCode} }" /> -->
+                            <Text text="{parts:['subModuleId','employeeId','externalCode','externalCode2'],formatter:'.formatter.formatExternalCode'}"/>
+                           
                             <Text text="{path : 'effectiveStartDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'},formatter:'.formatter.handleNoData'}" />
                             <Text text="{summary}" />
                             <Text text="{path : 'requestDate',type:'sap.ui.model.type.Date',formatOptions: {pattern: 'MM/dd/yyyy'}}" type="Bold" />
