@@ -49,7 +49,8 @@ sap.ui.define([
                     this.getView().setBusy(true);
                     this._getTicketData(this.sChildID);
                 }
-               
+                
+                this.getView().byId("idEditUploadSet").removeAllItems();
                 var sUploadAttachment = this.getView().byId("UploadSet").getVisible();
                 if (!sUploadAttachment) {
                     this.attachReq = false;
@@ -203,11 +204,19 @@ sap.ui.define([
             },
 
             onEditPress: function () {
+                var oItem = this.byId("idEditUploadSet").getItems()[0];
+                var oModel = this.getView().getModel("attachmentModel").getData();
+                debugger;
+                if(!oItem) {
+                    this.byId("idEditUploadSet").addItem(new sap.m.upload.UploadSetItem(
+                        {
+                            fileName:oModel.fileName,
+                            mediaType:oModel.mimeType
+                        }));
+                }
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
                 var sItem = this.getView().byId("idEditUploadSet").getItems()[0];
-                if(!sItem){
-                    this.getView().byId("idEditUploadSet").addItem(new sap.m.upload.UploadSetItem({fileName:"Manasa",mediaType:"XLSX"}));
-                }       
+                  
 
                 // this.getView().getModel("attachmentModel").refresh();
             },
@@ -215,6 +224,8 @@ sap.ui.define([
             onCancelPress: function () {
                 debugger;
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                this.getView().byId("idEditUploadSet").removeAllItems();
+                this.getView().getModel().refresh(true);
             },
 
             onWithdrawPress: function () {
@@ -541,9 +552,9 @@ sap.ui.define([
                 var oUploadSet = this.byId("idEditUploadSet");
                 oUploadSet.getDefaultFileUploader().setEnabled(false);
 
-                this.getView().getModel("attachmentModel").setProperty("/fileName", Filename);
-                this.getView().getModel("attachmentModel").setProperty("/mimeType", Filetype);
-                this.getView().getModel("attachmentModel").refresh();
+                // this.getView().getModel("attachmentModel").setProperty("/fileName", Filename);
+                // this.getView().getModel("attachmentModel").setProperty("/mimeType", Filetype);
+                // this.getView().getModel("attachmentModel").refresh();
 
                 this.isAttachment = true;
             },

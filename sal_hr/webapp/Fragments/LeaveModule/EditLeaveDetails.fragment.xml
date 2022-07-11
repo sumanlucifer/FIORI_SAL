@@ -59,7 +59,7 @@
 
              
          
-            <upload:UploadSet id="idEditUploadSet" class="uploadDetailPage" instantUpload="true" showIcons="true" uploadEnabled="false" terminationEnabled="true"  maxFileNameLength="30" maxFileSize="200" mediaTypes="text/plain,application/msword,image/jpeg" 
+            <upload:UploadSet id="idEditUploadSet" class="uploadDetailPage" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true"  maxFileNameLength="255" maxFileSize="200"  
             afterItemRemoved="onFileDeleted"
             afterItemAdded="onFileAdded" 
             fileRenamed="onFileRenamed" 
@@ -73,7 +73,7 @@
                             </OverflowToolbar>
                         </upload:toolbar>
                 <upload:items>
-                    <upload:UploadSetItem fileName="{=${attachmentModel>/fileName}}" mediaType="attachmentModel>/mimeType}" >
+                    <upload:UploadSetItem id="idEditUploadSetItem" fileName="{attachmentModel>/fileName}" mediaType="{attachmentModel>/mimeType}" >
                     </upload:UploadSetItem>
                 </upload:items>
             </upload:UploadSet>
