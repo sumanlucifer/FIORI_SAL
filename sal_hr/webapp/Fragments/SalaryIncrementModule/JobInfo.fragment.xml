@@ -99,7 +99,12 @@
 
          
              <Label text="Is Full Time Employee" required="false" />
-            <Text text="{DisplayJobInfoModel>/isFulltimeEmployee}" />
+            <!-- <Text text="{DisplayJobInfoModel>/isFulltimeEmployee}" /> -->
+
+             <ComboBox  enabled="false" selectedKey="{DisplayJobInfoModel>/isFulltimeEmployee}">
+                            <core:Item key="true" text="Yes"/>
+                            <core:Item key="false" text="No"/>
+                        </ComboBox>
 
 
              <Label text="Employee Type" required="false" />
