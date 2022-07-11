@@ -79,6 +79,7 @@ sap.ui.define([
                         }.bind(this),
                         error: function () {
                             this.getView().setBusy(false);
+                            this.fnSetDisplaySalryJobInfoModel(null);
                         }.bind(this)
                     });
 
@@ -103,7 +104,7 @@ sap.ui.define([
 
                     this.getView().getModel().read(sKey, {
                         urlParameters: {
-                            $expand: "customString2Nav,empPayCompRecurringNav,employmentNav,eventReasonNav,payGroupNav,payTypeNav,userNav,wfRequestNav",
+                            $expand: "customString2Nav,empPayCompRecurringNav,employmentNav,eventReasonNav,payGroupNav,payTypeNav/picklistLabels,userNav,wfRequestNav",
                             "IsUserManager": bIsUserManager,
                             "recordStatus": object.status
                         },
@@ -113,6 +114,7 @@ sap.ui.define([
                         }.bind(this),
                         error: function () {
                             this.getView().setBusy(false);
+                            this.fnSetDisplaySalryCompInfoModel(null);
                         }.bind(this)
                     });
 
@@ -153,149 +155,145 @@ sap.ui.define([
 
             fnSetDisplaySalryJobInfoModel: function (oData) {
                 this.getView().setBusy(true);
-
-
-
-                var oDisplayJobInfoObj =
-
-
-                {
-                    "assedicCertInitialStateNum": oData.assedicCertInitialStateNum,
-                    "assedicCertObjectNum": oData.assedicCertObjectNum,
-                    "assessmentStatus": oData.assessmentStatus,
-                    "businessUnit": oData.businessUnit,
-                    "codeOfJobForEldp": oData.codeOfJobForEldp,
-                    "commitmentIndicator": oData.commitmentIndicator,
-                    "company": oData.company,
-                    "continuedSicknessPayMeasure": oData.continuedSicknessPayMeasure,
-                    "continuedSicknessPayPeriod": oData.continuedSicknessPayPeriod,
-                    "contractEndDate": oData.contractEndDate,
-                    "contractId": oData.contractId,
-                    "contractNumber": oData.contractNumber,
-                    "contractReferenceForAed": oData.contractReferenceForAed,
-                    "contractType": oData.contractType,
-                    "corporation": oData.corporation,
-                    "costCenter": oData.costCenter,
-                    "creditForPreviousService": oData.creditForPreviousService,
-                    "currentWageLevel": oData.currentWageLevel,
-                    "customString1": oData.customString1,
-                    "customString10": oData.customString10,
-                    "customString11": oData.customString11,
-                    "customString12": oData.customString12,
-                    "customString13": oData.customString13,
-                    "customString2": oData.customString2,
-                    "customString3": oData.customString3,
-                    "customString4": oData.customString4,
-                    "customString5": oData.customString5,
-                    "customString6": oData.customString6,
-                    "customString7": oData.customString7,
-                    "customString8": oData.customString8,
-                    "customString9": oData.customString9,
-                    "degreeOfProductivity": oData.degreeOfProductivity,
-                    "department": oData.department,
-                    "dismissalsNoticePeriodForEmployer": oData.dismissalsNoticePeriodForEmployer,
-                    "division": oData.division,
-                    "eeo1JobCategory": oData.eeo1JobCategory,
-                    "eeo4JobCategory": oData.eeo4JobCategory,
-                    "eeo5JobCategory": oData.eeo5JobCategory,
-                    "eeo6JobCategory": oData.assedicCertInitialStateNum,
-                    "eeoClass": oData.eeoClass,
-                    "electoralCollegeForLaborCourt": oData.electoralCollegeForLaborCourt,
-                    "electoralCollegeForWorkersRepresentatives": oData.electoralCollegeForWorkersRepresentatives,
-                    "electoralCollegeForWorksCouncil": oData.electoralCollegeForWorksCouncil,
-                    "employeeClass": oData.employeeClass,
-                    "employeeNoticePeriod": oData.employeeNoticePeriod,
-                    "employeeType": oData.employeeType,
-                    "employmentType": oData.employmentType,
-                    "empRelationship": oData.empRelationship,
-                    "endDate": oData.endDate,
-                    "entryIntoGroup": oData.entryIntoGroup,
-                    "eventReason": oData.eventReason,
-                    "exchangeRate": oData.exchangeRate,
-                    "familyRelationshipWithEmployer": oData.familyRelationshipWithEmployer,
-                    "flsaStatus": oData.flsaStatus,
-                    "fromCurrency": oData.fromCurrency,
-                    "guaranteedPayment": oData.guaranteedPayment,
-                    "harmfulAgentExposure": oData.harmfulAgentExposure,
-                    "holidayCalendarCode": oData.holidayCalendarCode,
-                    "initialEntryDate": oData.initialEntryDate,
-                    "isFulltimeEmployee": oData.isFulltimeEmployee,
-                    "jobCode": oData.jobCode,
-                    "jobGroup": oData.jobGroup,
-                    "jobTitle": oData.jobTitle,
-                    "laborCourtSector": oData.laborCourtSector,
-                    "localJobTitle": oData.localJobTitle,
-                    "location": oData.location,
-                    "managerId": oData.managerId,
-                    "notes": oData.notes,
-                    "noticePeriod": oData.noticePeriod,
-                    "noticePeriodStartDate": oData.noticePeriodStartDate,
-                    "occupationalLevels": oData.occupationalLevels,
-                    "payGrade": oData.payGrade,
-                    "payGroup": oData.payGroup,
-                    "payScaleArea": oData.payScaleArea,
-                    "payScaleGroup": oData.payScaleGroup,
-                    "payScaleLevel": oData.payScaleLevel,
-                    "payScaleType": oData.payScaleType,
-                    "periodIndicator": oData.periodIndicator,
-                    "position": oData.assedicCertInitialStateNum,
-                    "probationaryPeriod": oData.probationaryPeriod,
-                    "probationaryPeriodMeasure": oData.probationaryPeriodMeasure,
-                    "probationPeriodEndDate": oData.probationPeriodEndDate,
-                    "regularTemp": oData.regularTemp,
-                    "seqNumber": oData.seqNumber,
-                    "sickPaySupplement": oData.sickPaySupplement,
-                    "sickPaySupplementMeasure": oData.sickPaySupplementMeasure,
-                    "sickPaySupplementPeriod": oData.sickPaySupplementPeriod,
-                    "standardHours": oData.standardHours,
-                    "startDate": oData.startDate,
-                    "timeRecordingAdmissibilityCode": oData.timeRecordingAdmissibilityCode,
-                    "timeRecordingProfileCode": oData.timeRecordingProfileCode,
-                    "timeRecordingVariant": oData.timeRecordingVariant,
-                    "timeTypeProfileCode": oData.timeTypeProfileCode,
-                    "timezone": oData.timezone,
-                    "toCurrency": oData.toCurrency,
-                    "travelDistance": oData.travelDistance,
-                    "tupeOrgNumber": oData.tupeOrgNumber,
-                    "userId": oData.userId,
-                    "validFrom": oData.validFrom,
-                    "workerCategory": oData.workerCategory,
-                    "workingDaysPerWeek": oData.workingDaysPerWeek,
-                    "workLocation": oData.workLocation,
-                    "workPermitExpiry": oData.workPermitExpiry,
-                    "workscheduleCode": oData.workscheduleCode,
-                    "wtdHoursLimit": oData.wtdHoursLimit,
-                },
+                var oDisplayJobInfoModel = new JSONModel();
+                if(oData != null) {
+                    var oDisplayJobInfoObj = {
+                        "assedicCertInitialStateNum": oData.assedicCertInitialStateNum,
+                        "assedicCertObjectNum": oData.assedicCertObjectNum,
+                        "assessmentStatus": oData.assessmentStatus,
+                        "businessUnit": oData.businessUnit,
+                        "codeOfJobForEldp": oData.codeOfJobForEldp,
+                        "commitmentIndicator": oData.commitmentIndicator,
+                        "company": oData.company,
+                        "continuedSicknessPayMeasure": oData.continuedSicknessPayMeasure,
+                        "continuedSicknessPayPeriod": oData.continuedSicknessPayPeriod,
+                        "contractEndDate": oData.contractEndDate,
+                        "contractId": oData.contractId,
+                        "contractNumber": oData.contractNumber,
+                        "contractReferenceForAed": oData.contractReferenceForAed,
+                        "contractType": oData.contractType,
+                        "corporation": oData.corporation,
+                        "costCenter": oData.costCenter,
+                        "creditForPreviousService": oData.creditForPreviousService,
+                        "currentWageLevel": oData.currentWageLevel,
+                        "customString1": oData.customString1,
+                        "customString10": oData.customString10,
+                        "customString11": oData.customString11,
+                        "customString12": oData.customString12,
+                        "customString13": oData.customString13,
+                        "customString2": oData.customString2,
+                        "customString3": oData.customString3,
+                        "customString4": oData.customString4,
+                        "customString5": oData.customString5,
+                        "customString6": oData.customString6,
+                        "customString7": oData.customString7,
+                        "customString8": oData.customString8,
+                        "customString9": oData.customString9,
+                        "degreeOfProductivity": oData.degreeOfProductivity,
+                        "department": oData.department,
+                        "dismissalsNoticePeriodForEmployer": oData.dismissalsNoticePeriodForEmployer,
+                        "division": oData.division,
+                        "eeo1JobCategory": oData.eeo1JobCategory,
+                        "eeo4JobCategory": oData.eeo4JobCategory,
+                        "eeo5JobCategory": oData.eeo5JobCategory,
+                        "eeo6JobCategory": oData.assedicCertInitialStateNum,
+                        "eeoClass": oData.eeoClass,
+                        "electoralCollegeForLaborCourt": oData.electoralCollegeForLaborCourt,
+                        "electoralCollegeForWorkersRepresentatives": oData.electoralCollegeForWorkersRepresentatives,
+                        "electoralCollegeForWorksCouncil": oData.electoralCollegeForWorksCouncil,
+                        "employeeClass": oData.employeeClass,
+                        "employeeNoticePeriod": oData.employeeNoticePeriod,
+                        "employeeType": oData.employeeType,
+                        "employmentType": oData.employmentType,
+                        "empRelationship": oData.empRelationship,
+                        "endDate": oData.endDate,
+                        "entryIntoGroup": oData.entryIntoGroup,
+                        "eventReason": oData.eventReason,
+                        "exchangeRate": oData.exchangeRate,
+                        "familyRelationshipWithEmployer": oData.familyRelationshipWithEmployer,
+                        "flsaStatus": oData.flsaStatus,
+                        "fromCurrency": oData.fromCurrency,
+                        "guaranteedPayment": oData.guaranteedPayment,
+                        "harmfulAgentExposure": oData.harmfulAgentExposure,
+                        "holidayCalendarCode": oData.holidayCalendarCode,
+                        "initialEntryDate": oData.initialEntryDate,
+                        "isFulltimeEmployee": oData.isFulltimeEmployee,
+                        "jobCode": oData.jobCode,
+                        "jobGroup": oData.jobGroup,
+                        "jobTitle": oData.jobTitle,
+                        "laborCourtSector": oData.laborCourtSector,
+                        "localJobTitle": oData.localJobTitle,
+                        "location": oData.location,
+                        "managerId": oData.managerId,
+                        "notes": oData.notes,
+                        "noticePeriod": oData.noticePeriod,
+                        "noticePeriodStartDate": oData.noticePeriodStartDate,
+                        "occupationalLevels": oData.occupationalLevels,
+                        "payGrade": oData.payGrade,
+                        "payGroup": oData.payGroup,
+                        "payScaleArea": oData.payScaleArea,
+                        "payScaleGroup": oData.payScaleGroup,
+                        "payScaleLevel": oData.payScaleLevel,
+                        "payScaleType": oData.payScaleType,
+                        "periodIndicator": oData.periodIndicator,
+                        "position": oData.assedicCertInitialStateNum,
+                        "probationaryPeriod": oData.probationaryPeriod,
+                        "probationaryPeriodMeasure": oData.probationaryPeriodMeasure,
+                        "probationPeriodEndDate": oData.probationPeriodEndDate,
+                        "regularTemp": oData.regularTemp,
+                        "seqNumber": oData.seqNumber,
+                        "sickPaySupplement": oData.sickPaySupplement,
+                        "sickPaySupplementMeasure": oData.sickPaySupplementMeasure,
+                        "sickPaySupplementPeriod": oData.sickPaySupplementPeriod,
+                        "standardHours": oData.standardHours,
+                        "startDate": oData.startDate,
+                        "timeRecordingAdmissibilityCode": oData.timeRecordingAdmissibilityCode,
+                        "timeRecordingProfileCode": oData.timeRecordingProfileCode,
+                        "timeRecordingVariant": oData.timeRecordingVariant,
+                        "timeTypeProfileCode": oData.timeTypeProfileCode,
+                        "timezone": oData.timezone,
+                        "toCurrency": oData.toCurrency,
+                        "travelDistance": oData.travelDistance,
+                        "tupeOrgNumber": oData.tupeOrgNumber,
+                        "userId": oData.userId,
+                        "validFrom": oData.validFrom,
+                        "workerCategory": oData.workerCategory,
+                        "workingDaysPerWeek": oData.workingDaysPerWeek,
+                        "workLocation": oData.workLocation,
+                        "workPermitExpiry": oData.workPermitExpiry,
+                        "workscheduleCode": oData.workscheduleCode,
+                        "wtdHoursLimit": oData.wtdHoursLimit,
+                    };
                     oDisplayJobInfoModel = new JSONModel(oDisplayJobInfoObj);
-
+                }
 
                 this.getView().setModel(oDisplayJobInfoModel, "DisplayJobInfoModel");
-
                 this.getView().setBusy(false);
             },
 
 
             fnSetDisplaySalryCompInfoModel: function (oData) {
                 this.getView().setBusy(true);
+                var oDisplayCompInfoModel = new JSONModel();
 
-
-
-                var oDisplayCompInfoObj = {
-                    "payGroup": oData.payGroupNav.name_defaultValue,
-                    "isEligibleForCar": oData.isEligibleForCar,
-                    "customDouble1": oData.customDouble1,
-                    "customString2": oData.customString2,
-                    "payType": oData.payTypeNav.localeLabel,
-                    "customDate1": oData.customDate1,
-                    "customString3": oData.customString3,
-                    "country":oData.userNav.country,
-                    "componesationDetails": oData.empPayCompRecurringNav.results
-                },
+                if(oData != null) {
+                    var oDisplayCompInfoObj = {
+                        "payGroup": oData.payGroupNav ? `${oData.payGroupNav.name} (${oData.payGroupNav.externalCode})` : oData.payGroup,
+                        "isEligibleForCar": oData.isEligibleForCar,
+                        "customDouble1": oData.customDouble1,
+                        "customString2": oData.customString2,
+                        "payType": oData.payTypeNav ? `${oData?.payTypeNav.picklistLabels.results[0].label} (${oData.payTypeNav.id})` : oData.payType,
+                        "customDate1": oData.customDate1,
+                        "customString3": oData.customString3,
+                        "country":oData.userNav.country,
+                        "componesationDetails": oData.empPayCompRecurringNav.results
+                    };
+                    
                     oDisplayCompInfoModel = new JSONModel(oDisplayCompInfoObj);
-
+                }
 
                 this.getView().setModel(oDisplayCompInfoModel, "DisplayCompInfoModel");
-
+                this.getView().getModel("DisplayCompInfoModel").refresh();
                 this.getView().setBusy(false);
             },
 
