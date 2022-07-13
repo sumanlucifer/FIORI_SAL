@@ -1122,7 +1122,57 @@ sap.ui.define(
                             }.bind(this),
                         });
                 },
+                onPayScaleTypeChange: function (oEvent) {
+                    var selectedItem = oEvent.oSource.getSelectedItem();
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idPayScaleGroup").setSelectedKey(null);
+                    this.getView().byId("idPayScaleGroup").fireChange();
+                    if(!selectedItem) {
+                        oLocalViewModel.setProperty("/payGroupEnabled", false);
+                        return;
+                    }
+                    var sPayScaleType = selectedItem.getKey();
+                    this.onSelectPayScaleType(sPayScaleType, null);
+                },
 
+                onSelectPayScaleType: function(sPayScaleType, callback) {
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idPayScaleGroup").setBusy(true);
+                    // load location dropdown
+                    var oFilter = new Filter(
+                        [
+                           new Filter(
+                            "payScaleType",
+                            FilterOperator.EQ,
+                            sPayScaleType
+                        )], true 
+                    );
+                    
+                
+                    this.getView()
+                        .getModel()
+                        .read("/SF_PayScaleGroup", {
+                            filters: [oFilter],
+                            // urlParameters: {
+                            //     $orderby: "name"
+                            // },
+                            success: function (oData) {
+                                var oModel = new JSONModel(oData.results);
+                                this.getView().setModel(oModel, "PayScaleGroupModel");
+                                oLocalViewModel.setProperty("/payGroupEnabled", true);
+                                this.getView().byId("idPayScaleGroup").setBusy(false);
+                                if(callback) {
+                                    callback();
+                                }
+                            }.bind(this),
+                            error: function (oError) {
+                                this.getView().byId("idPayScaleGroup").setBusy(false);
+                                sap.m.MessageBox.error(
+                                    JSON.parse(oError.responseText).error.message.value
+                                );
+                            }.bind(this),
+                        });
+                },
 
                 onPayGroupChange: function (oEvent) {
                     var selectedItem = oEvent.oSource.getSelectedItem();
@@ -1465,6 +1515,7 @@ sap.ui.define(
 
 
                   //---------------------------------------
+                  var spayScaleType = oJobModel.getProperty("/payScaleType"); 
                   var sPayScaleGroup = oJobModel.getProperty("/payScaleGroup"); 
                   var sPayScaleLevel = oJobModel.getProperty("/payScaleLevel"); 
 
@@ -1520,14 +1571,30 @@ sap.ui.define(
                     }
 
 
-                    if(sPayScaleGroup) {
-                        this.getView().byId("idPayScaleGroup").setSelectedKey(sPayScaleGroup);
-                        this.onSelectPayGroup(sPayScaleGroup, function(){
-                            if(sPayScaleLevel) {
-                                this.getView().byId("idPayScaleLevel").setSelectedKey(sPayScaleLevel);
+
+
+
+
+
+                    if(spayScaleType) {
+                        //select PayScaleType
+                        this.getView().byId("idPayScaleType").setSelectedKey(spayScaleType);
+                        this.onSelectPayScaleType(spayScaleType, function() {
+                            if(sPayScaleGroup) {
+                                //select PayGroup
+                                this.getView().byId("idPayScaleGroup").setSelectedKey(sPayScaleGroup);
+                                this.onSelectPayGroup(sPayScaleGroup, function() {
+                                    if(sPayScaleLevel) {
+                                        //select Pay Scale level
+                                        this.getView().byId("idPayScaleLevel").setSelectedKey(sPayScaleLevel);
+                                       
+                                    }
+                                }.bind(this));
                             }
                         }.bind(this));
                     }
+
+                  
 
                     this.getView().byId("idCompany").setSelectedKey(company);
                     this.onSelectCompany(company, function() {

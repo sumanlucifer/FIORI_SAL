@@ -208,7 +208,7 @@
                         </ComboBox>
 
                         <Label text="Pay Scale Type" required="true" />
-                        <ComboBox id="idPayScaleType" items="{ path: '/SF_PayScaleType', sorter : {
+                        <ComboBox id="idPayScaleType" change="onPayScaleTypeChange" items="{ path: '/SF_PayScaleType', sorter : {
                                 path : 'externalName_defaultValue' 
                             } }" selectedKey="{jobModel>/payScaleType}">
                             <core:Item key="{code}" text="{externalName_defaultValue} ({code})"/>
@@ -223,10 +223,15 @@
                         </ComboBox>
 
                         <Label text="Pay Scale Group" />
-                        <ComboBox change="onPayGroupChange" id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup', sorter : {
+                        <!-- <ComboBox change="onPayGroupChange" id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup', sorter : {
                                 path : 'externalName_defaultValue' 
                             } }" selectedKey="{jobModel>/payScaleGroup}">
                             <core:Item key="{code}" text="{externalName_defaultValue} ({code})"/>
+                        </ComboBox> -->
+
+
+                         <ComboBox id="idPayScaleGroup" enabled="{= ${LocalViewModel>/payGroupEnabled} ? true : false }" change="onPayGroupChange" items="{PayScaleGroupModel>/}" selectedKey="{jobModel>/payScaleLevel}">
+                            <core:Item key="{PayScaleGroupModel>code}" text="{PayScaleGroupModel>externalName_defaultValue} ({PayScaleGroupModel>code})"/>
                         </ComboBox>
 
                         <Label text="Pay Scale Level" />
@@ -237,7 +242,7 @@
                         </ComboBox> -->
 
 
-                          <ComboBox id="idPayScaleLevel" enabled="{= ${LocalViewModel>/payScaleLevelEnabled} ? true : false }" change="onLoca" items="{PayScaleLevelModel>/}" selectedKey="{jobModel>/payScaleLevel}">
+                          <ComboBox id="idPayScaleLevel" enabled="{= ${LocalViewModel>/payScaleLevelEnabled} ? true : false }"  items="{PayScaleLevelModel>/}" selectedKey="{jobModel>/payScaleLevel}">
                             <core:Item key="{PayScaleLevelModel>code}" text="{PayScaleLevelModel>externalName_defaultValue} ({PayScaleLevelModel>code})"/>
                         </ComboBox>
 

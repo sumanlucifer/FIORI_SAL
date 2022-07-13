@@ -303,7 +303,8 @@ sap.ui.define([
                         "customDate1": oData.customDate1,
                         "customString3": oData.customString3,
                         "country":oData.userNav.country,
-                        "componesationDetails": oData.empPayCompRecurringNav.results
+                        "componesationDetails": oData.empPayCompRecurringNav.results,
+                        "startDate":oData.startDate
                     };
                     
                     oDisplayCompInfoModel = new JSONModel(oDisplayCompInfoObj);
