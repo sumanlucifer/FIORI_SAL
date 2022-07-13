@@ -46,7 +46,7 @@
     <!-- <form:SimpleForm id="idDisplayattachmentForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <form:content> -->
 
-    <upload:UploadSet id="UploadSet" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" fileTypes="txt,doc,png" maxFileNameLength="30" maxFileSize="200" mediaTypes="text/plain,application/msword,image/jpeg" visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : false}">
+    <upload:UploadSet id="UploadSet" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" fileTypes="txt,doc,png" maxFileNameLength="30" maxFileSize="200" visible="{= ${LocalViewModel>/uploadAttachment} === true ? true : false}">
         <upload:toolbar>
             <OverflowToolbar>
                 <Button text="Download Attachment" press="onDownLoadPress"/>
