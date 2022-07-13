@@ -129,17 +129,21 @@
                         <Input id="idJobTitle" value="{jobModel>/jobTitle}" />
 
                         <Label text="Pay Grade" />
-                        <ComboBox id="idPayGrade" items="{ path: '/SF_FOPayGrade', sorter : {
+                        <ComboBox id="idPayGrade" change="onPayGradeChange"  items="{ path: '/SF_FOPayGrade', sorter : {
                                 path : 'name' 
                             } }" selectedKey="{jobModel>/payGrade}">
                             <core:Item key="{externalCode}" text="{name} ({externalCode})"/>
                         </ComboBox>
 
                         <Label text="Pay Range" />
-                        <ComboBox id="idPayRange" items="{ path: '/SF_PayRange', sorter : {
+                        <!-- <ComboBox id="idPayRange" items="{ path: '/SF_PayRange', sorter : {
                                 path : 'name' 
                             } }" selectedKey="{jobModel>/customString9}">
                             <core:Item key="{externalCode}" text="{name} ({externalCode})"/>
+                        </ComboBox> -->
+
+                          <ComboBox id="idPayRange" enabled="{= ${LocalViewModel>/payRangeEnabled} ? true : false }" change="onLoca" items="{PayRangeModel>/}" selectedKey="{jobModel>/customString9}">
+                            <core:Item key="{PayRangeModel>externalCode}" text="{PayRangeModel>name} ({PayRangeModel>externalCode})"/>
                         </ComboBox>
 
                         <Label text="IK/OOK" />
@@ -155,10 +159,10 @@
                             <core:Item key="false" text="No"/>
                         </ComboBox>
 
-                        <Label text="Employee Type" />
-                        <ComboBox id="idEmployeeType" items="{ path: '/SF_PicklistOption',sorter : {
+                      <Label text="Employee Class" />
+                        <ComboBox id="idEmployeeClass" change="onEmployeeClassChange"   items="{ path: '/SF_PicklistOption',sorter : {
                                 path : 'picklistLabels/label' 
-                            }, filters: [{ path: 'picklist/picklistId', operator: 'EQ', value1: 'employee-type' }] }" selectedKey="{jobModel>/employeeType}">
+                            }, filters: [{ path: 'picklist/picklistId', operator: 'EQ', value1: 'EMPLOYEECLASS' }] }" selectedKey="{jobModel>/employeeClass}">
                             <core:Item key="{id}" text="{localeLabel}"/>
                         </ComboBox>
 
@@ -183,11 +187,17 @@
                         </ComboBox>
 
 
-                        <Label text="Employee Class" />
-                        <ComboBox id="idEmployeeClass" items="{ path: '/SF_PicklistOption',sorter : {
+                       
+
+                           <Label text="Employee Type" />
+                        <!-- <ComboBox id="idEmployeeType" items="{ path: '/SF_PicklistOption',sorter : {
                                 path : 'picklistLabels/label' 
-                            }, filters: [{ path: 'picklist/picklistId', operator: 'EQ', value1: 'EMPLOYEECLASS' }] }" selectedKey="{jobModel>/employeeClass}">
+                            }, filters: [{ path: 'picklist/picklistId', operator: 'EQ', value1: 'employee-type' }] }" selectedKey="{jobModel>/employeeType}">
                             <core:Item key="{id}" text="{localeLabel}"/>
+                        </ComboBox> -->
+
+                          <ComboBox id="idEmployeeType" enabled="{= ${LocalViewModel>/empTypeEnabled} ? true : false }" change="onLoca" items="{EmployeeTypeModel>/}" selectedKey="{jobModel>/employeeType}">
+                            <core:Item key="{EmployeeTypeModel>id}" text="{EmployeeTypeModel>localeLabel}"/>
                         </ComboBox>
 
                         <Label text="Employment Type" />
@@ -213,18 +223,25 @@
                         </ComboBox>
 
                         <Label text="Pay Scale Group" />
-                        <ComboBox id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup', sorter : {
+                        <ComboBox change="onPayGroupChange" id="idPayScaleGroup" items="{ path: '/SF_PayScaleGroup', sorter : {
                                 path : 'externalName_defaultValue' 
                             } }" selectedKey="{jobModel>/payScaleGroup}">
                             <core:Item key="{code}" text="{externalName_defaultValue} ({code})"/>
                         </ComboBox>
 
                         <Label text="Pay Scale Level" />
-                        <ComboBox id="idPayScaleLevel" items="{ path: '/SF_PayScaleLevel', sorter : {
+                        <!-- <ComboBox id="idPayScaleLevel" items="{ path: '/SF_PayScaleLevel', sorter : {
                                 path : 'externalName_defaultValue' 
                             } }" selectedKey="{jobModel>/payScaleLevel}">
                             <core:Item key="{code}" text="{externalName_defaultValue} ({code})"/>
+                        </ComboBox> -->
+
+
+                          <ComboBox id="idPayScaleLevel" enabled="{= ${LocalViewModel>/payScaleLevelEnabled} ? true : false }" change="onLoca" items="{PayScaleLevelModel>/}" selectedKey="{jobModel>/payScaleLevel}">
+                            <core:Item key="{PayScaleLevelModel>code}" text="{PayScaleLevelModel>externalName_defaultValue} ({PayScaleLevelModel>code})"/>
                         </ComboBox>
+
+                        
 
                         <Label text="Employee Notice Period" />
                         <ComboBox id="idEmployeeNoticePeriod" items="{ path: '/SF_PicklistOption',sorter : {

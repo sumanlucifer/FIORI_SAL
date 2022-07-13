@@ -1123,6 +1123,170 @@ sap.ui.define(
                         });
                 },
 
+
+                onPayGroupChange: function (oEvent) {
+                    var selectedItem = oEvent.oSource.getSelectedItem();
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idPayScaleLevel").setSelectedKey(null);
+                    this.getView().byId("idPayScaleLevel").fireChange();
+                    if(!selectedItem) {
+                        oLocalViewModel.setProperty("/payScaleLevelEnabled", false);
+                        return;
+                    }
+                    var sPayGroup = selectedItem.getKey();
+                    this.onSelectPayGroup(sPayGroup, null);
+                },
+
+                onSelectPayGroup: function(sPayGroup, callback) {
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idPayScaleLevel").setBusy(true);
+                    // load location dropdown
+                    var oFilter = new Filter(
+                        [
+                           new Filter(
+                            "payScaleGroup/code",
+                            FilterOperator.EQ,
+                            sPayGroup
+                        )], true 
+                    );
+                    
+                
+                    this.getView()
+                        .getModel()
+                        .read("/SF_PayScaleLevel", {
+                            filters: [oFilter],
+                            // urlParameters: {
+                            //     $orderby: "name"
+                            // },
+                            success: function (oData) {
+                                var oModel = new JSONModel(oData.results);
+                                this.getView().setModel(oModel, "PayScaleLevelModel");
+                                oLocalViewModel.setProperty("/payScaleLevelEnabled", true);
+                                this.getView().byId("idPayScaleLevel").setBusy(false);
+                                if(callback) {
+                                    callback();
+                                }
+                            }.bind(this),
+                            error: function (oError) {
+                                this.getView().byId("idPayScaleLevel").setBusy(false);
+                                sap.m.MessageBox.error(
+                                    JSON.parse(oError.responseText).error.message.value
+                                );
+                            }.bind(this),
+                        });
+                },
+            
+
+                onEmployeeClassChange: function (oEvent) {
+                    var selectedItem = oEvent.oSource.getSelectedItem();
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idEmployeeType").setSelectedKey(null);
+                    this.getView().byId("idEmployeeType").fireChange();
+                    if(!selectedItem) {
+                        oLocalViewModel.setProperty("/empTypeEnabled", false);
+                        return;
+                    }
+                    var sEmployeeClass = selectedItem.getKey();
+                    this.onSelectEmployeeClass(sEmployeeClass, null);
+                },
+
+                onSelectEmployeeClass: function(sEmployeeClass, callback) {
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idEmployeeType").setBusy(true);
+                    // load location dropdown
+                    var oFilter = new Filter(
+                        [
+                            new Filter(
+                            "parentPicklistOption/id",
+                            FilterOperator.EQ,
+                            sEmployeeClass
+                        )], true 
+                    );
+
+                    
+                    this.getView()
+                        .getModel()
+                        .read("/SF_PicklistOption", {
+                            filters: [oFilter],
+                            // urlParameters: {
+                            //     $orderby: "name"
+                            // },
+                            success: function (oData) {
+                                var oModel = new JSONModel(oData.results);
+                                this.getView().setModel(oModel, "EmployeeTypeModel");
+                                oLocalViewModel.setProperty("/empTypeEnabled", true);
+                                this.getView().byId("idEmployeeType").setBusy(false);
+                                if(callback) {
+                                    callback();
+                                }
+                            }.bind(this),
+                            error: function (oError) {
+                                this.getView().byId("idEmployeeType").setBusy(false);
+                                sap.m.MessageBox.error(
+                                    JSON.parse(oError.responseText).error.message.value
+                                );
+                            }.bind(this),
+                        });
+                },
+
+                onPayGradeChange: function (oEvent) {
+                    var selectedItem = oEvent.oSource.getSelectedItem();
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idPayRange").setSelectedKey(null);
+                    this.getView().byId("idPayRange").fireChange();
+                    if(!selectedItem) {
+                        oLocalViewModel.setProperty("/payRangeEnabled", false);
+                        return;
+                    }
+                    var sPayGrade = selectedItem.getKey();
+                    this.onSelectPayGrade(sPayGrade, null);
+                },
+
+                onSelectPayGrade: function(sPayGrade, callback) {
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idPayRange").setBusy(true);
+                    // load location dropdown
+                    var oFilter = new Filter(
+                        [
+                            new Filter(
+                            "status",
+                            FilterOperator.EQ,
+                            'A'
+                        ), new Filter(
+                            "payGradeFlxNav/externalCode",
+                            FilterOperator.EQ,
+                            sPayGrade
+                        )], true 
+                    );
+
+               
+
+
+                    this.getView()
+                        .getModel()
+                        .read("/SF_PayRange", {
+                            filters: [oFilter],
+                            urlParameters: {
+                                $orderby: "name"
+                            },
+                            success: function (oData) {
+                                var oModel = new JSONModel(oData.results);
+                                this.getView().setModel(oModel, "PayRangeModel");
+                                oLocalViewModel.setProperty("/payRangeEnabled", true);
+                                this.getView().byId("idPayRange").setBusy(false);
+                                if(callback) {
+                                    callback();
+                                }
+                            }.bind(this),
+                            error: function (oError) {
+                                this.getView().byId("idPayRange").setBusy(false);
+                                sap.m.MessageBox.error(
+                                    JSON.parse(oError.responseText).error.message.value
+                                );
+                            }.bind(this),
+                        });
+                },
+
                 onLocationGroupChange: function (oEvent) {
                     var selectedItem = oEvent.oSource.getSelectedItem();
                     var oLocalViewModel = this.getView().getModel("LocalViewModel");
@@ -1291,6 +1455,20 @@ sap.ui.define(
                     var company = oJobModel.getProperty("/company");
                     var payGroup = oJobModel.getProperty("/payGroup");
 
+                 //   ----------
+                 var sPayGrade = oJobModel.getProperty("/payGrade"); 
+                 var sPayRange = oJobModel.getProperty("/customString9"); 
+
+                  //  ---------------
+                  var sEmployeeClass = oJobModel.getProperty("/employeeClass"); 
+                  var sEmpType= oJobModel.getProperty("/employmentType"); 
+
+
+                  //---------------------------------------
+                  var sPayScaleGroup = oJobModel.getProperty("/payScaleGroup"); 
+                  var sPayScaleLevel = oJobModel.getProperty("/payScaleLevel"); 
+
+
                     if(businessUnit) {
                         //select BU
                         this.getView().byId("idBU").setSelectedKey(businessUnit);
@@ -1322,6 +1500,35 @@ sap.ui.define(
                         }.bind(this));
                     }
                     
+
+                    if(sPayGrade) {
+                        this.getView().byId("idPayGrade").setSelectedKey(sPayGrade);
+                        this.onSelectPayGrade(sPayGrade, function(){
+                            if(sPayRange) {
+                                this.getView().byId("idPayRange").setSelectedKey(sPayRange);
+                            }
+                        }.bind(this));
+                    }
+
+                    if(sEmployeeClass) {
+                        this.getView().byId("idEmployeeClass").setSelectedKey(sEmployeeClass);
+                        this.onSelectEmployeeClass(sEmployeeClass, function(){
+                            if(sEmpType) {
+                                this.getView().byId("idEmploymentType").setSelectedKey(sEmpType);
+                            }
+                        }.bind(this));
+                    }
+
+
+                    if(sPayScaleGroup) {
+                        this.getView().byId("idPayScaleGroup").setSelectedKey(sPayScaleGroup);
+                        this.onSelectPayGroup(sPayScaleGroup, function(){
+                            if(sPayScaleLevel) {
+                                this.getView().byId("idPayScaleLevel").setSelectedKey(sPayScaleLevel);
+                            }
+                        }.bind(this));
+                    }
+
                     this.getView().byId("idCompany").setSelectedKey(company);
                     this.onSelectCompany(company, function() {
                         if(payGroup) {
