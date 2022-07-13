@@ -174,6 +174,7 @@ sap.ui.define([
                 var oDisplayJobInfoModel = new JSONModel();
                 if(oData != null) {
                     var oDisplayJobInfoObj = {
+                        "Jobposition":   oData.positionNav.externalName_defaultValue,
                         "assedicCertInitialStateNum": oData.assedicCertInitialStateNum,
                         "assedicCertObjectNum": oData.assedicCertObjectNum,
                         "assessmentStatus": oData.assessmentStatus,

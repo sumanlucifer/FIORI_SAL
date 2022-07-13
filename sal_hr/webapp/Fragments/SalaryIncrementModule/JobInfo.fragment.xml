@@ -7,12 +7,13 @@
           
           
             <Label text="Position" />
-         <Select editable="false" selectedKey="{DisplayJobInfoModel>/position}" id="idPosition" items="{ path: '/SF_Position'}" >
+         <!-- <Select editable="false" selectedKey="{DisplayJobInfoModel>/position}" id="idPosition" items="{ path: '/SF_Position'}" >
                 <core:Item key="{externalCode}" text="{externalName_defaultValue}"/>
-            </Select>
+            </Select> -->
+               <Text text="{DisplayJobInfoModel>/Jobposition}"  />
            
-            <Label text="Time in Position" />
-              <Text text="{DisplayJobInfoModel>/position}"  />
+               <Label text="Time in Position" />
+               <Text  text="{path : 'DisplayJobInfoModel>/startDate', formatter: '.formatter.formatTimeInPosition' }" />
          </fm:SimpleForm> 
              <fm:SimpleForm title="Organization Information" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
            
