@@ -63,7 +63,7 @@ sap.ui.define(
                         .getModel("EmpInfoModel")
                         .getData();
                     
-                    
+                    // this.EmpInfoObj.IsUserManager = true;
                     if(!this.EmpInfoObj.IsUserManager) {
                         // not authorized
                         if(!this.PRNFlag) {
@@ -78,6 +78,7 @@ sap.ui.define(
                     
                     this.onResetPress();
                     this.managerID = this.EmpInfoObj.userId;
+                    // this.managerID = '12000843';
                 },
                 onSelectCompensation: function (oEve) {
                     if (oEve.getSource().getSelected()) {
@@ -109,30 +110,48 @@ sap.ui.define(
                     this.EmpInfoObj = this.getOwnerComponent()
                         .getModel("EmpInfoModel")
                         .getData();
-                    var oComponentModel = this.getComponentModel(),
-                        that = this;
+
                     if (this.PRNFlag) {
                         sUserID = this.prnID;
                     } else {
                         sUserID = this.EmpInfoObj.userId;
                     }
-                    var sKey = oComponentModel.createKey("/SF_EmpEmployment", {
-                        personIdExternal: sUserID,
-                        userId: sUserID,
-                    });
+                    this.getUserJobInfo(sUserID);
+                    this.getUserCompInfo(sUserID);
+                },
+
+                getUserJobInfo: function(userId) {
+                    var oComponentModel = this.getComponentModel(),
+                        that = this;
+                    
+                    var sJobKey = "/SF_EmpJob";
+
+                    var oFilter = new Filter(
+                        [
+                            new Filter(
+                            "userId",
+                            FilterOperator.EQ,
+                            userId
+                        ), new Filter(
+                            "effectiveLatestChange",
+                            FilterOperator.EQ,
+                            true
+                        )], true 
+                    );
 
                     this.getView()
                         .getModel()
-                        .read(sKey, {
+                        .read(sJobKey, {
+                            filters: [oFilter],
                             urlParameters: {
-                                $expand: "compInfoNav, jobInfoNav,jobInfoNav/positionNav, jobInfoNav/costCenterNav, jobInfoNav/jobCodeNav, jobInfoNav/managerUserNav",
+                                $top: 1,
+                                $expand: "positionNav, costCenterNav, jobCodeNav, managerUserNav",
+                                $orderby: "startDate desc"
                             },
                             success: function (oData) {
                                 that.getView().setBusy(false);
-                                var oJobModel = new JSONModel(oData.jobInfoNav.results.slice(-1)[0]);
-                                var oCompensationModel = new JSONModel(oData.compInfoNav.results.slice(-1)[0]);
+                                var oJobModel = new JSONModel(oData.results[0]);
                                 that.oJobModel = oJobModel;
-                                that.oCompensationModel = oCompensationModel;
                             },
                             error: function (oError) {
                                 that.getView().setBusy(false);
@@ -140,7 +159,41 @@ sap.ui.define(
                                 that.oJobModel = new JSONModel({
                                     countryOfCompany: "SAU"
                                 });
+                                // sap.m.MessageBox.error(that.parseResponseError(oError.responseText));
+                            },
+                        });
+                },
 
+                getUserCompInfo: function(userId) {
+                    var oComponentModel = this.getComponentModel(),
+                    that = this;
+
+                    var sCompKey = "/SF_EmpCompensation";
+
+                    var oFilter = new Filter(
+                        [
+                            new Filter(
+                            "userId",
+                            FilterOperator.EQ,
+                            userId
+                        )], true 
+                    );
+
+                    this.getView()
+                        .getModel()
+                        .read(sCompKey, {
+                            filters: [oFilter],
+                            urlParameters: {
+                                $top: 1,
+                                $orderby: "startDate desc"
+                            },
+                            success: function (oData) {
+                                that.getView().setBusy(false);
+                                var oCompensationModel = new JSONModel(oData.results[0]);
+                                that.oCompensationModel = oCompensationModel;
+                            },
+                            error: function (oError) {
+                                that.getView().setBusy(false);
                                 // initialize new model
                                 that.oCompensationModel = new JSONModel({
                                     customString2: "SAU"

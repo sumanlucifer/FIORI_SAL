@@ -282,6 +282,7 @@ sap.ui.define([], function () {
           .getProperty("/createSelf");
         bRaiseRequestVisible = bCreateSelf === true ? true : false;
       }
+    //   return true;
       return bRaiseRequestVisible;
     },
 
@@ -406,6 +407,9 @@ sap.ui.define([], function () {
     },
 
     formatTimeInPosition: function(date) {
+        if(!date) {
+            return 'NA';
+        }
         var diff = Date.now() - new Date(date);
         var days    = Math.ceil(diff / 86400000),
             months  = Math.floor(days / 30),
