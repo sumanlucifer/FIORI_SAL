@@ -1,9 +1,9 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", 	"sap/ui/core/Fragment"],
+  ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel", 	"sap/ui/core/Fragment",  'sap/ui/model/Sorter'],
   /**
    * @param {typeof sap.ui.core.mvc.Controller} Controller
    */
-  function (Controller, JSONModel, Fragment) {
+  function (Controller, JSONModel, Fragment, Sorter) {
     "use strict";
 
     return Controller.extend(
@@ -218,6 +218,7 @@ sap.ui.define(
                 filter.push(sStatusFilter,sModuleFilter);
                 this.getOwnerComponent().getModel().read("/Tickets",
                 {
+                    sorters: [ new Sorter("createdAt", true)],
                     filters: [filter],
                     success:function(oData){
                         var oFragmetModel = new JSONModel(oData.results);
@@ -249,6 +250,7 @@ sap.ui.define(
                 filter.push(sStatusFilter,sModuleFilter);
                 this.getOwnerComponent().getModel().read("/Tickets",
                 {
+                    sorters: [ new Sorter("createdAt", true)],
                     filters: [filter],
                     success:function(oData){
                         var oFragmetModel = new JSONModel(oData.results);
