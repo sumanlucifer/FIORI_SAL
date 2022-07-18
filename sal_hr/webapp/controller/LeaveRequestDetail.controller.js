@@ -414,32 +414,7 @@ sap.ui.define([
 
 
 
-                    // switch (sType) {
-                    //     case "460":
-                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-
-                    //         break;
-                    //     case "450":
-                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-
-                    //         break;
-                    //     case "480":
-                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                    //     case "440":
-                    //         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
-                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-
-                    //         break;
-                    //     case "HD1":
-                    //         sQtyHrs = "0.5";
-                    //         break;
-                    //     default:
-                    //         sQtyHrs = "0.0";
-                    // }
-                    
+                   
 
                     if(sType === "460" || sType === "450" || sType === "480" || sType === "440"){
                         sQtyHrs = this.getView().byId("idEditRequestHrs").getDOMValue();
@@ -510,23 +485,7 @@ sap.ui.define([
                 debugger;
                 this.fnDownloadAttachment(fContent,mimeType,fName,fileext);
 
-                // if (fileext === "pdf" || fileext === "png") {
-                //     var decodedPdfContent = atob(fContent);
-                //     var byteArray = new Uint8Array(decodedPdfContent.length)
-                //     for (var i = 0; i < decodedPdfContent.length; i++) {
-                //         byteArray[i] = decodedPdfContent.charCodeAt(i);
-                //     }
-                //     var blob = new Blob([byteArray.buffer], { type: mimeType });
-                //     var _pdfurl = URL.createObjectURL(blob);
-                //     var a = document.createElement('a');
-                //     a.href = _pdfurl;
-                //     a.download = fName;
-                //     a.dispatchEvent(new MouseEvent('click'));
-                // }
-                // else {
-                //     var decodedContent = atob(fContent);
-                //     sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
-                // }
+                
             },
 
             onFileDeleted: function (oEvent) {
@@ -552,9 +511,7 @@ sap.ui.define([
                 var oUploadSet = this.byId("idEditUploadSet");
                 oUploadSet.getDefaultFileUploader().setEnabled(false);
 
-                // this.getView().getModel("attachmentModel").setProperty("/fileName", Filename);
-                // this.getView().getModel("attachmentModel").setProperty("/mimeType", Filetype);
-                // this.getView().getModel("attachmentModel").refresh();
+            
 
                 this.isAttachment = true;
             },

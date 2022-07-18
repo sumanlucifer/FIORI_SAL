@@ -63,12 +63,7 @@ sap.ui.define(
 
         var sLayout = oEvent.getParameter("arguments").layout;
 
-        // var subModuleId = oEvent.getParameter("arguments").parentMaterial;
-        // var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
-        // if(subModuleId){
-        //     this.fnGetRoleAccess(sManagerTile, subModuleId);
-        // }
-
+        
         this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
         this.getView().setBusy(false);
@@ -145,22 +140,7 @@ sap.ui.define(
         this.fnGetRoleAccess(sManagerTile, subModuleId, oItem);
       },
 
-      // _showObject: function (oItem) {
-      //     var that = this;
-      //     var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
-      //     var subModuleId = oItem.getBindingContext().getObject().ID;
-      //     this.fnGetRoleAccess(sManagerTile, subModuleId);
-
-      //     var sPath = oItem.getBindingContextPath()
-      //     this.getView().getModel("EmpInfoModel").refresh(true);
-      //     this.getRouter().navTo("detail", {
-      //         parentMaterial: oItem.getModel().getProperty(sPath).ID,
-      //         layout: "TwoColumnsMidExpanded"
-      //     },
-      //         false
-      //     );
-
-      // },
+      
 
       onSearch: function (oEvent) {
         var aFilters = [];

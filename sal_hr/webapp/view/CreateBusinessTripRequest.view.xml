@@ -23,12 +23,7 @@
             <VBox>
                 <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                     <Label text="When would you like your changes to take effect? " required="true" />
-                    <!-- <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/> -->
-                    <!-- <DatePicker enabled="false" id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>                 -->
+                   
                          <DatePicker enabled="false" id="idEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>                        
@@ -112,7 +107,7 @@
                                                 }}" change="onReturnDateChange"></DatePicker>
 
                     <Label text="{i18n>DesiredAirlineTicketTravelTime}"/>
-                    <!-- <TimePicker id="idAirlineTicket" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"></TimePicker> -->
+                   
                     <TimePicker id="idAirlineTicket" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime'}" />
 
                     <Label text="{i18n>DestinationCountry}" required="true"/>

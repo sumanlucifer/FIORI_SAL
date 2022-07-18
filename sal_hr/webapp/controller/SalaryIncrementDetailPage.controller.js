@@ -13,10 +13,8 @@ sap.ui.define([
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
-                    LeaveModule: false,
                     PageTitle: null,
-                    Modify: true,
-                    IDCardModule: false
+                    Modify: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -325,39 +323,7 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
-            onDownLoadPress: function (oEvent) {
-                var oItemRowObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
-                var sLinkText = oEvent.getSource().getTooltip_Text().trim();
-
-                var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : sLinkText === "Download(2)" ? oItemRowObj.cust_attachment2Nav : oItemRowObj.cust_attachment3Nav;
-
-                //    var oFileObj =  oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject().cust_attachment1Nav;
-                var fContent = oFileObj.fileContent;
-                var fileext = oFileObj.fileExtension;
-                var mimeType = oFileObj.mimeType;
-                var fName = oFileObj.fileName;
-                fName = fName.split(".")[0];
-
-                if (fileext === "pdf" || fileext === "png") {
-                    var decodedPdfContent = atob(fContent);
-                    var byteArray = new Uint8Array(decodedPdfContent.length)
-                    for (var i = 0; i < decodedPdfContent.length; i++) {
-                        byteArray[i] = decodedPdfContent.charCodeAt(i);
-                    }
-                    var blob = new Blob([byteArray.buffer], { type: mimeType });
-                    var _pdfurl = URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = _pdfurl;
-                    a.download = fName;
-                    a.dispatchEvent(new MouseEvent('click'));
-                }
-                else {
-                    var decodedContent = atob(fContent);
-                    sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
-                }
-            },
-
-
+           
             handleFullScreen: function (oEvent) {
                 var sLayout = "";
                 if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {

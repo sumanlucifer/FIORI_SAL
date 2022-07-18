@@ -60,7 +60,7 @@
                     </layout:VerticalLayout>
                   <layout:VerticalLayout class="sapUiMediumMarginEnd">
                        <ObjectAttribute title="{i18n>RequestedBy}"/>
-         <!-- <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/> -->
+        
           <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/>
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
@@ -111,7 +111,7 @@
                                     <core:Fragment fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.HistoryTab" type="XML"/>
                                 </IconTabFilter>
                                   <IconTabFilter  text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                            <!-- <core:Fragment fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.EditComponesationDetails" type="XML"/> -->
+                          
                         </IconTabFilter>
                             </items>
                         </IconTabBar>

@@ -38,7 +38,7 @@
                    
                 </f:actions>
                 <f:navigationActions>
-                    <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
+                  
                     <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
                     <Button icon="sap-icon://decline" type="Transparent" press="handleClose" />
                 </f:navigationActions>
@@ -53,8 +53,7 @@
                         <ObjectStatus text="{headerModel>/status}" state="Success"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                       <ObjectAttribute title="{i18n>RequestedBy}"/>
-         <!-- <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/> -->          
+                       <ObjectAttribute title="{i18n>RequestedBy}"/>         
                     <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/> 
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">

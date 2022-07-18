@@ -17,22 +17,11 @@ sap.ui.define([
                 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("DisciplinaryRequest").attachPatternMatched(this._onObjectMatched, this);
-                // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
+             
                 this.mainModel = this.getOwnerComponent().getModel();
                 var that = this;
 
-                this.sReturnDate= new Date();
-                this.sRequesting = 0;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
-                if(this.sReturnDate.getDay() === 5){
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-                    
-                }else if(this.sReturnDate.getDay() === 6){
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-                   
-                }else{
-                    this.sRequesting = 1;
-                }
+                
                 var oLocalViewModel = new JSONModel({
                     currentDate: new Date(),    
                     busy:false,
@@ -48,11 +37,7 @@ sap.ui.define([
 
                
             },
-            // onRouteMatched: function (oEvent) {
-            //     this.sParentID = oEvent.getParameter("arguments").parentMaterial;
-            //     this.loadFragment();
-
-            // },
+      
             _onObjectMatched: function (oEvent) {
                 this.onResetPress();
                 
@@ -69,7 +54,7 @@ sap.ui.define([
                 
             },
             fnSetDisciplinaryLocalModel: function () {
-                // this.EmpInfoObj = oEmpInfoObj;
+              
                
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
               this.managerID = this.EmpInfoObj.userId;
@@ -92,7 +77,7 @@ sap.ui.define([
                 var objectViewModel = this.getViewModel("objectViewModel");
                 var that = this;
                 var oComponentModel = this.getComponentModel();
-                //    var sTickets = sObjectPath + "/tickets";
+              
                 var sKey = oComponentModel.createKey("/MasterSubModules", {
                     ID: this.sParentID
                 });
@@ -154,7 +139,7 @@ sap.ui.define([
 
             onValueHelpSearch: function (oEvent) {
                 var sValue = oEvent.getParameter("value");
-                // sValue =   sValue.replace(/\s+/g, '');
+          
                 if (sValue && sValue.length > 0 && sValue.indexOf(" ") > 0) {
                   sValue = sValue.trim().split(" ");
                 } else if (sValue && sValue.length > 0) {
@@ -235,12 +220,7 @@ sap.ui.define([
                     this.byId("idIncidentDescription").setValueStateText(null);
                 }
 
-                // if(this.isAttachment !== true)
-                // {
-                //     sap.m.MessageBox.error("Please upload the attachments.");
-                //     bValid = false;
-                // }
-
+               
 
 
 
@@ -288,7 +268,7 @@ sap.ui.define([
                 debugger;
                 var that = this;
 
-                //  var file = oEvent.getParameters().files[0];
+         
                 var file = oEvent.getParameter("item");
                 var Filename = file.getFileName(),
                     Filetype = file.getMediaType(),
@@ -388,34 +368,7 @@ sap.ui.define([
                 };
             },
          
-            onLeaveEndDateChange:function(oEvent){
-                var oneDay = 24 * 60 * 60 * 1000;
-                var sStartDate = sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").getDateValue();
-                var sEndDate = oEvent.getSource().getDateValue();
-                
-                if(sEndDate <= sStartDate){
-                    oEvent.getSource().setValueState("Error");
-                    oEvent.getSource().setValueStateText("End Date should be later than Start Date");
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue("");
-                }else{
-                    oEvent.getSource().setValueState();
-                    oEvent.getSource().setValueStateText("");
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueState();
-                    sap.ui.core.Fragment.byId("idLeaveFragment", "idStartDate").setValueStateText("");
-                    // this.sRequestDay = Math.round(Math.abs((sEndDate - new Date(sStartDate)) / oneDay)) + 1 ;
-                    this.sRequestDay = this.dateDifference(sStartDate,sEndDate,oEvent);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idRequestDay").setValue(this.sRequestDay);
-                    this.getView().getModel("LocalViewModel").setProperty("/requestDay",this.sRequestDay);
-                }
-            },
-            onSelectRecurringAbsc:function(oEvent){
-                 if(oEvent.getParameters().selected === true){
-                  this.getView().getModel("LocalViewModel").setProperty("/recurringAbs", true);
-                 }else{
-                    this.getView().getModel("LocalViewModel").setProperty("/recurringAbs", false);
-                 }
-            },
-          
+         
             
           
           

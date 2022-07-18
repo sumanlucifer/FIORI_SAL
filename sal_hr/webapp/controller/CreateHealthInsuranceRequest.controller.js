@@ -18,23 +18,7 @@ sap.ui.define([
                 this.mainModel.setSizeLimit(1000);
                 var that = this;
                 this._createItemDataModel();
-                this.sReturnDate = new Date();
-                this.sRequesting = 1;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
-                if (this.sReturnDate.getDay() === 5) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-                } else if (this.sReturnDate.getDay() === 6) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-                } else {
-                    this.sRequesting = 1;
-                }
                 var oLocalViewModel = new JSONModel({
-                    startDate: new Date(),
-                    endDate: new Date(),
-                    returnDate: this.sReturnDate,
-                    requestDay: this.sRequesting,
-                    availBal: false,
-                    recurringAbs: false,
                     busy: false,
                     uploadAttachment: true,
                     currentDate: new Date()
@@ -42,7 +26,7 @@ sap.ui.define([
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
             },
             _onObjectMatched: function (oEvent) {
-                // this.onResetPress();
+            
                 this._createItemDataModel();
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 var sLayout = oEvent.getParameter("arguments").layout;
@@ -51,7 +35,7 @@ sap.ui.define([
             },
             _bindView: function () {
                 var oComponentModel = this.getComponentModel();
-                //    var sTickets = sObjectPath + "/tickets";
+            
                 var sKey = oComponentModel.createKey("/MasterSubModules", {
                     ID: this.sParentID
                 });
@@ -284,38 +268,7 @@ sap.ui.define([
                         attachment3UserId : sUserID
                     }
 
-                    // var oHealthInsuranceObj =
-                    // {
-                    //     cust_address: item.DependentNationalAddress,
-                    //     cust_dateOfBirth: new Date(item.DependentDOB),
-                    //     cust_dependentName: item.DependentName,
-                    //     cust_healthInsurance_User: sUserID,
-                    //     cust_healthInsurance_effectiveStartDate: sEffectiveStartDate,
-                    //     cust_location: item.DeliveryLoc,
-                    //     cust_nationalID: item.NationalID,
-                    //     cust_gender: item.DependentGender,
-                    //     cust_relationship: item.Relationship,
-                    //     cust_scheme: item.Scheme,
-                    // };
-
-                    // if (item.isAttach1New === true) {
-                    //     oHealthInsuranceObj.attachment1FileContent = item.attachment1FileContent;
-                    //     oHealthInsuranceObj.attachment1FileName = item.attachment1FileName;
-                    //     oHealthInsuranceObj.isAttach1New = item.isAttach1New;
-                    //     oHealthInsuranceObj.attachment1UserId = sUserID;
-                    // }
-                    // if (item.isAttach2New === true) {
-                    //     oHealthInsuranceObj.attachment2FileContent = item.attachment2FileContent;
-                    //     oHealthInsuranceObj.attachment2FileName = item.attachment2FileName;
-                    //     oHealthInsuranceObj.isAttach2New = item.isAttach2New;
-                    //     oHealthInsuranceObj.attachment2UserId = sUserID;
-                    // }
-                    // if (item.isAttach3New === true) {
-                    //     oHealthInsuranceObj.attachment3FileContent = item.attachment3FileContent;
-                    //     oHealthInsuranceObj.attachment3FileName = item.attachment3FileName;
-                    //     oHealthInsuranceObj.isAttach3New = item.isAttach3New;
-                    //     oHealthInsuranceObj.attachment3UserId = sUserID;
-                    // }
+                   
                 });
                 return {
                     "User": sUserID,

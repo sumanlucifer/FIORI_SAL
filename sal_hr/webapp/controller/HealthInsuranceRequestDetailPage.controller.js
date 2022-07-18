@@ -13,10 +13,8 @@ sap.ui.define([
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
-                    LeaveModule: false,
                     PageTitle: null,
-                    Modify: true,
-                    IDCardModule: false
+                    Modify: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -59,39 +57,7 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
                 this.onCallHistoryData(object.ticketCode);
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
-                // }
-                // var oComponentModel = this.getComponentModel(),
-                //     sKey = null;
-                //         sKey = oComponentModel.createKey("/SF_HealthInsurance", {
-                //             effectiveStartDate: object.effectiveStartDate,
-                //             User: object.externalCode
-
-                //         });
-                //         this.getView().bindElement({
-                //             path: sKey,
-                //             parameters: {
-
-                //                 expand: "cust_healthInsuranceDetails",
-
-                //                 // expand: "cust_healthInsuranceDetails,cust_healthInsuranceDetails/cust_relationshipNav,cust_healthInsuranceDetails/cust_genderNav",
-                //             },
-                //             events: {
-                //                 change: function (oEvent) {
-                //                     var oContextBinding = oEvent.getSource();
-                //                     oContextBinding.refresh(false);
-                //                 }.bind(this),
-                //                 dataRequested: function () {
-                //                     this.getView().setBusy(true);
-                //                 }.bind(this),
-                //                 dataReceived: function () {
-                //                     this.getView().setBusy(false);
-                //                 }.bind(this)
-                //             }
-                //         });
+           
                 this.getView().setBusy(true);
 
                 var oComponentModel = this.getComponentModel();
@@ -182,7 +148,6 @@ sap.ui.define([
 
                 var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : sLinkText === "Download(2)" ? oItemRowObj.cust_attachment2Nav : oItemRowObj.cust_attachment3Nav;
 
-                //    var oFileObj =  oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject().cust_attachment1Nav;
                 var fContent = oFileObj.fileContent;
                 var fileext = oFileObj.fileExtension;
                 var mimeType = oFileObj.mimeType;

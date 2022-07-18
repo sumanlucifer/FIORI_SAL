@@ -52,7 +52,7 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                        <ObjectAttribute title="{i18n>RequestedBy}"/>
-         <!-- <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/> -->
+        
           <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/>
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
@@ -79,13 +79,11 @@
                             <core:Fragment fragmentName="com.sal.salhr.Fragments.IDCardModule.DisplayIDReplacementRequest" type="XML"/>
                         </IconTabFilter>
                         <IconTabFilter id="idCardEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                            <!-- <core:Fragment fragmentName="com.sal.salhr.Fragments.IDCardModule.EditLeaveDetails" type="XML"/> -->
+                      
                         </IconTabFilter>
-                        <!-- <IconTabFilter text="{i18n>Resolution}">
-                            <Text text="" />
-                        </IconTabFilter> -->
+                       
                       <IconTabFilter text="{i18n>History}">
-                            <!-- <Text text="" /> -->
+                        
                              <core:Fragment fragmentName="com.sal.salhr.Fragments.IDCardModule.HistoryTab" type="XML"/>
                         </IconTabFilter>
                     </items>

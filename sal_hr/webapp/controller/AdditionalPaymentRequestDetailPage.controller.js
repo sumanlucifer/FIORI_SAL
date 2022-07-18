@@ -12,32 +12,25 @@ sap.ui.define([
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
-                    LeaveModule: false,
                     PageTitle: null,
-                    Modify: true,
-                    IDCardModule: false
+                    Modify: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("AdditionalPaymentRequestDetail").attachPatternMatched(this._onObjectMatched, this);
-                // var oUploadSet = this.byId("UploadSet"); 
-                // oUploadSet.getDefaultFileUploader().setButtonOnly(false);
-                // oUploadSet.getDefaultFileUploader().setTooltip("");
+               
 
             },
 
             _onObjectMatched: function (oEvent) {
-                // this.sParentID = JSON.parse(oEvent.getParameter("arguments").parentMaterial).ParentID;
-                // this.sChildID = JSON.parse(oEvent.getParameter("arguments").parentMaterial).ChildID;
+             
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // // this._bindView();
-                // this._getTicketData(this.sChildID);
+             
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
@@ -59,11 +52,7 @@ sap.ui.define([
                 this.onCallHistoryData(object.ticketCode);
 
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                // }
+              
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
@@ -95,29 +84,7 @@ sap.ui.define([
                     }
                 });
 
-                // this.getView().getModel().read(sKey, {
-                //     urlParameters: {
-                //         "$expand": "cust_attachmentNav, timeTypeNav"
-                //     },
-                //     success: function (oData) {
-                //         oAttachModel = new JSONModel(oData.cust_attachmentNav);
-                //         var oTimeTypeModel = new JSONModel(oData.timeTypeNav);
-                //         that.getView().setModel(oAttachModel, "attachmentModel");
-                //         that.getView().setModel(oTimeTypeModel, "timeTypeModel");
-                //         // that.getView().getModel("attachmentModel").setProperty("/ticketCode", sTicketCode);
-                //         var sType = that.getView().getModel("timeTypeModel").getProperty("/externalCode");
-                //         if (sType === "S110" || sType === "500" || sType === "460") {
-                //             that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', false);
-                //         } else {
-                //             that.getView().getModel("LocalViewModel").setProperty('/uploadAttachment', true);
-                //         }
-                //     },
-                //     error: function (oError) {
-
-                //     }
-
-                // });
-
+              
 
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Additional Payment Request");
                 this.getView().getModel("LocalViewModel").refresh();
@@ -227,10 +194,7 @@ sap.ui.define([
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
 
-                // this.oRouter.navTo("detail", {
-                //     parentMaterial: this.sParentID,
-                //     layout: sLayout
-                // });
+               
                 this.oRouter.navTo("AdditionalPaymentRequestDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,
@@ -315,23 +279,7 @@ sap.ui.define([
                 var fName = this.getView().getModel("attachmentModel").getData().fileName;
                 fName = fName.split(".")[0];
                 this.fnDownloadAttachment(fContent,mimeType,fName,fileext);
-                // if (fileext === "pdf" || fileext === "png") {
-                //     var decodedPdfContent = atob(fContent);
-                //     var byteArray = new Uint8Array(decodedPdfContent.length)
-                //     for (var i = 0; i < decodedPdfContent.length; i++) {
-                //         byteArray[i] = decodedPdfContent.charCodeAt(i);
-                //     }
-                //     var blob = new Blob([byteArray.buffer], { type: mimeType });
-                //     var _pdfurl = URL.createObjectURL(blob);
-                //     var a = document.createElement('a');
-                //     a.href = _pdfurl;
-                //     a.download = fName;
-                //     a.dispatchEvent(new MouseEvent('click'));
-                // }
-                // else {
-                //     var decodedContent = atob(fContent);
-                //     sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
-                // }
+            
             },
             onFileDeleted: function (oEvent) {
                 var oUploadSet = this.byId("idEditUploadSet");

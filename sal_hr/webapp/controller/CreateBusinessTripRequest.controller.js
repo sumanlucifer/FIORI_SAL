@@ -37,12 +37,12 @@ sap.ui.define([
 
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
-                // this.fnGetEmpInfo("12002429", this.sParentID);
+             
                 this.fnSetCreateBusinessTripModel();
 
             },
             fnSetCreateBusinessTripModel: function () {
-                // this.EmpInfoObj = oEmpInfoObj;
+              
                 this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
 
 
@@ -56,20 +56,19 @@ sap.ui.define([
 
                 var oCreateBusinessObj = {
                     "externalCode": sExternalCode,
-                    //  "externalCode": "12002440",
+                 
                     "effectiveStartDate": new Date(),
                     "cust_toDutyTravelItem": [
                         {
                             "cust_userId": sExternalCode,
-                            // "cust_userId": "12002440",
-
+                            
                             "cust_dutyTravelMain_externalCode": sExternalCode,
-                            // "cust_dutyTravelMain_externalCode": "12002440",
+                          
                             "cust_dutyTravelMain_effectiveStartDate": new Date(),
 
                             "externalCode": sExternalCode,
 
-                            // "externalCode": "12002440",
+                      
                             "externalName": null,
                             "cust_requestType": "1",
                             "cust_perDiemPayComp": "9256",
@@ -295,12 +294,8 @@ sap.ui.define([
                     oTravelDatePicker = this.byId("idTravelDate"),
                     oReturnDatePicker = this.byId("idReturnDate"),
                     sDestinationCountry = this.getView().byId("idDestCountry"),
-                    // oFlightTravelDatePicker = this.byId("idFlightTravelDate"),
+                 
                     sTravelJustification = this.byId("idTravelJustification");
-                //sOtherCity = this.byId("idCityCountry");
-
-                debugger;
-                // Validate Business Trip Effective Start Date
                 if (!oEffectStartDatePicker.getValue()) {
                     oEffectStartDatePicker.setValueState("Error");
                     oEffectStartDatePicker.setValueStateText("Please select Efective Start date");
@@ -344,15 +339,7 @@ sap.ui.define([
                     sDestinationCountry.setValueState("None");
                 }
 
-                // // Validate Flight Deatils Travel Date
-                // if (!oFlightTravelDatePicker.getValue()) {
-                //     oFlightTravelDatePicker.setValueState("Error");
-                //     oFlightTravelDatePicker.setValueStateText("Please select Travel Date");
-                //     sValidationErrorMsg = "Please fill the all required fields.";
-                // } else {
-                //     oFlightTravelDatePicker.setValueState("None");
-                // }
-
+        
 
                 // Validate Travel Justification
                 if (!sTravelJustification.getValue()) {
@@ -363,33 +350,7 @@ sap.ui.define([
                     sTravelJustification.setValueState("None");
                 }
 
-                // Validate Other City
-                // if (!sOtherCity.getValue()) {
-                //     sOtherCity.setValueState("Error");
-                //     sOtherCity.setValueStateText("City(Other Country) is required");
-                //     sValidationErrorMsg = "Please fill the all required fields.";
-                // } else {
-                //     sOtherCity.setValueState("None");
-                // }
-
-
-                // Validate attachment sections
-
-                // if (this.byId("idTripCategory").getSelectedKey() === "B") {
-                //     if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/isbusinessTravelAttachNew")) {
-                //         sValidationErrorMsg = "Please upload Boarding Pass.";
-                //         this.getView().setBusy(false);
-                //         return sValidationErrorMsg;
-                //     }
-                // } else {
-                //     if (!this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/istrainingTravelAttachNew")) {
-                //         sValidationErrorMsg = "Please upload Boarding Pass.";
-                //         this.getView().setBusy(false);
-                //         return sValidationErrorMsg;
-                //     }
-                // }
-
-
+               
                 //   # Visa Copy Mandatory check
                 if (this.byId("idVisaType").getSelectedKey() === "V") {
                     // # Visa Copy Mandatory check
@@ -422,7 +383,7 @@ sap.ui.define([
                     layout: "TwoColumnsMidExpanded"
 
                 });
-                // this.mainModel.refresh();
+            
                 this.onResetPress();
 
             },
@@ -681,7 +642,7 @@ sap.ui.define([
             fnCalculateTotalPerDiem: function () {
 
                 var sTotalPerDiem = Number(this.byId("idPerDiem").getValue()) + Number(this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_ticketAmount")) + Number(this.byId("idVisaAmt").getValue());
-                //    sTotalPerDiem = String(sTotalPerDiem);
+             
                 this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalPerDiem", sTotalPerDiem);
                 this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_totalAmount", sTotalPerDiem);
 

@@ -50,13 +50,7 @@
         
     </form:SimpleForm>
 
-  <!-- <HBox>
-        <Text text="Attachments" class="sapUiSmallMarginTop" />
-        <Text text="*" class="sapUiMediumMarginBottom redColor" />
-        </HBox> -->
-
-    <!-- <form:SimpleForm id="idDisplayattachmentForm" layout="ResponsiveGridLayout" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" columnsM="3" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
-        <form:content> -->
+  
 
     <VBox id="idDisplayattachmentForm" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
 

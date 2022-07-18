@@ -618,23 +618,7 @@ sap.ui.define([
 
                 this.fnDownloadAttachment(sFileContent,sMimeType,sFileName,sFileext);
 
-                // if (sFileext === "pdf" || sFileext === "png") {
-                //     var decodedPdfContent = atob(sFileContent);
-                //     var byteArray = new Uint8Array(decodedPdfContent.length)
-                //     for (var i = 0; i < decodedPdfContent.length; i++) {
-                //         byteArray[i] = decodedPdfContent.charCodeAt(i);
-                //     }
-                //     var blob = new Blob([byteArray.buffer], { type: sMimeType });
-                //     var _pdfurl = URL.createObjectURL(blob);
-                //     var a = document.createElement('a');
-                //     a.href = _pdfurl;
-                //     a.download = sFileName;
-                //     a.dispatchEvent(new MouseEvent('click'));
-                // }
-                // else {
-                //     var decodedContent = atob(sFileContent);
-                //     sap.ui.core.util.File.save(decodedContent, sFileName, sFileext, sMimeType);
-                // }
+               
             },
 
             handleFullScreen: function (oEvent) {

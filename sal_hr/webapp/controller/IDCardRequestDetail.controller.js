@@ -61,29 +61,7 @@ sap.ui.define([
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
               
-                // this.getView().bindElement({
-                //     path: sKey,
-                //     parameters: {
-                //         expand: "cust_idReplacementDetails, UserNav",
-                //         custom: {
-                //             "recordStatus": object.status,
-                //             "IsUserManager": bIsUserManager
-                //         }
-                //     },
-                //     events: {
-                //         change: function (oEvent) {
-                //             oEvent.getSource().refresh(false);
-                //             this.getView().setBusy(false);
-                //         }.bind(this),
-                //         dataRequested: function () {
-                //         }.bind(this),
-                //         dataReceived: function (oData) {
-                //             this._fnSetUserName(oData.getParameter("data"));
-                          
-                //             this.getView().setBusy(false);
-                //         }.bind(this)
-                //     }
-                // });
+               
 
 
                 this.getView().getModel().read(`/EmpInfo('${object.externalCode}')`, {

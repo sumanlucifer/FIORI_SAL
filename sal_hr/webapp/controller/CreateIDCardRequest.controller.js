@@ -9,21 +9,12 @@ sap.ui.define([
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("IDCardRequest").attachPatternMatched(this._onObjectMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
-                this.sReturnDate = new Date();
-                this.sRequesting = 1;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
+               
 
                
 
                 var oLocalViewModel = new JSONModel({
-                    startDate: new Date(),
-                    endDate: new Date(),
-                    returnDate: this.sReturnDate,
-                    requestDay: this.sRequesting,
-                    availBal: false,
-                    recurringAbs: false,
                     busy: false,
-                    uploadAttachment: true,
                     currentDate: new Date()
                 });
 

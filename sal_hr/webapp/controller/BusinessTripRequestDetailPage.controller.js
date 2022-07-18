@@ -13,23 +13,10 @@ sap.ui.define([
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("BusinessTripRequestDetailPage").attachPatternMatched(this._onObjectMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
-                this.sReturnDate = new Date();
-                this.sRequesting = 1;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
-                if (this.sReturnDate.getDay() === 5) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-
-                } else if (this.sReturnDate.getDay() === 6) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-
-                } else {
-                    this.sRequesting = 1;
-                }
+             
                 var oLocalViewModel = new JSONModel({
                     startDate: new Date(),
                     endDate: new Date(),
-                    returnDate: this.sReturnDate,
-                    requestDay: this.sRequesting,
                     availBal: false,
                     recurringAbs: false,
                     busy: false,

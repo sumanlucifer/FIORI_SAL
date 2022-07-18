@@ -13,10 +13,8 @@ sap.ui.define([
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
-                    LeaveModule: false,
                     PageTitle: null,
-                    Modify: true,
-                    IDCardModule: false
+                    Modify: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -32,9 +30,7 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // // this._bindView();
-                // this._getTicketData(this.sChildID);
+         
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
@@ -54,11 +50,6 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
 
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                // }
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 sKey = oComponentModel.createKey("/SF_EmpEmploymentTermination", {

@@ -121,7 +121,7 @@
                                                 }}"  />
                                               <Input value="{HealthItemDetailsModel>DeliveryLoc}"/>
                                               <Input value="{HealthItemDetailsModel>Scheme}"/>
-                                             <!-- <Input value="{HealthItemDetailsModel>Attach1}"/> -->
+                                          
 
                                               <VBox>
                                                
@@ -138,8 +138,7 @@
                                                
                                                 <unified:FileUploader  buttonOnly="true" buttonText="{i18n>Upload}"  sameFilenameAllowed="true" multiple="false" style="Emphasized" change="onAttach3FileSelectedForUpload" visible="{path:'Attachments',formatter:'.formatter.viewItemsFileUploader'}" />
                                             </VBox>
-                                             <!-- <Input value="{HealthItemDetailsModel>Attach1}"/>
-                                              <Input value="{HealthItemDetailsModel>Attach1}"/> -->
+                                            
                                                <Button icon="sap-icon://delete" press="onDeleteItemPress" type="Transparent"/>
                                        
                                     </cells>

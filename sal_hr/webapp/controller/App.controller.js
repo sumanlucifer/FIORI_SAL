@@ -18,10 +18,7 @@ sap.ui.define([
 
                 this.oRouter.attachRouteMatched(this.onRouteMatched, this);
                 
-            //    var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").IsUserManager;
-                // this.fnGetLoggedInEmpInfo(bIsUserManager);
-                
-                // window.location.href= "https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de4a228034.cfapps.eu10.hana.ondemand.com/";
+           
             },
             
             onRouteMatched: function (oEvent) {
