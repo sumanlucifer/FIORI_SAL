@@ -216,7 +216,7 @@ sap.ui.define([
                     });
                     var filter = [];
                     filter.push(sStatusFilter,sModuleFilter);
-                    this.getOwnerComponent().getModel().read("/tickets",
+                    this.getOwnerComponent().getModel().read("/Tickets",
                     {
                         sorters: [ new Sorter("createdAt", true)],
                         filters: [filter],

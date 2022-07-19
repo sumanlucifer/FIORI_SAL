@@ -39,7 +39,7 @@
                     <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                         <Label text="Choose what you want to change"/>
                         <CheckBox id="idJobInfo" select="onSelectJobInfo" text="Job Information"></CheckBox>
-                        <CheckBox width="20rem" id="idCompensationInfo" select="onSelectCompensation" text="Compensation Information"></CheckBox>
+                        <CheckBox width="25rem" id="idCompensationInfo" select="onSelectCompensation" text="Compensation Information"></CheckBox>
                     </fm:SimpleForm>
                  </VBox>
 
