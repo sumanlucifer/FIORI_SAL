@@ -27,10 +27,10 @@ sap.ui.define([
             onConfirmItsmRequest: function (oEvent) {
                 var oSelectedItem = oEvent.getParameter("selectedItem");
                 var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
-                this.triggerCrossApp(obj.subModuleId, obj.ID);
+                this.triggerCrossApp(obj.subModuleId, obj.ID, obj.externalCode);
             },
 
-            triggerCrossApp: function (sSubModuleID, sTicketID) {
+            triggerCrossApp: function (sSubModuleID, sTicketID, sExternalCode) {
                 debugger;
 
                 var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
@@ -42,7 +42,8 @@ sap.ui.define([
                     params: {
 
                         "submoduleId": sSubModuleID,
-                        "ticketId": sTicketID
+                        "ticketId": sTicketID,
+                        "externalCode": sExternalCode
 
                     }
                 })) || "";
