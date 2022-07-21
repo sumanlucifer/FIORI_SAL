@@ -113,7 +113,7 @@ sap.ui.define(
                 oCardData.donut["sap.card"].content.data.path = "/measures";
 
                 // Set Values for Header
-                oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalPending + oData.results[1].totalPending + oData.results[2].totalPending + oData.results[3].totalPending;
+                oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalPending + oData.results[1].totalPending + oData.results[2].totalPending;
                 // oCardData.donut["sap.card"].header.data.json.NumberCount =
                 //   oData.results[0].totalPending +
                 //   oData.results[1].totalPending +
@@ -125,8 +125,8 @@ sap.ui.define(
  
                 oData.results[0].name = "HR";
                 oData.results[1].name = "Procurement";
-                oData.results[2].name = "PM";
-                oData.results[3].name = "ITSM";
+                oData.results[2].name = "ITSM";
+              //oData.results[3].name = "ITSM";
 
                 cardManifests.setData(oCardData);
                 this.getView().setModel(cardManifests, "manifests");

@@ -110,7 +110,7 @@ sap.ui.define([
                         oCardData.donut["sap.card"].content.data.path = "/measures";
                         
                          // Set Values for Header
-                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalApproved + oData.results[1].totalApproved + oData.results[2].totalApproved + oData.results[3].totalApproved;
+                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalApproved + oData.results[1].totalApproved + oData.results[2].totalApproved ;
                         // oCardData.donut["sap.card"].content.data.json.NumberCount =  "0";
                         // oCardData.donut["sap.card"].content.data.json.Unit = "";
                         // oCardData.donut["sap.card"].content.data.json.Trend= "";
@@ -118,8 +118,8 @@ sap.ui.define([
 
                         oData.results[0].name = "HR";
                         oData.results[1].name = "Procurement";
-                        oData.results[2].name = "PM";
-                        oData.results[3].name = "ITSM";
+                        oData.results[2].name = "ITSM";
+                        //oData.results[3].name = "ITSM";
 
                         cardManifests.setData(oCardData);
                         this.getView().setModel(cardManifests, "manifests");
