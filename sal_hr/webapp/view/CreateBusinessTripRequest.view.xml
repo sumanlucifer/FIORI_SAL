@@ -34,7 +34,13 @@
                                 sorter : {
                                     path : 'label_defaultValue' 
                                 },
-                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelReqType'} ]
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelReqType'}, {
+        path: 'externalCode', 
+        operator: 'EQ', 
+        value1: '1',
+        and: 'true'
+
+      } ]
                                        }">
                         <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
 
