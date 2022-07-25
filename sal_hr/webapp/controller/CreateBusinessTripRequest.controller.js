@@ -62,13 +62,11 @@ sap.ui.define([
                         {
                             "cust_userId": sExternalCode,
                             
-                            "cust_dutyTravelMain_externalCode": sExternalCode,
+                        "cust_dutyTravelMain_externalCode": sExternalCode,
                           
-                            "cust_dutyTravelMain_effectiveStartDate": new Date(),
+                        "cust_dutyTravelMain_effectiveStartDate": new Date(),
 
                             "externalCode": sExternalCode,
-
-                      
                             "externalName": null,
                             "cust_requestType": "1",
                             "cust_perDiemPayComp": "9256",
@@ -166,36 +164,38 @@ sap.ui.define([
                             "cust_status": null,
                             "cust_returnDate": null,
                             "cust_paymentType": null,
-                            "mdfSystemRecordStatus": "N",
-                            "travelattachment1FileContent": "create travelattachment1 attache",
-                            "travelattachment1FileName": "travelattachment1.txt",
-                            "isTravelAttach1New": true,
-                            "travelattachment1UserId": sExternalCode,
+                            "mdfSystemRecordStatus": "N"
 
-
-                            "businessTravelattachmentFileContent": "businessTravelattachment create",
-                            "businessTravelattachmentFileName": "businessTravelAttachment.txt",
-                            "isbusinessTravelAttachNew": false,
-                            "businessTravelattachmentUserId": sExternalCode,
-
-                            "trainingTravelattachmentFileContent": "trainingTravelattachment create",
-                            "trainingTravelattachmentFileName": "trainingTravelattachment.txt",
-                            "istrainingTravelAttachNew": false,
-                            "trainingTravelattachmentUserId": sExternalCode,
-
-                            "receiptEmbassyattachmentFileContent": "receiptEmbassy 3create",
-                            "receiptEmbassyattachmentFileName": "receiptEmbassy.txt",
-                            "isreceiptEmbassyAttachNew": false,
-                            "receiptEmbassyattachmentUserId": sExternalCode,
-
-                            "visaCopyattachmentFileContent": "visaCopy 6 create",
-                            "visaCopyattachmentFileName": "visaCopy.txt",
-                            "isvisaCopyAttachNew": false,
-                            "visaCopyattachmentUserId": sExternalCode
-
+                         
 
                         }
-                    ]
+                    ],
+                    "travelattachment1FileContent": "create travelattachment1 attache",
+                    "travelattachment1FileName": "travelattachment1.txt",
+                    "isTravelAttach1New": true,
+                    "travelattachment1UserId": sExternalCode,
+
+
+                    "businessTravelattachmentFileContent": "businessTravelattachment create",
+                    "businessTravelattachmentFileName": "businessTravelAttachment.txt",
+                    "isbusinessTravelAttachNew": false,
+                    "businessTravelattachmentUserId": sExternalCode,
+
+                    "trainingTravelattachmentFileContent": "trainingTravelattachment create",
+                    "trainingTravelattachmentFileName": "trainingTravelattachment.txt",
+                    "istrainingTravelAttachNew": false,
+                    "trainingTravelattachmentUserId": sExternalCode,
+
+                    "receiptEmbassyattachmentFileContent": "receiptEmbassy 3create",
+                    "receiptEmbassyattachmentFileName": "receiptEmbassy.txt",
+                    "isreceiptEmbassyAttachNew": false,
+                    "receiptEmbassyattachmentUserId": sExternalCode,
+
+                    "visaCopyattachmentFileContent": "visaCopy 6 create",
+                    "visaCopyattachmentFileName": "visaCopy.txt",
+                    "isvisaCopyAttachNew": false,
+                    "visaCopyattachmentUserId": sExternalCode
+
                 },
 
 

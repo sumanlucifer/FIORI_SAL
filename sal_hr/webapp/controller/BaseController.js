@@ -341,11 +341,12 @@ sap.ui.define([
                 success: function (oData) {
                     MessageBox.success("Request Rejected Successfully.");
                     this.getView().setBusy(false);
-                    this.getView().getModel().refresh();
+                
                     this.oRouter.navTo("detail", {
                         parentMaterial: this.sParentID,
                         layout: "TwoColumnsMidExpanded"
                     });
+                    this.getView().getModel().refresh();
                 }.bind(this),
                 error: function (oError) {
                     this.getView().setBusy(false);
