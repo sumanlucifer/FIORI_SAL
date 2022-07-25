@@ -67,10 +67,7 @@ sap.ui.define([
                         }
                     },
                     events: {
-                        change: function (oEvent) {
-                            var oContextBinding = oEvent.getSource();
-                            oContextBinding.refresh(false);
-                        }.bind(this),
+                        
                         dataRequested: function () {
                             this.getView().setBusy(true);
                         }.bind(this),
