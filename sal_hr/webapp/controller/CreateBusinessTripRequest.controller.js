@@ -39,6 +39,8 @@ sap.ui.define([
 
              
                 this.fnSetCreateBusinessTripModel();
+            
+                
 
             },
             fnSetCreateBusinessTripModel: function () {
@@ -203,8 +205,8 @@ sap.ui.define([
                     oCreateBusinessTripModel = new JSONModel(oCreateBusinessObj);
 
                 this.getView().setModel(oCreateBusinessTripModel, "CreateBusinessTripModel");
-
-                // this._fnRemoveFileUploaderItems();
+                // this.getView().byId("idDestCountry").fireChange();
+                 this.onDestCountryChange();
             },
 
 
@@ -609,7 +611,7 @@ sap.ui.define([
             },
             onDestCountryChange: function (oEvent) {
 
-                var sDestCountry = oEvent.getSource().getSelectedKey(),
+                var sDestCountry = oEvent ? oEvent.getSource().getSelectedKey() : this.getView().byId("idDestCountry").getSelectedKey() ,
                     sPayGrade = this.EmpInfoObj.payGrade;
 
                 var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
