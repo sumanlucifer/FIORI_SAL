@@ -125,7 +125,7 @@
                     </Select>
 
                     <Label visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" text="{i18n>CitySaudi}"/>
-                    <Select visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" id="idCity" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}" change="onCitySaudiChange" items="{ path: '/SF_PickListValueV2',
+                    <Select visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" id="idCity" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" change="onCitySaudiChange" items="{ path: '/SF_PickListValueV2',
                                                             filters: [
                                                                         {
                                                                              path: 'PickListV2_id',
@@ -143,13 +143,17 @@
 
 
                     <Label visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" text="{i18n>OtherCity}" />
-                    <Input visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" id="idOtherCity" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" />
+                    <Input visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" id="idOtherCity" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}" />
 
                     <Label visible="{= ${LocalViewModel>/cityOtherCountry} === true ? true : false }" text="{i18n>CityOtherCountry}" />
                     <Input  visible="{= ${LocalViewModel>/cityOtherCountry} === true ? true : false }" id="idCityCountry" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}" />
+                    <Label text="{i18n>InsideOtsideKingdom}" required="true"/>
+                    <!-- <Input id="idInsOutKingdom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false" /> -->
 
-                    <Label text="{i18n>InsideOtsideKingdom}" required="true" />
-                    <Input id="idInsOutKingdom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false" />
+                     <Select id="idInsOutKingdom" change="onInsideOutsideChange" enabled="false" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}">
+                        <core:Item key="IN" text="Inside Kingdom (IN)" />
+                        <core:Item key="OUT" text="Outside Kingdom (OUT)" />
+                    </Select>
 
                     <Label text="{i18n>PerDiem}" />
                     <Input id="idPerDiem" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}" enabled="false"/>

@@ -94,7 +94,7 @@ sap.ui.define([
                             "cust_city": null,
                             "cust_SAUotherCity": null,
                             "cust_cityAll": null,
-                            "cust_inOutKingdom": "OUT",
+                            "cust_inOutKingdom": "IN",
                             "cust_perDiem": null,
                             "cust_totalPerDiem": null,
 
@@ -617,6 +617,8 @@ sap.ui.define([
                 var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
 
                 var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
+
+                var sIOKValueSet = sDestCountry === "SAU" ? this.byId("idInsOutKingdom").setSelectedKey("IN") : this.byId("idInsOutKingdom").setSelectedKey("OUT");
 
                 this.getView().getModel().read("/SF_DutyTravel_PerDiem",
                     {
