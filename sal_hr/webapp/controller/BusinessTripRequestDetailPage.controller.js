@@ -25,7 +25,10 @@ sap.ui.define([
                     EditMode: false,
                     PageTitle: null,
                     businessTravel: false,
-                    trainingTravel: false
+                    trainingTravel: false,
+                    cityVisible: false,
+                    otherCityVisible: false,
+                    cityOtherCountry: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -259,7 +262,7 @@ sap.ui.define([
                                 // Attachment Sections fields
                                 "travelattachment1FileContent": "create travel attache",
                                 "travelattachment1FileName": "tr1.txt",
-                                "isTravelAttach1New": true,
+                                "isTravelAttach1New": false,
                                 "travelattachment1UserId": "Extentia",
 
                                 "businessTravelattachmentFileContent": "btravle create",
@@ -269,7 +272,7 @@ sap.ui.define([
 
                                 "trainingTravelattachmentFileContent": "btravle2create",
                                 "trainingTravelattachmentFileName": "btrave2.txt",
-                                "istrainingTravelAttachNew": true,
+                                "istrainingTravelAttachNew": false,
                                 "trainingTravelattachmentUserId": "Extentia",
 
                                 "receiptEmbassyattachmentFileContent": "btravle 3create",
@@ -800,7 +803,7 @@ sap.ui.define([
 
                 // validate Inside or Out Kingdom Field
                 var oInsOutKingdom = this.getView().byId("idEditInsOutKingdom");
-                if (!oInsOutKingdom.getValue()) {
+                if (!oInsOutKingdom.getSelectedKey()) {
                     oInsOutKingdom.setValueState("Error");
                     oInsOutKingdom.setValueStateText("Please enter Inside or Out Kingdom.");
                     sValidationErrorMsg = "Please fill the all required fields.";

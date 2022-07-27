@@ -101,8 +101,8 @@
         <Label visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }"   text="{i18n>OtherCity}"/>
         <Input visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" id="idEditOtherCity" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}"/>
 
-        <Label text="{i18n>CityOtherCountry}"/>
-        <Input id="idEditCityCountry" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}"/>
+        <Label visible="{= ${LocalViewModel>/cityOtherCountry} === true ? true : false }"  text="{i18n>CityOtherCountry}"/>
+        <Input visible="{= ${LocalViewModel>/cityOtherCountry} === true ? true : false }"  id="idEditCityCountry" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}"/>
 
         <Label text="{i18n>InsideOtsideKingdom}" required="true"/>
         <!-- <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false"/> -->
