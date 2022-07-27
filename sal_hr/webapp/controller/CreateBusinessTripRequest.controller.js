@@ -169,7 +169,7 @@ sap.ui.define([
                             "mdfSystemRecordStatus": "N",
                             "travelattachment1FileContent": "create travelattachment1 attache",
                             "travelattachment1FileName": "travelattachment1.txt",
-                            "isTravelAttach1New": true,
+                            "isTravelAttach1New": false,
                             "travelattachment1UserId": sExternalCode,
         
         
@@ -283,9 +283,10 @@ sap.ui.define([
             },
 
             onHotelBookChange: function (evt) {
+                debugger;
 
                 var sValue = JSON.parse(evt.getSource().getSelectedKey());
-                this.getView().getModel("CreateBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_hotelBooking");
+                this.getView().getModel("CreateBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_hotelBooking", sValue);
 
 
             },
@@ -617,6 +618,8 @@ sap.ui.define([
                 var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
 
                 var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
+
+                var sCitySaudiVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", false);
 
                 var sIOKValueSet = sDestCountry === "SAU" ? this.byId("idInsOutKingdom").setSelectedKey("IN") : this.byId("idInsOutKingdom").setSelectedKey("OUT");
 

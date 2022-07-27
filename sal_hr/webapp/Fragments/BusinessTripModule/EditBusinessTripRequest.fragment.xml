@@ -82,8 +82,8 @@
             <core:ListItem key="{code}" text="{code}" additionalText="{externalName_defaultValue}"/>
         </Select>
 
-        <Label text="{i18n>CitySaudi}"/>
-        <Select id="idEditCity" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" items="{ path: '/SF_PickListValueV2',
+        <Label visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" text="{i18n>CitySaudi}"/>
+        <Select visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" id="idEditCity" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" change="onCitySaudiChange" items="{ path: '/SF_PickListValueV2',
                                                             filters: [
                                                                         {
                                                                              path: 'PickListV2_id',
@@ -98,14 +98,20 @@
             <core:Item key="{externalCode}" text="{label_defaultValue}" />
         </Select>
 
-        <Label text="{i18n>OtherCity}"/>
-        <Input id="idEditOtherCity" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}"/>
+        <Label visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }"   text="{i18n>OtherCity}"/>
+        <Input visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" id="idEditOtherCity" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}"/>
 
         <Label text="{i18n>CityOtherCountry}"/>
         <Input id="idEditCityCountry" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}"/>
 
         <Label text="{i18n>InsideOtsideKingdom}" required="true"/>
-        <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false"/>
+        <!-- <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false"/> -->
+
+
+           <Select id="idEditInsOutKingdom" change="onInsideOutsideChange" enabled="false" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}">
+                        <core:Item key="IN" text="Inside Kingdom (IN)" />
+                        <core:Item key="OUT" text="Outside Kingdom (OUT)" />
+                    </Select>
 
         <Label text="{i18n>PerDiem}"/>
         <Input id="idEditPerDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}" enabled="false"/>
@@ -171,7 +177,7 @@
     <upload:UploadSet id="idEditAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? true : false}" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
         <upload:toolbar>
             <OverflowToolbar>
-                <Label text="{i18n>AttachBoardingPass}" required="true"/>
+                <Label text="{i18n>AttachBoardingPass}" required="false"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
         </upload:toolbar>

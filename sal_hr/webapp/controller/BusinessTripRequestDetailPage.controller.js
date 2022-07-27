@@ -77,7 +77,7 @@ sap.ui.define([
                         this._fnSetUserName(oData);
                         this._fnSetDisplayEditBusinessTripModel(oData);
                     }.bind(this),
-                    error: function () {
+                    error: function (oError) {
                         this.getView().setBusy(false);
                         if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
                             sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
@@ -264,7 +264,7 @@ sap.ui.define([
 
                                 "businessTravelattachmentFileContent": "btravle create",
                                 "businessTravelattachmentFileName": "btravel.txt",
-                                "isbusinessTravelAttachNew": true,
+                                "isbusinessTravelAttachNew": false,
                                 "businessTravelattachmentUserId": "Extentia",
 
                                 "trainingTravelattachmentFileContent": "btravle2create",
@@ -274,12 +274,12 @@ sap.ui.define([
 
                                 "receiptEmbassyattachmentFileContent": "btravle 3create",
                                 "receiptEmbassyattachmentFileName": "btrave3.txt",
-                                "isreceiptEmbassyAttachNew": true,
+                                "isreceiptEmbassyAttachNew": false,
                                 "receiptEmbassyattachmentUserId": "Extentia",
 
                                 "visaCopyattachmentFileContent": "btravle 6 create",
                                 "visaCopyattachmentFileName": "btrave6.txt",
-                                "isvisaCopyAttachNew": true,
+                                "isvisaCopyAttachNew": false,
                                 "visaCopyattachmentUserId": "Extentia",
 
                                 "travelAttachment1Id": "34908",
@@ -299,8 +299,20 @@ sap.ui.define([
                     });
 
                 this.getView().setModel(oDisplayEditBusinessTripModel, "DisplayEditBusinessTripModel");
+                
                 this.getView().setModel(oBusinessTripAttachmentModel, "BusinessTripAttachmentModel");
                 this.getView().setBusy(false);
+
+                this.getView().getModel("BusinessTripAttachmentModel").getProperty("/businessTravelAttachment") ? null: this.getView().byId("idEditAttachBoardingPassBusiness").removeAllItems();
+
+                this.getView().getModel("BusinessTripAttachmentModel").getProperty("/receiptEmbassyAttachment") ? null: this.getView().byId("idEditAttachEmbassyReceipt").removeAllItems();
+
+
+                this.getView().getModel("BusinessTripAttachmentModel").getProperty("/trainingTravelAttachment") ? null: this.getView().byId("idEditAttachBoardingPassTraining").removeAllItems();
+
+                this.getView().getModel("BusinessTripAttachmentModel").getProperty("/visaCopyAttachment") ? null: this.getView().byId("idEditAttachVisaCopy").removeAllItems();
+
+                this.onDestCountryChange();
 
                 this._fnSetDesiredAirlineTicketTravelTimeValues();
             },
@@ -318,6 +330,52 @@ sap.ui.define([
                 }
             },
 
+            onHotelBookChange: function (evt) {
+                debugger;
+
+                var sValue = JSON.parse(evt.getSource().getSelectedKey());
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_hotelBooking", sValue);
+
+
+            },
+            onDestCountryChange: function (oEvent) {
+
+                var sDestCountry = oEvent ? oEvent.getSource().getSelectedKey() : this.getView().byId("idEditDestCountry").getSelectedKey() ,
+                    sPayGrade = this.EmpInfoObj.payGrade;
+
+                var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
+
+                var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
+
+                var sCitySaudiVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", false);
+
+                var sIOKValueSet = sDestCountry === "SAU" ? this.byId("idEditInsOutKingdom").setSelectedKey("IN") : this.byId("idEditInsOutKingdom").setSelectedKey("OUT");
+
+                this.getView().getModel().read("/SF_DutyTravel_PerDiem",
+                    {
+                        urlParameters: {
+                            "$filter": "(cust_country eq '" + sDestCountry + "' and cust_salaryGrade eq '" + sPayGrade + "')"
+                        },
+                        success: function (oData) {
+                            this.getView().byId("idEditPerDiem").setValue(oData.results[0].cust_amount);
+                            this.fnCalculateTotalPerDiem();
+                        }.bind(this),
+                        error: function (oError) {
+                            sap.m.MessageBox.error(JSON.stringify(oError));
+                        }.bind(this),
+                    });
+
+
+            },
+
+            onCitySaudiChange: function (oEvent) {
+                debugger;
+                var sCitySaudi = oEvent.getSource().getSelectedKey();
+
+
+                var sCitySaudiVisibleSet = sCitySaudi === "OTH" ? this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", false);
+
+            },
             onEditPress: function () {
                 var sVisaType = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee");
                 this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee", (sVisaType ? sVisaType : "N"));
@@ -761,19 +819,19 @@ sap.ui.define([
                 }
 
                 // Validate Boarding Pass attachment sections
-                if (this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_tripCategory") === "B") {
-                    if (this.getView().byId("idEditAttachBoardingPassBusiness").getItems().length <= 0) {
-                        sValidationErrorMsg = "Please upload Boarding Pass.";
-                        this.getView().setBusy(false);
-                        return sValidationErrorMsg;
-                    }
-                } else {
-                    if (this.getView().byId("idEditAttachBoardingPassTraining").getItems().length <= 0) {
-                        sValidationErrorMsg = "Please upload Boarding Pass.";
-                        this.getView().setBusy(false);
-                        return sValidationErrorMsg;
-                    }
-                }
+                // if (this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_tripCategory") === "B") {
+                //     if (this.getView().byId("idEditAttachBoardingPassBusiness").getItems().length <= 0) {
+                //         sValidationErrorMsg = "Please upload Boarding Pass.";
+                //         this.getView().setBusy(false);
+                //         return sValidationErrorMsg;
+                //     }
+                // } else {
+                //     if (this.getView().byId("idEditAttachBoardingPassTraining").getItems().length <= 0) {
+                //         sValidationErrorMsg = "Please upload Boarding Pass.";
+                //         this.getView().setBusy(false);
+                //         return sValidationErrorMsg;
+                //     }
+                // }
 
                 // Validate embasy attachment sections
                 if (this.byId("idEditVisaType").getSelectedKey() === "V") {
