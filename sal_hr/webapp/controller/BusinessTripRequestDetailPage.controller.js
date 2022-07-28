@@ -28,7 +28,8 @@ sap.ui.define([
                     trainingTravel: false,
                     cityVisible: false,
                     otherCityVisible: false,
-                    cityOtherCountry: true
+                    cityOtherCountry: true,
+                    ExpenseTypeBusinessTravelVisible: false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -51,6 +52,7 @@ sap.ui.define([
                     this.byId("idBusinessTripetailsFullScreenBTN").setIcon("sap-icon://exit-full-screen");
                     this._getTicketData(this.sChildID);
                 }
+                this.onReqTypeChange();
             },
 
             _bindView: function (data) {
@@ -876,6 +878,7 @@ sap.ui.define([
 
             onReqTypeChange: function () {
                 if (this.getView().byId("idEditReqType").getSelectedKey() === "1") {
+                    this.getView().getModel("LocalViewModel").setProperty("/ExpenseTypeBusinessTravelVisible", false);
                     this.byId("idEditHRBook").setEnabled(true);
                     this.byId("idEditHRBook").setValue("Yes");
                     this.byId("idEditTravelDate").setEnabled(true);
@@ -887,6 +890,8 @@ sap.ui.define([
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
                 } else {
+                    
+                    this.getView().getModel("LocalViewModel").setProperty("/ExpenseTypeBusinessTravelVisible", true);
                     this.byId("idEditHRBook").setEnabled(false);
                     this.byId("idEditTravelDate").setEnabled(false);
                     this.byId("idEditTripCategory").setEnabled(false);

@@ -60,6 +60,18 @@
 
         <Label text="{i18n>TravelBusinessJustification}" required="true"/>
         <TextArea id="idEditTravelJustification" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignJustification}"/>
+
+        <Label  visible="{= ${LocalViewModel>/ExpenseTypeBusinessTravelVisible} === true ? true : false }" text="{i18n>ExpenseTypeBusinessTravel}" />
+        <Select  visible="{= ${LocalViewModel>/ExpenseTypeBusinessTravelVisible} === true ? true : false }" id="idEditBusinesExpense" change="onBusinessExpenseChange"  items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelExpTypeTravel'} ]
+                                       }">
+            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
+        </Select>
+
+        
     </form:SimpleForm>
 
     <form:SimpleForm title="{i18n>TravelInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
