@@ -120,7 +120,7 @@
                 </form:SimpleForm>
 
 
-    <upload:UploadSet id="idDisplayAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? true : false}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" 
+    <upload:UploadSet id="idDisplayAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' &amp;&amp; ${BusinessTripAttachmentModel>/businessTravelAttachment} !== null  }"  uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" 
     instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
@@ -134,7 +134,8 @@
         </upload:items>
     </upload:UploadSet>
 
-    <upload:UploadSet id="idDisplayAttachBoardingPassTraining" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? false : true}" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" 
+    
+    <upload:UploadSet id="idDisplayAttachBoardingPassTraining" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' &amp;&amp; ${BusinessTripAttachmentModel>/trainingTravelAttachment} !== null  }"  uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" 
     instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
@@ -148,6 +149,7 @@
         </upload:items>
     </upload:UploadSet>
 
+
     <form:SimpleForm title="{i18n>VisaInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
         <Label text="{i18n>VisaType}"/>
         <Text id="idDisplayVisaType" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee} === 'V' ? 'Visa Fee' : 'No Visa'}" />
@@ -159,7 +161,7 @@
         <Text id="idDisplayVisaAmt" text="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeeExpenseAmount} ? ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_visaFeeExpenseAmount} : '-'}"/>
     </form:SimpleForm>
 
-    <upload:UploadSet id="idDisplayAttachVisaCopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+    <upload:UploadSet visible="{= ${BusinessTripAttachmentModel>/visaCopyAttachment} !== null}" id="idDisplayAttachVisaCopy" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>AttachVisaCopy}"/>
@@ -172,7 +174,7 @@
         </upload:items>
     </upload:UploadSet>
 
-    <upload:UploadSet id="idDisplayAttachEmbassyReceipt" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
+    <upload:UploadSet visible="{= ${BusinessTripAttachmentModel>/receiptEmbassyAttachment} !== null}" id="idDisplayAttachEmbassyReceipt" uploadButtonInvisible="true" class="sapUiSmallMarginBeginEnd" instantUpload="false" showIcons="true" uploadEnabled="false" terminationEnabled="false" maxFileNameLength="30" maxFileSize="200" fileTypes="pdf,doc,docx,docm,ppt,pptx,xls,xlsx,jpg,jpeg,png">
         <upload:toolbar>
             <OverflowToolbar>
                 <Label text="{i18n>AttachEmbassyReceipt}"/>
