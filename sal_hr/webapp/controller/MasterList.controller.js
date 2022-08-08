@@ -70,7 +70,7 @@ sap.ui.define(
         var startupParams = this.getOwnerComponent().getComponentData()
           .startupParameters;
         // get Startup params from Owner Component
-        if (startupParams.submoduleId[0]) {
+        if (startupParams?.submoduleId && startupParams?.submoduleId[0]) {
           this._navToDetail(
             startupParams.submoduleId[0],
             startupParams.ticketId[0]
@@ -180,6 +180,24 @@ sap.ui.define(
           },
 
           success: function (oData) {
+
+            // oData = {
+            //   results: [
+            //     {
+            //       createSelf: true,
+            //       readSelf: true,
+            //       updateSelf: true,
+            //       deleteSelf: true,
+            //       withdrawSelf: true,
+            //       createOther: true,
+            //       readOther: true,
+            //       updateOther: true,
+            //       deleteOther: true,
+            //       approveOther: true,
+            //       rejectOther: true,
+            //     },
+            //   ],
+            // };
             if (oData.results.length === 0) {
               sap.m.MessageBox.error(
                 "You do not have permission to perform this action"
