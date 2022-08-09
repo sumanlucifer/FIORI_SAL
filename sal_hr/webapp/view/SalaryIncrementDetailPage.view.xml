@@ -90,7 +90,7 @@
                             <items>
 
                                 <IconTabFilter visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" id="idEditBusinessTripRequestITB" text="{i18n>Details}">
-                        <VBox visible="{= ${LocalViewModel>/jobInfoVisible} ? true : false }"  >
+                        <VBox visible="{= ${LocalViewModel>/jobInfoVisible} ? true : true }"  >
                         
                           <!-- <core:Fragment  fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.JobInfo" type="XML"/> -->
 
@@ -98,15 +98,7 @@
 
                         </VBox>
 
-                           <VBox visible="{= ${LocalViewModel>/componesationInfoVisible} ? true : false }"  >
-                        
-                          <!-- <core:Fragment  fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.CompensationInfo" type="XML"/> -->
-
-                             <core:Fragment  fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.WorkflowPendingData" type="XML"/>
-
                           
-                        
-                        </VBox>
                                    
                                 </IconTabFilter>
 

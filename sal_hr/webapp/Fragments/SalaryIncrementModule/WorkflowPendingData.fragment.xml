@@ -4,11 +4,11 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:grid="sap.ui.layout.cssgrid">
      
-        <Panel id="panelForGridList" backgroundDesign="Transparent">
+        <Panel backgroundDesign="Transparent">
 	
 
 		<f:GridList
-			id="gridList"
+			
 			items="{
 				path: 'TestModel>/items',
 				sorter: {

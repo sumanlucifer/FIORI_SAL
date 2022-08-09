@@ -166,7 +166,7 @@ sap.ui.define([
                   .getModel("LocalViewModel")
                   .setProperty("/componesationInfoVisible", false);
 
-                this.getView().setBusy(true);
+             
 
                 this.callWorkflowPendindDataService(object.workflowRequestId);
 
@@ -212,7 +212,7 @@ sap.ui.define([
                   .getModel("LocalViewModel")
                   .setProperty("/jobInfoVisible", false);
 
-                this.getView().setBusy(true);
+               
                 this.callWorkflowPendindDataService(object.workflowRequestId);
                 // var oComponentModel = this.getComponentModel();
                 // var sKey = oComponentModel.createKey("/SF_EmpCompensation", {
@@ -261,6 +261,7 @@ sap.ui.define([
               }
               
             //    var sWFRequestId = "62422";
+            this.getView().setBusy(true);
 
                 this.getOwnerComponent().getModel("sfsfModel").create("/getWorkflowPendingData", null, {
                     urlParameters: {
