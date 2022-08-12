@@ -34,7 +34,7 @@
                         <core:Item key="{code}" text="{code}" />
                         </Select>
                          </fm:SimpleForm>
-                            <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                            <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label id="idALTCostCenterLBL" text="{i18n>AlternativeCostCenter}"/>
                        <Select id="idInpAltCostCenter" items="{ path: '/SF_FOCostCenter',
                                                 sorter : {
@@ -44,7 +44,7 @@
                         <core:Item key="{externalCode}" text="{name} ({externalCode})" />
                         </Select>
 
-                     </fm:SimpleForm>
+                     </fm:SimpleForm> -->
            
         
 
