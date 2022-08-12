@@ -294,8 +294,16 @@ sap.ui.define([
                                 "visaCopyAttachmentId": "34915"
                             }
                         ]
-                    },
-                    oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
+                    };
+
+                    var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+
+                    if(bIsUserManager) {
+                        debugger;
+                        this.fnGetEmpInfo(oTravelItemDetailsObj.externalCode, "4");
+
+                    }
+                    var oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
                     oBusinessTripAttachmentModel = new JSONModel({
                         trainingTravelAttachment: oTravelItemDetailsObj.cust_trainingTravelAttachNav,
                         businessTravelAttachment: oTravelItemDetailsObj.cust_businessTravelAttachNav,
@@ -320,6 +328,21 @@ sap.ui.define([
                 this.onDestCountryChange();
 
                 this._fnSetDesiredAirlineTicketTravelTimeValues();
+            },
+
+            fnSetEmployeeBusinessTripModel: function() {
+                debugger;
+                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
+
+
+                var sExternalCode = this.EmpInfoObj.userId,
+                    sFirstName = this.EmpInfoObj.firstName + " " + this.EmpInfoObj.middleName + " " + this.EmpInfoObj.lastName,
+                    sPayGrade = this.EmpInfoObj.payGrade,
+                    sCostCenter = this.EmpInfoObj.costCentre,
+                    sPhnNum = this.EmpInfoObj.emergencyNumber;
+
+                
+                
             },
 
             _fnSetDesiredAirlineTicketTravelTimeValues: function () {

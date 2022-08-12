@@ -198,6 +198,11 @@ sap.ui.define([
                         case "5":
                             this.fnSetCreateBusinessCardLocalModel(oData);
                             break;
+                        
+                        //Employee Detail
+                        case "4":
+                            this.fnSetEmployeeBusinessTripModel(oData);
+                            break;
                     }
                 }.bind(this),
                 error: function (oError) {
