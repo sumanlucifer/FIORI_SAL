@@ -49,40 +49,41 @@ sap.ui.define([
                 this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
+                this.callWorkflowPendindDataService(object.workflowRequestId);
                 this.onCallHistoryData(object.ticketCode);
 
 
               
-                var oComponentModel = this.getComponentModel(),
-                    sKey = null;
-                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
-                sKey = oComponentModel.createKey("/SF_Pay", {
-                    payComponentCode: object.externalCode,
-                    payDate: object.effectiveStartDate,
-                    userId: object.employeeId
-                });
-                this.getView().bindElement({
-                    path: sKey,
-                    parameters: {
-                        expand: "payComponentCodeNav,alternativeCostCenterNav,userNav",
-                        custom: {
-                            "recordStatus": object.status,
-                            "IsUserManager": bIsUserManager
-                        }
-                    },
-                    events: {
-                        change: function (oEvent) {
-                            var oContextBinding = oEvent.getSource();
-                            oContextBinding.refresh(false);
-                        }.bind(this),
-                        dataRequested: function () {
-                            this.getView().setBusy(true);
-                        }.bind(this),
-                        dataReceived: function () {
-                            this.getView().setBusy(false);
-                        }.bind(this)
-                    }
-                });
+                // var oComponentModel = this.getComponentModel(),
+                //     sKey = null;
+                // var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+                // sKey = oComponentModel.createKey("/SF_Pay", {
+                //     payComponentCode: object.externalCode,
+                //     payDate: object.effectiveStartDate,
+                //     userId: object.employeeId
+                // });
+                // this.getView().bindElement({
+                //     path: sKey,
+                //     parameters: {
+                //         expand: "payComponentCodeNav,alternativeCostCenterNav,userNav",
+                //         custom: {
+                //             "recordStatus": object.status,
+                //             "IsUserManager": bIsUserManager
+                //         }
+                //     },
+                //     events: {
+                //         change: function (oEvent) {
+                //             var oContextBinding = oEvent.getSource();
+                //             oContextBinding.refresh(false);
+                //         }.bind(this),
+                //         dataRequested: function () {
+                //             this.getView().setBusy(true);
+                //         }.bind(this),
+                //         dataReceived: function () {
+                //             this.getView().setBusy(false);
+                //         }.bind(this)
+                //     }
+                // });
 
               
 
@@ -90,6 +91,48 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").refresh();
 
             },
+
+            callWorkflowPendindDataService : function(wfID)
+            {
+
+              if(!wfID)
+              {
+                return false;
+              }
+              
+            //    var sWFRequestId = "62422";
+            this.getView().setBusy(true);
+
+                this.getOwnerComponent().getModel("sfsfModel").create("/getWorkflowPendingData", null, {
+                    urlParameters: {
+                        "wfRequestId": wfID + "L"
+                    },
+                  success: function (oData) {
+                    this.getView().setBusy(false);
+                    var items = this.convertResponseToGridItems(oData);
+                    var oTestModel = new JSONModel({
+                      items: items
+              });
+               this.getView().setModel(oTestModel, "TestModel");
+                  }.bind(this),
+                  error: function () {
+                    this.getView().setBusy(false);
+                    // this.fnSetDisplaySalryCompInfoModel(null);
+                  }.bind(this),
+                });
+
+            },
+
+            convertResponseToGridItems: function (oData) {
+                var items = [];
+                oData.d[0].workflowAttributeGroups.results.forEach((group) => {
+                  group.changeSet.results.forEach((item) => {
+                    item.group = group.title;
+                    items.push(item);
+                  });
+                });
+                return items;
+              },
             onCallHistoryData: function (sticketCode) {
                 var ticketCodeFilter = new sap.ui.model.Filter({
                     path: "ticketCode",

@@ -81,7 +81,12 @@
                 <IconTabBar id="idLeaveiconTabBar">
                     <items>
                         <IconTabFilter id="idBankDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.DisplayAdditionalPaymentRequest" type="XML"/>
+                            <!-- <core:Fragment fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.DisplayAdditionalPaymentRequest" type="XML"/> -->
+
+
+                            <core:Fragment  fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.WorkflowPendingData" type="XML"/>
+
+
                         </IconTabFilter>
                         <IconTabFilter id="idBankEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
                             <core:Fragment fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.EditAdditionalPaymentRequest" type="XML"/>

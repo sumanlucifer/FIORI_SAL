@@ -19,6 +19,11 @@
                                 <core:Item key="MyTeam" text="MyTeam" />
 
                             </Select>
+   
+                            <HBox class="DateRangeCss"  alignContent="Right">
+ <DateRangeSelection id="DRS2" width="20rem" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
+   </HBox>
+
                         </HBox>    
                         <commons:ChartContainer showFullScreen="true" showZoom="true">
                             <commons:content>
