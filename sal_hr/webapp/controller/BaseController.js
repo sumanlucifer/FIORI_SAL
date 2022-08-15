@@ -173,6 +173,31 @@ sap.ui.define([
                 }
             };
         }),
+        fnGetBusinessTripEmpInfo: function(sExternalCode) {
+            debugger;
+            this.empModel = this.getOwnerComponent().getModel();
+            var sKey = this.getView().getModel().createKey("/EmpInfo", {
+                userId: sExternalCode
+            });
+            this.getView().setBusy(true);
+            this.empModel.read(sKey, {
+                urlParameters: {
+                    "moreInfo": true
+                },
+                success: function (oData) {
+                    this.fnSetEmployeeBusinessTripModel(oData);
+                }.bind(this),
+                error: function (oError) {
+                    this.getView().setBusy(false);
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                }.bind(this)
+            });
+        },
+                                   
 
         fnGetEmpInfo: function (sExternalCode, sParentID) {
             this.mainModel = this.getOwnerComponent().getModel();
@@ -181,7 +206,7 @@ sap.ui.define([
             });
             this.sParentID = sParentID;
             this.getView().setBusy(true);
-            this.mainModel.read(sKey, {
+            this.mainModel.read(sKey+"?moreInfo=true", {
                 success: function (oData) {
                     this.getView().setBusy(false);
                     switch (this.sParentID) {
@@ -199,10 +224,7 @@ sap.ui.define([
                             this.fnSetCreateBusinessCardLocalModel(oData);
                             break;
                         
-                        //Employee Detail
-                        case "4":
-                            this.fnSetEmployeeBusinessTripModel(oData);
-                            break;
+
                     }
                 }.bind(this),
                 error: function (oError) {

@@ -296,13 +296,8 @@ sap.ui.define([
                         ]
                     };
 
-                    var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
 
-                    if(bIsUserManager) {
-                        debugger;
-                        this.fnGetEmpInfo(oTravelItemDetailsObj.externalCode, "4");
-
-                    }
+                    
                     var oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
                     oBusinessTripAttachmentModel = new JSONModel({
                         trainingTravelAttachment: oTravelItemDetailsObj.cust_trainingTravelAttachNav,
@@ -314,6 +309,14 @@ sap.ui.define([
                 this.getView().setModel(oDisplayEditBusinessTripModel, "DisplayEditBusinessTripModel");
                 
                 this.getView().setModel(oBusinessTripAttachmentModel, "BusinessTripAttachmentModel");
+                
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+
+                if(bIsUserManager) {
+                    debugger;
+                    this.fnGetBusinessTripEmpInfo(oTravelItemDetailsObj.externalCode);
+                }
+
                 this.getView().setBusy(false);
 
                 this.getView().getModel("BusinessTripAttachmentModel").getProperty("/businessTravelAttachment") ? null: this.getView().byId("idEditAttachBoardingPassBusiness").removeAllItems();
@@ -330,19 +333,12 @@ sap.ui.define([
                 this._fnSetDesiredAirlineTicketTravelTimeValues();
             },
 
-            fnSetEmployeeBusinessTripModel: function() {
-                debugger;
-                this.EmpInfoObj = this.getOwnerComponent().getModel("EmpInfoModel").getData();
-
-
-                var sExternalCode = this.EmpInfoObj.userId,
-                    sFirstName = this.EmpInfoObj.firstName + " " + this.EmpInfoObj.middleName + " " + this.EmpInfoObj.lastName,
-                    sPayGrade = this.EmpInfoObj.payGrade,
-                    sCostCenter = this.EmpInfoObj.costCentre,
-                    sPhnNum = this.EmpInfoObj.emergencyNumber;
-
-                
-                
+            fnSetEmployeeBusinessTripModel: function(oData) {
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/payGrade", oData.payGrade);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/costCentre", oData.costCentre);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/emergencyNumber", oData.emergencyNumber);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_empName", (oData.firstName + " " + ((!oData.middleName)?"":oData.e.middleName+" ")+ oData.lastName));
+                this.empRequested = oData.payGrade;
             },
 
             _fnSetDesiredAirlineTicketTravelTimeValues: function () {
@@ -369,8 +365,8 @@ sap.ui.define([
             onDestCountryChange: function (oEvent) {
 
                 var sDestCountry = oEvent ? oEvent.getSource().getSelectedKey() : this.getView().byId("idEditDestCountry").getSelectedKey() ,
-                    sPayGrade = this.EmpInfoObj.payGrade;
-
+                    // sPayGrade = this.EmpInfoObj.payGrade;
+                    sPayGrade = this.empRequested;
                 var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
 
                 var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
