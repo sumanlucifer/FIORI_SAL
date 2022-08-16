@@ -294,8 +294,11 @@ sap.ui.define([
                                 "visaCopyAttachmentId": "34915"
                             }
                         ]
-                    },
-                    oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
+                    };
+
+
+                    
+                    var oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
                     oBusinessTripAttachmentModel = new JSONModel({
                         trainingTravelAttachment: oTravelItemDetailsObj.cust_trainingTravelAttachNav,
                         businessTravelAttachment: oTravelItemDetailsObj.cust_businessTravelAttachNav,
@@ -306,6 +309,14 @@ sap.ui.define([
                 this.getView().setModel(oDisplayEditBusinessTripModel, "DisplayEditBusinessTripModel");
                 
                 this.getView().setModel(oBusinessTripAttachmentModel, "BusinessTripAttachmentModel");
+                
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+
+                if(bIsUserManager) {
+                    debugger;
+                    this.fnGetBusinessTripEmpInfo(oTravelItemDetailsObj.externalCode);
+                }
+
                 this.getView().setBusy(false);
 
                 this.getView().getModel("BusinessTripAttachmentModel").getProperty("/businessTravelAttachment") ? null: this.getView().byId("idEditAttachBoardingPassBusiness").removeAllItems();
@@ -320,6 +331,14 @@ sap.ui.define([
                 this.onDestCountryChange();
 
                 this._fnSetDesiredAirlineTicketTravelTimeValues();
+            },
+
+            fnSetEmployeeBusinessTripModel: function(oData) {
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/payGrade", oData.payGrade);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/costCentre", oData.costCentre);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/emergencyNumber", oData.emergencyNumber);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_empName", (oData.firstName + " " + ((!oData.middleName)?"":oData.e.middleName+" ")+ oData.lastName));
+                this.empRequested = oData.payGrade;
             },
 
             _fnSetDesiredAirlineTicketTravelTimeValues: function () {
@@ -346,8 +365,8 @@ sap.ui.define([
             onDestCountryChange: function (oEvent) {
 
                 var sDestCountry = oEvent ? oEvent.getSource().getSelectedKey() : this.getView().byId("idEditDestCountry").getSelectedKey() ,
-                    sPayGrade = this.EmpInfoObj.payGrade;
-
+                    // sPayGrade = this.EmpInfoObj.payGrade;
+                    sPayGrade = this.empRequested;
                 var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
 
                 var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
