@@ -83,7 +83,7 @@ sap.ui.define([
                 var sEffectiveStartDate = this.getView().byId("idIssueDate").getDateValue();
                 var sCurrency = this.getView().byId("idInpCurrencyCode").getSelectedKey();
                 var sType = this.getView().byId("idInpType").getSelectedKey();
-                var saltCostCenter = this.getView().byId("idInpAltCostCenter").getSelectedKey();
+                // var saltCostCenter = this.getView().byId("idInpAltCostCenter").getSelectedKey();
                 var sValue = this.getView().byId("idValueINP").getValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                     oDate = dateFormat.format(new Date(sEffectiveStartDate));
@@ -93,7 +93,7 @@ sap.ui.define([
                     "userId": sUserID,
                     "payDate": sEffectiveStartDate,
                     "notes": null,
-                    "alternativeCostCenter": saltCostCenter,
+                    "alternativeCostCenter": "",
                     "currencyCode": sCurrency,
                     "value": sValue
                 };
