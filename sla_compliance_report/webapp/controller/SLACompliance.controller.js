@@ -93,6 +93,19 @@ sap.ui.define([
                 });
             },
 
+            onFilterDateChange: function (oEvent) {
+                this.getView().getModel("LocalViewModel").setProperty("/FromDate", oEvent.getSource().getDateValue());
+                this.getView().getModel("LocalViewModel").setProperty("/ToDate", oEvent.getSource().getSecondDateValue());
+                this.getView().getModel("LocalViewModel").refresh();
+
+                
+                var requestForTeamReports = "false";
+     
+             
+                this.fnReadTickitsSummaryData(requestForTeamReports);
+              
+            },
+
             fnReadTickitsSummaryData: function (requestForTeamReports) {
                 var oFromDate = this.getView().getModel("LocalViewModel").getProperty("/FromDate"),
                 oToDate = this.getView().getModel("LocalViewModel").getProperty("/ToDate"),
