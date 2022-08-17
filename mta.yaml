@@ -158,6 +158,10 @@ modules:
       - comsalfeedbacktile.zip
       name: comsalfeedbacktile
       target-path: resources/
+    - artifacts:
+      - comsalfeedbacktilecontainer.zip
+      name: comsalfeedbacktilecontainer
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -441,6 +445,16 @@ modules:
 - name: comsalfeedbacktile
   type: html5
   path: feedbacktile
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalfeedbacktilecontainer
+  type: html5
+  path: feedbacktilecontainer
   build-parameters:
     build-result: dist
     builder: custom
