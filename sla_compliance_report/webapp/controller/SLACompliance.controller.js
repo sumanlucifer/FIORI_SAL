@@ -135,6 +135,7 @@ sap.ui.define([
                         }
                         this.getView().setModel(oSLAComplianceDataModel, "SLAComplianceDataModel");
                         this.fnInitializeChart();
+                        this.getView().getModel("SLAComplianceDataModel").refresh();
                     }.bind(this),
                     error: function () {
                         this.getView().setBusy(false);
