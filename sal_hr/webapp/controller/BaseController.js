@@ -76,8 +76,8 @@ sap.ui.define([
             oComponentModel.read("/Tickets", {
                 filters: [filter],
                 urlParameters: {
-                    $expand:"ticketWorkflowParticipants",
-                    "IsUserManager": bIsUserManager
+                    "IsUserManager": bIsUserManager,
+                    $expand:"ticketWorkflowParticipants"
                 },
                 success: function (oData) {
                     this.getView().setBusy(false);
