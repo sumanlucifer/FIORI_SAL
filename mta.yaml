@@ -154,6 +154,10 @@ modules:
       - comsalitsrvmgmtrequestssummarymanager.zip
       name: comsalitsrvmgmtrequestssummarymanager
       target-path: resources/
+    - artifacts:
+      - comsalfeedbacktile.zip
+      name: comsalfeedbacktile
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -427,6 +431,16 @@ modules:
 - name: comsalitsrvmgmtrequestssummarymanager
   type: html5
   path: itsrvmgmtrequestssummarymanager
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalfeedbacktile
+  type: html5
+  path: feedbacktile
   build-parameters:
     build-result: dist
     builder: custom
