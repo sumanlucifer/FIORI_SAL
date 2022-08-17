@@ -15,9 +15,10 @@ server:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
+          version: ''
         backend:
-          - path: /sap
-            url: http://localhost
+          - path: /odata
+            url: https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de3438ae57.cfapps.eu10.hana.ondemand.com
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
