@@ -72,37 +72,13 @@
                                                 formatOptions: {pattern: 'MM/dd/yyyy'}}"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
-                    <ObjectAttribute title="Timeline"/>
-                       	<ui:MicroProcessFlow>
+                        <ObjectAttribute title="Timeline"/>
+                       	<ui:MicroProcessFlow content="{headerModel>/ticketWorkflowParticipants}">
 		                    <ui:content>
-			                    <ui:MicroProcessFlowItem state="Error" press="itemPress">
-				                    <ui:customData>
-					<core:CustomData key="title" value="Shipping"/>
-					<core:CustomData key="icon" value="sap-icon://warning"/>
-					<core:CustomData key="subTitle" value="Overdue in 2 days"/>
-					<core:CustomData key="description"
-									 value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin maximus congue massa, sed euismod lectus tristique at. Praesent ornare arcu lacus, id consectetur ligula vestibulum vel. Nunc at lorem feugiat, malesuada nunc eu, ultrices lorem."/>
-				</ui:customData>
-			</ui:MicroProcessFlowItem>
-			<ui:MicroProcessFlowItem state="Success" press="itemPress">
-				<ui:customData>
-					<core:CustomData key="title" value="Payment"/>
-					<core:CustomData key="icon" value="sap-icon://accept"/>
-					<core:CustomData key="subTitle" value="Payment successful"/>
-					<core:CustomData key="description" value="Lorem ipsum dolor sit amet."/>
-				</ui:customData>
-			</ui:MicroProcessFlowItem>
-			<ui:MicroProcessFlowItem state="Warning" press="itemPress">
-				<ui:customData>
-					<core:CustomData key="title" value="Shipping"/>
-					<core:CustomData key="icon" value="sap-icon://warning"/>
-					<core:CustomData key="subTitle" value="Complete in 15 hours"/>
-					<core:CustomData key="description"
-									 value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin maximus congue massa, sed euismod lectus tristique at. Praesent ornare arcu lacus, id consectetur ligula vestibulum vel. Nunc at lorem feugiat, malesuada nunc eu, ultrices lorem."/>
-				</ui:customData>
-			</ui:MicroProcessFlowItem>
-		</ui:content>
-	</ui:MicroProcessFlow>
+			                    <ui:MicroProcessFlowItem  state="{path: 'headerModel>status', formatter:'.formatter.ticketStatus'}" press="itemPress" />
+                            </ui:content>
+	                    </ui:MicroProcessFlow>
+
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
