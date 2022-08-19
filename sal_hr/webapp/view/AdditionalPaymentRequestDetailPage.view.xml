@@ -2,6 +2,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
+    xmlns:ui="sap.suite.ui.commons"
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core" height="100%">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding">
@@ -71,6 +72,15 @@
                                                 formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                        <ObjectAttribute title="Timeline"/>
+                       	<ui:MicroProcessFlow content="{headerModel>/ticketWorkflowParticipants}">
+		                    <ui:content>
+			                    <ui:MicroProcessFlowItem  state="{path: 'headerModel>status', formatter:'.formatter.ticketStatus'}" press="itemPress" />
+                            </ui:content>
+	                    </ui:MicroProcessFlow>
+
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
