@@ -57,6 +57,12 @@ sap.ui.define([], function () {
         case 18:
           return "sap-icon://quality-issue";
           break;
+        case 33:
+          return "sap-icon://business-card";
+          break;
+        case 34:
+          return "sap-icon://quality-issue";
+          break;
       }
     },
 
