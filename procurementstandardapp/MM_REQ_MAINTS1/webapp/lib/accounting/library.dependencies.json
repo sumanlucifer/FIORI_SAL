@@ -1,0 +1,335 @@
+{
+  "modules" : [
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/component/Component.js",
+      "size" : 2523,
+      "compressedSize" : 1555,
+      "required" : ["sap/ui/core/Control.js", "jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/component/controller/AccountAssignment.controller.js",
+      "description" : "Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.",
+      "size" : 18395,
+      "compressedSize" : 7018,
+      "required" : ["sap/ui/core/mvc/Controller.js", "sap/m/Dialog.js", "sap/ui/s2p/mm/lib/reuse/accounting/component/util/HelperFunctions.js", "jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/component/controller/AccountAssignmentDetail.controller.js",
+      "description" : "Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.",
+      "size" : 18789,
+      "compressedSize" : 6649,
+      "required" : ["sap/ui/core/mvc/Controller.js", "sap/ui/s2p/mm/lib/reuse/accounting/component/util/HelperFunctions.js", "jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/component/manifest.json",
+      "size" : 1920,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/component/util/HelperFunctions.js",
+      "description" : "Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.",
+      "size" : 8396,
+      "compressedSize" : 2432,
+      "required" : ["jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/component/view/AccountAssignment.view.xml",
+      "size" : 1418,
+      "required" : ["sap/ui/core/mvc/XMLView.js", "sap/ui/s2p/mm/lib/reuse/accounting/component/controller/AccountAssignment.controller.js", "sap/m/Toolbar.js", "sap/m/ToolbarSpacer.js", "sap/m/Button.js", "sap/m/Table.js", "sap/m/ColumnListItem.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/component/view/AccountAssignmentDetail.view.xml",
+      "size" : 969,
+      "required" : ["sap/ui/core/mvc/XMLView.js", "sap/ui/s2p/mm/lib/reuse/accounting/component/controller/AccountAssignmentDetail.controller.js", "sap/m/Button.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/controls/Example.js",
+      "description" : "Provides control sap.ui.s2p.mm.lib.reuse.accounting.Example.",
+      "size" : 1317,
+      "compressedSize" : 422,
+      "required" : ["jquery.sap.global.js", "sap/ui/s2p/mm/lib/reuse/accounting/library.js", "sap/ui/core/Control.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/controls/ExampleRenderer.js",
+      "description" : "Copyright (C) 2009-2017 SAP SE or an SAP affiliate company. All rights reserved.",
+      "size" : 916,
+      "compressedSize" : 347,
+      "required" : ["jquery.sap.global.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/library.js",
+      "description" : "Initialization Code and shared classes of library sap.ui.s2p.mm.lib.reuse.accounting.",
+      "size" : 794,
+      "compressedSize" : 391,
+      "required" : ["jquery.sap.global.js", "sap/ui/core/library.js"],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/manifest.json",
+      "size" : 1260,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle.properties",
+      "size" : 795,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_ar.properties",
+      "size" : 1231,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_bg.properties",
+      "size" : 1953,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_ca.properties",
+      "size" : 677,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_cs.properties",
+      "size" : 812,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_da.properties",
+      "size" : 560,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_de.properties",
+      "size" : 606,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_el.properties",
+      "size" : 1823,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_en.properties",
+      "size" : 639,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_en_US_sappsd.properties",
+      "size" : 2063,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_en_US_saptrc.properties",
+      "size" : 854,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_es.properties",
+      "size" : 727,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_et.properties",
+      "size" : 594,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_fi.properties",
+      "size" : 611,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_fr.properties",
+      "size" : 624,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_hi.properties",
+      "size" : 1368,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_hr.properties",
+      "size" : 603,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_hu.properties",
+      "size" : 689,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_it.properties",
+      "size" : 656,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_iw.properties",
+      "size" : 1166,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_ja.properties",
+      "size" : 818,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_kk.properties",
+      "size" : 1355,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_ko.properties",
+      "size" : 859,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_lt.properties",
+      "size" : 762,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_lv.properties",
+      "size" : 774,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_ms.properties",
+      "size" : 595,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_nl.properties",
+      "size" : 602,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_no.properties",
+      "size" : 560,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_pl.properties",
+      "size" : 609,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_pt.properties",
+      "size" : 790,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_ro.properties",
+      "size" : 626,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_ru.properties",
+      "size" : 1288,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_sh.properties",
+      "size" : 636,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_sk.properties",
+      "size" : 724,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_sl.properties",
+      "size" : 601,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_sv.properties",
+      "size" : 565,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_th.properties",
+      "size" : 1406,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_tr.properties",
+      "size" : 641,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_uk.properties",
+      "size" : 1371,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_vi.properties",
+      "size" : 832,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_zh_CN.properties",
+      "size" : 740,
+      "required" : [],
+      "includes" : []
+    },
+    {
+      "name" : "sap/ui/s2p/mm/lib/reuse/accounting/messagebundle_zh_TW.properties",
+      "size" : 728,
+      "required" : [],
+      "includes" : []
+    }
+  ]
+}

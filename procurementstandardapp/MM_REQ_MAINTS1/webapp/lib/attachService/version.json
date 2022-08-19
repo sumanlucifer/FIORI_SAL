@@ -1,0 +1,9 @@
+{ "application": "se.mi.plm.lib.attachmentservice",
+  "version": "4.0.35",
+  "buildNumber": "108",
+  "buildId": "108",
+  "branch": "detached",
+  "revision": "6bab8b038d6120dcc37cf703e0e4900aff061714",
+  "GitURL": "",
+  "namespace": "sap.se.mi.plm.lib.attachmentservice"
+}

@@ -1,0 +1,21 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog confirm="handleConfirmGrouping">
+		
+		<groupItems>
+			<ViewSettingsItem text="{i18n>PUR_REQ}" key="Purchaserequisition" />
+			<ViewSettingsItem text="{i18n>DESC}" key="Purchaserequisitionitemtext" />
+			<ViewSettingsItem text="{i18n>MG}" key="Materialgroup" />
+			<ViewSettingsItem text="{i18n>QUANT}" key="Quantity" />
+			<ViewSettingsItem text="{i18n>PRICE}" key="Materialcomponentprice" />
+			 <ViewSettingsItem text="{i18n>DEVD}" key="Deliverydate" displayFormat="" />
+		</groupItems>
+		
+		
+	</ViewSettingsDialog>
+</core:FragmentDefinition> 

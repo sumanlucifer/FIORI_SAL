@@ -1,0 +1,42 @@
+{
+  "_version": "1.1.0",
+  "resources": [
+    {
+      "name": "Component-dbg.js",
+      "isDebug": true
+    },
+    {
+      "name": "Component.js"
+    },
+    {
+      "name": "controller/AccountAssignment-dbg.controller.js",
+      "isDebug": true
+    },
+    {
+      "name": "controller/AccountAssignment.controller.js"
+    },
+    {
+      "name": "controller/AccountAssignmentDetail-dbg.controller.js",
+      "isDebug": true
+    },
+    {
+      "name": "controller/AccountAssignmentDetail.controller.js"
+    },
+    {
+      "name": "manifest.json"
+    },
+    {
+      "name": "util/HelperFunctions-dbg.js",
+      "isDebug": true
+    },
+    {
+      "name": "util/HelperFunctions.js"
+    },
+    {
+      "name": "view/AccountAssignment.view.xml"
+    },
+    {
+      "name": "view/AccountAssignmentDetail.view.xml"
+    }
+  ]
+}

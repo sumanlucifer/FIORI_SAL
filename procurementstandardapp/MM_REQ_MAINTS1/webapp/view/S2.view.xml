@@ -1,0 +1,83 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:View xmlns:f="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:core="sap.ui.core" xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" controllerName="ui.ssuite.s2p.mm.pur.pr.prcss.view.S2" class="sapUiSizeCompact">
+	<!-- title="{i18n>ItemDetails}"-->
+	<Page id="ItemDetailPage" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<ObjectHeader
+				intro="{parts:[{path:'{i18n>PUR_REQ}'},path:'/itemDetails/Purchaserequisition'},{path:'/itemDetails/Purchaserequisitionitem'}], formatter:'ui.ssuite.s2p.mm.pur.pr.prcss.util.Formatter.formatPRNum'}"
+				title="{parts:[{path:'/itemDetails/Purchaserequisitionitemtext'},{path:'/itemDetails/Material'}], formatter:'ui.ssuite.s2p.mm.pur.pr.prcss.util.Formatter.formatPRMNum'}"
+				number="{/itemDetails/Materialcomponentprice}" numberUnit="{/itemDetails/Purgdoctransactioncurrency}">
+				<attributes>
+					<ObjectAttribute
+						text="{parts:[{path:'/itemDetails/Quantity'},{path:'/itemDetails/Materialbaseunit'}], formatter:'ui.ssuite.s2p.mm.pur.pr.prcss.util.Formatter.formatQuant'}"/>
+				</attributes>
+			</ObjectHeader>
+			<l:Grid defaultSpan="L12 M12 S12" width="auto">
+				<l:content>
+					<IconTabBar >
+						<items>
+							<IconTabFilter>
+								<f:SimpleForm minWidth="1024" maxContainerCols="2" layout="ResponsiveGridLayout">
+									<f:title>
+										<core:Title text="{i18n>Information}"/>
+									</f:title>
+									<Label text="{i18n>SOS}"/>
+									<Link xmlns="sap.m"
+										text="{parts:[{path:'/itemDetails/Sos_count'},{path:'i18n>Sources'}],formatter:'ui.ssuite.s2p.mm.pur.pr.prcss.util.Formatter.formatDisplayTextSos'}"
+										press="handleSoSDialog"/>
+									<Label text="{i18n>Supplier}"/>
+									<Link text="{/itemDetails/Fixedvendor}" press="handleBusinessCard" id="businessCardItemDetails"/>
+									<!--         <Label text="{i18n>Category}" />
+                                                <Text text="{/itemDetails/Purchasedocumentcategory}" /> -->
+									<Label text="{i18n>DD}"/>
+									<Text text="{path:'/itemDetails/Deliverydate',formatter:'ui.ssuite.s2p.mm.pur.pr.prcss.util.Formatter.formatDateRead'}"/>
+									<Label text="{i18n>AA}"/>
+									<Text
+										text="{parts:[{path:'/itemDetails/AcctAssignmentCategoryName'}, {path:'/itemDetails/AccountAssignmentNumber'}], formatter:'ui.ssuite.s2p.mm.pur.pr.prcss.util.Formatter.formatAcct'}"/>
+									<Label text="{i18n>DeliveryAddress}"/>
+									<Text
+										text="{parts:[{path:'/itemDetails/Streetname'},{path:'/itemDetails/Postal_code'},{path:'/itemDetails/Cityname'}], formatter:'ui.ssuite.s2p.mm.pur.pr.prcss.util.Formatter.formatAddress'}"/>
+									<Label text="{i18n>Plant}"/>
+									<Text text="{/itemDetails/Supplyingplantname}"/>
+								</f:SimpleForm>
+							</IconTabFilter>
+						</items>
+					</IconTabBar>
+				</l:content>
+			</l:Grid>
+			<l:Grid defaultSpan="L12 M6 S12" width="auto">
+				<l:content>
+					<IconTabBar >
+						<items>
+							<IconTabFilter>
+								<f:SimpleForm minWidth="1024" maxContainerCols="2" layout="ResponsiveGridLayout" editable="false">
+									<f:title>
+										<core:Title text="{i18n>Notes}"/>
+									</f:title>
+									<f:content>
+										<List id="PurchaseReqItemNotes" backgroundDesign="Transparent" items="{/PurchaseReqNotesSet}" includeItemInSelection="false">
+											<StandardListItem title="{Tdline}" description="{Tdtext}"/>
+										</List>
+									</f:content>
+								</f:SimpleForm>
+							</IconTabFilter>
+						</items>
+					</IconTabBar>
+				</l:content>
+			</l:Grid>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<!-- <Button text="{i18n>CREATE_PO}" enabled="false" />-->
+				<Button text="{i18n>Edit}"/>
+				<Button icon="sap-icon://action" press="onPressAction"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</core:View>

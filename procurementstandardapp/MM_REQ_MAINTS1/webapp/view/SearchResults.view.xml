@@ -1,0 +1,71 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<!-- Search results View -->
+<View controllerName="ui.s2p.mm.requisition.maintain.s1.controller.SearchResults" xmlns:core="sap.ui.core"
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic"
+	xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:table="sap.ui.table" xmlns:u="sap.ui.unified"
+	xmlns="sap.m">
+	<Page id="pageSearch" navButtonPress="onBack" showNavButton="true" title="{i18n>appTitleSearch}">
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Button class="" icon="sap-icon://nav-back" press="onBack"/>
+					<Button class="sapUiSmallMarginEnd" icon="sap-icon://filter" id="filterBtn" press="closeSecondaryContent"/>
+				</contentLeft>
+				<contentMiddle>
+					<Label text="{i18n>appTitleSearch}"/>
+				</contentMiddle>
+				<contentRight>
+					<Button class="sapUiSmallMarginEnd" icon="sap-icon://cart" id="btnCart" press="onPressCart" text="{NumberOfItems}" tooltip="{i18n>PurReq}"/>
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<content>
+			<u:SplitContainer id="mySplitContainer" showSecondaryContent="true">
+				<u:secondaryContent id="">
+					<List growing="true" headerText="{i18n>Filter}" id="FilterList" includeItemInSelection="true"
+						items="{ path: '/results', sorter: { path: 'PropertyCategory', descending: true, group: true },groupHeaderFactory: '.formatter.getGroupHeader'}"
+						mode="MultiSelect" selectionChange="onSelectionFilter">
+						<StandardListItem counter="{path: 'TotalHits', formatter: '.formatter.convertInt' }" iconInset="true" title="{ValueDesc}"/>
+						<layoutData><l:SplitterLayoutData size="400px"/></layoutData>
+					</List>
+				</u:secondaryContent>
+				<u:content>
+					<l:ResponsiveFlowLayout id="headerContent">
+						<Panel class="sapUiNoContentPadding" id="headerPanel">
+							<FlexBox class="sapUiNoContentPadding"  justifyContent="Center">
+								<VBox class="sapuiViewDisplayBlock" width="65%">
+									<SearchField class="sapUiSmallMarginEnd" id="searchItems" search="bindResults" width="98%">
+										<layoutData>
+											<FlexItemData growFactor="2"/>
+										</layoutData>
+									</SearchField>
+									<HBox class="sapUiSmallMarginTop">
+										<Button class="" press="goToFreetext" text="{i18n>createItem}" type="Transparent"/>
+										<Button class="" id="catalogText" press="backtoCatalog" text="{i18n>catalogText}" type="Transparent"/>
+										<layoutData>
+											<FlexItemData growFactor="2"/>
+										</layoutData>
+									</HBox>
+								</VBox>
+							</FlexBox>
+						</Panel>
+					</l:ResponsiveFlowLayout>
+					<l:ResponsiveFlowLayout id="middleContent"></l:ResponsiveFlowLayout>
+					<!-- If Search result not found-->
+					<l:ResponsiveFlowLayout id="NoSearchresult"></l:ResponsiveFlowLayout>
+					<l:ResponsiveFlowLayout id="bodyContent"></l:ResponsiveFlowLayout>
+				</u:content>
+			</u:SplitContainer>
+		</content>
+		<footer>
+			<Toolbar>
+				<Button icon="sap-icon://alert" press="showMessageLogPopover" type="Emphasized"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</footer>
+	</Page>
+</View>

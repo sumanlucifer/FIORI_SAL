@@ -1,0 +1,115 @@
+{
+	"_version": "1.1.0",
+
+	"start_url": "localIndex.html",
+
+	"sap.app": {
+		"_version": "1.1.0",
+		"id": "ui.ssuite.s2p.mm.pur.pr.prcss.s1",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "4.0.47"
+		},
+		"title": "{{FULLSCREEN_TITLE}}",
+		"ach": "MM-PUR-REQ",
+		"dataSources": {
+			"MM_PUR_PR_PROCESS": {
+				"uri": "/sap/opu/odata/sap/MM_PUR_PR_PROCESS_SRV/",
+				"settings": {
+					"localUri": "model/mockData/metadata.xml",
+					"annotations": [
+						"localAnnotations"
+					]
+				}
+			},
+			"localAnnotations": {
+				"type": "ODataAnnotation",
+				"uri": "annotations/annotations.xml",
+				"settings": {
+					"localUri": "annotations/annotations.xml"
+				}
+			}
+		},
+		"resources": "resources.json",
+        "crossNavigation": {
+            "inbounds": {
+                "ui-ssuite-s2p-mm-pur-pr-prcss-s1-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "uissuites2pmmpurprprcsss1",
+                    "action": "manage",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": ""
+                }
+            }
+        }
+	},
+	"sap.ui": {
+		"technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        },
+        "supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal",
+            "sap_fiori_3"
+		]
+	},
+	"sap.ui5": {
+		"flexEnabled": true,
+		"dependencies": {
+			"minUI5Version": "1.100.2",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.ui.comp": {},
+				"sap.uxap": {},
+				"sap.ui.layout": {},
+				"sap.m": {
+					"minVersion": "1.30.3-SNAPSHOT"
+				},
+				"sap.me": {
+					"minVersion": "1.30.3-SNAPSHOT"
+				},
+				"sap.ca.scfld.md": {
+					"minVersion": "1.30"
+				}
+			},
+			"components": {
+
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.platform.abap": {
+		"_version": "1.1.0",
+		"uri": "/sap/bc/ui5_ui5/sap/mm_pr_prcs1"
+	},
+	"sap.fiori": {
+		"_version": "1.1.0",
+		"registrationIds": [
+			"F1048"
+		],
+		"archeType": "transactional"
+	},
+    "sap.cloud": {
+        "public": true,
+        "service": "com.sal.pr"
+    }
+}

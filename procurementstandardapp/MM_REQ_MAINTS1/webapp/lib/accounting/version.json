@@ -1,0 +1,9 @@
+{ "application": "ui.s2p.mm.lib.reuse.accounting",
+  "version": "4.0.9",
+  "buildNumber": "9",
+  "buildId": "2017-01-20_06-48-53",
+  "branch": "detached",
+  "revision": "82745b3665e9f03a18b4b2c4f7e612d70571a3f8",
+  "GitURL": "",
+  "namespace": "sap.ui.s2p.mm.lib.reuse.accounting"
+}

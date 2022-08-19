@@ -1,0 +1,51 @@
+<!--
+
+    Copyright (C) 2009-2020 SAP SE or an SAP affiliate company. All rights reserved.
+
+-->
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:smartField="sap.ui.comp.smartfield" xmlns="sap.m"
+	xmlns:time="sap.suite.ui.commons">
+	<Popover placement="Right" showHeader="false" contentHeight="45%" contentWidth="35%">
+		<NavContainer id="navCon">
+			<Page id="p1" title="{i18n>purchasedItems}">
+				<subHeader>
+					<Toolbar>
+						<SearchField liveChange="onItemSearch" width="100%"/>
+					</Toolbar>
+				</subHeader>
+				<List id="itemsList" items="{pf2>/results}">
+					<items>
+						<StandardListItem type="Navigation" title="{pf2>PurchaseRequisitionItemText}" description="{pf2>PurchaseRequisitionItem}" press="handleNav"/>
+					</items>
+				</List>
+			</Page>
+			<Page id="p2" title="{i18n>itemStatus}" showNavButton="true" navButtonPress="goBack">
+				<subHeader>
+					<Toolbar>
+					<Title text="{i18n>itemLevelStatus}"/>
+					</Toolbar>
+				</subHeader>
+				<content>
+					<Panel>
+						<headerToolbar>
+							<Toolbar>
+								<Button icon="sap-icon://zoom-in" text="{i18n>zoomIn}" press="processFlowZoomIn"/>
+								<Button icon="sap-icon://zoom-out" text="{i18n>zoomOut}" press="processFlowZoomOut"/>
+							</Toolbar>
+						</headerToolbar>
+						<time:ProcessFlow id="processflow" scrollable="true" foldedCorners="true" nodePress="onNodePress" nodes="{pf1>/nodes}" lanes="{pf1>/lanes}">
+							<time:nodes>
+								<time:ProcessFlowNode laneId="{pf1>lane}" nodeId="{pf1>id}" title="{pf1>title}" titleAbbreviation="{pf1>titleAbbreviation}"
+									children="{pf1>children}" state="{pf1>state}" stateText="{pf1>stateText}" texts="{pf1>texts}" focused="{pf1>focused}"/>
+							</time:nodes>
+							<time:lanes>
+								<time:ProcessFlowLaneHeader laneId="{pf1>id}" iconSrc="{pf1>icon}" text="{pf1>label}" position="{pf1>position}"/>
+							</time:lanes>
+						</time:ProcessFlow>
+					</Panel>
+				</content>
+			</Page>
+		</NavContainer>
+	</Popover>
+</core:FragmentDefinition>
