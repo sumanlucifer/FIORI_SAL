@@ -1,0 +1,113 @@
+<mvc:View controllerName="com.sal.feedbackreport.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" showHeader="false">
+        <content>
+
+        <OverflowToolbar>
+				<content>
+					<Title text="Ratings" level="H1" />
+					<ToolbarSpacer />
+					
+				
+				</content>
+			</OverflowToolbar>
+
+        <ScrollContainer height="40%" width="100%" vertical="true"
+		focusable="true">
+              <Table id="idRatingsTable"
+		        inset="false"
+		        items="{
+			        path: '/Rating'
+			
+		        }" growing="true" growingThreshold="5" growingScrollToLoad="true">
+		<!-- <headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<Title text="Ratings" level="H2"/>
+					<ToolbarSpacer />
+					
+				
+				</content>
+			</OverflowToolbar>
+		</headerToolbar> -->
+	
+		<columns>
+			<Column
+				>
+				<Text text="Employee Id" />
+			</Column>
+			<Column>
+				<Text text="Rating" />
+			</Column>
+			
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+				
+					<Text
+						text="{createdBy}" />
+					<Text
+						text="{rating}" />
+				
+						
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+
+        </ScrollContainer>
+
+
+        
+			<OverflowToolbar class="sapUiLargeMarginTop">
+				<content>
+					<Title text="Suggestions" level="H1" />
+					<ToolbarSpacer />
+					
+				
+				</content>
+			</OverflowToolbar>
+	
+        	
+       <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true">
+       
+       <Table id="idSuggestionsTable"
+		        inset="false"
+		        items="{
+			        path: '/Suggestion'
+			
+		        }" growing="true" growingScrollToLoad="true" growingThreshold="5">
+	
+	
+		<columns>
+			<Column
+				>
+				<Text text="Employee Id" />
+			</Column>
+			<Column>
+				<Text text="Suggestion" />
+			</Column>
+			
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+				
+					<Text
+						text="{createdBy}" />
+					<Text
+						text="{suggestion}" />
+				
+						
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+       </ScrollContainer>
+    	
+        
+        </content>
+    </Page>
+</mvc:View>

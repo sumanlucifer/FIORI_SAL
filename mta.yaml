@@ -167,8 +167,8 @@ modules:
       name: comsalfeedbackform
       target-path: resources/
     - artifacts:
-      - comsaluserfeedbackform.zip
-      name: comsaluserfeedbackform
+      - comsalfeedbackreport.zip
+      name: comsalfeedbackreport
       target-path: resources/
 - name: comsalsalhr
   type: html5
@@ -480,9 +480,9 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comsaluserfeedbackform
+- name: comsalfeedbackreport
   type: html5
-  path: userfeedbackform
+  path: feedbackreport
   build-parameters:
     build-result: dist
     builder: custom
