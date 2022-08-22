@@ -142,6 +142,180 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
             },
 
+            onAttach1FileSelectedForUpload: function (oEvent) {
+                // keep a reference of the uploaded file
+                var that = this;
+                var iRowNumber = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getPath();
+                var oFiles = oEvent.getParameters().files;
+                var fileName = oFiles[0].name;
+                var fileType = oFiles[0].type;
+                //code for base64/binary array 
+                this._getImageData((oFiles[0]), function (base64) {
+                    sap.m.MessageBox.success("Attachment Uploaded Successfully.");
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/attachment1FileContent", base64);
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/attachment1FileName", fileName);
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/isAttach1New", true);
+                });
+            },
+            onAttach2FileSelectedForUpload: function (oEvent) {
+                var that = this;
+                var iRowNumber = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getPath();
+                var oFiles = oEvent.getParameters().files;
+                var fileName = oFiles[0].name;
+                var fileType = oFiles[0].type;
+                //code for base64/binary array 
+                this._getImageData((oFiles[0]), function (base64) {
+                    sap.m.MessageBox.success("Attachment Uploaded Successfully.");
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/attachment2FileContent", base64);
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/attachment2FileName", fileName);
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/isAttach2New", true);
+                });
+            },
+            onAttach3FileSelectedForUpload: function (oEvent) {
+                var that = this;
+                var iRowNumber = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getPath();
+                var oFiles = oEvent.getParameters().files;
+                var fileName = oFiles[0].name;
+                var fileType = oFiles[0].type;
+                //code for base64/binary array 
+                this._getImageData((oFiles[0]), function (base64) {
+                    sap.m.MessageBox.success("Attachment Uploaded Successfully.");
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/attachment3FileContent", base64);
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/attachment3FileName", fileName);
+                    that.getView().getModel("DisplayHealthInsuranceModel").setProperty(iRowNumber + "/isAttach3New", true);
+                });
+            },
+            _getImageData: function (url, callback, fileName) {
+                var reader = new FileReader();
+                reader.onloadend = function (evt) {
+                    if (evt.target.readyState === FileReader.DONE) {
+                        var binaryString = evt.target.result,
+                            base64file = btoa(binaryString);
+                        callback(base64file);
+                    }
+                };
+                reader.readAsBinaryString(url);
+            },
+            onAddDetailsItemsPress: function (oEvent) {
+                var aItemData = this.getView().getModel("DisplayHealthInsuranceModel").getData();
+                if (aItemData.length > 0) {
+                    if (!this._validateMandatoryFields()) {
+                        return;
+                    }
+                }
+
+                var oModel = this.getViewModel("DisplayHealthInsuranceModel");
+                var oItems = oModel.getData().map(function (oItem) {
+                    return Object.assign({}, oItem);
+                });
+                oItems.push({
+                    Relationship: "",
+                    DependentName: "",
+                    DependentGender: "",
+                    NationalID: "",
+                    DependentNationalAddress: "",
+                    DependentDOB: new Date(),
+                    DeliveryLoc: "",
+                    Scheme: "",
+                    attachment1FileContent: null,
+                    attachment1FileName: null,
+                    attachment2FileContent: null,
+                    attachment2FileName:null,
+                    attachment3FileContent: null,
+                    attachment3FileName:null,
+                    isAttach1New: false,
+                    isAttach2New: false,
+                    isAttach3New: false
+                });
+                oModel.setData(oItems);
+            },
+            onDeleteItemPress: function (oEvent) {
+                this.packingListObj = oEvent.getSource().getBindingContext("HealthItemDetailsModel").getObject();
+                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("HealthItemDetailsModel").getPath().slice("/".length));
+                var aTableData = this.getViewModel("HealthItemDetailsModel").getProperty("/");
+                aTableData.splice(iRowNumberToDelete, 1);
+                this.getView().getModel("HealthItemDetailsModel").refresh();
+            },
+            onSavePress: function () {
+                var sEntityPath = "/SF_Leave('" + this.object.externalCode + "')",
+                    oPayloadObj = this.fnGetHealthInsuranceRequestPayload();
+
+
+
+
+                if (this.bValid != false) {
+                    this.getView().setBusy(true);
+                    this.getView().getModel().update(sEntityPath, oPayloadObj, {
+                        urlParameters: {
+                            ticketId: this.sChildID
+                        },
+                        success: function (oResponse) {
+                            this.getView().setBusy(false);
+                            sap.m.MessageBox.success("Request Submitted successfully.");
+                            this.getView().getModel().refresh();
+                          
+                            this.oRouter.navTo("detail", {
+                                parentMaterial: this.sParentID,
+                                layout: "TwoColumnsMidExpanded"
+                            });
+                        }.bind(this),
+                        error: function (oError) {
+                            this.getView().setBusy(false);
+                            if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                                sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                            else {
+                                sap.m.MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                            }
+                            this.getView().getModel().refresh();
+                        }.bind(this)
+                    });
+                }
+            },
+
+
+
+
+            fnGetHealthInsuranceRequestPayload: function () {
+                var aData = this.getViewModel("HealthItemDetailsModel").getData();
+                var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+                var sEffectiveStartDate = this.getView().byId("idEffectiveStartDateDate").getDateValue();
+                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                    sEffectiveStartDate = dateFormat.format(new Date(sEffectiveStartDate));
+                sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
+                var cust_healthInsuranceDetails = aData.map(function (item) {
+                    return {
+                        cust_address: item.DependentNationalAddress,
+                        cust_dateOfBirth: new Date(item.DependentDOB),
+                        cust_dependentName: item.DependentName,
+                        cust_healthInsurance_User: sUserID,
+                        cust_healthInsurance_effectiveStartDate: sEffectiveStartDate,
+                        cust_location: item.DeliveryLoc,
+                        cust_nationalID: item.NationalID,
+                        cust_gender: item.DependentGender,
+                        cust_relationship: item.Relationship,
+                        cust_scheme: item.Scheme,
+                        attachment1FileContent :item.attachment1FileContent,
+                        attachment1FileName : item.attachment1FileName,
+                        isAttach1New : item.isAttach1New,
+                        attachment1UserId : sUserID,
+                        attachment2FileContent : item.attachment2FileContent,
+                        attachment2FileName :item.attachment2FileName,
+                        isAttach2New : item.isAttach2New,
+                        attachment2UserId : sUserID,
+                        attachment3FileContent : item.attachment3FileContent,
+                        attachment3FileName : item.attachment3FileName,
+                        isAttach3New : item.isAttach3New,
+                        attachment3UserId : sUserID
+                    }
+
+                   
+                });
+                return {
+                    "User": sUserID,
+                    "effectiveStartDate": sEffectiveStartDate,
+                    "cust_healthInsuranceDetails": cust_healthInsuranceDetails
+                };
+            },
             onDownLoadPress: function (oEvent) {
                 var oItemRowObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
                 var sLinkText = oEvent.getSource().getTooltip_Text().trim();
