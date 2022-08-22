@@ -9,7 +9,7 @@ sap.ui.define([
 
         return Controller.extend("com.sal.feedbacktile.controller.View1", {
             onInit: function () {
-
+                                
             }
         });
     });
