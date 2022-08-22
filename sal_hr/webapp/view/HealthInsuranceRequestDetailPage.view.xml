@@ -101,7 +101,7 @@
                                 </IconTabFilter>
 
                                   <IconTabFilter  text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.LeaveModule.EditHealthInsuranceRequest" type="XML"/>
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.EditHealthInsuranceRequest" type="XML"/>
                         </IconTabFilter>
 
                                 <IconTabFilter text="{i18n>History}">
