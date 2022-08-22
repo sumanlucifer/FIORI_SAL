@@ -4,7 +4,7 @@
     <f:title>
       <f:DynamicPageTitle id="idDynamicPageTitle">
         <f:heading>
-          <Title level="H1" text="Feed Back Form"/>
+        
         </f:heading>
       </f:DynamicPageTitle>
     </f:title>
