@@ -44,45 +44,13 @@
                         <ObjectAttribute title="{i18n>RequestedBy}"/>
                         <ObjectAttribute text="{headerModel>/employeeId}"/>
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>DateofCreation}"/>
                         <ObjectAttribute text="{path:'headerModel>/requestDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MMMM dd, yyyy'
                                                 }}"/>
-                    </layout:VerticalLayout>
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                       	<ui:MicroProcessFlow>
-		                    <ui:content>
-			                    <ui:MicroProcessFlowItem state="Error" press="itemPress">
-				                    <ui:customData>
-					<core:CustomData key="title" value="Shipping"/>
-					<core:CustomData key="icon" value="sap-icon://warning"/>
-					<core:CustomData key="subTitle" value="Overdue in 2 days"/>
-					<core:CustomData key="description"
-									 value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin maximus congue massa, sed euismod lectus tristique at. Praesent ornare arcu lacus, id consectetur ligula vestibulum vel. Nunc at lorem feugiat, malesuada nunc eu, ultrices lorem."/>
-				</ui:customData>
-			</ui:MicroProcessFlowItem>
-			<ui:MicroProcessFlowItem state="Success" press="itemPress">
-				<ui:customData>
-					<core:CustomData key="title" value="Payment"/>
-					<core:CustomData key="icon" value="sap-icon://accept"/>
-					<core:CustomData key="subTitle" value="Payment successful"/>
-					<core:CustomData key="description" value="Lorem ipsum dolor sit amet."/>
-				</ui:customData>
-			</ui:MicroProcessFlowItem>
-			<ui:MicroProcessFlowItem state="Warning" press="itemPress">
-				<ui:customData>
-					<core:CustomData key="title" value="Shipping"/>
-					<core:CustomData key="icon" value="sap-icon://warning"/>
-					<core:CustomData key="subTitle" value="Complete in 15 hours"/>
-					<core:CustomData key="description"
-									 value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin maximus congue massa, sed euismod lectus tristique at. Praesent ornare arcu lacus, id consectetur ligula vestibulum vel. Nunc at lorem feugiat, malesuada nunc eu, ultrices lorem."/>
-				</ui:customData>
-			</ui:MicroProcessFlowItem>
-		</ui:content>
-	</ui:MicroProcessFlow>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>

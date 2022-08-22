@@ -139,7 +139,7 @@
     },
     "sap.cloud.portal": {
         "feedbacksummary_semantic-manage": {
-            "vizType": "com.sal.summarytiles.hrrequestssummarytile"
+            "vizType": "com.sal.feedbacktile"
         }
     }
 }

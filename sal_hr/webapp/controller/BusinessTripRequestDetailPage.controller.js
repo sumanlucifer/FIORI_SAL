@@ -337,7 +337,7 @@ sap.ui.define([
                 this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/payGrade", oData.payGrade);
                 this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/costCentre", oData.costCentre);
                 this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/emergencyNumber", oData.emergencyNumber);
-                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_empName", (oData.firstName + " " + ((!oData.middleName)?"":oData.e.middleName+" ")+ oData.lastName));
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_empName", (oData.firstName + " " + ((!oData.middleName)?"":oData.middleName+" ")+ oData.lastName));
                 this.empRequested = oData.payGrade;
             },
 
@@ -366,7 +366,7 @@ sap.ui.define([
 
                 var sDestCountry = oEvent ? oEvent.getSource().getSelectedKey() : this.getView().byId("idEditDestCountry").getSelectedKey() ,
                     // sPayGrade = this.EmpInfoObj.payGrade;
-                    sPayGrade = this.empRequested;
+                    sPayGrade = this.empRequested ? this.empRequested : this.EmpInfoObj.payGrade;
                 var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
 
                 var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);

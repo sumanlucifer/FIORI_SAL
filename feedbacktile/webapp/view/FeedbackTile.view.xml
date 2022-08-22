@@ -8,8 +8,8 @@
                 <m:content>
                     <ComparisonMicroChart id="idFeedbackChart" view="Wide" size="M" shrinkable="true" width="100%" class="zCustomTitleWidth">
                         <data>
-                            <ComparisonMicroChartData id="idFeedbackChartHappy" title="{i18n>Happy}" value="{FeedbackModel>/totalHappy}" color="Critical" />
-                            <ComparisonMicroChartData id="idFeedbackChartNeutral" title="{i18n>Neutral}" value="{FeedbackModel>/totalNeutral}" color="Good" />
+                            <ComparisonMicroChartData id="idFeedbackChartHappy" title="{i18n>Happy}" value="{FeedbackModel>/totalHappy}" color="Good" />
+                            <ComparisonMicroChartData id="idFeedbackChartNeutral" title="{i18n>Neutral}" value="{FeedbackModel>/totalNeutral}" color="Critical" />
                             <ComparisonMicroChartData id="idFeedbackChartUnhappy" title="{i18n>Unhappy}" value="{FeedbackModel>/totalUnhappy}" color="Error" />
                         </data>
                     </ComparisonMicroChart>

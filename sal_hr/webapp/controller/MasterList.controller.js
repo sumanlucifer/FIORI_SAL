@@ -171,6 +171,7 @@ sap.ui.define(
       },
 
       fnGetRoleAccess: function (sManagerTile, subModuleId, oItem) {
+          debugger;
         this.sManagerTile = sManagerTile;
         var sURL = "";
         var oComponentModel = this.getComponentModel();
@@ -260,6 +261,14 @@ sap.ui.define(
                   break;
                 case 9:
                   sURL = Const.LINKS.Performance;
+                  this.openSucessFatcors(sURL);
+                  break;
+                case 33:
+                  sURL = Const.LINKS.EmployeeProfile;
+                  this.openSucessFatcors(sURL);
+                  break;
+                case 34:
+                  sURL = Const.LINKS.OrganizationChart;
                   this.openSucessFatcors(sURL);
                   break;
                 default:
