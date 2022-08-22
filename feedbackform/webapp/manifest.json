@@ -34,7 +34,7 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "semobj_feedbackform",
-                    "action": "semaction_feedbackform",
+                    "action": "display",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
                     "icon": ""
