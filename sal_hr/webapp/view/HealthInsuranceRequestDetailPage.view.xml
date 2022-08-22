@@ -96,7 +96,7 @@
                         <IconTabBar id="idBusinessTripiconTabBar">
                             <items>
 
-                                <IconTabFilter id="idEditBusinessTripRequestITB" text="{i18n>Details}">
+                                <IconTabFilter id="idEditBusinessTripRequestITB" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" text="{i18n>Details}">
                                     <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.DisplayHealthInsuranceRequest" type="XML"/>
                                 </IconTabFilter>
 

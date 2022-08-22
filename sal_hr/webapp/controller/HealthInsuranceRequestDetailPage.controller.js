@@ -230,11 +230,11 @@ sap.ui.define([
                 oModel.setData(oItems);
             },
             onDeleteItemPress: function (oEvent) {
-                this.packingListObj = oEvent.getSource().getBindingContext("HealthItemDetailsModel").getObject();
-                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("HealthItemDetailsModel").getPath().slice("/".length));
-                var aTableData = this.getViewModel("HealthItemDetailsModel").getProperty("/");
+                this.packingListObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
+                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getPath().slice("/".length));
+                var aTableData = this.getViewModel("DisplayHealthInsuranceModel").getProperty("/");
                 aTableData.splice(iRowNumberToDelete, 1);
-                this.getView().getModel("HealthItemDetailsModel").refresh();
+                this.getView().getModel("DisplayHealthInsuranceModel").refresh();
             },
             onSavePress: function () {
                 var sEntityPath = "/SF_Leave('" + this.object.externalCode + "')",
@@ -276,7 +276,7 @@ sap.ui.define([
 
 
             fnGetHealthInsuranceRequestPayload: function () {
-                var aData = this.getViewModel("HealthItemDetailsModel").getData();
+                var aData = this.getViewModel("DisplayHealthInsuranceModel").getData();
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sEffectiveStartDate = this.getView().byId("idEffectiveStartDateDate").getDateValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
