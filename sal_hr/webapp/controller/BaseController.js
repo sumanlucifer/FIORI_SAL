@@ -90,7 +90,7 @@ sap.ui.define([
                     else {
                         MessageBox.error(JSON.parse(oError.responseText).error.message.value);
                     }
-                }
+                }.bind(this),
             });
         },
 
