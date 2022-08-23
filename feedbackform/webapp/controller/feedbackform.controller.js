@@ -22,36 +22,20 @@ sap.ui.define(
           // }
           var oRatingPayloadObj = this.fnGetRatingPayload(),
             oSuggestionPayloadObj = this.fnGetSuggestionPayload(),
+            oComplainPayloadObj = this.fnGetComplainPayload(),
             sRatingEntityPath = "/Rating",
-            sSuggestionEntityPath = "/Suggestion";
+            sSuggestionEntityPath = "/Suggestion",
+            sComplainEntityPath = "/Answer";
 
           this.getView().setBusy(true);
           Promise.allSettled([
 
             this.callAPIServiceInstance(sRatingEntityPath, oRatingPayloadObj),
-            this.callAPIServiceInstance(sSuggestionEntityPath, oSuggestionPayloadObj)
+            this.callAPIServiceInstance(sSuggestionEntityPath, oSuggestionPayloadObj),
+            this.callAPIServiceInstance(sComplainEntityPath, oComplainPayloadObj)
         ]).then(this.PromiseResponse.bind(this)).catch(function (error) {}.bind(this));
 
-        //   this.mainModel.create(sRatingEntityPath, oRatingPayloadObj, {
-        //     success: function (oData, oResponse) {
-        //       sap.m.MessageBox.success("Thank You for Your Feedback.");
-        //       this.getView().setBusy(false);
-        //       this.getView().getModel().refresh();
-        //       this.oRouter.navTo("detail", {
-        //         parentMaterial: this.sParentID,
-        //         layout: "TwoColumnsMidExpanded",
-        //       });
-        //     }.bind(this),
-        //     error: function (oError) {
-        //       this.getView().setBusy(false);
-        //       sap.m.MessageBox.error(
-        //         JSON.parse(
-        //           JSON.parse(oError.responseText).error.message.value
-        //         ).error.message.value.split("]")[1]
-        //       );
-        //       this.getView().getModel().refresh();
-        //     }.bind(this),
-        //   });
+      
         },
 
 
@@ -85,7 +69,8 @@ sap.ui.define(
             moduleId: 1,
             masterSubModuleId: 60,
             rating: this.getView().byId("idRating").getSelectedIndex() === 0 ? 1 : this.getView().byId("idRating").getSelectedIndex(),
-            questionId: 2
+            questionId: 2,
+            source : "EP_PORTLET"
          
           };
         },
@@ -97,10 +82,25 @@ sap.ui.define(
             moduleId: 4,
             masterSubModuleId: 2,
             questionId: 3,
-            suggestion: this.getView().byId("idSuggestion").getValue()
+            suggestion: this.getView().byId("idSuggestion").getValue(),
+            source : "EP_PORTLET"
           
           };
         },
+
+        fnGetComplainPayload :  function()
+        {
+            var  sEmployeeID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
+            return {
+              employeeId: sEmployeeID,
+              moduleId: 4,
+              masterSubModuleId: 2,
+              questionId: 5,
+              answerText: this.getView().byId("idComplains").getValue(),
+              source : "EP_PORTLET"
+            
+            };
+        }
       }
     );
   }
