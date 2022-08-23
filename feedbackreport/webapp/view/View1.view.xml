@@ -4,16 +4,12 @@
     <Page id="page" showHeader="false">
         <content>
 
-        <OverflowToolbar>
-				<content>
-					<Title text="Ratings" level="H1" />
-					<ToolbarSpacer />
-					
-				
-				</content>
-			</OverflowToolbar>
 
-        <ScrollContainer height="40%" width="100%" vertical="true"
+
+        <IconTabBar id="idIconTabBar" select="onIconTabSelect" headerMode="Inline" expanded="true" class="sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter  text="{i18n>Rating}" >
+                       <ScrollContainer height="40%" width="100%" vertical="true"
 		focusable="true">
               <Table id="idRatingsTable"
 		        inset="false"
@@ -21,16 +17,7 @@
 			        path: '/Rating'
 			
 		        }" growing="true" growingThreshold="5" growingScrollToLoad="true">
-		<!-- <headerToolbar>
-			<OverflowToolbar>
-				<content>
-					<Title text="Ratings" level="H2"/>
-					<ToolbarSpacer />
-					
-				
-				</content>
-			</OverflowToolbar>
-		</headerToolbar> -->
+		
 	
 		<columns>
 			<Column
@@ -59,19 +46,9 @@
 
         </ScrollContainer>
 
-
-        
-			<OverflowToolbar class="sapUiLargeMarginTop">
-				<content>
-					<Title text="Suggestions" level="H1" />
-					<ToolbarSpacer />
-					
-				
-				</content>
-			</OverflowToolbar>
-	
-        	
-       <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true">
+                    </IconTabFilter>
+                    <IconTabFilter  text="{i18n>Suggestions}" >
+                        <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true">
        
        <Table id="idSuggestionsTable"
 		        inset="false"
@@ -106,6 +83,70 @@
 		</items>
 	</Table>
        </ScrollContainer>
+                    </IconTabFilter>
+                     <IconTabFilter  text="{i18n>Complaints}" >
+
+                      <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true">
+       
+       <Table id="idComplainsTable"
+		        inset="false"
+
+                items="{ path: '/Answer', filters: [{ path: 'questionId', operator: 'EQ', value1: '5' }] }" growing="true" growingScrollToLoad="true" growingThreshold="5">
+	
+	
+		<columns>
+			<Column
+				>
+				<Text text="Employee Id" />
+			</Column>
+			<Column>
+				<Text text="Complain" />
+			</Column>
+			
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+				
+					<Text
+						text="{createdBy}" />
+					<Text
+						text="{answerText}" />
+				
+						
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+       </ScrollContainer>
+                       
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+
+        <!-- <OverflowToolbar>
+				<content>
+					<Title text="Ratings" level="H1" />
+					<ToolbarSpacer />
+					
+				
+				</content>
+			</OverflowToolbar> -->
+
+       
+
+        
+			<!-- <OverflowToolbar class="sapUiLargeMarginTop">
+				<content>
+					<Title text="Suggestions" level="H1" />
+					<ToolbarSpacer />
+					
+				
+				</content>
+			</OverflowToolbar>
+	 -->
+        	
+      
     	
         
         </content>
