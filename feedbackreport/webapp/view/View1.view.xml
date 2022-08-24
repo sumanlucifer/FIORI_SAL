@@ -46,6 +46,16 @@
 	</Table>
 
         </ScrollContainer> -->
+            
+				<content>
+                                            <HBox class="DateRangeCss"  alignContent="Right">
+ <DateRangeSelection id="DRS2" width="20rem" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
+   </HBox>
+				
+					
+				
+				</content>
+			  <viz:Popover id="idPopOver"></viz:Popover>
 
         <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
 												selectData="1" deselectData="2">
@@ -53,7 +63,7 @@
 													<viz.data:FlattenedDataset 
                                                     
                                                     
-                                                    data="{path: '/HrAvgRatings', parameters: {expand: 'ratings'}}" >
+                                                    data="{RatingDataModel>/}" >
 														<viz.data:dimensions>
 															<viz.data:DimensionDefinition name="label" axis="1" value="{label}"/>
 														</viz.data:dimensions>
