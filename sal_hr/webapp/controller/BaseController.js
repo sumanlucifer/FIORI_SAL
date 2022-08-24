@@ -76,8 +76,7 @@ sap.ui.define([
             oComponentModel.read("/Tickets", {
                 filters: [filter],
                 urlParameters: {
-                    "IsUserManager": bIsUserManager,
-                    $expand:"ticketWorkflowParticipants"
+                    "IsUserManager": bIsUserManager
                 },
                 success: function (oData) {
                     this.getView().setBusy(false);
@@ -94,7 +93,10 @@ sap.ui.define([
             });
         },
 
+        _getTicketWorkflowParticipant:function(sTicketId, sWorkflowRequestedId) {
+            debugger;
 
+        },
         _getSFUser: function (sId) {
             var idFILTER = new sap.ui.model.Filter({
                 path: "userId",

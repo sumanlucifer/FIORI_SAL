@@ -77,7 +77,7 @@
                     </layout:VerticalLayout>
                     <layout:VerticalLayout>
                         <ObjectAttribute title="Timeline"/>
-                       	<ui:MicroProcessFlow content="{headerModel>/ticketWorkflowParticipants}">
+                       	<ui:MicroProcessFlow content="{headerModel>/ticketWorkflowParticipants/results}">
 		                    <ui:content>
 			                    <ui:MicroProcessFlowItem  state="{path: 'headerModel>status', formatter:'.formatter.ticketStatus'}" press="itemPress" />
                             </ui:content>
