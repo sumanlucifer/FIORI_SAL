@@ -946,7 +946,6 @@ sap.ui.define([
                 var oButton = oEvent.getSource(),
 				oView = this.getView();
                 var index = oEvent.getSource().sId.split('-')[2];
-                var sTicketPath = `/ticketWorkflowParticipants/results/${index}`;
                 var oTicketWorkflowParticipantData = oView.getModel("headerModel").getProperty(`/ticketWorkflowParticipants/results/${index}`);
 			if (!this._pPopover) {
 				this._pPopover = Fragment.load({
@@ -954,18 +953,23 @@ sap.ui.define([
 					name: "com.sal.salhr.Fragments.TimelineStatus",
 					controller: this
 				}).then(function(oPopover) {
-                    this._oPopover = oPopover;
-					oView.addDependent(this._oPopover);
-					this._oPopover.bindElement(oTicketWorkflowParticipantData);
+                    oView.addDependent(oPopover);
+					// oPopover.bindElement(oTicketWorkflowParticipantData);
+                    return oPopover;
 				});
+                // this._pPopover = sap.ui.xmlfragment(oView.getId(), "com.sal.salhr.Fragments.TimelineStatus", this);
+                // oView.addDependent(this._pPopover);
+
 			}
 			this._pPopover.then(function(oPopover) {
+                var oTicketWorkflow = new JSONModel(oTicketWorkflowParticipantData);
+                oView.setModel(oTicketWorkflow, "TicketWorkFlowParticipantModel");
 				oPopover.openBy(oButton);
 			});
             },
             handleCloseButton: function() {
                 if (this._pPopover) {
-                    this.byId('idTimelinestatus').close();
+                    this.byId("idTimelinestatus").close()
                 }
             }
         });

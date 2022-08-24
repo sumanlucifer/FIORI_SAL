@@ -1,21 +1,32 @@
 <core:FragmentDefinition
 	xmlns="sap.m"
-	xmlns:core="sap.ui.core">
+	xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
 	<ResponsivePopover
         id="idTimelinestatus"
 		title="Status"
 		class="sapUiContentPadding"
 		placement="Bottom" >
         <content>
-            <Label text="Status:" />
-            <Text text="{status}" />
-            <Label text="step Number:" />
-            <Text text="{stepNumber}" />
-            <Label text="workflow Participant Id:" />
-            <Text text="{/workflowParticipantId}" />
-            <Label text="workflow Participant Name:" />
-            <Text text="{/workflowParticipantName}" />
-		</content>
+            <VBox alignContent="Center">
+                <VBox>
+                    <Label text="Status:" labelFor="idStatus" />
+                    <Text id="idStatus" text="{path: 'TicketWorkFlowParticipantModel>/status', formatter:'.formatter.ticketStatus'}" />
+                </VBox>
+                <VBox>
+                    <Label text="step Number:" labelFor="idStepNumber"/>
+                    <Text id="idStepNumber" text="{TicketWorkFlowParticipantModel>/stepNumber}" />
+                </VBox>
+                <VBox>
+                    <Label text="workflow Participant Id:" labelFor="idWorkflowParticipantId"/>
+                    <Text id="idWorkflowParticipantId" text="{TicketWorkFlowParticipantModel>/workflowParticipantId}" />
+                </VBox>
+                <VBox>
+                    <Label text="workflow Participant Name:" labelFor="idWorkflowParticipantName"/>
+                    <Text id="idWorkflowParticipantName" text="{TicketWorkFlowParticipantModel>/workflowParticipantName}" />
+                </VBox>
+            </VBox>
+        </content>
 		<endButton>
 			<Button text="Close" press="handleCloseButton" />
 		</endButton>
