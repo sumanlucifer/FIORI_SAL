@@ -550,6 +550,33 @@ sap.ui.define([
                     })
                     break;
             }
+        },
+        itemPress: function(oEvent) {
+            debugger;
+            var oButton = oEvent.getSource(),
+            oView = this.getView();
+            var index = oEvent.getSource().sId.split('-')[2];
+            var oTicketWorkflowParticipantData = oView.getModel("headerModel").getProperty(`/ticketWorkflowParticipants/results/${index}`);
+            if (!this._pPopover) {
+                this._pPopover = Fragment.load({
+                    id: oView.getId(),
+                    name: "com.sal.salhr.Fragments.TimelineStatus",
+                    controller: this
+                }).then(function(oPopover) {
+                    oView.addDependent(oPopover);
+                    return oPopover;
+                });
+            }
+            this._pPopover.then(function(oPopover) {
+                var oTicketWorkflow = new JSONModel(oTicketWorkflowParticipantData);
+                oView.setModel(oTicketWorkflow, "TicketWorkFlowParticipantModel");
+                oPopover.openBy(oButton);
+            });
+        },
+        handleCloseButton: function() {
+            if (this._pPopover) {
+                this.byId("idTimelinestatus").close();
+            }
         }
     });
 });
