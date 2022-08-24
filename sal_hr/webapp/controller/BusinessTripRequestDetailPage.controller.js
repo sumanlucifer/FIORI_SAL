@@ -954,9 +954,9 @@ sap.ui.define([
 					name: "com.sal.salhr.Fragments.TimelineStatus",
 					controller: this
 				}).then(function(oPopover) {
-                    this._oPopover = oPopover;
-					oView.addDependent(this._oPopover);
-					this._oPopover.bindElement(oTicketWorkflowParticipantData);
+                    this._pPopover = oPopover;
+					oView.addDependent(this._pPopover);
+					this._pPopover.bindElement(oTicketWorkflowParticipantData);
 				});
 			}
 			this._pPopover.then(function(oPopover) {
@@ -965,7 +965,7 @@ sap.ui.define([
             },
             handleCloseButton: function() {
                 if (this._pPopover) {
-                    this.byId('idTimelinestatus').close();
+                    this._pPopover.close();
                 }
             }
         });
