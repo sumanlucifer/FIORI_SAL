@@ -1,5 +1,6 @@
 <mvc:View controllerName="com.sal.feedbackreport.controller.View1"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:mvc="sap.ui.core.mvc" xmlns:viz="sap.viz.ui5.controls" 
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:T="sap.ui.commons"  xmlns:viz.data="sap.viz.ui5.data" displayBlock="true"
     xmlns="sap.m">
     <Page id="page" showHeader="false">
         <content>
@@ -9,7 +10,7 @@
         <IconTabBar id="idIconTabBar" select="onIconTabSelect" headerMode="Inline" expanded="true" class="sapUiResponsiveContentPadding">
                 <items>
                     <IconTabFilter  text="{i18n>Rating}" >
-                       <ScrollContainer height="40%" width="100%" vertical="true"
+                       <!-- <ScrollContainer height="40%" width="100%" vertical="true"
 		focusable="true">
               <Table id="idRatingsTable"
 		        inset="false"
@@ -44,7 +45,28 @@
 		</items>
 	</Table>
 
-        </ScrollContainer>
+        </ScrollContainer> -->
+
+        <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
+												selectData="1" deselectData="2">
+												<viz:dataset>
+													<viz.data:FlattenedDataset 
+                                                    
+                                                    
+                                                    data="{path: '/HrAvgRatings', parameters: {expand: 'ratings'}}" >
+														<viz.data:dimensions>
+															<viz.data:DimensionDefinition name="label" axis="1" value="{label}"/>
+														</viz.data:dimensions>
+														<viz.data:measures>
+															<viz.data:MeasureDefinition name="value" value="{value}"/>
+														</viz.data:measures>
+													</viz.data:FlattenedDataset>
+												</viz:dataset>
+												<viz:feeds>
+													<viz.feeds:FeedItem uid="size" type="Measure" values="value"/>
+													<viz.feeds:FeedItem uid="color" type="Dimension" values="label"/>
+												</viz:feeds>
+											</viz:VizFrame>
 
                     </IconTabFilter>
                     <IconTabFilter  text="{i18n>Suggestions}" >
