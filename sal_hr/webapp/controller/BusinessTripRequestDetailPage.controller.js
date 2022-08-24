@@ -955,8 +955,6 @@ sap.ui.define([
 				}).then(function(oPopover) {
                     oView.addDependent(oPopover);
 					// oPopover.bindElement(oTicketWorkflowParticipantData);
-                    var oTicketWorkflow = new JSONModel(oTicketWorkflowParticipantData);
-                    oView.setModel(oTicketWorkflow, "TicketWorkFlowParticipantModel")
                     return oPopover;
 				});
                 // this._pPopover = sap.ui.xmlfragment(oView.getId(), "com.sal.salhr.Fragments.TimelineStatus", this);
@@ -964,12 +962,14 @@ sap.ui.define([
 
 			}
 			this._pPopover.then(function(oPopover) {
+                var oTicketWorkflow = new JSONModel(oTicketWorkflowParticipantData);
+                oView.setModel(oTicketWorkflow, "TicketWorkFlowParticipantModel");
 				oPopover.openBy(oButton);
 			});
             },
             handleCloseButton: function() {
                 if (this._pPopover) {
-                    this._pPopover.close();
+                    this.byId("idTimelinestatus").close()
                 }
             }
         });
