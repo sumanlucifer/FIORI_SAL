@@ -2,9 +2,10 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "sap/ui/core/Fragment"
 ],
-    function (BaseController, JSONModel, formatter, MessageBox) {
+    function (BaseController, JSONModel, formatter, MessageBox, Fragment) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.BusinessTripRequestDetailPage", {
@@ -939,6 +940,33 @@ sap.ui.define([
             onRejectPress: function () {
                 var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
                 this.onRejectRequest(swfRequestId);
+            },
+            itemPress: function(oEvent) {
+                debugger;
+                var oButton = oEvent.getSource(),
+				oView = this.getView();
+                var index = oEvent.getSource().sId.split('-')[2];
+                var sTicketPath = `/ticketWorkflowParticipants/results/${index}`;
+                var oTicketWorkflowParticipantData = oView.getModel("headerModel").getProperty(`/ticketWorkflowParticipants/results/${index}`);
+			if (!this._pPopover) {
+				this._pPopover = Fragment.load({
+					id: oView.getId(),
+					name: "com.sal.salhr.Fragments.TimelineStatus",
+					controller: this
+				}).then(function(oPopover) {
+                    this._oPopover = oPopover;
+					oView.addDependent(this._oPopover);
+					this._oPopover.bindElement(oTicketWorkflowParticipantData);
+				});
+			}
+			this._pPopover.then(function(oPopover) {
+				oPopover.openBy(oButton);
+			});
+            },
+            handleCloseButton: function() {
+                if (this._pPopover) {
+                    this.byId('idTimelinestatus').close();
+                }
             }
         });
     });

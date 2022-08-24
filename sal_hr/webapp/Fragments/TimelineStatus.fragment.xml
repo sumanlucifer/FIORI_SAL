@@ -1,0 +1,24 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ResponsivePopover
+        id="idTimelinestatus"
+		title="Status"
+		class="sapUiContentPadding"
+		placement="Bottom" >
+        <content>
+            <Label text="Status:" />
+            <Text text="{status}" />
+            <Label text="step Number:" />
+            <Text text="{stepNumber}" />
+            <Label text="workflow Participant Id:" />
+            <Text text="{/workflowParticipantId}" />
+            <Label text="workflow Participant Name:" />
+            <Text text="{/workflowParticipantName}" />
+		</content>
+		<endButton>
+			<Button text="Close" press="handleCloseButton" />
+		</endButton>
+		
+	</ResponsivePopover>
+</core:FragmentDefinition>

@@ -79,8 +79,9 @@ sap.ui.define([
                     "IsUserManager": bIsUserManager
                 },
                 success: function (oData) {
-                    this.getView().setBusy(false);
-                    this._bindView(oData);
+                    // this.getView().setBusy(false);
+                    this._getTicketWorkflowParticipant(oData);
+                    
                 }.bind(this),
                 error: function (oError) {
                     this.getView().setBusy(false);
@@ -93,8 +94,31 @@ sap.ui.define([
             });
         },
 
-        _getTicketWorkflowParticipant:function(sTicketId, sWorkflowRequestedId) {
-            debugger;
+        _getTicketWorkflowParticipant:function(oData) {
+            var workflowReqId = oData.results[0].workflowRequestId;
+            var ticketId = oData.results[0].ID;
+            var oComponentModel = this.getComponentModel();
+            oComponentModel.read("/TicketWorkflowParticipant", {
+                urlParameters: {
+                    // "IsUserManager": bIsUserManager
+                    $filter:`ticketId eq guid'${ticketId}' and workflowRequestId eq '${workflowReqId}'`,
+                    $orderby:'stepNumber'
+                },
+                success: function (oTicketWorkflowParticipantData) {
+                    oData.results[0].ticketWorkflowParticipants = oTicketWorkflowParticipantData;
+                    this.getView().setBusy(false);
+                    this._bindView(oData);
+                }.bind(this),
+                error: function (oError) {
+                    debugger;
+                    this.getView().setBusy(false);
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                }
+            });
 
         },
         _getSFUser: function (sId) {

@@ -75,7 +75,15 @@
                         <ObjectAttribute title="Timeline"/>
                        	<ui:MicroProcessFlow content="{headerModel>/ticketWorkflowParticipants/results}">
 		                    <ui:content>
-			                    <ui:MicroProcessFlowItem  state="{path: 'headerModel>status', formatter:'.formatter.ticketStatus'}" press="itemPress" />
+			                    <ui:MicroProcessFlowItem  state="{path: 'headerModel>status', formatter:'.formatter.ticketStatus'}" press="itemPress" >
+                                    <!-- <ui:customData>
+                                        <core:CustomData key="title" value="Shipping"/>
+                                        <core:CustomData key="icon" value="sap-icon://warning"/>
+                                        <core:CustomData key="subTitle" value="Overdue in 2 days"/>
+                                        <core:CustomData key="description"
+                                                        value="Lorem ipsum dolor sit amet, "/>
+                                    </ui:customData> -->
+                                </ui:MicroProcessFlowItem>
                             </ui:content>
 	                    </ui:MicroProcessFlow>
 
