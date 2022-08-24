@@ -42,9 +42,10 @@ sap.ui.define([
                 this.getView().setBusy(true);
                 this.getOwnerComponent().getModel().read("/HrAvgRatings", {
                     urlParameters: {
+                        "$expand": "ratings",
                         "from": sStartDate ? sStartDate : "",
-                        "to": sEndDate ? sEndDate : "" ,
-                        "$expand": "ratings"
+                        "to": sEndDate ? sEndDate : "" 
+                     
                     },
                     success: function (oData, oResponse) {
                         this.getView().setBusy(false);
