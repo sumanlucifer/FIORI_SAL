@@ -27,7 +27,9 @@
                 <!--Modify and Withdraw not be visible for Manager Tile -->
                 <f:actions>
                 
-                   
+                       <HBox visible="{= ${headerModel>/status} === 'PENDING' ? false : ${headerModel>/status} === 'APPROVED' ? true : ${headerModel>/status} === 'CANCELLED' ? true: ${headerModel>/status} === 'REJECTED' ? true : false }">
+                        <Button text="Modify" type="Emphasized" press="onEditPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}], formatter:'.formatter.fnSetModifyVisibilty'}"/>
+                    </HBox>
                     <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}, {path: 'headerModel>/externalStatus'}], formatter:'.formatter.fnSetWithdrawtVisibilty'}"/>
                 </f:actions>
 
@@ -38,6 +40,7 @@
                     <Button text="Reject" icon="sap-icon://decline" type="Reject" press="onRejectPress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}, {path:'headerModel>/approverId'}], formatter:'.formatter.setRejectVisibility'}"/>
                    
                 </f:actions>
+                
                 <f:navigationActions>
                    
                     <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
@@ -93,9 +96,13 @@
                         <IconTabBar id="idBusinessTripiconTabBar">
                             <items>
 
-                                <IconTabFilter id="idEditBusinessTripRequestITB" text="{i18n>Details}">
+                                <IconTabFilter id="idEditBusinessTripRequestITB" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" text="{i18n>Details}">
                                     <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.DisplayHealthInsuranceRequest" type="XML"/>
                                 </IconTabFilter>
+
+                                  <IconTabFilter  text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.EditHealthInsuranceRequest" type="XML"/>
+                        </IconTabFilter>
 
                                 <IconTabFilter text="{i18n>History}">
                                 

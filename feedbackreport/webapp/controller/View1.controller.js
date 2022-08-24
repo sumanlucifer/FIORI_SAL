@@ -7,9 +7,9 @@ sap.ui.define([
     function (Controller) {
         "use strict";
 
-        return Controller.extend("com.sal.feedbacktile.controller.View1", {
+        return Controller.extend("com.sal.feedbackreport.controller.View1", {
             onInit: function () {
-                                
+
             }
         });
     });
