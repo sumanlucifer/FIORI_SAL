@@ -11,6 +11,21 @@ sap.ui.define(
         //   this.getView().byId("idRating").setSelectedIndex(null);
         },
 
+
+        onResetPress : function()
+        {
+            this.byId("idSuggestion").setValue("");
+            this.byId("idComplains").setValue("");
+            this.getView().byId("idRating").setSelectedIndex(null);
+
+        },
+
+        onCancelPress : function()
+        {
+            thus.handleNavigationBack();
+        },
+
+
         onSubmitPress: function () {
 
 

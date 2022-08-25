@@ -32,6 +32,8 @@
     <f:footer>
       <OverflowToolbar id="idOverflowToolbar">
         <ToolbarSpacer id="idToolbarSpacer"/>
+         <Button text="Reset" type="Emphasized" press="onResetPress"/>
+          <Button text="Cancel" type="Emphasized" press="onCancelPress"/>
         <Button text="Submit" type="Emphasized" press="onSubmitPress"/>
       </OverflowToolbar>
     </f:footer>
