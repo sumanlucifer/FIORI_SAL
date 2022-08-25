@@ -14,7 +14,7 @@
     <!-- DynamicPage Content -->
     <f:content>
       <l:VerticalLayout class="sapUiContentPadding" width="100%">
-        <Label  design="Bold" class="TextClass" text="Q1: How do you describe your experience with SAL Portal? Give me Rating"/>
+        <Label  design="Bold" class="TextClass" text="Q1: How do you describe your experience with SAL Portal? Give me a Rating"/>
         <RadioButtonGroup id="idRating" columns="3" Select="onRbChnageMain">
           <buttons>
             <RadioButton class="radiobtnClass" text="Excellent"/>
@@ -22,7 +22,7 @@
             <RadioButton class="radiobtnClass" text="Needs Improvement"/>
           </buttons>
         </RadioButtonGroup>
-        <Label design="Bold" class="TextClass" text="Q2: Please enter your suggestion?"/>
+        <Label design="Bold" class="TextClass" text="Q2: Please enter your suggestion"/>
         <TextArea maxlength="40" height="15rem" id="idSuggestion" value="" width="100%"/>
 
         <Label design="Bold" class="TextClass" text="Q3: Do you have any Complains?"/>

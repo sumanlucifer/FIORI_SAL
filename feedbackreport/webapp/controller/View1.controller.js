@@ -49,7 +49,7 @@ sap.ui.define([
                     },
                     success: function (oData, oResponse) {
                         this.getView().setBusy(false);
-                        var oResponseData = oData.results[0].ratings.results;
+                    var oResponseData = oData.results.length === 0 ? [] : oData.results[0].ratings.results;
                         
                         var oRatingDataModel = new JSONModel(oResponseData);
                         this.getView().setModel(oRatingDataModel, "RatingDataModel");
