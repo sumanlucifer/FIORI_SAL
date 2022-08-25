@@ -1,14 +1,14 @@
 sap.ui.define(
-  ["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/Device"],
+  ["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/Device", "sap/ui/core/routing/History",     "sap/m/MessageBox"],
 
-  function (BaseController, JSONModel, Device) {
+  function (BaseController, JSONModel, Device, History, MessageBox) {
     "use strict";
     return BaseController.extend(
       "com.sal.feedbackform.controller.feedbackform",
       {
         onInit: function () {
           this.mainModel = this.getOwnerComponent().getModel();
-          this.getView().byId("idRating").setSelectedIndex(null);
+        //   this.getView().byId("idRating").setSelectedIndex(null);
         },
 
         onSubmitPress: function () {
@@ -16,10 +16,10 @@ sap.ui.define(
 
           
 
-          // if (!this._validateMandatoryFields()) {
+          if (!this._validateMandatoryFields()) {
 
-          //     return;
-          // }
+              return;
+          }
           var oRatingPayloadObj = this.fnGetRatingPayload(),
             oSuggestionPayloadObj = this.fnGetSuggestionPayload(),
             oComplainPayloadObj = this.fnGetComplainPayload(),
@@ -37,6 +37,52 @@ sap.ui.define(
 
       
         },
+        _validateMandatoryFields: function () {
+            var bValid = true;
+
+            // if (this.byId("idRating").getSelectedIndex() === 0) {
+            //     sap.m.MessageToast.show("Please Select Rating.");
+            //     bValid = false;
+            // } 
+
+            if (this.byId("idSuggestion").getValue() === "") {
+                this.byId("idSuggestion").setValueState("Error");
+                this.byId("idSuggestion").setValueStateText(
+                    "Please enter Suggestion"
+                );
+                bValid = false;
+            } else {
+                this.byId("idSuggestion").setValueState("None");
+                this.byId("idSuggestion").setValueStateText(null);
+            }
+
+
+            if (this.byId("idComplains").getValue() === "") {
+                this.byId("idComplains").setValueState("Error");
+                this.byId("idComplains").setValueStateText(
+                    "Please enter Complains"
+                );
+                bValid = false;
+            } else {
+                this.byId("idComplains").setValueState("None");
+                this.byId("idComplains").setValueStateText(null);
+            }
+
+           
+
+
+
+            
+
+
+
+            
+
+
+
+            return bValid;
+        },
+
 
 
         callAPIServiceInstance: function (path, oPayload) {
@@ -57,7 +103,20 @@ sap.ui.define(
         PromiseResponse : function(aValues)
         {
             this.getView().setBusy(false);
-            sap.m.MessageBox.success("Thank You for Your Feedback.");
+       
+            var that = this;
+
+            MessageBox.confirm("Thank You for Your Feedback.", {
+                icon: MessageBox.Icon.INFORMATION,
+                title: "Information",
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                emphasizedAction: MessageBox.Action.YES,
+                onClose: function (oAction) {
+                    if (oAction == "YES") {
+                        that.handleNavigationBack();
+                    }
+                }
+            });
             this.getView().byId("idRating").setSelectedIndex(null);
             this.getView().byId("idSuggestion").setValue("");
         },
@@ -100,7 +159,11 @@ sap.ui.define(
               source : "EP_PORTLET"
             
             };
-        }
+        },
+
+        handleNavigationBack: function (oEvent) {
+            history.go(-1);
+        },
       }
     );
   }
