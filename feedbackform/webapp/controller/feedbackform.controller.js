@@ -22,7 +22,7 @@ sap.ui.define(
 
         onCancelPress : function()
         {
-            thus.handleNavigationBack();
+            this.handleNavigationBack();
         },
 
 
@@ -124,10 +124,10 @@ sap.ui.define(
             MessageBox.confirm("Thank You for Your Feedback.", {
                 icon: MessageBox.Icon.INFORMATION,
                 title: "Information",
-                actions: [MessageBox.Action.YES, MessageBox.Action.NO],
-                emphasizedAction: MessageBox.Action.YES,
+                actions: [MessageBox.Action.OK],
+                emphasizedAction: MessageBox.Action.OK,
                 onClose: function (oAction) {
-                    if (oAction == "YES") {
+                    if (oAction == "OK") {
                         that.handleNavigationBack();
                     }
                 }
