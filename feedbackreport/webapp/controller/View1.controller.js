@@ -31,11 +31,17 @@ sap.ui.define([
                 this.getView().getModel("LocalViewModel").refresh();
                 var oFromDate = this.getView().getModel("LocalViewModel").getProperty("/FromDate"),
                 oToDate = this.getView().getModel("LocalViewModel").getProperty("/ToDate"),
+
+
                 dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                 oStartDate = dateFormat.format(new Date(oFromDate)),
                 oEndDate = dateFormat.format(new Date(oToDate)),
                 sStartDate = oStartDate + "T00:00:00.000Z",
-                sEndDate = oEndDate + "T00:00:00.000Z";
+                // sEndDate = oEndDate + "T00:00:00.000Z";
+
+                // sEndateHrsMinsSeonds = `${oToDate.getHours()}:${oToDate.getMinutes()}:${oToDate.getSeconds()}`;
+
+                sEndDate =   oStartDate === oEndDate ? oEndDate + "T23:59:59.000Z" : oEndDate + "T00:00:00.000Z"; 
                 this.onCallChartData(sStartDate, sEndDate);
             },
             onCallChartData: function (sStartDate, sEndDate ) {
