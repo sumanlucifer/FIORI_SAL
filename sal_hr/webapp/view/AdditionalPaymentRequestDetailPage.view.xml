@@ -65,7 +65,7 @@
 
 
                     
-                    <layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>DateofCreation}"/>
                         <ObjectAttribute text="{path:'headerModel>/requestDate',
                                                 type: 'sap.ui.model.type.Date',

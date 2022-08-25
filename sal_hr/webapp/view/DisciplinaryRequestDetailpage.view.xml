@@ -64,7 +64,7 @@
                          <ObjectAttribute title="{i18n>RequestedFor}"/>
                         <ObjectAttribute text="{headerModel>/employeeName} ({headerModel>/employeeId})"/>
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>DateofCreation}"/>
                         <ObjectAttribute text="{path:'headerModel>/requestDate',
                                                 type: 'sap.ui.model.type.Date',
