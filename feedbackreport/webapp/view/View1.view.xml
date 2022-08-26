@@ -84,10 +84,10 @@
        
        <Table id="idSuggestionsTable"
 		        inset="false"
-		        items="{
-			        path: '/Suggestion'
-			
-		        }" growing="true" growingScrollToLoad="true" growingThreshold="5">
+
+
+                  items="{ path: '/Suggestion', sorter: [{path: 'createdBy', descending: 'true'}] }"
+		       growing="true" growingScrollToLoad="true" growingThreshold="5">
 	
 	
 		<columns>
@@ -123,7 +123,7 @@
        <Table id="idComplainsTable"
 		        inset="false"
 
-                items="{ path: '/Answer', filters: [{ path: 'questionId', operator: 'EQ', value1: '5' }] }" growing="true" growingScrollToLoad="true" growingThreshold="5">
+                items="{ path: '/Answer', filters: [{ path: 'questionId', operator: 'EQ', value1: '5' }], sorter: [{path: 'createdBy', descending: 'true'}] }" growing="true" growingScrollToLoad="true" growingThreshold="5">
 	
 	
 		<columns>
