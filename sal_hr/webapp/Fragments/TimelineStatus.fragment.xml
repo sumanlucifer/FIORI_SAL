@@ -11,18 +11,18 @@
             <VBox alignContent="Center">
                 <VBox>
                     <Label text="Status:" labelFor="idStatus" />
-                    <Text id="idStatus" text="{path: 'TicketWorkFlowParticipantModel>/status', formatter:'.formatter.ticketStatus'}" />
+                    <ObjectStatus id="idStatus" text="{TicketWorkFlowParticipantModel>/status}" state="{path: 'TicketWorkFlowParticipantModel>/status', formatter:'.formatter.ticketStatus'}" />
                 </VBox>
                 <VBox>
-                    <Label text="step Number:" labelFor="idStepNumber"/>
+                    <Label text="Step Number:" labelFor="idStepNumber"/>
                     <Text id="idStepNumber" text="{TicketWorkFlowParticipantModel>/stepNumber}" />
                 </VBox>
                 <VBox>
-                    <Label text="workflow Participant Id:" labelFor="idWorkflowParticipantId"/>
+                    <Label text="Workflow Participant ID:" labelFor="idWorkflowParticipantId"/>
                     <Text id="idWorkflowParticipantId" text="{TicketWorkFlowParticipantModel>/workflowParticipantId}" />
                 </VBox>
                 <VBox>
-                    <Label text="workflow Participant Name:" labelFor="idWorkflowParticipantName"/>
+                    <Label text="Workflow Participant Name:" labelFor="idWorkflowParticipantName"/>
                     <Text id="idWorkflowParticipantName" text="{TicketWorkFlowParticipantModel>/workflowParticipantName}" />
                 </VBox>
             </VBox>

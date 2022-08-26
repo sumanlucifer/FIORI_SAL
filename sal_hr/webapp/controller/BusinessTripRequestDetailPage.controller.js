@@ -2,10 +2,9 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter",
-    "sap/m/MessageBox",
-    "sap/ui/core/Fragment"
+    "sap/m/MessageBox"
 ],
-    function (BaseController, JSONModel, formatter, MessageBox, Fragment) {
+    function (BaseController, JSONModel, formatter, MessageBox) {
         "use strict";
 
         return BaseController.extend("com.sal.salhr.controller.BusinessTripRequestDetailPage", {
