@@ -12,7 +12,7 @@
                         
 
                         <Label id="idDateLBL"  required="false" text="{i18n>whenWouldYouLiketoText}" />
-                        <DatePicker required="true" enabled="false"  value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
+                        <DatePicker required="true" enabled="false"  value="{path:'DisplayHealthInsuranceModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"  change="handleChange"/>         
                         </fm:SimpleForm>        
@@ -85,7 +85,7 @@
                                             </ComboBox>
                                            
                                             <Input value="{DisplayHealthInsuranceModel>cust_dependentName}"/>
-                                            <ComboBox  selectedKey="{DisplayHealthInsuranceModel>cust_genderNav/results/0/label_defaultValue}" items="{ path: '/SF_PickListValueV2',
+                                            <ComboBox  selectedKey="{DisplayHealthInsuranceModel>cust_genderNav/results/0/externalCode}" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {  
                                                  path : 'label_defaultValue'},
                                                 filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'Gender'}]}" change="onTimeTyeChange">
