@@ -232,8 +232,8 @@ sap.ui.define([
             },
             onDeleteItemPress: function (oEvent) {
                 this.packingListObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
-                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getPath().slice("/".length));
-                var aTableData = this.getViewModel("DisplayHealthInsuranceModel").getProperty("/");
+                var iRowNumberToDelete = parseInt(oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getPath().split("/")[2]);
+                var aTableData = this.getViewModel("DisplayHealthInsuranceModel").getProperty("/cust_healthInsuranceDetails");
                 aTableData.splice(iRowNumberToDelete, 1);
                 this.getView().getModel("DisplayHealthInsuranceModel").refresh();
             },
@@ -274,7 +274,63 @@ sap.ui.define([
             },
 
 
+            _validateMandatoryFields: function (itemData) {
+                var bValid = true;
+                var aItemData = this.getView().getModel("DisplayHealthInsuranceModel").getData().cust_healthInsuranceDetails;
+                if (aItemData.length > 0) {
+                    for (let i = 0; i < aItemData.length; i++) {
+                        if (!aItemData[i].Relationship) {
+                            bValid = false;
+                            sap.m.MessageBox.alert(
+                                "Please select Relationship "
+                            );
+                            return;
+                        }
+                        if (!aItemData[i].DependentName) {
+                            bValid = false;
+                            sap.m.MessageBox.alert(
+                                "Please select Dependent Name "
+                            );
+                            return;
+                        }
+                        if (!aItemData[i].DependentGender) {
+                            bValid = false;
+                            sap.m.MessageBox.alert(
+                                "Please select Dependent Gender "
+                            );
+                            return;
+                        }
+                        if (!aItemData[i].NationalID) {
+                            bValid = false;
+                            sap.m.MessageBox.alert(
+                                "Please select National ID "
+                            );
+                            return;
+                        }
+                        if (!aItemData[i].DependentNationalAddress) {
+                            bValid = false;
+                            sap.m.MessageBox.alert(
+                                "Please select Dependent National Address "
+                            );
+                            return;
+                        }
 
+                        if (!aItemData[i].DeliveryLoc) {
+                            bValid = false;
+                            sap.m.MessageBox.alert(
+                                "Please select Delivery Location"
+                            );
+                            return;
+                        }
+
+                    }
+                }
+                if (aItemData.length === 0) {
+                    bValid = false;
+                    sap.m.MessageBox.alert("Please add atleast one item");
+                }
+                return bValid;
+            },
 
             fnGetHealthInsuranceRequestPayload: function () {
                 var aData = this.getViewModel("DisplayHealthInsuranceModel").getData().cust_healthInsuranceDetails;

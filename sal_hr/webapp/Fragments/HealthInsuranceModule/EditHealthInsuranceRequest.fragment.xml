@@ -77,7 +77,7 @@
 
 
 
-                                             <ComboBox  selectedKey="{DisplayHealthInsuranceModel>cust_relationshipNav/results/0/label_defaultValue}" items="{ path: '/SF_PickListValueV2',
+                                             <ComboBox  selectedKey="{DisplayHealthInsuranceModel>cust_relationshipNav/results/0/externalCode}" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {  
                                                  path : 'label_defaultValue'},
                                                 filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'ESS_personRelationshipType'}]}" change="onTimeTyeChange">
