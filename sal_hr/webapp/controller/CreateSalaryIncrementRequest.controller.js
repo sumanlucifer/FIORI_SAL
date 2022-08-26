@@ -282,7 +282,7 @@ sap.ui.define(
                 },
 
                 fnGetJobRequestPayload: function () {
-                    var sJobData = this.getView().getModel("jobModel").getData(),
+                    var sJobData = this.getView().getModel("jobModel").getData() ? this.getView().getModel("jobModel").getData() : {},
                         sNewPayload = $.extend(true, {}, sJobData);
                         
                     sNewPayload.startDate = this.getFormattedDateValue("idStartDate");
