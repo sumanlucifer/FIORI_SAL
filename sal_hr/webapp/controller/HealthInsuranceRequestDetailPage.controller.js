@@ -53,6 +53,7 @@ sap.ui.define([
             _bindView: function (data) {
                 debugger;
                 var object = data.results[0];
+                this.object = data.results[0];
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
                 this.onCallHistoryData(object.ticketCode);
@@ -197,7 +198,7 @@ sap.ui.define([
                 reader.readAsBinaryString(url);
             },
             onAddDetailsItemsPress: function (oEvent) {
-                var aItemData = this.getView().getModel("DisplayHealthInsuranceModel").getData();
+                var aItemData = this.getView().getModel("DisplayHealthInsuranceModel").getData().cust_healthInsuranceDetails;
                 if (aItemData.length > 0) {
                     if (!this._validateMandatoryFields()) {
                         return;
@@ -205,7 +206,7 @@ sap.ui.define([
                 }
 
                 var oModel = this.getViewModel("DisplayHealthInsuranceModel");
-                var oItems = oModel.getData().map(function (oItem) {
+                var oItems = oModel.getData().cust_healthInsuranceDetails.map(function (oItem) {
                     return Object.assign({}, oItem);
                 });
                 oItems.push({
@@ -276,7 +277,7 @@ sap.ui.define([
 
 
             fnGetHealthInsuranceRequestPayload: function () {
-                var aData = this.getViewModel("DisplayHealthInsuranceModel").getData();
+                var aData = this.getViewModel("DisplayHealthInsuranceModel").getData().cust_healthInsuranceDetails;
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 var sEffectiveStartDate = this.getView().byId("idEffectiveStartDateDate").getDateValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
@@ -284,6 +285,7 @@ sap.ui.define([
                 sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
                 var cust_healthInsuranceDetails = aData.map(function (item) {
                     return {
+                        externalCode: this.object.externalCode,
                         cust_address: item.DependentNationalAddress,
                         cust_dateOfBirth: new Date(item.DependentDOB),
                         cust_dependentName: item.DependentName,
