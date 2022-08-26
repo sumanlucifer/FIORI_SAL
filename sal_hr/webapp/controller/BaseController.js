@@ -2,8 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/BusyIndicator",
     "sap/m/MessageBox",
-    "sap/ui/core/Fragment"
-], function (Controller, BusyIndicator, MessageBox, Fragment) {
+    "sap/ui/core/Fragment",
+    "sap/ui/model/json/JSONModel"
+], function (Controller, BusyIndicator, MessageBox, Fragment, JSONModel) {
     "use strict";
 
     return Controller.extend("com.sal.salhr.controller.BaseController", {
