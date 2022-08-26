@@ -77,31 +77,31 @@
 
 
 
-                                             <ComboBox  selectedKey="{DisplayHealthInsuranceModel>Relationship}" items="{ path: '/SF_PickListValueV2',
+                                             <ComboBox  selectedKey="{DisplayHealthInsuranceModel>cust_relationshipNav/results/0/label_defaultValue}" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {  
                                                  path : 'label_defaultValue'},
                                                 filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'ESS_personRelationshipType'}]}" change="onTimeTyeChange">
                                               <core:Item key="{externalCode}" text="{label_defaultValue}" />
                                             </ComboBox>
                                            
-                                            <Input value="{DisplayHealthInsuranceModel>DependentName}"/>
-                                            <ComboBox  selectedKey="{DisplayHealthInsuranceModel>DependentGender}" items="{ path: '/SF_PickListValueV2',
+                                            <Input value="{DisplayHealthInsuranceModel>cust_dependentName}"/>
+                                            <ComboBox  selectedKey="{DisplayHealthInsuranceModel>cust_genderNav/results/0/label_defaultValue}" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {  
                                                  path : 'label_defaultValue'},
                                                 filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'Gender'}]}" change="onTimeTyeChange">
                                               <core:Item key="{externalCode}" text="{label_defaultValue}" />
                                             </ComboBox>
-                                              <Input type="Number" value="{DisplayHealthInsuranceModel>NationalID}"/>
-                                             <Input value="{DisplayHealthInsuranceModel>DependentNationalAddress}"/>
+                                              <Input type="Number" value="{DisplayHealthInsuranceModel>cust_nationalID}"/>
+                                             <Input value="{DisplayHealthInsuranceModel>cust_address}"/>
                                            
 
             
 
-                                       <DatePicker   value="{path:'DisplayHealthInsuranceModel>DependentDOB', type:'sap.ui.model.type.Date', formatOptions: {
+                                       <DatePicker   value="{path:'DisplayHealthInsuranceModel>cust_dateOfBirth', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"  />
-                                              <Input value="{DisplayHealthInsuranceModel>DeliveryLoc}"/>
-                                              <Input value="{DisplayHealthInsuranceModel>Scheme}"/>
+                                              <Input value="{DisplayHealthInsuranceModel>cust_location}"/>
+                                              <Input value="{DisplayHealthInsuranceModel>cust_scheme}"/>
                                           
 
                                               <VBox>
