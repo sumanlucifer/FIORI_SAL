@@ -335,7 +335,7 @@ sap.ui.define([
             fnGetHealthInsuranceRequestPayload: function () {
                 var aData = this.getViewModel("DisplayHealthInsuranceModel").getData().cust_healthInsuranceDetails;
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-                var sEffectiveStartDate = this.getView().byId("idEffectiveStartDateDate").getDateValue();
+                var sEffectiveStartDate = this.getView().byId("idEditEffectiveStartDate").getDateValue();
                 var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
                     sEffectiveStartDate = dateFormat.format(new Date(sEffectiveStartDate));
                 sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
