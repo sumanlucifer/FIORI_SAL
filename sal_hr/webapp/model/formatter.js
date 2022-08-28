@@ -127,7 +127,7 @@ sap.ui.define([], function () {
 
     viewFileNames: function (oData) {
       if (oData) {
-        if (oData.fileContent.length > 0) return true;
+        if (oData.length > 0) return true;
         else return false;
       } else {
         return false;
