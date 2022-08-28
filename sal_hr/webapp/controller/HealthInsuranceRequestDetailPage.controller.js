@@ -226,8 +226,8 @@ sap.ui.define([
                     }
                 }
 
-                var oModel = this.getViewModel("DisplayHealthInsuranceModel").getData().cust_healthInsuranceDetails;
-                var oItems = oModel.map(function (oItem) {
+                var oModel = this.getViewModel("DisplayHealthInsuranceModel");
+                var oItems = oModel.getData().cust_healthInsuranceDetails.map(function (oItem) {
                     return Object.assign({}, oItem);
                 });
                 oItems.push({
@@ -267,7 +267,7 @@ sap.ui.define([
 
                 if (this.bValid != false) {
                     this.getView().setBusy(true);
-                    this.getView().getModel().update(sEntityPath, oPayloadObj, {
+                    this.getView().getModel().create(sEntityPath, oPayloadObj, {
                       
                         success: function (oResponse) {
                             this.getView().setBusy(false);
