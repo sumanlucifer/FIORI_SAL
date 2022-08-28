@@ -56,9 +56,21 @@
                             <items>
                                 <ColumnListItem >
                                     <cells>
-                                              <Text text="{DisplayHealthInsuranceModel>Relationship}"/>
+                                             
+
+                                                <ComboBox enabled="false" selectedKey="{DisplayHealthInsuranceModel>Relationship}" items="{ path: '/SF_PickListValueV2',
+                                                sorter : {  
+                                                 path : 'label_defaultValue'},
+                                                filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'ESS_personRelationshipType'}]}" change="onTimeTyeChange">
+                                              <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                                            </ComboBox>
                                              <Text text="{DisplayHealthInsuranceModel>DependentName}"/>
-                                    <Text text="{DisplayHealthInsuranceModel>DependentGender}"/>
+                                  <ComboBox enabled="false"  selectedKey="{DisplayHealthInsuranceModel>DependentGender}" items="{ path: '/SF_PickListValueV2',
+                                                sorter : {  
+                                                 path : 'label_defaultValue'},
+                                                filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'Gender'}]}" change="onTimeTyeChange">
+                                              <core:Item key="{externalCode}" text="{label_defaultValue}" />
+                                            </ComboBox>
                                              <Text text="{DisplayHealthInsuranceModel>NationalID}"/>
                                               	<ExpandableText maxCharacters="10" overflowMode="Popover" class="sapUiTinyMarginBottom sapUiTinyMarginTop" text="{DisplayHealthInsuranceModel>DependentNationalAddress}"  />
                                         <Text text="{path:'DisplayHealthInsuranceModel>DependentDOB',

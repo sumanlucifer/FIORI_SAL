@@ -161,6 +161,7 @@ sap.ui.define([
 
             onCancelPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
+                this.handleClose();
             },
 
             onAttach1FileSelectedForUpload: function (oEvent) {
@@ -258,7 +259,7 @@ sap.ui.define([
                 this.getView().getModel("DisplayHealthInsuranceModel").refresh();
             },
             onSavePress: function () {
-                sEntityPath = "/SF_HealthInsurance",
+               var sEntityPath = "/SF_HealthInsurance",
                     oPayloadObj = this.fnGetHealthInsuranceRequestPayload();
 
 
