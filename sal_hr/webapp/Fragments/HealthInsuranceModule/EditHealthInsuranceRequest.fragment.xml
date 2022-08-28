@@ -77,48 +77,49 @@
 
 
 
-                                             <ComboBox  selectedKey="{DisplayHealthInsuranceModel>cust_relationshipNav/results/0/externalCode}" items="{ path: '/SF_PickListValueV2',
+                                             <ComboBox  selectedKey="{DisplayHealthInsuranceModel>Relationship}" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {  
                                                  path : 'label_defaultValue'},
                                                 filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'ESS_personRelationshipType'}]}" change="onTimeTyeChange">
                                               <core:Item key="{externalCode}" text="{label_defaultValue}" />
                                             </ComboBox>
                                            
-                                            <Input value="{DisplayHealthInsuranceModel>cust_dependentName}"/>
-                                            <ComboBox  selectedKey="{DisplayHealthInsuranceModel>cust_genderNav/results/0/externalCode}" items="{ path: '/SF_PickListValueV2',
+                                            <Input value="{DisplayHealthInsuranceModel>DependentName}"/>
+                                            <ComboBox  selectedKey="{DisplayHealthInsuranceModel>DependentGender}" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {  
                                                  path : 'label_defaultValue'},
                                                 filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'Gender'}]}" change="onTimeTyeChange">
                                               <core:Item key="{externalCode}" text="{label_defaultValue}" />
                                             </ComboBox>
-                                              <Input type="Number" value="{DisplayHealthInsuranceModel>cust_nationalID}"/>
-                                             <Input value="{DisplayHealthInsuranceModel>cust_address}"/>
+                                              <Input type="Number" value="{DisplayHealthInsuranceModel>NationalID}"/>
+                                             <Input value="{DisplayHealthInsuranceModel>DependentNationalAddress}"/>
                                            
 
             
 
-                                       <DatePicker   value="{path:'DisplayHealthInsuranceModel>cust_dateOfBirth', type:'sap.ui.model.type.Date', formatOptions: {
+                                       <DatePicker   value="{path:'DisplayHealthInsuranceModel>DependentDOB', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"  />
-                                              <Input value="{DisplayHealthInsuranceModel>cust_location}"/>
-                                              <Input value="{DisplayHealthInsuranceModel>cust_scheme}"/>
+                                              <Input value="{DisplayHealthInsuranceModel>DeliveryLoc}"/>
+                                              <Input value="{DisplayHealthInsuranceModel>Scheme}"/>
                                           
 
                                               <VBox>
-                                               
+                                               <Link  tooltip="Download(1)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>attachment1FileContent',formatter:'.formatter.viewFileNames'}"/>
                                                
                                                 <unified:FileUploader  buttonOnly="true" buttonText="{i18n>Upload}"  sameFilenameAllowed="true" multiple="false" style="Emphasized" change="onAttach1FileSelectedForUpload" visible="{path:'Attachments',formatter:'.formatter.viewItemsFileUploader'}" />
                                             </VBox>
                                             <VBox>
                                                
-                                               
+                                               <Link tooltip="Download(2)"  text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>attachment2FileContent',formatter:'.formatter.viewFileNames'}"/>
                                                 <unified:FileUploader  buttonOnly="true" buttonText="{i18n>Upload}"  sameFilenameAllowed="true" multiple="false" style="Emphasized" change="onAttach2FileSelectedForUpload" visible="{path:'Attachments',formatter:'.formatter.viewItemsFileUploader'}" />
                                             </VBox>
-                                            <VBox>
+                                            <HBox>
                                                
+                                                <Link  tooltip="Download(3)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>attachment3FileContent',formatter:'.formatter.viewFileNames'}"/>
                                                
                                                 <unified:FileUploader  buttonOnly="true" buttonText="{i18n>Upload}"  sameFilenameAllowed="true" multiple="false" style="Emphasized" change="onAttach3FileSelectedForUpload" visible="{path:'Attachments',formatter:'.formatter.viewItemsFileUploader'}" />
-                                            </VBox>
+                                            </HBox>
                                             
                                                <Button icon="sap-icon://delete" press="onDeleteItemPress" type="Transparent"/>
                                        
