@@ -3,9 +3,7 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "com/sal/salhr/model/formatter"
-
 ],
-
     function (BaseController, Controller, JSONModel, formatter) {
         "use strict";
         return BaseController.extend("com.sal.salhr.controller.HealthInsuranceRequestDetailPage", {
@@ -16,28 +14,21 @@ sap.ui.define([
                     PageTitle: null,
                     Modify: true
                 });
-
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
-
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("HealthInsuranceRequestDetail").attachPatternMatched(this._onObjectMatched, this);
-
             },
-
             onWithdrawPress: function () {
                 var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
                 if(swfRequestId) {
                     this.onWithdrawRequest(swfRequestId);
                 }
             },
-
             _onObjectMatched: function (oEvent) {
-
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
@@ -49,7 +40,6 @@ sap.ui.define([
                     this._getTicketData(this.sChildID);
                 }
             },
-
             _bindView: function (data) {
                 debugger;
                 var object = data.results[0];
@@ -57,17 +47,13 @@ sap.ui.define([
                 var oHeaderModel = new JSONModel(data.results[0]);
                 this.getView().setModel(oHeaderModel, "headerModel");
                 this.onCallHistoryData(object.ticketCode);
-
-           
                 this.getView().setBusy(true);
-
                 var oComponentModel = this.getComponentModel();
                 var sKey = oComponentModel.createKey("/SF_HealthInsurance", {
                     effectiveStartDate: object.effectiveStartDate,
                     User: object.externalCode
                 });
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
-
                 this.getView().getModel().read(sKey, {
                     urlParameters: {
                         $expand: "cust_healthInsuranceDetails,cust_healthInsuranceDetails/cust_relationshipNav,cust_healthInsuranceDetails/cust_genderNav,cust_healthInsuranceDetails/cust_attachment1Nav,cust_healthInsuranceDetails/cust_attachment2Nav,cust_healthInsuranceDetails/cust_attachment3Nav,UserNav",
@@ -82,15 +68,9 @@ sap.ui.define([
                         this.getView().setBusy(false);
                     }.bind(this)
                 });
-
-
-
-
                 this.getView().getModel("LocalViewModel").setProperty("/PageTitle", "Health Insurance dependent Request");
                 this.getView().getModel("LocalViewModel").refresh();
-
             },
-
             onCallHistoryData: function (sticketCode) {
                 var ticketCodeFilter = new sap.ui.model.Filter({
                     path: "ticketCode",
@@ -101,22 +81,17 @@ sap.ui.define([
                 filter.push(ticketCodeFilter);
                 this.getOwnerComponent().getModel().read("/TicketHistory", {
                     filters: [filter],
-
                     success: function (oData, oResponse) {
                         var oHistoryData = new JSONModel(oData.results);
                         this.getView().setModel(oHistoryData, "HistoryData");
-
-
                     }.bind(this),
                     error: function (oError) {
                         sap.m.MessageBox.error(JSON.stringify(oError));
                     }
                 });
             },
-
             fnSetDisplayHealthInsuranceModel: function (oData) {
                 this.getView().setBusy(true);
-            
                 var aCust_healthInsuranceDetails = oData.cust_healthInsuranceDetails.results,
                     oDisplayEditBusinessTripObj = {
                         "externalCode": oData.externalCode,
@@ -132,38 +107,29 @@ sap.ui.define([
                                 DependentDOB: item.cust_dateOfBirth,
                                 DeliveryLoc: item.cust_location,
                                 Scheme: item.cust_scheme,
-                                attachment1FileContent: item.cust_attachment1Nav ? item.cust_attachment1Nav : null,
-                                attachment1FileName: item.attachment1FileName,
-                                attachment2FileContent: item.cust_attachment2Nav ? item.cust_attachment2Nav : null,
-                                attachment2FileName:item.attachment2FileName,
-                                attachment3FileContent: item.cust_attachment3Nav ? item.cust_attachment3Nav : null,
-                                attachment3FileName:item.attachment3FileName,
+                                attachment1FileContent: item.cust_attachment1Nav ? item.cust_attachment1Nav.fileContent : null,
+                                attachment1FileName: item.cust_attachment1Nav ? item.cust_attachment1Nav.fileName : null,
+                                attachment2FileContent: item.cust_attachment2Nav ? item.cust_attachment2Nav.fileContent : null,
+                                attachment2FileName: item.cust_attachment2Nav ? item.cust_attachment2Nav.fileName : null,
+                                attachment3FileContent: item.cust_attachment3Nav ? item.cust_attachment3Nav.fileContent : null,
+                                attachment3FileName:item.cust_attachment3Nav ? item.cust_attachment3Nav.fileName : null,
                                 isAttach1New: false,
                                 isAttach2New: false,
                                 isAttach3New: false
                             };
                         })
-        
                     },
                     oDisplayHealthInsuranceModel = new JSONModel(oDisplayEditBusinessTripObj);
-
-
                 this.getView().setModel(oDisplayHealthInsuranceModel, "DisplayHealthInsuranceModel");
-
                 this.getView().setBusy(false);
             },
-
-
             onEditPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
-
             },
-
             onCancelPress: function () {
                 this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                 this.handleClose();
             },
-
             onAttach1FileSelectedForUpload: function (oEvent) {
                 // keep a reference of the uploaded file
                 var that = this;
@@ -226,7 +192,6 @@ sap.ui.define([
                     }
                 }
              var oModel = this.getViewModel("DisplayHealthInsuranceModel").getProperty("/cust_healthInsuranceDetails");
-
              oModel.push({
                 Relationship: "",
                 DependentName: "",
@@ -247,30 +212,6 @@ sap.ui.define([
                 isAttach3New: false
             });
             this.getView().getModel("DisplayHealthInsuranceModel").refresh();
-
-
-
-                // var oModel = this.getViewModel("DisplayHealthInsuranceModel");
-                // var oItems = oModel.getData().cust_healthInsuranceDetails.push({
-                //     Relationship: "",
-                //     DependentName: "",
-                //     DependentGender: "",
-                //     NationalID: "",
-                //     DependentNationalAddress: "",
-                //     DependentDOB: new Date(),
-                //     DeliveryLoc: "",
-                //     Scheme: "",
-                //     attachment1FileContent: null,
-                //     attachment1FileName: null,
-                //     attachment2FileContent: null,
-                //     attachment2FileName:null,
-                //     attachment3FileContent: null,
-                //     attachment3FileName:null,
-                //     isAttach1New: false,
-                //     isAttach2New: false,
-                //     isAttach3New: false
-                // });
-                // oModel.setData(oItems);
             },
             onDeleteItemPress: function (oEvent) {
                 this.packingListObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
@@ -282,19 +223,13 @@ sap.ui.define([
             onSavePress: function () {
                var sEntityPath = "/SF_HealthInsurance",
                     oPayloadObj = this.fnGetHealthInsuranceRequestPayload();
-
-
-
-
                 if (this.bValid != false) {
                     this.getView().setBusy(true);
                     this.getView().getModel().create(sEntityPath, oPayloadObj, {
-                      
                         success: function (oResponse) {
                             this.getView().setBusy(false);
                             sap.m.MessageBox.success("Request Submitted successfully.");
                             this.getView().getModel().refresh();
-                          
                             this.oRouter.navTo("detail", {
                                 parentMaterial: this.sParentID,
                                 layout: "TwoColumnsMidExpanded"
@@ -312,8 +247,6 @@ sap.ui.define([
                     });
                 }
             },
-
-
             _validateMandatoryFields: function (itemData) {
                 var bValid = true;
                 var aItemData = this.getView().getModel("DisplayHealthInsuranceModel").getData().cust_healthInsuranceDetails;
@@ -354,7 +287,6 @@ sap.ui.define([
                             );
                             return;
                         }
-
                         if (!aItemData[i].DeliveryLoc) {
                             bValid = false;
                             sap.m.MessageBox.alert(
@@ -362,7 +294,6 @@ sap.ui.define([
                             );
                             return;
                         }
-
                     }
                 }
                 if (aItemData.length === 0) {
@@ -371,7 +302,6 @@ sap.ui.define([
                 }
                 return bValid;
             },
-
             fnGetHealthInsuranceRequestPayload: function () {
                 var aData = this.getViewModel("DisplayHealthInsuranceModel").getData().cust_healthInsuranceDetails;
                 var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
@@ -405,64 +335,32 @@ sap.ui.define([
                         attachment3FileName : item.attachment3FileName,
                         isAttach3New : item.isAttach3New,
                         attachment3UserId : sUserID,
-                        
-
-
-
                         // {
-
                         //     "cust_address": "Pune",
-                
                         //     "cust_dateOfBirth": "\/Date(987359400000)\/",
-                
                         //     "cust_dependentName": "Priyanka Gawande ",
-                
                         //     "cust_healthInsurance_User": "12002194",
-                
                         //     "cust_healthInsurance_effectiveStartDate": "2022-04-23T00:00:00",
-                
                         //     "cust_location": "Pune",
-                
                         //     "cust_nationalID": "1234567",
-                
                         //     "cust_gender": "2",
-                
                         //     "cust_relationship": "8",
-                
                         //     "cust_scheme": "",
-                
                         //     "attachment1FileContent": "aaa",
-                
                         //     "attachment1FileName": "a.txt",
-                
                         //     "isAttach1New": false,
-                
                         //     "attachment1UserId": "12002194",
-                
                         //     "attachment2FileContent": "bbbb",
-                
                         //     "attachment2FileName": "b.txt",
-                
                         //     "isAttach2New": false,
-                
                         //     "attachment2UserId": "12002194",
-                
                         //     "attachment3FileContent": "ccc",
-                
                         //     "attachment3FileName": "c.txt",
-                
                         //     "isAttach3New": false,
-                
                         //     "attachment3UserId": "12002194",
-                
                         //      "externalCode": "103300"
-                
-                           
-                
                         // }
                     }
-
-                   
                 });
                 return {
                     "User": sUserID,
@@ -473,9 +371,7 @@ sap.ui.define([
             onDownLoadPress: function (oEvent) {
                 var oItemRowObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
                 var sLinkText = oEvent.getSource().getTooltip_Text().trim();
-
                 var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : sLinkText === "Download(2)" ? oItemRowObj.cust_attachment2Nav : oItemRowObj.cust_attachment3Nav;
-
                 var fContent = oFileObj.fileContent;
                 var fileext = oFileObj.fileExtension;
                 var mimeType = oFileObj.mimeType;
@@ -500,8 +396,6 @@ sap.ui.define([
                     sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
                 }
             },
-
-
             handleFullScreen: function (oEvent) {
                 var sLayout = "";
                 if (oEvent.getSource().getIcon() === "sap-icon://full-screen") {
@@ -511,23 +405,17 @@ sap.ui.define([
                     sLayout = "ThreeColumnsMidExpanded";
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
-
-
                 this.oRouter.navTo("HealthInsuranceRequestDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,
                     layout: sLayout
                 });
-
             },
-
             handleClose: function (oEvent) {
                 var sLayout = "",
                     sIcon = this.byId("idFullScreenBTN").getIcon();
                 if (sIcon === "sap-icon://full-screen") {
                     sLayout = "TwoColumnsMidExpanded";
-
-
                 } else {
                     sLayout = "ThreeColumnsMidExpanded";
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
@@ -537,12 +425,10 @@ sap.ui.define([
                     layout: sLayout
                 });
             },
-
             onApprovePress: function () {
                 var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
                 this.onApproveRequest(swfRequestId);
             },
-
             onRejectPress: function () {
                 var swfRequestId = this.getView().getModel("headerModel").getProperty("/workflowRequestId");
                 this.onRejectRequest(swfRequestId);
