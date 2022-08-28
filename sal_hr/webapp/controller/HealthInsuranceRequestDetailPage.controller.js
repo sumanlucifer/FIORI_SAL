@@ -225,28 +225,52 @@ sap.ui.define([
                         return;
                     }
                 }
+             var oModel = this.getViewModel("DisplayHealthInsuranceModel").getProperty("/cust_healthInsuranceDetails");
 
-                var oModel = this.getViewModel("DisplayHealthInsuranceModel");
-                var oItems = oModel.getData().cust_healthInsuranceDetails.push({
-                    Relationship: "",
-                    DependentName: "",
-                    DependentGender: "",
-                    NationalID: "",
-                    DependentNationalAddress: "",
-                    DependentDOB: new Date(),
-                    DeliveryLoc: "",
-                    Scheme: "",
-                    attachment1FileContent: null,
-                    attachment1FileName: null,
-                    attachment2FileContent: null,
-                    attachment2FileName:null,
-                    attachment3FileContent: null,
-                    attachment3FileName:null,
-                    isAttach1New: false,
-                    isAttach2New: false,
-                    isAttach3New: false
-                });
-                oModel.setData(oItems);
+             oModel.push({
+                Relationship: "",
+                DependentName: "",
+                DependentGender: "",
+                NationalID: "",
+                DependentNationalAddress: "",
+                DependentDOB: new Date(),
+                DeliveryLoc: "",
+                Scheme: "",
+                attachment1FileContent: null,
+                attachment1FileName: null,
+                attachment2FileContent: null,
+                attachment2FileName:null,
+                attachment3FileContent: null,
+                attachment3FileName:null,
+                isAttach1New: false,
+                isAttach2New: false,
+                isAttach3New: false
+            });
+            this.getView().getModel("DisplayHealthInsuranceModel").refresh();
+
+
+
+                // var oModel = this.getViewModel("DisplayHealthInsuranceModel");
+                // var oItems = oModel.getData().cust_healthInsuranceDetails.push({
+                //     Relationship: "",
+                //     DependentName: "",
+                //     DependentGender: "",
+                //     NationalID: "",
+                //     DependentNationalAddress: "",
+                //     DependentDOB: new Date(),
+                //     DeliveryLoc: "",
+                //     Scheme: "",
+                //     attachment1FileContent: null,
+                //     attachment1FileName: null,
+                //     attachment2FileContent: null,
+                //     attachment2FileName:null,
+                //     attachment3FileContent: null,
+                //     attachment3FileName:null,
+                //     isAttach1New: false,
+                //     isAttach2New: false,
+                //     isAttach3New: false
+                // });
+                // oModel.setData(oItems);
             },
             onDeleteItemPress: function (oEvent) {
                 this.packingListObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
