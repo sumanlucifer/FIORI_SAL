@@ -344,7 +344,7 @@ sap.ui.define([
                 };
             },
             onDownLoadPress: function (oEvent) {
-                var oFileObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
+                var oItemRowObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
                 var sLinkText = oEvent.getSource().getTooltip_Text().trim();
                 var fContent = sLinkText === "Download(1)" ? oItemRowObj.attachment1FileContent : sLinkText === "Download(2)" ? oItemRowObj.attachment2FileContent : oItemRowObj.attachment3FileContent;
                 var fileext = oFileObj.fileExtension;
