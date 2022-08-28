@@ -335,31 +335,6 @@ sap.ui.define([
                         attachment3FileName : item.attachment3FileName,
                         isAttach3New : item.isAttach3New,
                         attachment3UserId : sUserID,
-                        // {
-                        //     "cust_address": "Pune",
-                        //     "cust_dateOfBirth": "\/Date(987359400000)\/",
-                        //     "cust_dependentName": "Priyanka Gawande ",
-                        //     "cust_healthInsurance_User": "12002194",
-                        //     "cust_healthInsurance_effectiveStartDate": "2022-04-23T00:00:00",
-                        //     "cust_location": "Pune",
-                        //     "cust_nationalID": "1234567",
-                        //     "cust_gender": "2",
-                        //     "cust_relationship": "8",
-                        //     "cust_scheme": "",
-                        //     "attachment1FileContent": "aaa",
-                        //     "attachment1FileName": "a.txt",
-                        //     "isAttach1New": false,
-                        //     "attachment1UserId": "12002194",
-                        //     "attachment2FileContent": "bbbb",
-                        //     "attachment2FileName": "b.txt",
-                        //     "isAttach2New": false,
-                        //     "attachment2UserId": "12002194",
-                        //     "attachment3FileContent": "ccc",
-                        //     "attachment3FileName": "c.txt",
-                        //     "isAttach3New": false,
-                        //     "attachment3UserId": "12002194",
-                        //      "externalCode": "103300"
-                        // }
                     }
                 });
                 return {
@@ -369,13 +344,12 @@ sap.ui.define([
                 };
             },
             onDownLoadPress: function (oEvent) {
-                var oItemRowObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
+                var oFileObj = oEvent.getSource().getBindingContext("DisplayHealthInsuranceModel").getObject();
                 var sLinkText = oEvent.getSource().getTooltip_Text().trim();
-                var oFileObj = sLinkText === "Download(1)" ? oItemRowObj.cust_attachment1Nav : sLinkText === "Download(2)" ? oItemRowObj.cust_attachment2Nav : oItemRowObj.cust_attachment3Nav;
-                var fContent = oFileObj.fileContent;
+                var fContent = sLinkText === "Download(1)" ? oItemRowObj.attachment1FileContent : sLinkText === "Download(2)" ? oItemRowObj.attachment2FileContent : oItemRowObj.attachment3FileContent;
                 var fileext = oFileObj.fileExtension;
                 var mimeType = oFileObj.mimeType;
-                var fName = oFileObj.fileName;
+                var fName = sLinkText === "Download(1)" ? oItemRowObj.attachment1FileName : sLinkText === "Download(2)" ? oItemRowObj.attachment2FileName : oItemRowObj.attachment3FileName;
                 fName = fName.split(".")[0];
                 debugger;
                 if (fileext === "pdf" || fileext === "png" || fileext === "jpg" || fileext === "jpeg") {
