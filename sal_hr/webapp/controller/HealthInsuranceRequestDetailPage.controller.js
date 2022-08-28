@@ -124,9 +124,9 @@ sap.ui.define([
                         "effectiveStartDate": oData.effectiveStartDate,
                         "cust_healthInsuranceDetails": aCust_healthInsuranceDetails.map(function (item) {
                             return {
-                                Relationship: item.cust_relationshipNav.results[0].label_defaultValue,
+                                Relationship: item.cust_relationshipNav.results[0].externalCode,
                                 DependentName: item.cust_dependentName,
-                                DependentGender: item.cust_genderNav.results[0].label_defaultValue,
+                                DependentGender: item.cust_genderNav.results[0].externalCode,
                                 NationalID: item.cust_nationalID,
                                 DependentNationalAddress: item.cust_address,
                                 DependentDOB: item.cust_dateOfBirth,
@@ -258,7 +258,7 @@ sap.ui.define([
                 this.getView().getModel("DisplayHealthInsuranceModel").refresh();
             },
             onSavePress: function () {
-                var sEntityPath = "/SF_Leave('" + this.object.externalCode + "')",
+                sEntityPath = "/SF_HealthInsurance",
                     oPayloadObj = this.fnGetHealthInsuranceRequestPayload();
 
 
@@ -267,9 +267,7 @@ sap.ui.define([
                 if (this.bValid != false) {
                     this.getView().setBusy(true);
                     this.getView().getModel().update(sEntityPath, oPayloadObj, {
-                        urlParameters: {
-                            ticketId: this.sChildID
-                        },
+                      
                         success: function (oResponse) {
                             this.getView().setBusy(false);
                             sap.m.MessageBox.success("Request Submitted successfully.");

@@ -114,12 +114,12 @@
                                                <Link tooltip="Download(2)"  text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>attachment2FileContent',formatter:'.formatter.viewFileNames'}"/>
                                                 <unified:FileUploader  buttonOnly="true" buttonText="{i18n>Upload}"  sameFilenameAllowed="true" multiple="false" style="Emphasized" change="onAttach2FileSelectedForUpload" visible="{path:'Attachments',formatter:'.formatter.viewItemsFileUploader'}" />
                                             </VBox>
-                                            <HBox>
+                                            <VBox>
                                                
                                                 <Link  tooltip="Download(3)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>attachment3FileContent',formatter:'.formatter.viewFileNames'}"/>
                                                
                                                 <unified:FileUploader  buttonOnly="true" buttonText="{i18n>Upload}"  sameFilenameAllowed="true" multiple="false" style="Emphasized" change="onAttach3FileSelectedForUpload" visible="{path:'Attachments',formatter:'.formatter.viewItemsFileUploader'}" />
-                                            </HBox>
+                                            </VBox>
                                             
                                                <Button icon="sap-icon://delete" press="onDeleteItemPress" type="Transparent"/>
                                        
