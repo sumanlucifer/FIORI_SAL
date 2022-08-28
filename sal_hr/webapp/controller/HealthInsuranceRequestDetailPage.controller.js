@@ -116,14 +116,34 @@ sap.ui.define([
 
             fnSetDisplayHealthInsuranceModel: function (oData) {
                 this.getView().setBusy(true);
-
-
+            
                 var aCust_healthInsuranceDetails = oData.cust_healthInsuranceDetails.results,
                     oDisplayEditBusinessTripObj = {
                         "externalCode": oData.externalCode,
                         "UserNav": oData.UserNav,
                         "effectiveStartDate": oData.effectiveStartDate,
-                        "cust_healthInsuranceDetails": aCust_healthInsuranceDetails
+                        "cust_healthInsuranceDetails": aCust_healthInsuranceDetails.map(function (item) {
+                            return {
+                                Relationship: item.cust_relationshipNav.results[0].label_defaultValue,
+                                DependentName: item.cust_dependentName,
+                                DependentGender: item.cust_genderNav.results[0].label_defaultValue,
+                                NationalID: item.cust_nationalID,
+                                DependentNationalAddress: item.cust_address,
+                                DependentDOB: item.cust_dateOfBirth,
+                                DeliveryLoc: item.cust_location,
+                                Scheme: item.cust_scheme,
+                                attachment1FileContent: item.cust_attachment1Nav ? item.cust_attachment1Nav : null,
+                                attachment1FileName: item.attachment1FileName,
+                                attachment2FileContent: item.cust_attachment2Nav ? item.cust_attachment2Nav : null,
+                                attachment2FileName:item.attachment2FileName,
+                                attachment3FileContent: item.cust_attachment3Nav ? item.cust_attachment3Nav : null,
+                                attachment3FileName:item.attachment3FileName,
+                                isAttach1New: false,
+                                isAttach2New: false,
+                                isAttach3New: false
+                            };
+                        })
+        
                     },
                     oDisplayHealthInsuranceModel = new JSONModel(oDisplayEditBusinessTripObj);
 

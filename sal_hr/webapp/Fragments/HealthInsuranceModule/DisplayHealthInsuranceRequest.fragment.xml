@@ -56,28 +56,28 @@
                             <items>
                                 <ColumnListItem >
                                     <cells>
-                                              <Text text="{DisplayHealthInsuranceModel>cust_relationshipNav/results/0/label_defaultValue}"/>
-                                             <Text text="{DisplayHealthInsuranceModel>cust_dependentName}"/>
-                                    <Text text="{DisplayHealthInsuranceModel>cust_genderNav/results/0/label_defaultValue}"/>
-                                             <Text text="{DisplayHealthInsuranceModel>cust_nationalID}"/>
-                                              	<ExpandableText maxCharacters="10" overflowMode="Popover" class="sapUiTinyMarginBottom sapUiTinyMarginTop" text="{DisplayHealthInsuranceModel>cust_address}"  />
-                                        <Text text="{path:'DisplayHealthInsuranceModel>cust_dateOfBirth',
+                                              <Text text="{DisplayHealthInsuranceModel>Relationship}"/>
+                                             <Text text="{DisplayHealthInsuranceModel>DependentName}"/>
+                                    <Text text="{DisplayHealthInsuranceModel>DependentGender}"/>
+                                             <Text text="{DisplayHealthInsuranceModel>NationalID}"/>
+                                              	<ExpandableText maxCharacters="10" overflowMode="Popover" class="sapUiTinyMarginBottom sapUiTinyMarginTop" text="{DisplayHealthInsuranceModel>DependentNationalAddress}"  />
+                                        <Text text="{path:'DisplayHealthInsuranceModel>DependentDOB',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
-                                             <Text text="{DisplayHealthInsuranceModel>cust_location}"/>
-                                           <Text text="{DisplayHealthInsuranceModel>cust_scheme}"/>
+                                             <Text text="{DisplayHealthInsuranceModel>DeliveryLoc}"/>
+                                           <Text text="{DisplayHealthInsuranceModel>Scheme}"/>
                                               <VBox>
-                                                 <Link  tooltip="Download(1)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment1Nav',formatter:'.formatter.viewFileNames'}"/>
+                                                 <Link  tooltip="Download(1)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>attachment1FileContent',formatter:'.formatter.viewFileNames'}"/>
 
                                                  
                                             </VBox>
                                             <VBox>
-                                               <Link tooltip="Download(2)"  text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment2Nav',formatter:'.formatter.viewFileNames'}"/>
+                                               <Link tooltip="Download(2)"  text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>attachment2FileContent',formatter:'.formatter.viewFileNames'}"/>
                                             </VBox>
                                             <VBox>
-                                                <Link  tooltip="Download(3)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>cust_attachment3Nav',formatter:'.formatter.viewFileNames'}"/>
+                                                <Link  tooltip="Download(3)" text="Download" press="onDownLoadPress" visible="{path:'DisplayHealthInsuranceModel>attachment3FileContent',formatter:'.formatter.viewFileNames'}"/>
                                             </VBox> 
                                     </cells>
                                 </ColumnListItem>
