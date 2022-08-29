@@ -325,7 +325,7 @@ sap.ui.define(
           this.getView().getModel("DisplayHealthInsuranceModel").refresh();
         },
         onSavePress: function () {
-          var sTicketID = this.object.ticketCode;
+          var sTicketID = this.object.ID;
           var sEffectiveStartDate = this.getView()
             .byId("idEditEffectiveStartDate")
             .getDateValue();
