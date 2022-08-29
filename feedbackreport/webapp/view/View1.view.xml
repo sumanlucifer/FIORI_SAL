@@ -10,42 +10,7 @@
         <IconTabBar id="idIconTabBar" select="onIconTabSelect" headerMode="Inline" expanded="true" class="sapUiResponsiveContentPadding">
                 <items>
                     <IconTabFilter  text="{i18n>Rating}" >
-                       <!-- <ScrollContainer height="40%" width="100%" vertical="true"
-		focusable="true">
-              <Table id="idRatingsTable"
-		        inset="false"
-		        items="{
-			        path: '/Rating'
-			
-		        }" growing="true" growingThreshold="5" growingScrollToLoad="true">
-		
-	
-		<columns>
-			<Column
-				>
-				<Text text="Employee Id" />
-			</Column>
-			<Column>
-				<Text text="Rating" />
-			</Column>
-			
-		</columns>
-		<items>
-			<ColumnListItem vAlign="Middle">
-				<cells>
-				
-					<Text
-						text="{createdBy}" />
-					<Text
-						text="{rating}" />
-				
-						
-				</cells>
-			</ColumnListItem>
-		</items>
-	</Table>
-
-        </ScrollContainer> -->
+                     
             
 				<content>
                                             <HBox class="DateRangeCss"  alignContent="Right">
@@ -55,6 +20,7 @@
 					
 				
 				</content>
+                 <HBox class="DateRangeCss"  alignContent="Center">
 			  <viz:Popover id="idPopOver"></viz:Popover>
 
         <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
@@ -78,6 +44,7 @@
 												</viz:feeds>
 											</viz:VizFrame>
 
+  </HBox >
                     </IconTabFilter>
                     <IconTabFilter  text="{i18n>Suggestions}" >
                         <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true">

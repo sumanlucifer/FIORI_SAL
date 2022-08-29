@@ -326,16 +326,7 @@ sap.ui.define(
         },
         onSavePress: function () {
           var sTicketID = this.object.ID;
-          var sEffectiveStartDate = this.getView()
-            .byId("idEditEffectiveStartDate")
-            .getDateValue();
-          var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-              pattern: "yyyy-MM-dd",
-            }),
-            sEffectiveStartDate = dateFormat.format(
-              new Date(sEffectiveStartDate)
-            );
-          sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
+          var sEffectiveStartDate =   this.getFormattedDateValue("idEditEffectiveStartDate");
           var sUserID = this.getOwnerComponent()
             .getModel("EmpInfoModel")
             .getData().userId;
