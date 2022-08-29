@@ -339,7 +339,7 @@ sap.ui.define(
           var sUserID = this.getOwnerComponent()
             .getModel("EmpInfoModel")
             .getData().userId;
-          var sEntityPath = `/SF_HealthInsurance(effectiveStartDate='${sEffectiveStartDate}',User='${sUserID}')?ticketId=${sTicketID}`,
+          var sEntityPath = `/SF_HealthInsurance(effectiveStartDate='${sEffectiveStartDate}',User='${sUserID}')`,
             oPayloadObj = this.fnGetHealthInsuranceRequestPayload();
 
           if (this.bValid != false) {
@@ -347,6 +347,10 @@ sap.ui.define(
             this.getView()
               .getModel()
               .update(sEntityPath, oPayloadObj, {
+                urlParameters: {
+                   
+                    "ticketId": sTicketID
+                },
                 success: function (oResponse) {
                   this.getView().setBusy(false);
                   sap.m.MessageBox.success("Request Submitted successfully.");
