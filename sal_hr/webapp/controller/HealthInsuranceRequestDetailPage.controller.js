@@ -426,17 +426,7 @@ sap.ui.define(
           var sUserID = this.getOwnerComponent()
             .getModel("EmpInfoModel")
             .getData().userId;
-          var sExternalCode = this.object.externalCode;
-          var sEffectiveStartDate = this.getView()
-            .byId("idEditEffectiveStartDate")
-            .getDateValue();
-          var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({
-              pattern: "yyyy-MM-dd",
-            }),
-            sEffectiveStartDate = dateFormat.format(
-              new Date(sEffectiveStartDate)
-            );
-          sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
+          var sEffectiveStartDate =   this.getFormattedDateValue("idEditEffectiveStartDate");
           var cust_healthInsuranceDetails = aData.map(function (item) {
             return {
               externalCode: item.externalCode,
