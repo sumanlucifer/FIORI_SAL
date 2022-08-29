@@ -20,7 +20,7 @@
                 }
             },
             "sfsfService": {
-                "uri": "/odata/",
+                "uri": "/odata/v2/",
                 "type": "OData"
             },
             "ds_timezones": {
