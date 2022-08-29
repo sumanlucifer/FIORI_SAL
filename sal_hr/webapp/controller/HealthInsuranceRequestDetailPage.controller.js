@@ -100,6 +100,7 @@ sap.ui.define([
                         "cust_healthInsuranceDetails": aCust_healthInsuranceDetails.map(function (item) {
                             return {
                                 Relationship: item.cust_relationshipNav.results[0].externalCode,
+                                externalCode: item.externalCode,
                                 DependentName: item.cust_dependentName,
                                 DependentGender: item.cust_genderNav.results[0].externalCode,
                                 NationalID: item.cust_nationalID,
@@ -312,7 +313,7 @@ sap.ui.define([
                 sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
                 var cust_healthInsuranceDetails = aData.map(function (item) {
                     return {
-                        externalCode: sExternalCode,
+                        externalCode: item.externalCode,
                         cust_address: item.DependentNationalAddress,
                         cust_dateOfBirth: new Date(item.DependentDOB),
                         cust_dependentName: item.DependentName,
