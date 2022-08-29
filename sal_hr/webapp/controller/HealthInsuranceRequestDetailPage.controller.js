@@ -234,12 +234,7 @@ sap.ui.define([
                 if (this.bValid != false) {
                     this.getView().setBusy(true);
                     this.getView().getModel().update(sEntityPath, oPayloadObj, {
-                        urlParameters: {
-                            "effectiveStartDate": sEffectiveStartDate,
-                            "User": sUserID,
-
                         
-                        },
                         success: function (oResponse) {
                             this.getView().setBusy(false);
                             sap.m.MessageBox.success("Request Submitted successfully.");
