@@ -222,11 +222,22 @@ sap.ui.define([
                 this.getView().getModel("DisplayHealthInsuranceModel").refresh();
             },
             onSavePress: function () {
-               var sEntityPath = "/SF_HealthInsurance",
+               var sEntityPath = `/SF_HealthInsurance?ticketId=${this.object.ticketCode}`,
                     oPayloadObj = this.fnGetHealthInsuranceRequestPayload();
+                    var sEffectiveStartDate = this.getView().byId("idEditEffectiveStartDate").getDateValue();
+                    var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                        sEffectiveStartDate = dateFormat.format(new Date(sEffectiveStartDate));
+                    sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
+                    var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
                 if (this.bValid != false) {
                     this.getView().setBusy(true);
-                    this.getView().getModel().create(sEntityPath, oPayloadObj, {
+                    this.getView().getModel().update(sEntityPath, oPayloadObj, {
+                        urlParameters: {
+                            "effectiveStartDate": sEffectiveStartDate,
+                            "User": sUserID,
+
+                        
+                        },
                         success: function (oResponse) {
                             this.getView().setBusy(false);
                             sap.m.MessageBox.success("Request Submitted successfully.");
