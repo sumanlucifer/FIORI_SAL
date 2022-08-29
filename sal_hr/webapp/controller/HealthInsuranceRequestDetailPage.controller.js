@@ -228,7 +228,7 @@ sap.ui.define([
                         sEffectiveStartDate = dateFormat.format(new Date(sEffectiveStartDate));
                     sEffectiveStartDate = sEffectiveStartDate + "T00:00:00";
                     var sUserID = this.getOwnerComponent().getModel("EmpInfoModel").getData().userId;
-               var sEntityPath = `/SF_HealthInsurance(effectiveStartDate='${sEffectiveStartDate},User='${sUserID}'')?ticketId=${this.object.ticketCode}`,
+               var sEntityPath = `/SF_HealthInsurance(effectiveStartDate='${sEffectiveStartDate},User='${sUserID}')?ticketId=${this.object.ticketCode}`,
                     oPayloadObj = this.fnGetHealthInsuranceRequestPayload();
                    
                 if (this.bValid != false) {
