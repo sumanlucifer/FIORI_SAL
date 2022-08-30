@@ -104,7 +104,7 @@ sap.ui.define([
             this.getView().setBusy(true);
 
            var oModel = this.getOwnerComponent().getModel("sfsfModel");
-            url = oModel.sServiceUrl + `/getWorkflowPendingData?wfRequestId=${wfID}L`;
+           var url = oModel.sServiceUrl + `/getWorkflowPendingData?wfRequestId=${wfID}L`;
             $.post(url, {success:function(oData) {
                 console.log(oData);
             }
