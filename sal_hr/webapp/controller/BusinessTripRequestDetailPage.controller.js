@@ -472,6 +472,10 @@ sap.ui.define([
                     this.getView().setBusy(true);
 
                     var oPayloadObj = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
+                    delete oPayloadObj.payGrade;
+                    delete oPayloadObj.costCentre;
+                    delete oPayloadObj.emergencyNumber;
+                    
                     oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany = (oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany === "Yes" ? true : false);
                     oPayloadObj.cust_toDutyTravelItem[0].cust_hotelBooking = oPayloadObj.cust_toDutyTravelItem[0].cust_hotelBooking === "Yes" ? true : false;
                     oPayloadObj.cust_toDutyTravelItem[0].cust_expenseTypeVisaFee = this.getView().byId("idEditVisaType").getSelectedKey();
