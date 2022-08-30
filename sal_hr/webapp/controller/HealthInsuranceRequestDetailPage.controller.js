@@ -330,7 +330,7 @@ sap.ui.define(
           var sUserID = this.getOwnerComponent()
             .getModel("EmpInfoModel")
             .getData().userId;
-          var sEntityPath = `/SF_HealthInsurance(effectiveStartDate='${sEffectiveStartDate}',User='${sUserID}')`,
+          var sEntityPath = `/SF_HealthInsurance(effectiveStartDate=datetime'${sEffectiveStartDate}',User='${sUserID}')`,
             oPayloadObj = this.fnGetHealthInsuranceRequestPayload();
 
           if (this.bValid != false) {
