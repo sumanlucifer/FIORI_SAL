@@ -21,7 +21,11 @@
             },
             "sfsfService": {
                 "uri": "/odata/v2/",
-                "type": "OData"
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "2.0"
+                }
             },
             "ds_timezones": {
 				"uri": "model/timezones.json",

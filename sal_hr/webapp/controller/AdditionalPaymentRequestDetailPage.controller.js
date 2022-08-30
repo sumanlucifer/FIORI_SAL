@@ -103,23 +103,31 @@ sap.ui.define([
             //    var sWFRequestId = "62422";
             this.getView().setBusy(true);
 
-                this.getOwnerComponent().getModel("sfsfModel").create("/getWorkflowPendingData", null, {
-                    urlParameters: {
-                        "wfRequestId": wfID + "L"
-                    },
-                  success: function (oData) {
-                    this.getView().setBusy(false);
-                    var items = this.convertResponseToGridItems(oData);
-                    var oTestModel = new JSONModel({
-                      items: items
-              });
-               this.getView().setModel(oTestModel, "TestModel");
-                  }.bind(this),
-                  error: function () {
-                    this.getView().setBusy(false);
-                    // this.fnSetDisplaySalryCompInfoModel(null);
-                  }.bind(this),
-                });
+           var oModel = this.getOwnerComponent().getModel("sfsfModel");
+           var url = oModel.sServiceUrl + `/getWorkflowPendingData?wfRequestId=${wfID}L`;
+            $.post(url, {success:function(oData) {
+                console.log(oData);
+            }
+                        });
+
+                        
+            //     this.getOwnerComponent().getModel("sfsfModel").create("/getWorkflowPendingData", null, {
+            //         urlParameters: {
+            //             "wfRequestId": wfID + "L"
+            //         },
+            //       success: function (oData) {
+            //         this.getView().setBusy(false);
+            //         var items = this.convertResponseToGridItems(oData);
+            //         var oTestModel = new JSONModel({
+            //           items: items
+            //   });
+            //    this.getView().setModel(oTestModel, "TestModel");
+            //       }.bind(this),
+            //       error: function () {
+            //         this.getView().setBusy(false);
+            //         // this.fnSetDisplaySalryCompInfoModel(null);
+            //       }.bind(this),
+            //     });
 
             },
 

@@ -14,7 +14,9 @@
     {
         "source": "^/odata/v2/(.*)$",
         "target": "/odata/v2/$1",
-        "destination": "sf_extensions_admin"
+        "destination": "sf_extensions_admin",
+        "authenticationType": "xsuaa",
+        "csrfProtection": false
     },
     
     {

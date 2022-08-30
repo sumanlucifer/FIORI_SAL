@@ -7,7 +7,7 @@
 
 
 
-        <IconTabBar id="idIconTabBar" select="onIconTabSelect" headerMode="Inline" expanded="true" class="sapUiResponsiveContentPadding">
+        <IconTabBar id="idIconTabBar"  select="onIconTabSelect" headerMode="Inline" expanded="true" class="sapUiResponsiveContentPadding">
                 <items>
                     <IconTabFilter  text="{i18n>Rating}" >
                      
@@ -20,7 +20,7 @@
 					
 				
 				</content>
-                 <HBox class="DateRangeCss"  alignContent="Center">
+                 <HBox alignContent="Center">
 			  <viz:Popover id="idPopOver"></viz:Popover>
 
         <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
