@@ -107,7 +107,19 @@ sap.ui.define([
            var url = oModel.sServiceUrl + `/getWorkflowPendingData?wfRequestId=${wfID}L`;
             $.post(url, {success:function(oData) {
                 console.log(oData);
-            }
+
+                this.getView().setBusy(false);
+                if(oData.length !== 0)
+                {
+                    var items = this.convertResponseToGridItems(oData);
+                    var oTestModel = new JSONModel({
+                      items: items
+                    });
+                    this.getView().setModel(oTestModel, "TestModel");
+                }
+               
+                
+            }.bind(this),
                         });
 
                         
