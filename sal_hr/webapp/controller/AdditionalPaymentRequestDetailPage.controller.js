@@ -138,7 +138,7 @@ sap.ui.define(
                     var items = [];
                     oData.d[0].workflowAttributeGroups.results.forEach((group) => {
                         group.changeSet.results.forEach((item) => {
-                            item.group = group.title;
+                            item.group = group.title ? group.title : "Request Details";
                             items.push(item);
                         });
                     });
