@@ -123,6 +123,12 @@ sap.ui.define([
             });
 
         },
+        setTimelineSteps: function() {
+            var processFlows = $(".ticketProcessFlow span[data-sap-ui-icon-content]");
+            $.each(processFlows, function(index, elem) {
+                elem.setAttribute("data-sap-ui-icon-content", index+1);
+            });
+        },
         _getSFUser: function (sId) {
             var idFILTER = new sap.ui.model.Filter({
                 path: "userId",
@@ -553,12 +559,41 @@ sap.ui.define([
                     break;
             }
         },
+        fillWorkflowParticipantDetails: function(oTicketWorkflowParticipantData) {
+            if(oTicketWorkflowParticipantData) {
+                var approver = "Unassigned";
+                if(oTicketWorkflowParticipantData.workflowParticipantId) {
+                    if(oTicketWorkflowParticipantData.workflowParticipantName) {
+                        approver = `${oTicketWorkflowParticipantData.workflowParticipantName} (${oTicketWorkflowParticipantData.workflowParticipantId})`;
+                    } else {
+                        approver = oTicketWorkflowParticipantData.workflowParticipantId;
+                    }
+                }
+                var dateFormat = sap.ui.core.format.DateFormat.getDateInstance({pattern: "MM/dd/YYYY HH:mm:ss"});
+                var targetDate = "Not Set";
+                if(oTicketWorkflowParticipantData.slaTargetDate) {
+                    targetDate = dateFormat.format(oTicketWorkflowParticipantData.slaTargetDate);
+                }
+                var actualDate = "Waiting for Approval";
+                if(oTicketWorkflowParticipantData.slaActualDate) {
+                    actualDate = dateFormat.format(oTicketWorkflowParticipantData.slaActualDate);
+                }
+                var violated = oTicketWorkflowParticipantData.slaViolated ? 'Yes' : 'No';
+                oTicketWorkflowParticipantData.approver = approver;
+                oTicketWorkflowParticipantData.targetDate = targetDate;
+                oTicketWorkflowParticipantData.actualDate = actualDate;
+                oTicketWorkflowParticipantData.violated = violated;
+            }
+        },
         itemPress: function(oEvent) {
             debugger;
             var oButton = oEvent.getSource(),
             oView = this.getView();
             var index = oEvent.getSource().sId.split('-')[2];
             var oTicketWorkflowParticipantData = oView.getModel("headerModel").getProperty(`/ticketWorkflowParticipants/results/${index}`);
+            
+            // setting approval and sla details
+            this.fillWorkflowParticipantDetails(oTicketWorkflowParticipantData);
             if (!this._pPopover) {
                 this._pPopover = Fragment.load({
                     id: oView.getId(),
