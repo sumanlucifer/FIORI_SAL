@@ -3,6 +3,7 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:unified="sap.ui.unified"
+    xmlns:ui="sap.suite.ui.commons"
     xmlns:l="sap.ui.layout"
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core"
@@ -60,20 +61,29 @@
                     </layout:VerticalLayout>
                   <layout:VerticalLayout class="sapUiMediumMarginEnd">
                        <ObjectAttribute title="{i18n>RequestedBy}"/>
-         <!-- <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/> -->
+        
           <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/>
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
                          <ObjectAttribute title="{i18n>RequestedFor}"/>
                         <ObjectAttribute text="{headerModel>/employeeName} ({headerModel>/employeeId})"/>
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>DateofCreation}"/>
                         <ObjectAttribute text="{path:'headerModel>/requestDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                        <ObjectAttribute title="Timeline"/>
+                       	<ui:MicroProcessFlow content="{headerModel>/ticketWorkflowParticipants/results}">
+		                    <ui:content>
+			                    <ui:MicroProcessFlowItem  state="{path: 'headerModel>status', formatter:'.formatter.ticketStatus'}" press="itemPress" />
+                            </ui:content>
+	                    </ui:MicroProcessFlow>
+
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -90,19 +100,15 @@
                             <items>
 
                                 <IconTabFilter visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" id="idEditBusinessTripRequestITB" text="{i18n>Details}">
-                        <VBox visible="{= ${LocalViewModel>/jobInfoVisible} ? true : false }"  >
+                        <VBox visible="{= ${LocalViewModel>/jobInfoVisible} ? true : true }"  >
                         
-                          <core:Fragment  fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.JobInfo" type="XML"/>
+                          <!-- <core:Fragment  fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.JobInfo" type="XML"/> -->
+
+                            <core:Fragment  fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.WorkflowPendingData" type="XML"/>
 
                         </VBox>
-
-                           <VBox visible="{= ${LocalViewModel>/componesationInfoVisible} ? true : false }"  >
-                        
-                          <core:Fragment  fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.CompensationInfo" type="XML"/>
 
                           
-                        
-                        </VBox>
                                    
                                 </IconTabFilter>
 
@@ -111,7 +117,7 @@
                                     <core:Fragment fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.HistoryTab" type="XML"/>
                                 </IconTabFilter>
                                   <IconTabFilter  text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
-                            <!-- <core:Fragment fragmentName="com.sal.salhr.Fragments.SalaryIncrementModule.EditComponesationDetails" type="XML"/> -->
+                          
                         </IconTabFilter>
                             </items>
                         </IconTabBar>

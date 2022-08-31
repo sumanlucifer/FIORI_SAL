@@ -11,7 +11,6 @@ sap.ui.define([
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
-                    LeaveModule: false,
                     BusineesTripModule: false,
                     HealthModule: false,
                     PageTitle: null
@@ -26,8 +25,7 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // this._getTicketData(this.sChildID);
+              
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
@@ -47,11 +45,6 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
 
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
-                // }
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
@@ -74,10 +67,7 @@ sap.ui.define([
                         }
                     },
                     events: {
-                        change: function (oEvent) {
-                            var oContextBinding = oEvent.getSource();
-                            oContextBinding.refresh(false);
-                        }.bind(this),
+                        
                         dataRequested: function () {
                             this.getView().setBusy(true);
                         }.bind(this),
@@ -239,11 +229,7 @@ sap.ui.define([
                     this.byId("idIncidentDescription").setValueState("None");
                     this.byId("idIncidentDescription").setValueStateText(null);
                 }
-                // if(this.isAttachment !== true)
-                // {
-                //     sap.m.MessageBox.error("Please upload attachments.");
-                //     bValid = false;
-                // }
+              
                 return bValid;
             },
 

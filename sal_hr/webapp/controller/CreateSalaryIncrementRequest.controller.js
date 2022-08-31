@@ -198,7 +198,7 @@ sap.ui.define(
                                 that.oCompensationModel = new JSONModel({
                                     customString2: "SAU"
                                 });
-                                // sap.m.MessageBox.error(that.parseResponseError(oError.responseText));
+                              
                             },
                         });
                 },
@@ -282,7 +282,7 @@ sap.ui.define(
                 },
 
                 fnGetJobRequestPayload: function () {
-                    var sJobData = this.getView().getModel("jobModel").getData(),
+                    var sJobData = this.getView().getModel("jobModel").getData() ? this.getView().getModel("jobModel").getData() : {},
                         sNewPayload = $.extend(true, {}, sJobData);
                         
                     sNewPayload.startDate = this.getFormattedDateValue("idStartDate");
@@ -361,8 +361,7 @@ sap.ui.define(
                         .getModel("compensationModel")
                         .getData(),
                         sNewPayload = $.extend(true, {}, sCompData);
-                    // this.getView().getModel("compensationModel").setProperty("/startDate", sStartDate);
-                    // this.getView().getModel("compensationModel").refresh();
+               
 
                     sNewPayload.startDate = this.getFormattedDateValue("idStartDate");
                     sNewPayload.customDate1 = this.getFormattedDateValue("idSchemeChangeDate");
@@ -399,18 +398,10 @@ sap.ui.define(
                             .getSelected();
                     var sValidationErrorMsg = "",
                         oStartDatePicker = this.byId("idStartDate"),
-                        // oIncumbentPosition = this.byId("idIncumbentPosition"),
+                       
                         oCompany = this.byId("idCompany"),
                         oLocation = this.byId("idLocation"),
-                        // sDirectManager = this.getView().byId("idDirectManager"),
-                        // sJobCountry = this.byId("idJobCountry"),
-                        // sNotes = this.byId("idNotes"),
-                        // oProbationaryDate = this.byId("idProbationaryDate"),
-                        // sJobTitle = this.byId("idJobTitle"),
-                        // sIKOOK = this.byId("idIKOOK"),
-                        // sFullTimeEmp = this.byId("idFullTimeEmp"),
-                        // sEmpType = this.byId("idEmployeeType"),
-                        // sPayGroup = this.byId("idPayGroup"),
+                      
                         sPayScaleType = this.byId("idPayScaleType"),
                         sPayScaleArea = this.byId("idPayScaleArea"),
                         sContractType = this.byId("idContractType"),
@@ -419,15 +410,7 @@ sap.ui.define(
                         sCompanyPayGroup = this.byId("idCompPayGroup"),
                         oPRNId = this.byId("idSalIncPRN");
                     if (sjobInfo === true) {
-                        // Validate Incumbent Parent Position
-                        // if (!oIncumbentPosition.getValue()) {
-                        //     oIncumbentPosition.setValueState("Error");
-                        //     oIncumbentPosition.setValueStateText("Incumbent Parent Posiiton is required");
-                        //     sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //     oIncumbentPosition.setValueState("None");
-                        // }
-                        // validate Company Field
+                        
                         if (!oCompany.getSelectedKey()) {
                             oCompany.setValueState("Error");
                             oCompany.setValueStateText("Please select Company.");
@@ -444,80 +427,9 @@ sap.ui.define(
                             oLocation.setValueState("None");
                         }
 
-                        // Validate Direct Manager
-                        // if (!sDirectManager.getValue()) {
-                        //   sDirectManager.setValueState("Error");
-                        //   sDirectManager.setValueStateText("Please enter Direct Manager");
-                        //   sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //   sDirectManager.setValueState("None");
-                        // }
-                        // Validate Notes
-                        // if (!sNotes.getValue()) {
-                        //     sNotes.setValueState("Error");
-                        //     sNotes.setValueStateText("Please enter Notes");
-                        //     sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //     sNotes.setValueState("None");
-                        // }
-                        // validate Pay Group
-                        // if (!sPayGroup.getSelectedKey()) {
-                        //   sPayGroup.setValueState("Error");
-                        //   sPayGroup.setValueStateText("Please select Company.");
-                        //   sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //   sPayGroup.setValueState("None");
-                        // }
-                        // Validate Probationary period End Date
-                        // if (!oProbationaryDate.getValue()) {
-                        //   oProbationaryDate.setValueState("Error");
-                        //   oProbationaryDate.setValueStateText(
-                        //     "Please select Probationary Period End date"
-                        //   );
-                        //   sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //   oProbationaryDate.setValueState("None");
-                        // }
-                        // Validate Job Title
-                        // if (!sJobTitle.getValue()) {
-                        //     sJobTitle.setValueState("Error");
-                        //     sJobTitle.setValueStateText("Please enter Job title");
-                        //     sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //     sJobTitle.setValueState("None");
-                        // }
-                        // Validate IK/OOK
-                        // if (!sIKOOK.getSelectedKey()) {
-                        //   sIKOOK.setValueState("Error");
-                        //   sIKOOK.setValueStateText("Please enter Job title");
-                        //   sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //   sIKOOK.setValueState("None");
-                        // }
-                        // Validate Is Full Time Employee
-                        // if (!sFullTimeEmp.getSelectedKey()) {
-                        //   sFullTimeEmp.setValueState("Error");
-                        //   sFullTimeEmp.setValueStateText("Please enter Job title");
-                        //   sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //   sFullTimeEmp.setValueState("None");
-                        // }
-                        // Validate Job Country
-                        // if (!sJobCountry.getSelectedKey()) {
-                        //   sJobCountry.setValueState("Error");
-                        //   sJobCountry.setValueStateText("Please enter Country");
-                        //   sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //   sJobCountry.setValueState("None");
-                        // }
-                        // Validate Employee Type
-                        // if (!sEmpType.getSelectedKey()) {
-                        //   sEmpType.setValueState("Error");
-                        //   sEmpType.setValueStateText("Please enter Job title");
-                        //   sValidationErrorMsg = "Please fill the all required fields.";
-                        // } else {
-                        //   sEmpType.setValueState("None");
-                        // }
+                      
+
+
                         // validate Pay Scale Type
                         if (!sPayScaleType.getSelectedKey()) {
                             sPayScaleType.setValueState("Error");
@@ -1175,7 +1087,57 @@ sap.ui.define(
                             }.bind(this),
                         });
                 },
+                onPayScaleTypeChange: function (oEvent) {
+                    var selectedItem = oEvent.oSource.getSelectedItem();
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idPayScaleGroup").setSelectedKey(null);
+                    this.getView().byId("idPayScaleGroup").fireChange();
+                    if(!selectedItem) {
+                        oLocalViewModel.setProperty("/payGroupEnabled", false);
+                        return;
+                    }
+                    var sPayScaleType = selectedItem.getKey();
+                    this.onSelectPayScaleType(sPayScaleType, null);
+                },
 
+                onSelectPayScaleType: function(sPayScaleType, callback) {
+                    var oLocalViewModel = this.getView().getModel("LocalViewModel");
+                    this.getView().byId("idPayScaleGroup").setBusy(true);
+                    // load location dropdown
+                    var oFilter = new Filter(
+                        [
+                           new Filter(
+                            "payScaleType",
+                            FilterOperator.EQ,
+                            sPayScaleType
+                        )], true 
+                    );
+                    
+                
+                    this.getView()
+                        .getModel()
+                        .read("/SF_PayScaleGroup", {
+                            filters: [oFilter],
+                            // urlParameters: {
+                            //     $orderby: "name"
+                            // },
+                            success: function (oData) {
+                                var oModel = new JSONModel(oData.results);
+                                this.getView().setModel(oModel, "PayScaleGroupModel");
+                                oLocalViewModel.setProperty("/payGroupEnabled", true);
+                                this.getView().byId("idPayScaleGroup").setBusy(false);
+                                if(callback) {
+                                    callback();
+                                }
+                            }.bind(this),
+                            error: function (oError) {
+                                this.getView().byId("idPayScaleGroup").setBusy(false);
+                                sap.m.MessageBox.error(
+                                    JSON.parse(oError.responseText).error.message.value
+                                );
+                            }.bind(this),
+                        });
+                },
 
                 onPayGroupChange: function (oEvent) {
                     var selectedItem = oEvent.oSource.getSelectedItem();
@@ -1518,6 +1480,7 @@ sap.ui.define(
 
 
                   //---------------------------------------
+                  var spayScaleType = oJobModel.getProperty("/payScaleType"); 
                   var sPayScaleGroup = oJobModel.getProperty("/payScaleGroup"); 
                   var sPayScaleLevel = oJobModel.getProperty("/payScaleLevel"); 
 
@@ -1573,14 +1536,30 @@ sap.ui.define(
                     }
 
 
-                    if(sPayScaleGroup) {
-                        this.getView().byId("idPayScaleGroup").setSelectedKey(sPayScaleGroup);
-                        this.onSelectPayGroup(sPayScaleGroup, function(){
-                            if(sPayScaleLevel) {
-                                this.getView().byId("idPayScaleLevel").setSelectedKey(sPayScaleLevel);
+
+
+
+
+
+                    if(spayScaleType) {
+                        //select PayScaleType
+                        this.getView().byId("idPayScaleType").setSelectedKey(spayScaleType);
+                        this.onSelectPayScaleType(spayScaleType, function() {
+                            if(sPayScaleGroup) {
+                                //select PayGroup
+                                this.getView().byId("idPayScaleGroup").setSelectedKey(sPayScaleGroup);
+                                this.onSelectPayGroup(sPayScaleGroup, function() {
+                                    if(sPayScaleLevel) {
+                                        //select Pay Scale level
+                                        this.getView().byId("idPayScaleLevel").setSelectedKey(sPayScaleLevel);
+                                       
+                                    }
+                                }.bind(this));
                             }
                         }.bind(this));
                     }
+
+                  
 
                     this.getView().byId("idCompany").setSelectedKey(company);
                     this.onSelectCompany(company, function() {

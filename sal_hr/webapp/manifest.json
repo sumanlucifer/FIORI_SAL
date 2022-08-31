@@ -19,6 +19,14 @@
                     "odataVersion": "2.0"
                 }
             },
+            "sfsfService": {
+                "uri": "/odata/v2/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "2.0"
+                }
+            },
             "ds_timezones": {
 				"uri": "model/timezones.json",
 				"type": "JSON"
@@ -101,6 +109,11 @@
                 "type": "sap.ui.model.json.JSONModel",
 				"dataSource": "ds_timezones",
                 "preload": true
+            },
+            "sfsfModel": {
+                "type": "sap.ui.model.odata.v2.ODataModel",
+				"dataSource": "sfsfService",
+                "preload": false
             }
         },
         "resources": {

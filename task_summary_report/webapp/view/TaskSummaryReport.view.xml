@@ -26,10 +26,10 @@
                             <DateRangeSelection id="DRS2" width="20%" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
                             <SegmentedButton selectedKey="{LocalViewModel>/SelectedSegmentBTNKey}" selectionChange="onSegmentBTNSelect">
                                 <items>
-                                    <SegmentedButtonItem text="{i18n>HR}" key="HR" width="12%"/>
+                                    <SegmentedButtonItem text="{i18n>HR}" key="HR" />
                                     <SegmentedButtonItem text="{i18n>Procurement}" key="Procurement"/>
                                     <SegmentedButtonItem text="{i18n>ITSM}" key="ITSM"/>
-                                    <SegmentedButtonItem text="{i18n>PlantMaintenance}" key="PM"/>
+                                    <SegmentedButtonItem text="{i18n>PlantMaintenance}" key="PM" visible="false"/>
                                 </items>
                             </SegmentedButton>
                             <SegmentedButton selectedKey="{LocalViewModel>/SelectedViewSegmentBTNKey}" selectionChange="fnSetChartTableVisibility">

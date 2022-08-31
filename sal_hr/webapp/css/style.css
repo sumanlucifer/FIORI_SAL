@@ -130,3 +130,10 @@
         min-width: 0px !important;
     }
 }
+
+
+.strikeOutCss
+{
+    color: #999;
+    text-decoration: line-through;
+}

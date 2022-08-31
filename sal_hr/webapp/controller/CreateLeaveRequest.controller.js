@@ -47,7 +47,7 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
-                // this.byId("CoreToolTip").setToolTip("dded");
+              
 
             },
 
@@ -174,31 +174,7 @@ sap.ui.define([
 
                    
 
-                    // switch (sTimeType) {
-                    //     case "460":
-                    //         sQtyHrs = this.getView().byId("TP1").getValue();
-                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-
-                    //         break;
-                    //     case "450":
-                    //         sQtyHrs = this.getView().byId("TP1").getValue();
-                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-
-                    //         break;
-                    //     case "480":
-                    //         sQtyHrs = this.getView().byId("TP1").getValue();
-                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-                    //     case "440":
-                    //         sQtyHrs = this.getView().byId("TP1").getValue();
-                    //         sQtyHrs = sQtyHrs.split(":")[0] + "." + sQtyHrs.split(":")[1];
-
-                    //         break;
-                    //     case "HD1":
-                    //         sQtyHrs = "0.5";
-                    //         break;
-                    //     default:
-                    //         sQtyHrs = "0.0";
-                    // }
+                   
 
                     if(sTimeType === "460" || sTimeType === "450" || sTimeType === "480" || sTimeType === "440"){
                         sQtyHrs = this.getView().byId("TP1").getDOMValue();
@@ -321,16 +297,16 @@ sap.ui.define([
 
                 if (sReturnDate.getDay() === 5) {
                     sReturnDate.setDate(sReturnDate.getDate() + 2);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
+                  
                     this.getView().getModel("LocalViewModel").setProperty("/returnDate", sReturnDate);
                 } else if (sReturnDate.getDay() === 6) {
                     sReturnDate.setDate(sReturnDate.getDate() + 1);
                     this.getView().getModel("LocalViewModel").setProperty("/returnDate", sReturnDate);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
+                   
                 } else {
                     sReturnDate.setDate(sReturnDate.getDate() + 1);
                     this.getView().getModel("LocalViewModel").setProperty("/returnDate", sReturnDate);
-                    // sap.ui.core.Fragment.byId("idLeaveFragment", "idReturning").setValue(sReturnDate);
+                
                 }
                 endDate.setDate(this.getView().getModel("LocalViewModel").getProperty("/endDate").getDate());
                 return days + 1;
@@ -338,7 +314,7 @@ sap.ui.define([
             onFileAdded: function (oEvent) {
                 var that = this;
 
-                //  var file = oEvent.getParameters().files[0];
+            
                 var file = oEvent.getParameter("item");
                 var Filename = file.getFileName(),
                     Filetype = file.getMediaType(),
@@ -546,7 +522,7 @@ sap.ui.define([
 
                 if (sValue > "08:00") {
                     oTimePicker.setValueState("Error");
-                    // oTimePicker.setValueText("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
+                 
                     this.getView().byId("idRaiseRequestBTN").setEnabled(false);
                     sap.m.MessageBox.error("Please enter a booking quantity that is greater than 0 and smaller than or equal to 8:00");
                 } else {

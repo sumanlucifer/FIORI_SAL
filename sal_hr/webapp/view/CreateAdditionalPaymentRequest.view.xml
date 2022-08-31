@@ -38,22 +38,15 @@
 
                         <Label id="idLblCreateType" required="true" text="{i18n>Type}" />
                         <Select id="idInpType" items="{ path: '/SF_FOPayComponent',
-                                                            filters: [
-                                                                        {
-                                                                             path: 'toupper(name)',
-                                                                             operator: 'StartsWith',
-                                                                             value1: '\'MARRIAGE REWARD\''
-                                                                         },
-                                                                         {
-                                                                             path: 'toupper(name)',
-                                                                             operator: 'StartsWith',
-                                                                             value1: '\'NEW BORN\''
-                                                                         }
-                                                                     ],
-                                                            sorter:{
-                                                                 path : 'name' 
-                                                            }         
-                                               
+                            filters: [
+                                { path: 'externalCode',
+                                    operator: 'eq',
+                                    value1: '9220'},
+                                { path: 'externalCode',
+                                    operator: 'eq',
+                                      value1: '9221'}],
+                                      sorter:{ path : 'name' 
+                                                            }    
                                                    }" change="onTimeTyeChange">
                             <core:Item key="{externalCode}" text="{name} ({externalCode})" />
                         </Select>
@@ -72,7 +65,7 @@
                             <core:Item key="{code}" text="{code}" />
                         </Select>
                     </fm:SimpleForm>
-                    <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
+                    <!-- <fm:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4" singleContainerFullSize="false" class="style-RemoveTitleHeight">
                         <Label id="idALTCostCenterLBL" text="{i18n>AlternativeCostCenter}"/>
                         <Select id="idInpAltCostCenter" items="{ path: '/SF_FOCostCenter',
                                                 sorter : {
@@ -82,7 +75,7 @@
                             <core:Item key="{externalCode}" text="{name} ({externalCode})" />
                         </Select>
 
-                    </fm:SimpleForm>
+                    </fm:SimpleForm> -->
                 </l:content>
             </l:VerticalLayout>
         </f:content>

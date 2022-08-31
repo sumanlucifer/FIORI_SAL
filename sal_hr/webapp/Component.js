@@ -75,7 +75,8 @@ sap.ui.define([
               
                 this.getModel().read("/EmpInfo", {
                     urlParameters: {
-                        "moreInfo": "true"
+                        "moreInfo": "true",
+                        // "$filter": "userId eq '12000843'"
                     },
                     success: function (oData) {        
                         this.getRouter().navTo("master");       

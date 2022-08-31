@@ -63,19 +63,14 @@ sap.ui.define(
 
         var sLayout = oEvent.getParameter("arguments").layout;
 
-        // var subModuleId = oEvent.getParameter("arguments").parentMaterial;
-        // var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
-        // if(subModuleId){
-        //     this.fnGetRoleAccess(sManagerTile, subModuleId);
-        // }
-
+        
         this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
 
         this.getView().setBusy(false);
         var startupParams = this.getOwnerComponent().getComponentData()
           .startupParameters;
         // get Startup params from Owner Component
-        if (startupParams.submoduleId[0]) {
+        if (startupParams?.submoduleId && startupParams?.submoduleId[0]) {
           this._navToDetail(
             startupParams.submoduleId[0],
             startupParams.ticketId[0]
@@ -145,22 +140,7 @@ sap.ui.define(
         this.fnGetRoleAccess(sManagerTile, subModuleId, oItem);
       },
 
-      // _showObject: function (oItem) {
-      //     var that = this;
-      //     var sManagerTile = this.getView().getModel("EmpInfoModel").getData().IsUserManager;
-      //     var subModuleId = oItem.getBindingContext().getObject().ID;
-      //     this.fnGetRoleAccess(sManagerTile, subModuleId);
-
-      //     var sPath = oItem.getBindingContextPath()
-      //     this.getView().getModel("EmpInfoModel").refresh(true);
-      //     this.getRouter().navTo("detail", {
-      //         parentMaterial: oItem.getModel().getProperty(sPath).ID,
-      //         layout: "TwoColumnsMidExpanded"
-      //     },
-      //         false
-      //     );
-
-      // },
+      
 
       onSearch: function (oEvent) {
         var aFilters = [];
@@ -191,6 +171,7 @@ sap.ui.define(
       },
 
       fnGetRoleAccess: function (sManagerTile, subModuleId, oItem) {
+          debugger;
         this.sManagerTile = sManagerTile;
         var sURL = "";
         var oComponentModel = this.getComponentModel();
@@ -200,6 +181,24 @@ sap.ui.define(
           },
 
           success: function (oData) {
+
+            // oData = {
+            //   results: [
+            //     {
+            //       createSelf: true,
+            //       readSelf: true,
+            //       updateSelf: true,
+            //       deleteSelf: true,
+            //       withdrawSelf: true,
+            //       createOther: true,
+            //       readOther: true,
+            //       updateOther: true,
+            //       deleteOther: true,
+            //       approveOther: true,
+            //       rejectOther: true,
+            //     },
+            //   ],
+            // };
             if (oData.results.length === 0) {
               sap.m.MessageBox.error(
                 "You do not have permission to perform this action"
@@ -262,6 +261,14 @@ sap.ui.define(
                   break;
                 case 9:
                   sURL = Const.LINKS.Performance;
+                  this.openSucessFatcors(sURL);
+                  break;
+                case 33:
+                  sURL = Const.LINKS.EmployeeProfile;
+                  this.openSucessFatcors(sURL);
+                  break;
+                case 34:
+                  sURL = Const.LINKS.OrganizationChart;
                   this.openSucessFatcors(sURL);
                   break;
                 default:

@@ -1,12 +1,13 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+   "sap/ui/model/Sorter" 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, Fragment) {
+    function (Controller, JSONModel, Fragment, Sorter) {
         "use strict";
 
         return Controller.extend("com.sal.openrequestcardtile.openrequestcardtile.controller.OpenRequestCard", {
@@ -109,15 +110,15 @@ sap.ui.define([
                         oCardData.donut["sap.card"].content.data.path = "/measures";
                         
                          // Set Values for Header
-                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalRejected + oData.results[1].totalRejected + oData.results[2].totalRejected + oData.results[3].totalRejected;
+                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalRejected + oData.results[1].totalRejected + oData.results[2].totalRejected;
                         // oCardData.donut["sap.card"].content.data.json.NumberCount =  "0";
                         // oCardData.donut["sap.card"].content.data.json.Unit = "";
                         // oCardData.donut["sap.card"].content.data.json.Trend= "";
                         // oCardData.donut["sap.card"].content.data.json.TrendColor= "Good";
                         oData.results[0].name = "HR";
                         oData.results[1].name = "Procurement";
-                        oData.results[2].name = "PM";
-                        oData.results[3].name = "ITSM";    
+                        oData.results[2].name = "ITSM";
+                        // oData.results[3].name = "ITSM";    
 
 
                         cardManifests.setData(oCardData);
@@ -131,10 +132,10 @@ sap.ui.define([
             {
                 var oSelectedItem = oEvent.getParameter("selectedItem");
                 var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
-                this.triggerCrossApp(obj.subModuleId, obj.ID);
+                this.triggerCrossApp(obj.subModuleId, obj.ID, obj.externalCode);
             },
 
-            triggerCrossApp: function (sSubModuleID, sTicketID) {
+            triggerCrossApp: function (sSubModuleID, sTicketID, sExternalCode) {
                 debugger;
            
                 var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
@@ -146,7 +147,8 @@ sap.ui.define([
                     params: {
 
                         "submoduleId" : sSubModuleID, 
-                        "ticketId" : sTicketID 
+                        "ticketId" : sTicketID,
+                        "externalCode": sExternalCode
 
                     }
                 })) || "";
@@ -187,6 +189,7 @@ sap.ui.define([
                     filter.push(sStatusFilter,sModuleFilter);
                     this.getOwnerComponent().getModel().read("/Tickets",
                     {
+                        sorters: [ new Sorter("createdAt", true)],
                         filters: [filter],
                         success:function(oData){
                             var oFragmetModel = new JSONModel(oData.results);
@@ -214,8 +217,9 @@ sap.ui.define([
                     });
                     var filter = [];
                     filter.push(sStatusFilter,sModuleFilter);
-                    this.getOwnerComponent().getModel().read("/tickets",
+                    this.getOwnerComponent().getModel().read("/Tickets",
                     {
+                        sorters: [ new Sorter("createdAt", true)],
                         filters: [filter],
                         success:function(oData){
                             var oFragmetModel = new JSONModel(oData.results);

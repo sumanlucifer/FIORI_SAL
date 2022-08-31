@@ -17,9 +17,12 @@ server:
           url: https://ui5.sap.com
           version: '' # The UI5 version, for instance, 1.78.1. Empty string means latest version
         backend:
-          - path: /odata
+          - path: /odata/v2/HumanResourceService
             url: https://saudi-airlines-cargo-company-sal-btp-cf-dev-8glkufj3-de3438ae57.cfapps.eu10.hana.ondemand.com
             destination: human-resource-srv
+          - path: /odata
+            url: https://api2.successfactors.eu
+            destination: sf_extensions_admin
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

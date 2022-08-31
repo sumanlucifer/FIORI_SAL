@@ -2,6 +2,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
+    xmlns:ui="sap.suite.ui.commons"
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core" height="100%">
     <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="true" stickySubheaderProvider="iconTabBar" class="sapUiNoContentPadding">
@@ -38,7 +39,7 @@
                    
                 </f:actions>
                 <f:navigationActions>
-                    <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
+                  
                     <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
                     <Button icon="sap-icon://decline" type="Transparent" press="handleClose" />
                 </f:navigationActions>
@@ -53,8 +54,7 @@
                         <ObjectStatus text="{headerModel>/status}" state="Success"/>
                     </layout:VerticalLayout>
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                       <ObjectAttribute title="{i18n>RequestedBy}"/>
-         <!-- <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/> -->          
+                       <ObjectAttribute title="{i18n>RequestedBy}"/>         
                     <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/> 
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
@@ -65,13 +65,22 @@
 
 
                     
-                    <layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>DateofCreation}"/>
                         <ObjectAttribute text="{path:'headerModel>/requestDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                        <ObjectAttribute title="Timeline"/>
+                       	<ui:MicroProcessFlow content="{headerModel>/ticketWorkflowParticipants/results}">
+		                    <ui:content>
+			                    <ui:MicroProcessFlowItem  state="{path: 'headerModel>status', formatter:'.formatter.ticketStatus'}" press="itemPress" />
+                            </ui:content>
+	                    </ui:MicroProcessFlow>
+
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -82,7 +91,12 @@
                 <IconTabBar id="idLeaveiconTabBar">
                     <items>
                         <IconTabFilter id="idBankDisplayDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }">
-                            <core:Fragment fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.DisplayAdditionalPaymentRequest" type="XML"/>
+                            <!-- <core:Fragment fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.DisplayAdditionalPaymentRequest" type="XML"/> -->
+
+
+                            <core:Fragment  fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.WorkflowPendingData" type="XML"/>
+
+
                         </IconTabFilter>
                         <IconTabFilter id="idBankEditDetailsITB" text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
                             <core:Fragment fragmentName="com.sal.salhr.Fragments.AdditionalPaymentModule.EditAdditionalPaymentRequest" type="XML"/>

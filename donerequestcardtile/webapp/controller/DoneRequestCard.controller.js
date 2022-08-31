@@ -1,12 +1,13 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    'sap/ui/model/Sorter'
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, Fragment) {
+    function (Controller, JSONModel, Fragment, Sorter) {
         "use strict";
 
         return Controller.extend("com.sal.donerequestcardtile.donerequestcardtile.controller.DoneRequestCard", {
@@ -109,7 +110,7 @@ sap.ui.define([
                         oCardData.donut["sap.card"].content.data.path = "/measures";
                         
                          // Set Values for Header
-                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalApproved + oData.results[1].totalApproved + oData.results[2].totalApproved + oData.results[3].totalApproved;
+                         oCardData.donut["sap.card"].header.data.json.NumberCount = oData.results[0].totalApproved + oData.results[1].totalApproved + oData.results[2].totalApproved ;
                         // oCardData.donut["sap.card"].content.data.json.NumberCount =  "0";
                         // oCardData.donut["sap.card"].content.data.json.Unit = "";
                         // oCardData.donut["sap.card"].content.data.json.Trend= "";
@@ -117,8 +118,8 @@ sap.ui.define([
 
                         oData.results[0].name = "HR";
                         oData.results[1].name = "Procurement";
-                        oData.results[2].name = "PM";
-                        oData.results[3].name = "ITSM";
+                        oData.results[2].name = "ITSM";
+                        //oData.results[3].name = "ITSM";
 
                         cardManifests.setData(oCardData);
                         this.getView().setModel(cardManifests, "manifests");
@@ -133,10 +134,10 @@ sap.ui.define([
             {
                 var oSelectedItem = oEvent.getParameter("selectedItem");
                 var obj = oSelectedItem.getBindingContext("FragmetModel").getObject();
-                this.triggerCrossApp(obj.subModuleId, obj.ID);
+                this.triggerCrossApp(obj.subModuleId, obj.ID, obj.externalCode);
             },
 
-            triggerCrossApp: function (sSubModuleID, sTicketID) {
+            triggerCrossApp: function (sSubModuleID, sTicketID, sExternalCode) {
                 debugger;
            
                 var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation"); // get a handle on the global XAppNav service
@@ -148,7 +149,8 @@ sap.ui.define([
                     params: {
 
                         "submoduleId" : sSubModuleID, 
-                        "ticketId" : sTicketID 
+                        "ticketId" : sTicketID,
+                        "externalCode": sExternalCode
 
                     }
                 })) || "";
@@ -187,8 +189,10 @@ sap.ui.define([
                     });
                     var filter = [];
                     filter.push(sStatusFilter,sModuleFilter);
-                    this.getOwnerComponent().getModel().read("/Tickets",
+                    // this.getOwnerComponent().getModel().read("/Tickets",
+                    this.getOwnerComponent().getModel().read(`/Tickets`,
                     {
+                        sorters: [ new Sorter("createdAt", true)],
                         filters: [filter],
                         success:function(oData){
                             var oFragmetModel = new JSONModel(oData.results);
@@ -217,8 +221,10 @@ sap.ui.define([
                 });
                 var filter = [];
                 filter.push(sStatusFilter,sModuleFilter);
-                    this.getOwnerComponent().getModel().read("/tickets",
+                    // this.getOwnerComponent().getModel().read("/tickets",
+                    this.getOwnerComponent().getModel().read(`/Tickets`,
                     {
+                        sorters: [ new Sorter("createdAt", true)],
                         filters: [filter],
                         success:function(oData){
                             var oFragmetModel = new JSONModel(oData.results);

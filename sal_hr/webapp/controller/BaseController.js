@@ -1,8 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/BusyIndicator",
-    "sap/m/MessageBox"
-], function (Controller, BusyIndicator, MessageBox) {
+    "sap/m/MessageBox",
+    "sap/ui/core/Fragment",
+    "sap/ui/model/json/JSONModel"
+], function (Controller, BusyIndicator, MessageBox, Fragment, JSONModel) {
     "use strict";
 
     return Controller.extend("com.sal.salhr.controller.BaseController", {
@@ -79,8 +81,9 @@ sap.ui.define([
                     "IsUserManager": bIsUserManager
                 },
                 success: function (oData) {
-                    this.getView().setBusy(false);
-                    this._bindView(oData);
+                    // this.getView().setBusy(false);
+                    this._getTicketWorkflowParticipant(oData);
+                    
                 }.bind(this),
                 error: function (oError) {
                     this.getView().setBusy(false);
@@ -89,11 +92,37 @@ sap.ui.define([
                     else {
                         MessageBox.error(JSON.parse(oError.responseText).error.message.value);
                     }
-                }
+                }.bind(this),
             });
         },
 
+        _getTicketWorkflowParticipant:function(oData) {
+            var workflowReqId = oData.results[0].workflowRequestId;
+            var ticketId = oData.results[0].ID;
+            var oComponentModel = this.getComponentModel();
+            oComponentModel.read("/TicketWorkflowParticipant", {
+                urlParameters: {
+                    // "IsUserManager": bIsUserManager
+                    $filter:`ticketId eq guid'${ticketId}' and workflowRequestId eq '${workflowReqId}'`,
+                    $orderby:'stepNumber'
+                },
+                success: function (oTicketWorkflowParticipantData) {
+                    oData.results[0].ticketWorkflowParticipants = oTicketWorkflowParticipantData;
+                    this.getView().setBusy(false);
+                    this._bindView(oData);
+                }.bind(this),
+                error: function (oError) {
+                    debugger;
+                    this.getView().setBusy(false);
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                }
+            });
 
+        },
         _getSFUser: function (sId) {
             var idFILTER = new sap.ui.model.Filter({
                 path: "userId",
@@ -173,6 +202,31 @@ sap.ui.define([
                 }
             };
         }),
+        fnGetBusinessTripEmpInfo: function(sExternalCode) {
+            debugger;
+            this.empModel = this.getOwnerComponent().getModel();
+            var sKey = this.getView().getModel().createKey("/EmpInfo", {
+                userId: sExternalCode
+            });
+            this.getView().setBusy(true);
+            this.empModel.read(sKey, {
+                urlParameters: {
+                    "moreInfo": true
+                },
+                success: function (oData) {
+                    this.fnSetEmployeeBusinessTripModel(oData);
+                }.bind(this),
+                error: function (oError) {
+                    this.getView().setBusy(false);
+                    if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
+                        MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
+                    else {
+                        MessageBox.error(JSON.parse(oError.responseText).error.message.value);
+                    }
+                }.bind(this)
+            });
+        },
+                                   
 
         fnGetEmpInfo: function (sExternalCode, sParentID) {
             this.mainModel = this.getOwnerComponent().getModel();
@@ -181,7 +235,7 @@ sap.ui.define([
             });
             this.sParentID = sParentID;
             this.getView().setBusy(true);
-            this.mainModel.read(sKey, {
+            this.mainModel.read(sKey+"?moreInfo=true", {
                 success: function (oData) {
                     this.getView().setBusy(false);
                     switch (this.sParentID) {
@@ -198,6 +252,8 @@ sap.ui.define([
                         case "5":
                             this.fnSetCreateBusinessCardLocalModel(oData);
                             break;
+                        
+
                     }
                 }.bind(this),
                 error: function (oError) {
@@ -341,11 +397,12 @@ sap.ui.define([
                 success: function (oData) {
                     MessageBox.success("Request Rejected Successfully.");
                     this.getView().setBusy(false);
-                    this.getView().getModel().refresh();
+                
                     this.oRouter.navTo("detail", {
                         parentMaterial: this.sParentID,
                         layout: "TwoColumnsMidExpanded"
                     });
+                    this.getView().getModel().refresh();
                 }.bind(this),
                 error: function (oError) {
                     this.getView().setBusy(false);
@@ -494,6 +551,33 @@ sap.ui.define([
                         layout: layout? layout : "ThreeColumnsMidExpanded"
                     })
                     break;
+            }
+        },
+        itemPress: function(oEvent) {
+            debugger;
+            var oButton = oEvent.getSource(),
+            oView = this.getView();
+            var index = oEvent.getSource().sId.split('-')[2];
+            var oTicketWorkflowParticipantData = oView.getModel("headerModel").getProperty(`/ticketWorkflowParticipants/results/${index}`);
+            if (!this._pPopover) {
+                this._pPopover = Fragment.load({
+                    id: oView.getId(),
+                    name: "com.sal.salhr.Fragments.TimelineStatus",
+                    controller: this
+                }).then(function(oPopover) {
+                    oView.addDependent(oPopover);
+                    return oPopover;
+                });
+            }
+            this._pPopover.then(function(oPopover) {
+                var oTicketWorkflow = new JSONModel(oTicketWorkflowParticipantData);
+                oView.setModel(oTicketWorkflow, "TicketWorkFlowParticipantModel");
+                oPopover.openBy(oButton);
+            });
+        },
+        handleCloseButton: function() {
+            if (this._pPopover) {
+                this.byId("idTimelinestatus").close();
             }
         }
     });

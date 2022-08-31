@@ -16,7 +16,7 @@ sap.ui.define([
             onInit: function () {
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("EmployeeTerminateRequest").attachPatternMatched(this._onObjectMatched, this);
-                // this.oRouter.attachRouteMatched(this.onRouteMatched, this);
+             
                 this.mainModel = this.getOwnerComponent().getModel();
                 this.mainModel.setSizeLimit(1000);
 
@@ -24,8 +24,6 @@ sap.ui.define([
 
                
                 var oLocalViewModel = new JSONModel({
-                    startDate: new Date(),
-                    endDate: new Date(),
                     busy: false,
                     uploadAttachment: true,
                     currentDate: new Date(),
@@ -55,7 +53,7 @@ sap.ui.define([
             _bindView: function () {
 
                 var oComponentModel = this.getComponentModel();
-                //    var sTickets = sObjectPath + "/tickets";
+            
                 var sKey = oComponentModel.createKey("/MasterSubModules", {
                     ID: this.sParentID
                 });

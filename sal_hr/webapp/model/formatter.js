@@ -57,6 +57,12 @@ sap.ui.define([], function () {
         case 18:
           return "sap-icon://quality-issue";
           break;
+        case 33:
+          return "sap-icon://business-card";
+          break;
+        case 34:
+          return "sap-icon://quality-issue";
+          break;
       }
     },
 
@@ -121,7 +127,7 @@ sap.ui.define([], function () {
 
     viewFileNames: function (oData) {
       if (oData) {
-        if (oData.fileContent.length > 0) return true;
+        if (oData.length > 0) return true;
         else return false;
       } else {
         return false;
@@ -434,6 +440,18 @@ sap.ui.define([], function () {
             return 'Cancel Request';
         }
         return '';
-    }
+    },
+    DateFormatter: function (dValue) {
+            if (!dValue) {
+                return "";
+            }
+            var localDate = new Date(dValue);
+            var pattern = "dd/MM/yyyy";
+            var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+                pattern: pattern
+            });
+            var oNow = new Date(localDate);
+            return oDateFormat.format(oNow);
+        },
   };
 });

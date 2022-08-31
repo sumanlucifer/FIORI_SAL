@@ -13,8 +13,23 @@ sap.ui.define([
 
         return Controller.extend("com.sal.reports.slacompliancereport.controller.SLACompliance", {
             onInit: function () {
-                var requestForTeamReports = "false";
-                this.fnReadTickitsSummaryData(requestForTeamReports);
+              
+                var oCurrentDate = new Date(),
+                oFromDate = oCurrentDate.getDate() - 7;
+
+            oFromDate = new Date(oCurrentDate.setDate(oFromDate));
+
+            var oLocalViewModel = new JSONModel({
+                
+                FromDate: oFromDate,
+                ToDate: new Date(),
+                SelectedModuleID: 1,
+                SelectedPortletID: "",
+                SelectedStatus: ""
+            });
+            this.getView().setModel(oLocalViewModel, "LocalViewModel");
+            var requestForTeamReports = "false";
+            this.fnReadTickitsSummaryData(requestForTeamReports);
             },
 
             fnInitializeChart: function () {
@@ -78,13 +93,38 @@ sap.ui.define([
                 });
             },
 
+            onFilterDateChange: function (oEvent) {
+                this.getView().getModel("LocalViewModel").setProperty("/FromDate", oEvent.getSource().getDateValue());
+                this.getView().getModel("LocalViewModel").setProperty("/ToDate", oEvent.getSource().getSecondDateValue());
+                this.getView().getModel("LocalViewModel").refresh();
+
+                
+                var requestForTeamReports = "false";
+     
+             
+                this.fnReadTickitsSummaryData(requestForTeamReports);
+              
+            },
+
             fnReadTickitsSummaryData: function (requestForTeamReports) {
+                var oFromDate = this.getView().getModel("LocalViewModel").getProperty("/FromDate"),
+                oToDate = this.getView().getModel("LocalViewModel").getProperty("/ToDate"),
+                dateFormat = sap.ui.core.format.DateFormat.getDateInstance({ pattern: "yyyy-MM-dd" }),
+                oStartDate = dateFormat.format(new Date(oFromDate)),
+                oEndDate = dateFormat.format(new Date(oToDate)),
+                sStartDate = oStartDate + "T00:00:00.000Z",
+                // sEndDate = oEndDate + "T00:00:00.000Z";
+
+                sEndDate =   oStartDate === oEndDate ? oEndDate + "T23:59:59.000Z" : oEndDate + "T00:00:00.000Z"; 
+
                 this.getView().setBusy(true);
                 var oFilter = new Filter("isHidden", FilterOperator.EQ, false);
                 this.getView().getModel().read("/MasterModules", {
                     filters: [oFilter],
                     urlParameters: {
-                        "IsUserManager": requestForTeamReports
+                        "IsUserManager": requestForTeamReports,
+                        "from": sStartDate,
+                        "to": sEndDate
                     },
                     success: function (oData) {
                         this.getView().setBusy(false);
@@ -97,6 +137,7 @@ sap.ui.define([
                         }
                         this.getView().setModel(oSLAComplianceDataModel, "SLAComplianceDataModel");
                         this.fnInitializeChart();
+                        this.getView().getModel("SLAComplianceDataModel").refresh();
                     }.bind(this),
                     error: function () {
                         this.getView().setBusy(false);

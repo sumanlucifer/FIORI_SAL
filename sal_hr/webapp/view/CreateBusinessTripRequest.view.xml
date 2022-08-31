@@ -23,12 +23,7 @@
             <VBox>
                 <form:SimpleForm layout="ColumnLayout" columnsM="2" columnsL="2" columnsXL="2" singleContainerFullSize="false" class="style-RemoveTitleHeight" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
                     <Label text="When would you like your changes to take effect? " required="true" />
-                    <!-- <DatePicker id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_dutyTravelMain_effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/> -->
-                    <!-- <DatePicker enabled="false" id="idEffectDatePicker" value="{path:'CreateBusinessTripModel>/effectiveStartDate', type:'sap.ui.model.type.Date', formatOptions: {
-                                                    pattern: 'MM/dd/yyyy'
-                                                }}" minDate="{LocalViewModel>/currentDate}"/>                 -->
+                   
                          <DatePicker enabled="false" id="idEffectDatePicker" value="{path:'LocalViewModel>/currentDate', type:'sap.ui.model.type.Date', formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>                        
@@ -39,7 +34,13 @@
                                 sorter : {
                                     path : 'label_defaultValue' 
                                 },
-                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelReqType'} ]
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelReqType'}, {
+        path: 'externalCode', 
+        operator: 'EQ', 
+        value1: '1',
+        and: 'true'
+
+      } ]
                                        }">
                         <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
 
@@ -112,7 +113,7 @@
                                                 }}" change="onReturnDateChange"></DatePicker>
 
                     <Label text="{i18n>DesiredAirlineTicketTravelTime}"/>
-                    <!-- <TimePicker id="idAirlineTicket" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', strictParsing: true, UTC: true}}"></TimePicker> -->
+                   
                     <TimePicker id="idAirlineTicket" valueFormat="HH:mm" displayFormat="HH:mm" maskMode="On" value="{path:'CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_travelTime'}" />
 
                     <Label text="{i18n>DestinationCountry}" required="true"/>
@@ -124,7 +125,7 @@
                     </Select>
 
                     <Label visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" text="{i18n>CitySaudi}"/>
-                    <Select visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" id="idCity" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}" change="onCitySaudiChange" items="{ path: '/SF_PickListValueV2',
+                    <Select visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" id="idCity" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" change="onCitySaudiChange" items="{ path: '/SF_PickListValueV2',
                                                             filters: [
                                                                         {
                                                                              path: 'PickListV2_id',
@@ -142,13 +143,17 @@
 
 
                     <Label visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" text="{i18n>OtherCity}" />
-                    <Input visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" id="idOtherCity" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" />
+                    <Input visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" id="idOtherCity" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}" />
 
                     <Label visible="{= ${LocalViewModel>/cityOtherCountry} === true ? true : false }" text="{i18n>CityOtherCountry}" />
                     <Input  visible="{= ${LocalViewModel>/cityOtherCountry} === true ? true : false }" id="idCityCountry" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}" />
+                    <Label text="{i18n>InsideOtsideKingdom}" required="true"/>
+                    <!-- <Input id="idInsOutKingdom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false" /> -->
 
-                    <Label text="{i18n>InsideOtsideKingdom}" required="true" />
-                    <Input id="idInsOutKingdom" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false" />
+                     <Select id="idInsOutKingdom" change="onInsideOutsideChange" enabled="false" selectedKey="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}">
+                        <core:Item key="IN" text="Inside Kingdom (IN)" />
+                        <core:Item key="OUT" text="Outside Kingdom (OUT)" />
+                    </Select>
 
                     <Label text="{i18n>PerDiem}" />
                     <Input id="idPerDiem" value="{CreateBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}" enabled="false"/>

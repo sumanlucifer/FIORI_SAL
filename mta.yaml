@@ -154,6 +154,22 @@ modules:
       - comsalitsrvmgmtrequestssummarymanager.zip
       name: comsalitsrvmgmtrequestssummarymanager
       target-path: resources/
+    - artifacts:
+      - comsalfeedbacktile.zip
+      name: comsalfeedbacktile
+      target-path: resources/
+    - artifacts:
+      - comsalfeedbacktilecontainer.zip
+      name: comsalfeedbacktilecontainer
+      target-path: resources/
+    - artifacts:
+      - comsalfeedbackform.zip
+      name: comsalfeedbackform
+      target-path: resources/
+    - artifacts:
+      - comsalfeedbackreport.zip
+      name: comsalfeedbackreport
+      target-path: resources/
 - name: comsalsalhr
   type: html5
   path: sal_hr
@@ -427,6 +443,46 @@ modules:
 - name: comsalitsrvmgmtrequestssummarymanager
   type: html5
   path: itsrvmgmtrequestssummarymanager
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalfeedbacktile
+  type: html5
+  path: feedbacktile
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalfeedbacktilecontainer
+  type: html5
+  path: feedbacktilecontainer
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalfeedbackform
+  type: html5
+  path: feedbackform
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comsalfeedbackreport
+  type: html5
+  path: feedbackreport
   build-parameters:
     build-result: dist
     builder: custom

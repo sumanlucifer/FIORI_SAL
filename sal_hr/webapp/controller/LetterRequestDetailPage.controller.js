@@ -13,13 +13,8 @@ sap.ui.define([
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
-                    LeaveModule: false,
-                    BusineesTripModule: false,
-                    HealthModule: false,
                     PageTitle: null,
-                    Modify: true,
-                    IDCardModule: false,
-                    meetingType: false
+                    Modify: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -54,27 +49,7 @@ sap.ui.define([
 
                 sKey = `Tickets`;
 
-                // this.getView().bindElement({
-                //     path: sKey,
-                //     parameters: {
-                //         custom: {
-                //             "IsUserManager": bIsUserManager
-                //         }
-                //     },
-
-                //     events: {
-                //         change: function (oEvent) {
-                //             var oContextBinding = oEvent.getSource();
-                //             oContextBinding.refresh(false);
-                //         }.bind(this),
-                //         dataRequested: function () {
-                //             this.getView().setBusy(true);
-                //         }.bind(this),
-                //         dataReceived: function () {
-                //             this.getView().setBusy(false);
-                //         }.bind(this)
-                //     }
-                // });
+                
 
                 this.getView().getModel().read(`/Tickets(guid'${this.object.ID}')/letterRequests`, {
                     urlParameters: {

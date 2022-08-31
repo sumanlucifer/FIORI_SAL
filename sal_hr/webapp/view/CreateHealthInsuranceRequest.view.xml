@@ -98,7 +98,7 @@
 
                                              <ComboBox  selectedKey="{HealthItemDetailsModel>Relationship}" items="{ path: '/SF_PickListValueV2',
                                                 sorter : {  
-                                                 path : 'label_defaultValue'},
+                                                path : 'label_defaultValue'},
                                                 filters : [{ path : 'PickListV2_id', operator : 'EQ', value1 : 'ESS_personRelationshipType'}]}" change="onTimeTyeChange">
                                               <core:Item key="{externalCode}" text="{label_defaultValue}" />
                                             </ComboBox>
@@ -121,7 +121,7 @@
                                                 }}"  />
                                               <Input value="{HealthItemDetailsModel>DeliveryLoc}"/>
                                               <Input value="{HealthItemDetailsModel>Scheme}"/>
-                                             <!-- <Input value="{HealthItemDetailsModel>Attach1}"/> -->
+                                          
 
                                               <VBox>
                                                
@@ -138,8 +138,7 @@
                                                
                                                 <unified:FileUploader  buttonOnly="true" buttonText="{i18n>Upload}"  sameFilenameAllowed="true" multiple="false" style="Emphasized" change="onAttach3FileSelectedForUpload" visible="{path:'Attachments',formatter:'.formatter.viewItemsFileUploader'}" />
                                             </VBox>
-                                             <!-- <Input value="{HealthItemDetailsModel>Attach1}"/>
-                                              <Input value="{HealthItemDetailsModel>Attach1}"/> -->
+                                            
                                                <Button icon="sap-icon://delete" press="onDeleteItemPress" type="Transparent"/>
                                        
                                     </cells>

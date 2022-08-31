@@ -13,34 +13,24 @@ sap.ui.define([
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
-                    LeaveModule: false,
-                    BusineesTripModule: false,
-                    HealthModule: false,
                     PageTitle: null,
-                    Modify: true,
-                    IDCardModule: false
+                    Modify: true
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
 
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("BankAccChangeDetail").attachPatternMatched(this._onObjectMatched, this);
-                // var oUploadSet = this.byId("UploadSet"); 
-                // oUploadSet.getDefaultFileUploader().setButtonOnly(false);
-                // oUploadSet.getDefaultFileUploader().setTooltip("");
-
+          
             },
 
             _onObjectMatched: function (oEvent) {
-                // this.sParentID = JSON.parse(oEvent.getParameter("arguments").parentMaterial).ParentID;
-                // this.sChildID = JSON.parse(oEvent.getParameter("arguments").parentMaterial).ChildID;
+              
                 this.sParentID = oEvent.getParameter("arguments").parentMaterial;
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // // this._bindView();
-                // this._getTicketData(this.sChildID);
+           
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
@@ -62,11 +52,7 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
 
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/Modify", true);
-                // }
+        
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var that = this;
@@ -247,10 +233,7 @@ sap.ui.define([
                     oEvent.getSource().setIcon("sap-icon://full-screen");
                 }
 
-                // this.oRouter.navTo("detail", {
-                //     parentMaterial: this.sParentID,
-                //     layout: sLayout
-                // });
+              
                 this.oRouter.navTo("BankAccChangeDetail", {
                     parentMaterial: this.sParentID,
                     childModule: this.sChildID,
@@ -287,14 +270,12 @@ sap.ui.define([
 
                     // Business Trip Module
                     case "2":
-                        // sEntityPath="/Business_Trip";
-                        // oPayloadObj = this.fnGetBusinessTripPayload();
+                     
                         break;
 
                     // Health Module
                     case "3":
-                        // sEntityPath="/Health_Insurance";
-                        // oPayloadObj = this.fnGetHealthInsurancePayload();
+                     
                         break;
                     // Bankrequest change Module
                     case "13":
@@ -329,14 +310,7 @@ sap.ui.define([
             },
 
             fnGetLeaveRequestPayload: function () {
-                // return {
-                //     "endDate": this.getView().byId("idEditLeaveEndDatePicker").getValue(),
-                //     "timeType": this.getView().byId("idEditTimeTypeINP").getValue(),
-                //     "startDate": this.getView().byId("idStartLDatePicker").getValue(),
-                //     "undeterminedEndDate": false,
-                //     "userId": "12002024",
-                //     "fractionQuantity": "1"
-                // };
+            
                 if (this.isAttachmentNew === true) {
                     var sattachmentFileName = this.fileName;
                     var sattachmentFileContent = this.fileContent;
@@ -402,91 +376,8 @@ sap.ui.define([
                     "cust_iban": this.getView().byId("idEditIBANINP").getValue()
                 };
             },
-            onDownLoadPress: function () {
-                // var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
-                // var fName = this.getView().getModel("attachmentModel").getData().fileName;
-                // var sfileExtension = this.getView().getModel("attachmentModel").getData().fileExtension;
-                // fName = fName.split(".")[0];
-                // fContent = atob(fContent);
-                // sap.ui.core.util.File.save(fContent, fName, sfileExtension);
-                var fContent = this.getView().getModel("attachmentModel").getData().fileContent;
-                var fileext = this.getView().getModel("attachmentModel").getData().fileExtension;
-                var mimeType = this.getView().getModel("attachmentModel").getData().mimeType;
-                var fName = this.getView().getModel("attachmentModel").getData().fileName;
-                fName = fName.split(".")[0];
-                debugger;
-                if (fileext === "pdf" || fileext === "png") {
-                    var decodedPdfContent = atob(fContent);
-                    var byteArray = new Uint8Array(decodedPdfContent.length)
-                    for (var i = 0; i < decodedPdfContent.length; i++) {
-                        byteArray[i] = decodedPdfContent.charCodeAt(i);
-                    }
-                    var blob = new Blob([byteArray.buffer], { type: mimeType });
-                    var _pdfurl = URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = _pdfurl;
-                    a.download = fName;
-                    a.dispatchEvent(new MouseEvent('click'));
-                }
-                else {
-                    var decodedContent = atob(fContent);
-                    sap.ui.core.util.File.save(decodedContent, fName, fileext, mimeType);
-                }
-            },
-            onFileDeleted: function (oEvent) {
-                var oUploadSet = this.byId("idEditUploadSet");
-                oUploadSet.getDefaultFileUploader().setEnabled(true);
-            },
-            onFileAdded: function (oEvent) {
-                debugger;
-                var that = this;
-
-                //  var file = oEvent.getParameters().files[0];
-                var file = oEvent.getParameter("item");
-                var Filename = file.getFileName(),
-                    Filetype = file.getMediaType(),
-                    Filesize = file.getFileObject().size,
-                    Filedata = oEvent.getParameter("item").getFileObject();
-
-
-                //code for base64/binary array 
-                this._getImageData((Filedata), function (Filecontent) {
-                    that._addData(Filecontent, Filename, Filetype, Filesize);
-                });
-                var oUploadSet = this.byId("idEditUploadSet");
-                oUploadSet.getDefaultFileUploader().setEnabled(false);
-
-                this.getView().getModel("attachmentModel").setProperty("/fileName", Filename);
-                this.getView().getModel("attachmentModel").setProperty("/mimeType", Filetype);
-                this.getView().getModel("attachmentModel").refresh();
-
-
-
-            },
-            _getImageData: function (url, callback, fileName) {
-                var reader = new FileReader();
-
-                reader.onloadend = function (evt) {
-                    if (evt.target.readyState === FileReader.DONE) {
-
-                        var binaryString = evt.target.result,
-                            base64file = btoa(binaryString);
-
-                        callback(base64file);
-                    }
-                };
-                reader.readAsBinaryString(url);
-            },
-            _addData: function (Filecontent, Filename, Filetype, Filesize) {
-                this.getViewModel("LocalViewModel").setProperty(
-                    "/busy",
-                    true
-                );
-                this.fileContent = Filecontent;
-                this.fileName = Filename;
-                this.isAttachmentNew = true;
-
-            },
+        
+       
             fnDeleteLeaveRequest: function () {
                 this.getView().getModel().remove("/SF_Leave('" + this.object.externalCode + "')", {
                     urlParameters: {

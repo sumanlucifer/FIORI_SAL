@@ -4,9 +4,17 @@
   "routes": [
 
     {
-        "source": "^/odata/(.*)$",
-        "target": "/odata/$1",
+        "source": "^/odata/v2/HumanResourceService/(.*)$",
+        "target": "/odata/v2/HumanResourceService/$1",
         "destination": "human-resource-srv",
+        "authenticationType": "xsuaa",
+        "csrfProtection": false
+    },
+
+    {
+        "source": "^/odata/v2/(.*)$",
+        "target": "/odata/v2/$1",
+        "destination": "sf_extensions_admin",
         "authenticationType": "xsuaa",
         "csrfProtection": false
     },

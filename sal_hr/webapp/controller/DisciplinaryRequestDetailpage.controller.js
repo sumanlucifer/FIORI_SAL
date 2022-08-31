@@ -12,9 +12,6 @@ sap.ui.define([
             onInit: function () {
                 var oLocalViewModel = new JSONModel({
                     EditMode: false,
-                    LeaveModule: false,
-                    BusineesTripModule: false,
-                    HealthModule: false,
                     PageTitle: null
                 });
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -26,8 +23,7 @@ sap.ui.define([
                 this.sChildID = oEvent.getParameter("arguments").childModule;
                 var sLayout = oEvent.getParameter("arguments").layout;
                 this.getView().getModel("layoutModel").setProperty("/layout", sLayout);
-                // this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
-                // this._getTicketData(this.sChildID);
+              
                 if (sLayout === "ThreeColumnsMidExpanded") {
                     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
                     this.byId("idFullScreenBTN").setIcon("sap-icon://full-screen");
@@ -47,11 +43,7 @@ sap.ui.define([
                 this.getView().setModel(oHeaderModel, "headerModel");
                 this.onCallHistoryData(object.ticketCode);
 
-                // if (object.status === "APPROVED") {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", false);
-                // } else {
-                //     this.getView().getModel("LocalViewModel").setProperty("/EditMode", true);
-                // }
+        
                 var oComponentModel = this.getComponentModel(),
                     sKey = null;
                 var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
@@ -138,10 +130,7 @@ sap.ui.define([
 
 
             onDeleteServiceCall: function () {
-                // if (sKey === "" || sKey === undefined) {
-                //     MessageBox.error("Please enter sKey ID to delete the record.");
-                //     return;
-                // }
+         
                 var oComponentModel = this.getComponentModel(),
                     sKey = oComponentModel.createKey("/SF_Disciplinary_Action", {
                         effectiveStartDate: this.effectiveStartDate,
@@ -221,18 +210,14 @@ sap.ui.define([
                     this.byId("idIncidentDescription").setValueState("None");
                     this.byId("idIncidentDescription").setValueStateText(null);
                 }
-                // if(this.isAttachment !== true)
-                // {
-                //     sap.m.MessageBox.error("Please upload attachments.");
-                //     bValid = false;
-                // }
+               
                 return bValid;
             },
             onFileAdded: function (oEvent) {
                 debugger;
                 var that = this;
 
-                //  var file = oEvent.getParameters().files[0];
+              
                 var file = oEvent.getParameter("item");
                 var Filename = file.getFileName(),
                     Filetype = file.getMediaType(),

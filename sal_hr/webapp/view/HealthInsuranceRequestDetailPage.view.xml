@@ -3,6 +3,7 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:unified="sap.ui.unified"
+    xmlns:ui="sap.suite.ui.commons"
     xmlns:l="sap.ui.layout"
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core"
@@ -26,7 +27,9 @@
                 <!--Modify and Withdraw not be visible for Manager Tile -->
                 <f:actions>
                 
-                    <!-- <Button text="Modify" type="Emphasized" press="onEditPress" visible="{= ${LocalViewModel>/EditMode} === false &amp;&amp; ${EmpInfoModel>/IsUserManager} === false ? true : false }"/> -->
+                       <HBox visible="{= ${headerModel>/status} === 'PENDING' ? false : ${headerModel>/status} === 'APPROVED' ? true : ${headerModel>/status} === 'CANCELLED' ? true: ${headerModel>/status} === 'REJECTED' ? true : false }">
+                        <Button text="Modify" type="Emphasized" press="onEditPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}], formatter:'.formatter.fnSetModifyVisibilty'}"/>
+                    </HBox>
                     <Button text="Withdraw" type="Emphasized" press="onWithdrawPress" visible="{parts: [{path: 'LocalViewModel>/EditMode'}, {path:'EmpInfoModel>/IsUserManager}'}, {path: 'headerModel>/externalStatus'}], formatter:'.formatter.fnSetWithdrawtVisibilty'}"/>
                 </f:actions>
 
@@ -37,8 +40,9 @@
                     <Button text="Reject" icon="sap-icon://decline" type="Reject" press="onRejectPress" visible="{parts: [{path: 'headerModel>/status'}, {path:'headerModel>/workflowRequestId'}, {path:'headerModel>/approverId'}], formatter:'.formatter.setRejectVisibility'}"/>
                    
                 </f:actions>
+                
                 <f:navigationActions>
-                    <!-- <Button icon="sap-icon://full-screen" press="onToggelFullScreenMode" type="Transparent" /> -->
+                   
                     <Button id="idFullScreenBTN" icon="sap-icon://full-screen" press="handleFullScreen" type="Transparent" />
                     <Button icon="sap-icon://decline" type="Transparent" press="handleClose" />
                 </f:navigationActions>
@@ -54,20 +58,29 @@
                     </layout:VerticalLayout>
                      <layout:VerticalLayout class="sapUiMediumMarginEnd">
                        <ObjectAttribute title="{i18n>RequestedBy}"/>
-         <!-- <ObjectAttribute text="{EmpInfoModel>/EmpFullName}({headerModel>/externalCreatedBy})"/> -->
+      
                      <ObjectAttribute text="{headerModel>/externalCreatedByName} ({headerModel>/externalCreatedBy})"/>
                     </layout:VerticalLayout>
                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
                          <ObjectAttribute title="{i18n>RequestedFor}"/>
                         <ObjectAttribute text="{headerModel>/employeeName} ({headerModel>/employeeId})"/>
                     </layout:VerticalLayout>
-                    <layout:VerticalLayout>
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <ObjectAttribute title="{i18n>DateofCreation}"/>
                         <ObjectAttribute text="{path:'headerModel>/requestDate',
                                                 type: 'sap.ui.model.type.Date',
                                                 formatOptions: {
                                                     pattern: 'MM/dd/yyyy'
                                                 }}"/>
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout>
+                        <ObjectAttribute title="Timeline"/>
+                       	<ui:MicroProcessFlow content="{headerModel>/ticketWorkflowParticipants/results}">
+		                    <ui:content>
+			                    <ui:MicroProcessFlowItem  state="{path: 'headerModel>status', formatter:'.formatter.ticketStatus'}" press="itemPress" />
+                            </ui:content>
+	                    </ui:MicroProcessFlow>
+
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -83,12 +96,16 @@
                         <IconTabBar id="idBusinessTripiconTabBar">
                             <items>
 
-                                <IconTabFilter id="idEditBusinessTripRequestITB" text="{i18n>Details}">
+                                <IconTabFilter id="idEditBusinessTripRequestITB" visible="{= ${LocalViewModel>/EditMode} === true ? false : true }" text="{i18n>Details}">
                                     <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.DisplayHealthInsuranceRequest" type="XML"/>
                                 </IconTabFilter>
 
+                                  <IconTabFilter  text="{i18n>Details}" visible="{= ${LocalViewModel>/EditMode} === true ? true : false }">
+                            <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.EditHealthInsuranceRequest" type="XML"/>
+                        </IconTabFilter>
+
                                 <IconTabFilter text="{i18n>History}">
-                                    <!-- <Text text="" /> -->
+                                
                                     <core:Fragment fragmentName="com.sal.salhr.Fragments.HealthInsuranceModule.HistoryTab" type="XML"/>
                                 </IconTabFilter>
                             </items>

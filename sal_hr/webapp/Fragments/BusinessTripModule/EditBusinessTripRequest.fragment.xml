@@ -49,7 +49,7 @@
             <core:Item key="No" text="No"/>
         </Select>
         <Label text="{i18n>ExpenseTypeTrainingTravel}" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }"/>
-        <Select id="idEditTrainingExpense" change="onTrainingExpenseChange" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }" items="{ path: '/SF_PickListValueV2',
+        <Select id="idEditTrainingExpense" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeTrainingTravel}"  change="onTrainingExpenseChange" visible="{= ${LocalViewModel>/trainingTravel} === true ? true : false }" items="{ path: '/SF_PickListValueV2',
                                 sorter : {
                                     path : 'label_defaultValue' 
                                 },
@@ -60,6 +60,18 @@
 
         <Label text="{i18n>TravelBusinessJustification}" required="true"/>
         <TextArea id="idEditTravelJustification" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_assignJustification}"/>
+
+        <Label  visible="{= ${LocalViewModel>/ExpenseTypeBusinessTravelVisible} === true ? true : false }" text="{i18n>ExpenseTypeBusinessTravel}" />
+        <Select selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_expenseTypeBusinessTravel}"  visible="{= ${LocalViewModel>/ExpenseTypeBusinessTravelVisible} === true ? true : false }" id="idEditBusinesExpense" change="onBusinessExpenseChange"  items="{ path: '/SF_PickListValueV2',
+                                sorter : {
+                                    path : 'label_defaultValue' 
+                                },
+                                filters : [ { path : 'PickListV2_id', operator : 'EQ', value1 : 'dutyTravelExpTypeTravel'} ]
+                                       }">
+            <core:ListItem key="{externalCode}" text="{label_defaultValue}" additionalText="{externalCode}"/>
+        </Select>
+
+        
     </form:SimpleForm>
 
     <form:SimpleForm title="{i18n>TravelInformation}" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="2" columnsL="3" columnsXL="3" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
@@ -82,8 +94,8 @@
             <core:ListItem key="{code}" text="{code}" additionalText="{externalName_defaultValue}"/>
         </Select>
 
-        <Label text="{i18n>CitySaudi}"/>
-        <Select id="idEditCity" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" items="{ path: '/SF_PickListValueV2',
+        <Label visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" text="{i18n>CitySaudi}"/>
+        <Select visible="{= ${LocalViewModel>/cityVisible} === true ? true : false }" id="idEditCity" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_city}" change="onCitySaudiChange" items="{ path: '/SF_PickListValueV2',
                                                             filters: [
                                                                         {
                                                                              path: 'PickListV2_id',
@@ -98,14 +110,20 @@
             <core:Item key="{externalCode}" text="{label_defaultValue}" />
         </Select>
 
-        <Label text="{i18n>OtherCity}"/>
-        <Input id="idEditOtherCity" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}"/>
+        <Label visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }"   text="{i18n>OtherCity}"/>
+        <Input visible="{= ${LocalViewModel>/otherCityVisible} === true ? true : false }" id="idEditOtherCity" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_SAUotherCity}"/>
 
-        <Label text="{i18n>CityOtherCountry}"/>
-        <Input id="idEditCityCountry" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}"/>
+        <Label visible="{= ${LocalViewModel>/cityOtherCountry} === true ? true : false }"  text="{i18n>CityOtherCountry}"/>
+        <Input visible="{= ${LocalViewModel>/cityOtherCountry} === true ? true : false }"  id="idEditCityCountry" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_cityAll}"/>
 
         <Label text="{i18n>InsideOtsideKingdom}" required="true"/>
-        <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false"/>
+        <!-- <Input id="idEditInsOutKingdom" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}" enabled="false"/> -->
+
+
+           <Select id="idEditInsOutKingdom" change="onInsideOutsideChange" enabled="false" selectedKey="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_inOutKingdom}">
+                        <core:Item key="IN" text="Inside Kingdom (IN)" />
+                        <core:Item key="OUT" text="Outside Kingdom (OUT)" />
+                    </Select>
 
         <Label text="{i18n>PerDiem}"/>
         <Input id="idEditPerDiem" value="{DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_perDiem}" enabled="false"/>
@@ -171,7 +189,7 @@
     <upload:UploadSet id="idEditAttachBoardingPassBusiness" visible="{= ${DisplayEditBusinessTripModel>/cust_toDutyTravelItem/0/cust_tripCategory} === 'B' ? true : false}" class="sapUiSmallMarginBeginEnd" instantUpload="true" showIcons="true" uploadEnabled="true" terminationEnabled="true" maxFileNameLength="255" maxFileSize="200" afterItemRemoved="onFileDeleted" afterItemAdded="onFileAdded">
         <upload:toolbar>
             <OverflowToolbar>
-                <Label text="{i18n>AttachBoardingPass}" required="true"/>
+                <Label text="{i18n>AttachBoardingPass}" required="false"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
         </upload:toolbar>

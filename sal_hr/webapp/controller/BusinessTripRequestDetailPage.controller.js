@@ -13,23 +13,10 @@ sap.ui.define([
                 this.oRouter = this.getRouter();
                 this.oRouter.getRoute("BusinessTripRequestDetailPage").attachPatternMatched(this._onObjectMatched, this);
                 this.mainModel = this.getOwnerComponent().getModel();
-                this.sReturnDate = new Date();
-                this.sRequesting = 1;
-                this.sReturnDate.setDate(new Date().getDate() + 1);
-                if (this.sReturnDate.getDay() === 5) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 2);
-
-                } else if (this.sReturnDate.getDay() === 6) {
-                    this.sReturnDate.setDate(this.sReturnDate.getDate() + 1);
-
-                } else {
-                    this.sRequesting = 1;
-                }
+             
                 var oLocalViewModel = new JSONModel({
                     startDate: new Date(),
                     endDate: new Date(),
-                    returnDate: this.sReturnDate,
-                    requestDay: this.sRequesting,
                     availBal: false,
                     recurringAbs: false,
                     busy: false,
@@ -38,7 +25,11 @@ sap.ui.define([
                     EditMode: false,
                     PageTitle: null,
                     businessTravel: false,
-                    trainingTravel: false
+                    trainingTravel: false,
+                    cityVisible: false,
+                    otherCityVisible: false,
+                    cityOtherCountry: true,
+                    ExpenseTypeBusinessTravelVisible: false
                 });
 
                 this.getView().setModel(oLocalViewModel, "LocalViewModel");
@@ -61,6 +52,7 @@ sap.ui.define([
                     this.byId("idBusinessTripetailsFullScreenBTN").setIcon("sap-icon://exit-full-screen");
                     this._getTicketData(this.sChildID);
                 }
+                this.onReqTypeChange();
             },
 
             _bindView: function (data) {
@@ -90,7 +82,7 @@ sap.ui.define([
                         this._fnSetUserName(oData);
                         this._fnSetDisplayEditBusinessTripModel(oData);
                     }.bind(this),
-                    error: function () {
+                    error: function (oError) {
                         this.getView().setBusy(false);
                         if (JSON.parse(oError.responseText).error.message.value.indexOf("{") === 0)
                             sap.m.MessageBox.error(JSON.parse(JSON.parse(oError.responseText).error.message.value).error.message.value.split("]")[1]);
@@ -272,27 +264,27 @@ sap.ui.define([
                                 // Attachment Sections fields
                                 "travelattachment1FileContent": "create travel attache",
                                 "travelattachment1FileName": "tr1.txt",
-                                "isTravelAttach1New": true,
+                                "isTravelAttach1New": false,
                                 "travelattachment1UserId": "Extentia",
 
                                 "businessTravelattachmentFileContent": "btravle create",
                                 "businessTravelattachmentFileName": "btravel.txt",
-                                "isbusinessTravelAttachNew": true,
+                                "isbusinessTravelAttachNew": false,
                                 "businessTravelattachmentUserId": "Extentia",
 
                                 "trainingTravelattachmentFileContent": "btravle2create",
                                 "trainingTravelattachmentFileName": "btrave2.txt",
-                                "istrainingTravelAttachNew": true,
+                                "istrainingTravelAttachNew": false,
                                 "trainingTravelattachmentUserId": "Extentia",
 
                                 "receiptEmbassyattachmentFileContent": "btravle 3create",
                                 "receiptEmbassyattachmentFileName": "btrave3.txt",
-                                "isreceiptEmbassyAttachNew": true,
+                                "isreceiptEmbassyAttachNew": false,
                                 "receiptEmbassyattachmentUserId": "Extentia",
 
                                 "visaCopyattachmentFileContent": "btravle 6 create",
                                 "visaCopyattachmentFileName": "btrave6.txt",
-                                "isvisaCopyAttachNew": true,
+                                "isvisaCopyAttachNew": false,
                                 "visaCopyattachmentUserId": "Extentia",
 
                                 "travelAttachment1Id": "34908",
@@ -302,8 +294,11 @@ sap.ui.define([
                                 "visaCopyAttachmentId": "34915"
                             }
                         ]
-                    },
-                    oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
+                    };
+
+
+                    
+                    var oDisplayEditBusinessTripModel = new JSONModel(oDisplayEditBusinessTripObj),
                     oBusinessTripAttachmentModel = new JSONModel({
                         trainingTravelAttachment: oTravelItemDetailsObj.cust_trainingTravelAttachNav,
                         businessTravelAttachment: oTravelItemDetailsObj.cust_businessTravelAttachNav,
@@ -312,10 +307,38 @@ sap.ui.define([
                     });
 
                 this.getView().setModel(oDisplayEditBusinessTripModel, "DisplayEditBusinessTripModel");
+                
                 this.getView().setModel(oBusinessTripAttachmentModel, "BusinessTripAttachmentModel");
+                
+                var bIsUserManager = this.getOwnerComponent().getModel("EmpInfoModel").getProperty("/IsUserManager").toString();
+
+                if(bIsUserManager) {
+                    debugger;
+                    this.fnGetBusinessTripEmpInfo(oTravelItemDetailsObj.externalCode);
+                }
+
                 this.getView().setBusy(false);
 
+                this.getView().getModel("BusinessTripAttachmentModel").getProperty("/businessTravelAttachment") ? null: this.getView().byId("idEditAttachBoardingPassBusiness").removeAllItems();
+
+                this.getView().getModel("BusinessTripAttachmentModel").getProperty("/receiptEmbassyAttachment") ? null: this.getView().byId("idEditAttachEmbassyReceipt").removeAllItems();
+
+
+                this.getView().getModel("BusinessTripAttachmentModel").getProperty("/trainingTravelAttachment") ? null: this.getView().byId("idEditAttachBoardingPassTraining").removeAllItems();
+
+                this.getView().getModel("BusinessTripAttachmentModel").getProperty("/visaCopyAttachment") ? null: this.getView().byId("idEditAttachVisaCopy").removeAllItems();
+
+                this.onDestCountryChange();
+
                 this._fnSetDesiredAirlineTicketTravelTimeValues();
+            },
+
+            fnSetEmployeeBusinessTripModel: function(oData) {
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/payGrade", oData.payGrade);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/costCentre", oData.costCentre);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/emergencyNumber", oData.emergencyNumber);
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_empName", (oData.firstName + " " + ((!oData.middleName)?"":oData.middleName+" ")+ oData.lastName));
+                this.empRequested = oData.payGrade;
             },
 
             _fnSetDesiredAirlineTicketTravelTimeValues: function () {
@@ -331,6 +354,52 @@ sap.ui.define([
                 }
             },
 
+            onHotelBookChange: function (evt) {
+                debugger;
+
+                var sValue = JSON.parse(evt.getSource().getSelectedKey());
+                this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_hotelBooking", sValue);
+
+
+            },
+            onDestCountryChange: function (oEvent) {
+
+                var sDestCountry = oEvent ? oEvent.getSource().getSelectedKey() : this.getView().byId("idEditDestCountry").getSelectedKey() ,
+                    // sPayGrade = this.EmpInfoObj.payGrade;
+                    sPayGrade = this.empRequested ? this.empRequested : this.EmpInfoObj.payGrade;
+                var sCountryVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/cityVisible", false);
+
+                var sOtherCityCountrySet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", false) : this.getView().getModel("LocalViewModel").setProperty("/cityOtherCountry", true);
+
+                var sCitySaudiVisibleSet = sDestCountry === "SAU" ? this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", false);
+
+                var sIOKValueSet = sDestCountry === "SAU" ? this.byId("idEditInsOutKingdom").setSelectedKey("IN") : this.byId("idEditInsOutKingdom").setSelectedKey("OUT");
+
+                this.getView().getModel().read("/SF_DutyTravel_PerDiem",
+                    {
+                        urlParameters: {
+                            "$filter": "(cust_country eq '" + sDestCountry + "' and cust_salaryGrade eq '" + sPayGrade + "')"
+                        },
+                        success: function (oData) {
+                            this.getView().byId("idEditPerDiem").setValue(oData.results[0].cust_amount);
+                            this.fnCalculateTotalPerDiem();
+                        }.bind(this),
+                        error: function (oError) {
+                            sap.m.MessageBox.error(JSON.stringify(oError));
+                        }.bind(this),
+                    });
+
+
+            },
+
+            onCitySaudiChange: function (oEvent) {
+                debugger;
+                var sCitySaudi = oEvent.getSource().getSelectedKey();
+
+
+                var sCitySaudiVisibleSet = sCitySaudi === "OTH" ? this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", true) : this.getView().getModel("LocalViewModel").setProperty("/otherCityVisible", false);
+
+            },
             onEditPress: function () {
                 var sVisaType = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee");
                 this.getView().getModel("DisplayEditBusinessTripModel").setProperty("/cust_toDutyTravelItem/0/cust_expenseTypeVisaFee", (sVisaType ? sVisaType : "N"));
@@ -403,6 +472,10 @@ sap.ui.define([
                     this.getView().setBusy(true);
 
                     var oPayloadObj = this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/");
+                    delete oPayloadObj.payGrade;
+                    delete oPayloadObj.costCentre;
+                    delete oPayloadObj.emergencyNumber;
+                    
                     oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany = (oPayloadObj.cust_toDutyTravelItem[0].cust_isCompany === "Yes" ? true : false);
                     oPayloadObj.cust_toDutyTravelItem[0].cust_hotelBooking = oPayloadObj.cust_toDutyTravelItem[0].cust_hotelBooking === "Yes" ? true : false;
                     oPayloadObj.cust_toDutyTravelItem[0].cust_expenseTypeVisaFee = this.getView().byId("idEditVisaType").getSelectedKey();
@@ -755,7 +828,7 @@ sap.ui.define([
 
                 // validate Inside or Out Kingdom Field
                 var oInsOutKingdom = this.getView().byId("idEditInsOutKingdom");
-                if (!oInsOutKingdom.getValue()) {
+                if (!oInsOutKingdom.getSelectedKey()) {
                     oInsOutKingdom.setValueState("Error");
                     oInsOutKingdom.setValueStateText("Please enter Inside or Out Kingdom.");
                     sValidationErrorMsg = "Please fill the all required fields.";
@@ -774,19 +847,19 @@ sap.ui.define([
                 }
 
                 // Validate Boarding Pass attachment sections
-                if (this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_tripCategory") === "B") {
-                    if (this.getView().byId("idEditAttachBoardingPassBusiness").getItems().length <= 0) {
-                        sValidationErrorMsg = "Please upload Boarding Pass.";
-                        this.getView().setBusy(false);
-                        return sValidationErrorMsg;
-                    }
-                } else {
-                    if (this.getView().byId("idEditAttachBoardingPassTraining").getItems().length <= 0) {
-                        sValidationErrorMsg = "Please upload Boarding Pass.";
-                        this.getView().setBusy(false);
-                        return sValidationErrorMsg;
-                    }
-                }
+                // if (this.getView().getModel("DisplayEditBusinessTripModel").getProperty("/cust_toDutyTravelItem/0/cust_tripCategory") === "B") {
+                //     if (this.getView().byId("idEditAttachBoardingPassBusiness").getItems().length <= 0) {
+                //         sValidationErrorMsg = "Please upload Boarding Pass.";
+                //         this.getView().setBusy(false);
+                //         return sValidationErrorMsg;
+                //     }
+                // } else {
+                //     if (this.getView().byId("idEditAttachBoardingPassTraining").getItems().length <= 0) {
+                //         sValidationErrorMsg = "Please upload Boarding Pass.";
+                //         this.getView().setBusy(false);
+                //         return sValidationErrorMsg;
+                //     }
+                // }
 
                 // Validate embasy attachment sections
                 if (this.byId("idEditVisaType").getSelectedKey() === "V") {
@@ -828,6 +901,7 @@ sap.ui.define([
 
             onReqTypeChange: function () {
                 if (this.getView().byId("idEditReqType").getSelectedKey() === "1") {
+                    this.getView().getModel("LocalViewModel").setProperty("/ExpenseTypeBusinessTravelVisible", false);
                     this.byId("idEditHRBook").setEnabled(true);
                     this.byId("idEditHRBook").setValue("Yes");
                     this.byId("idEditTravelDate").setEnabled(true);
@@ -839,6 +913,8 @@ sap.ui.define([
                     this.getView().getModel("LocalViewModel").setProperty("/businessTravel", false);
                     this.getView().getModel("LocalViewModel").setProperty("/trainingTravel", false);
                 } else {
+                    
+                    this.getView().getModel("LocalViewModel").setProperty("/ExpenseTypeBusinessTravelVisible", true);
                     this.byId("idEditHRBook").setEnabled(false);
                     this.byId("idEditTravelDate").setEnabled(false);
                     this.byId("idEditTripCategory").setEnabled(false);
