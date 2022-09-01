@@ -2,7 +2,7 @@
 
 
 
-.titleClass .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected .sapMITBText {
+.titleClass.sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected .sapMITBText {
    
     font-weight: 800;
 }
