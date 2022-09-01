@@ -60,10 +60,10 @@
 		<columns>
 			<Column
 				>
-				<Text text="Employee Id" />
+				<Label design="Bold"  text="Employee Id" />
 			</Column>
 			<Column>
-				<Text text="Suggestion" />
+				<Label design="Bold" text="Suggestion" />
 			</Column>
 			
 		</columns>
