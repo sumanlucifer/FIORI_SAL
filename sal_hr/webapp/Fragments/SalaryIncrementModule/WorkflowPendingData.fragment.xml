@@ -10,7 +10,7 @@
 		<f:GridList
 			
 			items="{
-				path: 'TestModel>/items',
+				path: 'WorkflowPendingDataModel>/items',
 				sorter: {
 					path: 'group',
 					descending: false,
@@ -28,9 +28,9 @@
 						<layoutData>
 							<FlexItemData growFactor="1" shrinkFactor="0" />
 						</layoutData>
-						<Title text="{TestModel>label}" wrapping="true" />
-						<Label text="{TestModel>newValue}" wrapping="true" />
-                        <Text class="strikeOutCss" text="{TestModel>oldValue}" />
+						<Title text="{WorkflowPendingDataModel>label}" wrapping="true" />
+						<Label text="{WorkflowPendingDataModel>newValue}" wrapping="true" />
+                        <Text class="strikeOutCss" text="{WorkflowPendingDataModel>oldValue}" />
 					</VBox>
 				</VBox>
 			</f:GridListItem>

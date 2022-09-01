@@ -47,67 +47,6 @@ sap.ui.define([
             },
 
             _onObjectMatched: function (oEvent) {
-            //   var response = {
-            //     d: [
-            //       {
-            //         wfRequestId: "62422",
-            //         workflowAttributeGroups: {
-            //           results: [
-            //             {
-            //               changeSet: {
-            //                 results: [
-            //                   {
-            //                     changeSet: {
-            //                       results: [],
-            //                     },
-            //                     entityName: "EmpJob",
-            //                     fieldId: null,
-            //                     fieldName: "customString1",
-            //                     id: "custom-string1",
-            //                     label: "Job Level",
-            //                     newValue: "Technical 1",
-            //                     oldValue: "Professional 5",
-            //                     payComponents: null,
-            //                     type: null,
-            //                   },
-            //                   {
-            //                     changeSet: {
-            //                       results: [],
-            //                     },
-            //                     entityName: "EmpJob",
-            //                     fieldId: null,
-            //                     fieldName: "payGrade",
-            //                     id: "pay-grade",
-            //                     label: "Pay Grade",
-            //                     newValue:
-            //                       "SACC-National-Professional-P4 (Nat-P4)",
-            //                     oldValue:
-            //                       "SACC-National-Professional-P5 (Nat-P5)",
-            //                     payComponents: null,
-            //                     type: null,
-            //                   },
-            //                 ],
-            //               },
-            //               groups: {
-            //                 results: [],
-            //               },
-            //               subChangeSetGroups: {
-            //                 results: [],
-            //               },
-            //               title: "Job Information",
-            //             },
-            //           ],
-            //         },
-            //       },
-            //     ],
-            //   };
-
-            //   var items = this.convertResponseToGridItems(response);
-
-            //   var oTestModel = new JSONModel({
-            //     items: items
-            //   });
-            //   this.getView().setModel(oTestModel, "TestModel");
               // this.initDropdowns();
               this.sParentID = oEvent.getParameter("arguments").parentMaterial;
               this.sChildID = oEvent.getParameter("arguments").childModule;
@@ -136,17 +75,6 @@ sap.ui.define([
                 );
                 this._getTicketData(this.sChildID);
               }
-            },
-
-            convertResponseToGridItems: function (oData) {
-              var items = [];
-              oData.d[0].workflowAttributeGroups.results.forEach((group) => {
-                group.changeSet.results.forEach((item) => {
-                  item.group = group.title;
-                  items.push(item);
-                });
-              });
-              return items;
             },
 
             _bindView: function (data) {
@@ -249,39 +177,58 @@ sap.ui.define([
               this.getView().getModel("LocalViewModel").refresh();
             },
 
-           
+            callWorkflowPendindDataService: function (wfID) {
+                if (!wfID) {
+                    return false;
+                }
 
+                //    var sWFRequestId = "62422";
+                this.getView().setBusy(true);
 
-            callWorkflowPendindDataService : function(wfID)
-            {
-
-              if(!wfID)
-              {
-                return false;
-              }
-              
-            //    var sWFRequestId = "62422";
-            this.getView().setBusy(true);
-
-                this.getOwnerComponent().getModel("sfsfModel").create("/getWorkflowPendingData", null, {
-                    urlParameters: {
-                        "wfRequestId": wfID + "L"
+                var oModel = this.getOwnerComponent().getModel("sfsfModel");
+                var url = oModel.sServiceUrl + `/getWorkflowPendingData?wfRequestId=${wfID}L`;
+                $.ajax({
+                    url: url,
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json"
                     },
-                  success: function (oData) {
-                    this.getView().setBusy(false);
-                    var items = this.convertResponseToGridItems(oData);
-                    var oTestModel = new JSONModel({
-                      items: items
-              });
-               this.getView().setModel(oTestModel, "TestModel");
-                  }.bind(this),
-                  error: function () {
-                    this.getView().setBusy(false);
-                    // this.fnSetDisplaySalryCompInfoModel(null);
-                  }.bind(this),
+                    success: function (oData) {
+                        //console.log(oData);
+                        this.getView().setBusy(false);
+                        if (oData && oData.d.length !== 0) {
+                            var items = this.convertResponseToGridItems(oData);
+                            var oWorkflowPendingDataModel = new JSONModel({
+                                items: items
+                            });
+                            this.getView().setModel(oWorkflowPendingDataModel, "WorkflowPendingDataModel")
+                        }
+                    }
+                    .bind(this),
+                    error: function (err) {
+                        console.log(err);
+                        this.getView().setBusy(false);
+                    }
+                    .bind(this),
                 });
-
             },
+
+            convertResponseToGridItems: function (oData) {
+                var items = [];
+                oData.d[0].workflowAttributeGroups.results.forEach((group) => {
+                    group.changeSet.results.forEach((item) => {
+                        item.group = group.title ? group.title : "Request Details";
+                        items.push(item);
+                    });
+                });
+                items = items.sort(function(a, b){
+                    if(a.label < b.label) { return -1; }
+                    if(a.label > b.label) { return 1; }
+                    return 0;
+                });
+                return items;
+            },
+
             onCallHistoryData: function (sticketCode) {
               var ticketCodeFilter = new sap.ui.model.Filter({
                 path: "ticketCode",

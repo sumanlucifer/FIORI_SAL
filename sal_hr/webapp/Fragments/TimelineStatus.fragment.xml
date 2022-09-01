@@ -4,7 +4,7 @@
     xmlns:l="sap.ui.layout">
 	<ResponsivePopover
         id="idTimelinestatus"
-		title="Status"
+		title="Step {TicketWorkFlowParticipantModel>/stepNumber}"
 		class="sapUiContentPadding"
 		placement="Bottom" >
         <content>
@@ -14,16 +14,20 @@
                     <ObjectStatus id="idStatus" text="{TicketWorkFlowParticipantModel>/status}" state="{path: 'TicketWorkFlowParticipantModel>/status', formatter:'.formatter.ticketStatus'}" />
                 </VBox>
                 <VBox>
-                    <Label text="Step Number:" labelFor="idStepNumber"/>
-                    <Text id="idStepNumber" text="{TicketWorkFlowParticipantModel>/stepNumber}" />
+                    <Label text="Approver:" labelFor="idWorkflowApprover"/>
+                    <Text id="idWorkflowApprover" text="{TicketWorkFlowParticipantModel>/approver}" />
                 </VBox>
                 <VBox>
-                    <Label text="Workflow Participant ID:" labelFor="idWorkflowParticipantId"/>
-                    <Text id="idWorkflowParticipantId" text="{TicketWorkFlowParticipantModel>/workflowParticipantId}" />
+                    <Label text="SLA Target Date:" labelFor="idWorkflowTargetDate"/>
+                    <Text id="idWorkflowTargetDate" text="{TicketWorkFlowParticipantModel>/targetDate}" />
                 </VBox>
                 <VBox>
-                    <Label text="Workflow Participant Name:" labelFor="idWorkflowParticipantName"/>
-                    <Text id="idWorkflowParticipantName" text="{TicketWorkFlowParticipantModel>/workflowParticipantName}" />
+                    <Label text="SLA Actual Date:" labelFor="idWorkflowActualDate"/>
+                    <Text id="idWorkflowActualDate" text="{TicketWorkFlowParticipantModel>/actualDate}" />
+                </VBox>
+                <VBox>
+                    <Label text="SLA Violated:" labelFor="idWorkflowViolated"/>
+                    <Text id="idWorkflowViolated" text="{TicketWorkFlowParticipantModel>/violated}" />
                 </VBox>
             </VBox>
         </content>

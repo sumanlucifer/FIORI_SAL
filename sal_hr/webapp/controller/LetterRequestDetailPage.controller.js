@@ -59,6 +59,7 @@ sap.ui.define([
                     success: function (oData) {
                        
                          this.fnSetDisplayLetterRequestModel(oData);
+                         this.setTimelineSteps();
                     }.bind(this),
                     error: function () {
                         this.getView().setBusy(false);

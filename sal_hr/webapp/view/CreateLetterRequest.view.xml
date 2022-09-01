@@ -32,7 +32,7 @@
 
                     <fm:SimpleForm title="Generate Document" layout="ColumnLayout" class="style-RemoveTitleHeight" columnsM="1" columnsL="1" columnsXL="1" singleContainerFullSize="false" labelSpanXL="12" labelSpanL="12" labelSpanM="12" labelSpanS="12">
             <Label text="Country Region" required="true"/>
-            <Input id="idLetterCountry" value="Saudi Arabia" enabled= "false"/>
+            <Input id="idLetterCountry" value="{LocalViewModel>/nationality}" enabled= "false"/>
 
             <Label text="Language" />
             <Input id="idLanguage" value="English US" enabled= "false"/>
