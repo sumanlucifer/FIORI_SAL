@@ -1,1 +1,6 @@
 /* Enter your custom styles here */
+
+.titleClass .sapMITBFilter .sapMITBText .sapMITHTextContent {
+{
+    font-weight: bold;
+}

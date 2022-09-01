@@ -9,17 +9,17 @@
 
         <IconTabBar id="idIconTabBar"  select="onIconTabSelect" headerMode="Inline" expanded="true" class="sapUiResponsiveContentPadding">
                 <items>
-                    <IconTabFilter  text="{i18n>Rating}" >
+                    <IconTabFilter class="titleClass" text="{i18n>Rating}" >
                      
             
-				<content>
+				
                                             <HBox class="DateRangeCss"  alignContent="Center">
  <DateRangeSelection id="DRS2" width="20rem" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
    <!-- </HBox> -->
 				
 					
 				
-				</content>
+			
                  <!-- <HBox alignContent="Center"> -->
 			  <viz:Popover id="idPopOver"></viz:Popover>
 
