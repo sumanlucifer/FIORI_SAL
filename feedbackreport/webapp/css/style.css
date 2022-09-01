@@ -1,6 +1,8 @@
 /* Enter your custom styles here */
 
 
-.titleClass .sapMITBFilter .sapMITBText .sapMITHTextContent {
-    font-weight: bold;
+
+.titleClass .sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected .sapMITBText {
+   
+    font-weight: 800;
 }
