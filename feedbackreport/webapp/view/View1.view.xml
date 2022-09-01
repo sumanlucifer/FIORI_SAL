@@ -13,14 +13,14 @@
                      
             
 				<content>
-                                            <HBox class="DateRangeCss"  alignContent="Right">
+                                            <HBox class="DateRangeCss"  alignContent="Center">
  <DateRangeSelection id="DRS2" width="20rem" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
-   </HBox>
+   <!-- </HBox> -->
 				
 					
 				
 				</content>
-                 <HBox alignContent="Center">
+                 <!-- <HBox alignContent="Center"> -->
 			  <viz:Popover id="idPopOver"></viz:Popover>
 
         <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
@@ -96,10 +96,10 @@
 		<columns>
 			<Column
 				>
-				<Text text="Employee Id" />
+				<Label design="Bold" text="Employee Id" />
 			</Column>
 			<Column>
-				<Text text="Complain" />
+				<Label design="Bold" text="Complain" />
 			</Column>
 			
 		</columns>
@@ -123,31 +123,6 @@
                 </items>
             </IconTabBar>
 
-        <!-- <OverflowToolbar>
-				<content>
-					<Title text="Ratings" level="H1" />
-					<ToolbarSpacer />
-					
-				
-				</content>
-			</OverflowToolbar> -->
-
-       
-
-        
-			<!-- <OverflowToolbar class="sapUiLargeMarginTop">
-				<content>
-					<Title text="Suggestions" level="H1" />
-					<ToolbarSpacer />
-					
-				
-				</content>
-			</OverflowToolbar>
-	 -->
-        	
-      
-    	
-        
         </content>
     </Page>
 </mvc:View>
