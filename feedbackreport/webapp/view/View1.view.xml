@@ -85,7 +85,7 @@
                     </IconTabFilter>
                      <IconTabFilter  text="{i18n>Complaints}" >
 
-                      <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true">
+                     
        
        <Table id="idComplainsTable"
 		        inset="false"
@@ -117,7 +117,7 @@
 			</ColumnListItem>
 		</items>
 	</Table>
-       </ScrollContainer>
+    
                        
                     </IconTabFilter>
                 </items>
