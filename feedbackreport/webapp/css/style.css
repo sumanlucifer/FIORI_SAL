@@ -4,5 +4,9 @@
 
 .titleClass.sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected .sapMITBText {
    
-    font-weight: 800;
+    font-weight: bold;
+}
+.titleClass.sapMITBTextOnly .sapMITBVertical 
+{
+    font-weight: bold;
 }

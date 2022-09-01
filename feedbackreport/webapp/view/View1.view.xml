@@ -47,7 +47,7 @@
   </HBox >
                     </IconTabFilter>
                     <IconTabFilter  text="{i18n>Suggestions}" >
-                        <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true">
+                        <!-- <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true"> -->
        
        <Table id="idSuggestionsTable"
 		        inset="false"
@@ -81,7 +81,7 @@
 			</ColumnListItem>
 		</items>
 	</Table>
-       </ScrollContainer>
+       <!-- </ScrollContainer> -->
                     </IconTabFilter>
                      <IconTabFilter  text="{i18n>Complaints}" >
 
