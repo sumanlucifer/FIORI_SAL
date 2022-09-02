@@ -15,12 +15,12 @@
 				
                                             <VBox class="DateRangeCss"  alignContent="Center">
  <DateRangeSelection id="DRS2" width="20rem" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
-   <!-- </HBox> -->
+   </VBox> -->
 				
 					
 				
 			
-                 <!-- <HBox alignContent="Center"> -->
+                 <VBox alignContent="Center">
 			  <viz:Popover id="idPopOver"></viz:Popover>
 
         <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
@@ -47,8 +47,7 @@
   </VBox >
                     </IconTabFilter>
                     <IconTabFilter  text="{i18n>Suggestions}" >
-                        <!-- <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true"> -->
-       
+                   
        <Table id="idSuggestionsTable"
 		        inset="false"
 
@@ -81,7 +80,7 @@
 			</ColumnListItem>
 		</items>
 	</Table>
-       <!-- </ScrollContainer> -->
+  
                     </IconTabFilter>
                      <IconTabFilter  text="{i18n>Complaints}" >
 
