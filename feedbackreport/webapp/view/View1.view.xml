@@ -13,14 +13,14 @@
                      
             
 				
- <VBox class="DateRangeCss"  alignContent="End">
+ <VBox class="MarginCss"  alignContent="End">
  <DateRangeSelection id="DRS2" width="20rem" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
    </VBox> 
 				
 					
 				
 			
-                 <HBox alignContent="End">
+                 <VBox alignContent="End">
 			  <viz:Popover id="idPopOver"></viz:Popover>
 
         <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
@@ -44,7 +44,7 @@
 												</viz:feeds>
 											</viz:VizFrame>
 
-  </HBox >
+  </VBox >
                     </IconTabFilter>
                     <IconTabFilter  text="{i18n>Suggestions}" >
                    
