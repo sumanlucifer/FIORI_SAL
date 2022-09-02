@@ -20,7 +20,7 @@
 					
 				
 			
-                 <VBox alignContent="End">
+                 <HBox alignContent="End">
 			  <viz:Popover id="idPopOver"></viz:Popover>
 
         <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
@@ -44,7 +44,7 @@
 												</viz:feeds>
 											</viz:VizFrame>
 
-  </VBox >
+  </HBox >
                     </IconTabFilter>
                     <IconTabFilter  text="{i18n>Suggestions}" >
                    
@@ -53,7 +53,7 @@
 
 
                   items="{ path: '/Suggestion', sorter: [{path: 'createdBy', descending: 'true'}] }"
-		       growing="true" growingScrollToLoad="true" growingThreshold="5">
+		       growing="true" growingScrollToLoad="true" growingThreshold="10">
 	
 	
 		<columns>
@@ -89,7 +89,7 @@
        <Table id="idComplainsTable"
 		        inset="false"
 
-                items="{ path: '/Answer', filters: [{ path: 'questionId', operator: 'EQ', value1: '5' }], sorter: [{path: 'createdBy', descending: 'true'}] }" growing="true" growingScrollToLoad="true" growingThreshold="5">
+                items="{ path: '/Answer', filters: [{ path: 'questionId', operator: 'EQ', value1: '5' }], sorter: [{path: 'createdBy', descending: 'true'}] }" growing="true" growingScrollToLoad="true" growingThreshold="10">
 	
 	
 		<columns>
