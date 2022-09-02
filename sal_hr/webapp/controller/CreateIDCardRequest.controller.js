@@ -103,7 +103,7 @@ sap.ui.define([
                     "effectiveStartDate": sEffectiveStartDate,
                     "cust_idReplacementDetails": {
                         "cust_bloodGroup": oDataObj.bloodGroup,
-                        "cust_idReplacement_effectiveStartDate": EffectiveStartDate,
+                        "cust_idReplacement_effectiveStartDate": sEffectiveStartDate,
 
                         "externalCode": "46986",
                         "cust_idReplacement_User": oDataObj.userId,
