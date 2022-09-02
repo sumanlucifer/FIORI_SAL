@@ -2,11 +2,7 @@
 
 
 
-.titleClass.sapMITBTextOnly .sapMITBFilterDefault.sapMITBSelected .sapMITBText {
+.sapMITBFilter .sapMITBText .sapMITHTextContent {
    
-    font-weight: bold;
-}
-.titleClass.sapMITBTextOnly .sapMITBVertical 
-{
     font-weight: bold;
 }
