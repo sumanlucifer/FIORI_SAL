@@ -23,10 +23,7 @@
                  <VBox class="MarginCss">
 			  <viz:Popover id="idPopOver"></viz:Popover>
 
-        <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}, dataLabel: {
-						showTotal: true,
-						
-					}}"
+        <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" vizType='donut' vizProperties="{title: { text : 'Rating '}}"
 												selectData="1" deselectData="2">
 												<viz:dataset>
 													<viz.data:FlattenedDataset 
