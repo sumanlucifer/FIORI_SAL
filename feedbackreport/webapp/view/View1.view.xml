@@ -13,7 +13,7 @@
                      
             
 				
-                                            <HBox class="DateRangeCss"  alignContent="Center">
+                                            <VBox class="DateRangeCss"  alignContent="Center">
  <DateRangeSelection id="DRS2" width="20rem" change="onFilterDateChange" dateValue="{LocalViewModel>/FromDate}" secondDateValue="{LocalViewModel>/ToDate}"/>
    <!-- </HBox> -->
 				
@@ -44,7 +44,7 @@
 												</viz:feeds>
 											</viz:VizFrame>
 
-  </HBox >
+  </VBox >
                     </IconTabFilter>
                     <IconTabFilter  text="{i18n>Suggestions}" >
                         <!-- <ScrollContainer height="40%" width="100%" class="sapUiSmallMarginTop" vertical="true" focusable="true"> -->
